@@ -1,0 +1,210 @@
+<div class="upload-contents">
+	<section id="top-header">
+		<div class="row">
+			<div class="col-md-12 top-heading">
+				<div class="col-md-7 col-sm-12">
+					<ul class="heading">
+						<li>
+							<a href="Javascript:void(0)" class="active">Upload</a>
+						</li>
+					</ul>
+				</div>
+				<div class="col-md-5 col-sm-12 search-box">
+					<form method="post">
+						<span class="search-icon search-c search_input_head"></span>
+					</form>
+				</div>
+			</div>
+		</div>	
+	</section>
+	<section class="col-xs-12 upload-btns" id="items-box">
+		<ul id="top_menu" class="top_menu">
+			<li class="{{if music_active}} active {{/if}}" id="music_li">
+				<a href="Javascript:void(0)" class="name">MUSIC</a>
+				<a href="Javascript:void(0)" class="icon music uploadmenu" id="mainupload">
+					<div id="drag_block">           
+						<div class="drag_text">Drop your file to upload </div>         
+					</div>
+					<div class="inner-texts">
+						<p>Browse or Drag&Drop your songs</p>
+						<button class="soundcloud_import" id="soundcloud_import">IMPORT FROM<br/>SOUNDCLOUD</button>
+					</div>
+				</a>
+			</li>
+
+			<li class="{{if album_active}} active {{/if}}" id="album_li">
+				<a href="Javascript:void(0)" class="name">ALBUM</a>
+				<a href="Javascript:void(0)" class="icon album uploadmenu" id="create_album_link"></a>
+			</li>	
+		</ul>
+		<p class="text_u">By uploading any content to Imusify, you hereby certify that you own the copyright in or have all the necessary rights related to such content to upload it.</p>
+		<div class="row">
+			<div class="col-md-12 album-cont">								
+				<div id="song_appen_row"></div>		
+
+
+				<div class="${albumform_dis_class} album_form" id="albumform">
+					<div class="form-box clearfix">
+						<div class="u_container all-details" id="u_container_${r}">
+							<h3 class="album-title">CREATE NEW ALBUM</h3>
+							<div class="u_song_detail album-box ${displaynone}">
+								<form class="album-form" method="post" name="album_create_form" id="album_create_form"  enctype="multipart/form-data" data-role="submitenter">
+									<ul class="nav nav-tabs user-tabs" data-tab role="tablist">
+										<li class="active"><a  data-toggle="tab" role="tab"  data-target="#album_basics_tab">Basic</a></li>
+										<li ><a data-toggle="tab" role="tab" data-target="#sell-your-album">Sell your album</a></li>
+									</ul>	
+
+									<div class="tab-content tabcontents">
+
+										<div class="tab-pane fade in active" id="album_basics_tab">
+											<div class="displaynone">	
+												<input type="hidden" name="id" value="${id}">
+												<input name="waveform" id="waveform_url" type="hidden" value=""/>	
+											</div>	
+											<div class="col-lg-3 col-md-4 col-sm-12 col-xs-12 cover-img">
+												<figure><img src="${img}track-img.jpg" class="img-responsive img_load" alt="" id="album_image_preview"></figure>
+												<p>Album image</p>
+												<a href="Javascript:void(0)" class="pink-btn album_image" id="album_image_upd">Upload Images</a> 
+												<!-- <input type="file" name="album_image" class="pink-btn album_image_upd" style="display:none !important" /> -->
+												<div id="album_img_modal" style="height:300px;width:300px" class="displaynone"></div>
+
+
+
+											</div>
+
+											<div class="col-lg-9 col-md-8 col-sm-12 col-xs-12">						
+												<div class="form-group">
+													<label for="title">Title</label>
+													<input type="text" name="album_title" class="form-control validate[required]" id="title" value="${name}">
+												</div>
+
+
+												<div class="form-group">
+													<label for="email">Label</label>
+													<input type="text" name="album_label" class="form-control validate[required]" id="lab" value="${label}">							
+												</div>
+
+
+												<div class="form-group">
+													<label for="des">Description</label>
+													<textarea id="des" name="album_desc" rows="4" class="form-control validate[required]">${description}</textarea>
+												</div>
+
+												<div class="form-group">
+													<label for="passwprd">Primary Genre</label>
+													<select class="form-control" name="genre">	{{each(i,v)  genre_list}}		
+														<option {{if v.selected}} selected="selected" {{/if}} value="${v.id}">${v.genre}</option>
+														{{/each}}
+													</select>
+												</div>
+
+
+												<div class="form-group">
+													<label>Release Date (MM/DD/YYYY)</label>
+
+													<input type="text" class="form-control width85 blackc validate[required,custom[integer],min[1],max[12]]" value="${release_mm}" placeholder="MM" name="rdate_mm" />
+
+
+													<input type="text" class="form-control width85 blackc validate[required,custom[integer],min[1],max[31]]" value="${release_dd}" placeholder="DD" name="rdate_dd"/>
+
+													<input type="text" class="form-control width85 blackc validate[required,custom[integer],min[${release_min_year}],max[${release_max_year}]]" placeholder="YYYY" value="${release_yy}" name="rdate_yy"/>
+
+												</div>
+
+												<div class="form-group">
+													<label>Secondary Genres (Pick two)</label>
+													<select class="form-control validate[required] select2 " multiple id="sec_tags" name="sec_tags[]">
+														{{each(i,v)  sec_genre_list}}		
+														<option {{if v.selected}} selected="selected" {{/if}} value="${v.id}">${v.genre}</option>
+														{{/each}}
+													</select>
+
+												</div>
+												<div class="text-right">
+													<button type="button" class="btn creat-btn next-album-btn" data-toggle="tab" role="tab">Next</button>
+
+													<button type="button" class="btn creat-btn cancel_album_btn" data-toggle="tab" role="tab">Cancel</button>													
+
+
+												</div>	
+
+											</div>
+										</div>
+
+										<div class="tab-pane fade" id="sell-your-album">
+
+											<div class="form-group">
+												<div class="make-switch" data-on-text="True" data-on="primary" data-off="info">
+													<label for="genner">Wanna make your album available for sale?</label>
+													<input type="checkbox" class="sale_avail_album_switch" name="album_avail_for_sale" value="y">
+												</div>
+											</div>	
+
+
+											<div class="form-group">
+												<div class="make-switch" data-on-text="True" data-on="primary" data-off="info">
+													<label for="genner">Wanna make your album fully for sale?</label>
+													<input type="checkbox" class="album_partial_switch" value="y" name="album_fully_avail">
+												</div>
+											</div>		
+
+											<div class="form-group album_sale_def_msg" >
+												<div class="form-group">
+													<label for="des">YOu need to fill track selling price while upload.</label>
+												</div>
+											</div>
+
+
+											<div class="form-group displaynone sale_avail_switch_disp" >
+												<div class="form-group">
+													<label for="des">Album Price</label>
+													<input type="text" name="album_price" class="form-control" id="lab" value="${album_price}">
+												</div>
+											</div>
+
+
+											<div class="text-right">
+												<a href="javascript:void(0)" id="" class="prev-album-btn pink-btn creat-btn " data-r="${r}">Prev</a>
+
+												<a href="javascript:void(0)" id="" class="pink-btn creat-btn ${save_class} progress-button create_album_submit" data-loading="Working.." data-finished="Saved" data-type="background-horizontal" data-r="${r}">Save</a>
+
+												<a href="javascript:void(0)" id="" class="pink-btn creat-btn  cancel_album_btn">Cancel</a>
+
+												
+											</div>
+
+										</div>
+										<div class="clearfix"></div>	
+									</div>
+								</form>		
+							</div>		
+							<div class="clearfix">
+
+							</div>
+						</div>								
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+
+	<section id="all-details" class="tabs-contents">
+		<div class="row">
+			<div class="col-md-12 col-sm-12 col-xs-12">
+				<ul class="nav nav-tabs user-tabs ul_li_active" role="tablist" id="link_ul_cont">
+					<li class="{{if music_active}} active {{/if}}">
+						<a href="${url}upload" data-role="uploadaudio" class="upload_audio">AUDIO</a>
+					</li>
+					<li class="{{if album_active}} active {{/if}}" id="album_li_cont">
+						<a href="${url}upload/album" data-role="uploadalbum" class="upload_albums">ALBUMS</a>
+					</li>					
+				</ul>
+				<div class="tab-content" id="tab_content">
+					<div class="tab-pane fade in active audio ${class_nm}" id="${tabid}">
+						{{tmpl "#uploadtabRender"}}						
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+</div>

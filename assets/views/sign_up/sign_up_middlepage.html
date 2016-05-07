@@ -1,0 +1,75 @@
+<div id="form-bg" class="sign_up_middlepage modal fade">
+					<div class="col-md-12 close-icon">
+						<a class="close_popup close"><span></span></a>
+					</div>
+					<div class="col-md-12">
+						<h1>You're almost ready...</h1>
+						<p>We loaded your account with your Facebook details. Help us with just a few more questions.
+You can always edit this or any other info in settings after joining.</p>
+					</div>
+					<div class="col-md-12">
+						<div class="form-box clearfix">
+							<span class="${provider}-icon"></span>
+							<form  method="post" action="#" class="form-field" id="signup_form_middle" data-role="submitenter">
+								<input type="hidden" name="social_id" value="${id}"/>
+								<input type="hidden" name="provider" value="${provider}"/>
+								<input type="hidden" name="fname" value="${first_name}"/>
+								<input type="hidden" name="lname" value="${last_name}"/>								
+								<fieldset>
+									<div class="col-md-6 form-group">
+    									<label for="uname">Username</label>
+    									<input type="type" class="form-control validate[required,custom[onlyLetterNumber],ajax[ajaxusercheck]] text-input " name="uname" id="uname">
+									</div>
+									<div class="col-md-6 form-group">
+										<label>Select Gender</label>
+    									<select class="form-control validate[required] " name="gender" id="gender" >
+											
+    										<option value="m" {{if gender=='male'}} selected {{/if}}>Male</option>
+    										<option value="f" {{if gender=='female'}} selected {{/if}}>Female</option>
+    										<option value="u" {{if gender=='unspecified'}} selected {{/if}}>Unspecified</option>    										
+    									</select>
+									</div>
+								</fieldset>
+								<fieldset>
+									<div class="col-md-6 form-group">
+    									<label for="email">Email</label>
+    									<input type="email" name="email" class="form-control validate[required,custom[email],ajax[ajaxusercheck]] text-input" id="email" value="${email}">
+									</div>
+									<div class="col-md-6 form-group">
+    									<label for="passwprd">Password</label>
+    									<input type="password" class="form-control validate[required] text-input" name="password" id="passwprd">
+									</div>
+								</fieldset>
+								<fieldset>
+								<div class="col-md-6 form-group">
+    									<label for="passwprd">Date of Birth</label>
+    									<input type="type" class="form-control width85 blackc validate[required,custom[integer]]" id="dob_mm" placeholder="MM" name="mm" data-errormessage="*Required">
+    									<input type="type" class="form-control width85 blackc validate[required,custom[integer]]" id="dob_dd" placeholder="DD" name="dd" data-errormessage="*Required">
+    									<input type="type" class="form-control width85 blackc validate[required,custom[integer]]" id="dob_yy" placeholder="YYYY" name="yy" data-errormessage="*Required">
+									</div>
+
+									<div class="col-md-6 form-group">
+    									<label for="uname">Invitation Code</label>
+    									<input type="type" class="form-control validate[required] text-input" id="invitecode" name="invitecode" data-prompt-position="topLeft">
+									</div>
+
+
+								</fieldset>
+								<fieldset class="check-box">
+									<div class="col-mad-12 borTop">
+										<input type="checkbox" class="validate[required] checkbox" id="agree" name="agree">
+										<label>I acknowledge that I have read and accept the <a href="#">Terms of Use Agreement</a> and consent to the <a href="#">Privacy Policy</a> and <a href="#">Video Privacy Policy</a>.</label>
+									</div>
+								</fieldset>
+								<fieldset>
+									<div class="col-md-12">
+										<!-- <input type="submit" id="signup_btn_mpage" value="Create Accout" class="creat-btn pull-right"> -->
+										
+										<a href="javascript:void(0)" id="signup_btn_mpage" class="creat-btn pull-right progress-button"  data-loading="Working.." data-finished="Finished!" data-type="background-horizontal">Create Accout</a>
+										
+									</div>
+								</fieldset>
+							</form>
+						</div>
+					</div>
+				</div>

@@ -1,0 +1,133 @@
+<div id="msg-box" class="profile-infor-msg-box displaynone popupmenu_custom">
+	<div role="tabpanel">
+		<!-- Nav tabs -->
+		<span class="close-btn"></span>
+		<ul class="nav nav-tabs" role="tablist">
+			<li role="presentation" class="active"><a href="#inbox" role="tab" data-toggle="tab">Inbox (<label class="inbox_msg_counter">0</label>)</a></li>
+		</ul>
+		<!-- Tab panes -->
+		<div class="tab-content">
+			<!-- Tab1 -->
+			<div role="tabpanel" class="tab-pane active message-box" id="inbox">
+
+			</div>
+			<!-- Tab2 -->
+		</div>
+	</div>
+	<div class="msg-option">
+		<ul>
+			<li><a href="${url}message" data-role="message">View All</a></li>
+			<li><a href="${url}message/new" data-role="newmessage_fullpage">New Message</a></li>			
+		</ul>
+	</div>
+</div>
+
+
+<div id="notifications" class="profile-infor-msg-box displaynone popupmenu_custom">
+	<h3>
+		<a href="Javascript:void(0)">Notifications</a>
+		<a href="${url}notifications" class="pull-right view_not_all" data-role="all_notification">View All</a>
+		<span class="close-btn"></span>
+	</h3>
+	<div class="notification_wraper">
+		<div id="notification_rows" class="mCustomScrollbar"></div>
+	</div>
+</div>
+
+<div id="setting-box" class="profile-infor-msg-box displaynone popupmenu_custom">
+	<ul>
+		<li><a href="${url}account" data-role="account">Account</a></li>
+		<li><a href="${url}${profileLink}/edit"  data-t="edit_profile" class="edit_user_profile popup" data-role="account">Edit Profile</a></li>
+
+		<!-- <li><a href="Javascript:void(0)">Privacy</a></li>
+		<li><a href="Javascript:void(0)">Invitations</a></li> -->
+		<li><a href="${url}invite" class="popup" data-t="invite">Invite Friend</a></li>
+		<li><a href="${url}membership" target="_blank" class="">Membership</a></li>
+		<li><a href="${url}giftcoupon" class="popup" data-t="giftcoupon">Apply Gift Coupon</a></li>
+		<!-- <li><a href="Javascript:void(0)">Applications</a></li>
+		<li><a href="Javascript:void(0)">Notifications</a></li> -->
+		<li><a href="Javascript:void(0)" id="btn_logout">Sign out</a></li>
+	</ul>
+</div>
+
+<div class="cust-header">
+
+	{{if profileImage}}
+	<div class="transparent_img_profile" style="background:url(${profileImage})"></div>
+	{{else}}
+	<div class="transparent_img_profile" ></div>
+	{{/if}}
+	<div class="logo">
+		<h1><a href="${url}" data-role="home" ><img src="${img}logo.svg" alt="Imusify" ></a></h1>
+		<!-- <p>Music Technology</p> -->
+	</div>
+	{{if loggedin}}
+	<div class="profile-box">
+
+		<figure>
+			<a href="${url}${profileLink}" data-role="profile">
+				<img src="${profileImage}" id="left_profile_image" class="borderradius" alt="" data-adaptive-background='1' data-ab-parent=".left_panel">
+			</a>
+		</figure>
+
+		<a href="${url}${profileLink}" class="name" data-role="profile">${username}</a>
+		<!-- <a href="Javascript:void(0)" id="btn_logout" class="name">Logout</a> -->
+		<ul class="profile-infor left_menu_set">
+			<li>
+				<a class="msg" data-id="msg-box">
+					<span class="inbox_msg_counter displaynone">0</span>
+				</a>			
+			</li>
+			<li>
+				<a class="notifi" data-id="notifications" id="notification_menu">
+					<span class="notification_counter displaynone">0</span>
+				</a>
+			</li>
+			<li class="border-r">
+				<a class="setting" data-id="setting-box"></a>			
+			</li>
+		</ul>
+	</div>
+	{{else}}
+	<div class="connect-btns">
+		<a href="${url}sign_up" id="sign_up"  data-t="sign_up" class="popup">Sign up</a>
+		<a href="${url}sign_in" id="sign_in"  data-t="sign_in" class="popup">Sign in</a>
+	</div>
+	{{/if}}
+	<nav id="nav-menus" class="mCustomScrollbar left_nav_menus">
+		<ul id="home_left_menu">
+			<li class="first-g">
+				<a href="${url}" data-role="home" data-rel="ajax" class="first-b {{if home_page}} active {{/if}}">
+					<span class="icon1 {{if home_page}} active {{/if}} spanicon"></span>Home
+				</a>
+			</li>
+			
+			
+			<li><a href="${url}browse" data-rel="ajax" data-role="recommended" class="{{if recommended_page}} active {{/if}}"><span class="icon2 spanicon {{if recommended_page}} active {{/if}}"></span>Browse</a></li>
+
+			{{if loggedin}}
+			<li><a href="${url}sets" class="playlist_popup {{if sets_page}} active {{/if}}" data-rel="ajax"><span class="icon3 spanicon {{if sets_page}} active {{/if}}"></span>Playlists</a></li>
+
+			<li class="first-g">
+				<a href="${url}liked" data-role="liked" data-rel="ajax" class="first-b {{if liked_page}} active {{/if}}">
+					<span class="icon1 {{if liked_page}} active {{/if}} spanicon"></span> Favorites
+				</a>
+			</li>	
+
+			<li><a href="${url}upload" data-role="upload" class="{{if upload_page}} active {{/if}}"><span class="icon4 spanicon {{if upload_page}} active {{/if}}"></span>Upload</a></li>
+			{{/if}}
+		</ul>
+	</nav>
+	<div class="footer-menu">
+		<ul class="pull-left">
+			<!-- <li><a href="${url}about" data-role="about">About</a></li> -->
+			<li><a href="${url}content/faqs" data-role="content">FAQs</a></li>
+			<li class="border-r"><a href="${url}content/legal" data-role="content">Legal</a></li>
+		</ul>
+		<div class="copyright pull-left">
+			<p>&copy; 2016 imusify</p>	
+			</div>
+		</div>
+
+
+	</div>

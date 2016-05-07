@@ -1,0 +1,14 @@
+<div id="form-bg" class="addtoplaylist modal fade" id="playlist_popup_modal">
+					<div class="col-md-12 close-icon">
+						<a class="close_popup"><span></span></a>
+					</div>
+					<div class="col-md-12">
+						<h1>Add this songs to playlist</h1>
+						<p>Click on add button to add track into playlist</p>
+					</div>					
+					<div class="col-md-12">
+						{{each(i,v) data}}
+							<div>${v.name}<a href="Javascript:void(0)" class="add_to_pl" data-tid="" data-plid="${v.id}">Add</a></div>
+						{{/each}}						
+					</div>
+</div>

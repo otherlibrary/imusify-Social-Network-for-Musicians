@@ -1,0 +1,20 @@
+/************************
+ * Vertical Scrollbar
+ ************************/
+.mCustomScrollbar{ -ms-touch-action: none; touch-action: none; /* MSPointer events - direct all pointer events to js */ }
+.mCustomScrollbar.mCS_no_scrollbar{ -ms-touch-action: auto; touch-action: auto; }
+.mCustomScrollBox{/* contains plugin's markup */position: relative; overflow: hidden; height: 100%; max-width: 100%; outline: none; direction: ltr;}
+.mCSB_container{ /* contains the original content */overflow: hidden; width: auto; height: auto;}
+
+.mCSB_inside > .mCSB_container{ margin-right: 11px; }
+#slide-toggle-box .toggle-conts .mCSB_inside > .mCSB_container{ margin-right: 0px; }
+
+.mCSB_scrollTools{ /* contains scrollbar markup (draggable element, dragger rail, buttons etc.) */position: absolute; width: 4px; height: auto; left: auto; top: 0; right: 0; bottom: 0;}
+.mCSB_scrollTools .mCSB_draggerContainer{ /* contains the draggable element and dragger rail markup */position: absolute; top: 0; left: 0; bottom: 0; right: 0; height: auto;}
+.mCSB_scrollTools .mCSB_draggerRail{width: 2px; height: 100%; margin: 0 auto; -webkit-border-radius: 16px; -moz-border-radius: 16px; border-radius: 16px;}
+.mCSB_scrollTools .mCSB_dragger{ /* the draggable element */cursor: pointer; width: 100%; height: 30px; /* minimum dragger height */ z-index: 1;}
+.mCSB_scrollTools .mCSB_dragger .mCSB_dragger_bar{ /* the dragger element */position: relative; width: 4px; height: 100%; margin: 0 auto; /*-webkit-border-radius: 16px; -moz-border-radius: 16px; border-radius: 16px;*/ text-align: center;}
+
+.mCSB_scrollTools .mCSB_draggerRail{background-color: #222227; background-color: rgba(34,34,34,1); filter: "alpha(opacity=40)"; -ms-filter: "alpha(opacity=40)";}
+.mCSB_scrollTools .mCSB_dragger .mCSB_dragger_bar{background-color: #393939; background-color: rgba(57,57,57,1); filter: "alpha(opacity=75)"; -ms-filter: "alpha(opacity=75)";}
+

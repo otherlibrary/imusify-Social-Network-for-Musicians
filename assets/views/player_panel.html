@@ -1,0 +1,77 @@
+<!--andy Player Panel-->
+<form id="fileupload" method="post" enctype="multipart/form-data" style="visibility:hidden;">
+	<ul id="upload-files-list" style="display:none;"></ul>
+	<!-- Redirect browsers with JavaScript disabled to the origin page -->
+	<!-- <noscript>&lt;input type="hidden" name="redirect" value="https://blueimp.github.io/jQuery-File-Upload/"&gt;</noscript> -->
+	<!-- The fileupload-buttonbar contains buttons to add/delete files and start/cancel the upload -->
+	<div class="row fileupload-buttonbar">
+		<div class="col-xs-12">
+			<!-- The fileinput-button span is used to style the file input field as button -->
+			<span class="btn btn-success fileinput-button">
+				<i class="glyphicon glyphicon-plus"></i>
+				<span>Add files...</span>
+				<input type="file" name="files[]" multiple="" accept="audio/*" id="footer_upload_btn">
+			</span>
+			<span class="btn btn-default fileinput-button " data-dismiss="modal">										
+				<span>Close</span>									
+			</span>
+			<span class="uploader-footer-text">Having problems? Try the <a class="basic-link-start">basic uploader</a>.
+				<!-- The global file processing state -->
+				<span class="fileupload-process"></span>
+			</span></div>
+			<!-- The global progress state -->								
+		</div>
+		<!-- The table listing the files available for upload/download -->						
+	</form>
+
+	<footer id="trans-bg">
+		<div class="footer_player player-bg sc-player">
+			<div class="transparent_img_player overflowhidden" style=""></div>
+			<div class="photo-box sc-info">
+				<figure><img src="${img}user-profile-img.jpg" class="sc-avtar" alt=""></figure>
+				<article>
+					<h2></h2>
+					<span></span>
+				</article>
+			</div>
+			<div class="player-box">
+				<div class="player-btns sc-controls">
+					<a href="javascript:void(0);" class="prev sc-prev prevtrack"></a>
+					<a href="javascript:void(0);" class="play sc-play"></a>
+					<a href="javascript:void(0);" class="pause sc-pause hidden"></a>
+					<a href="javascript:void(0);" class="next sc-next nexttrack"></a>
+				</div>
+				<div class="wave-img wave-box sc-time-indicators footer_sc_position">
+					<span class="sc-position">-:--</span>
+					<figure class="sc-waveform-container"></figure>
+					<span class="sc-duration">-:--</span>
+					<div class="player-setting">
+						<a href="javascript:void(0);" class="shuffle-icon"></a>
+						<a href="javascript:void(0);" class="repeat-icon"></a>
+					</div>					
+				</div>
+			</div>
+			
+			<div class="slider-bar" id="volume">
+				<img src="${img}volume.png" class="fl" />
+				<input id="volume_slider" class="displaynone" readonly="" type="text">
+			</div>	
+
+			<div class="file-lists">
+				<div class="list-box">
+					<a class="list-icon icons margin-l"></a>
+					<div id="slide-toggle-box"class="popupmenu_custom">
+						<article><h2><span>SONG</span> ARTIST</h2></article>
+						<div class="toggle-conts mCustomScrollbar _mCS_2 mCS_no_scrollbar">
+							<div class="sc-queuelist"></div>
+						</div>
+					</div>
+				</div>
+				<a href="#" class="plus-icon icons" id="footer_plus_icon"></a>
+			</div>
+
+		</div>
+		<div class="scroll-to-top">
+			<i class="fa fa-arrow-up"></i>
+		</div>
+	</footer>

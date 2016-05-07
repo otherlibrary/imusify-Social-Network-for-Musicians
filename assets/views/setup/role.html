@@ -1,0 +1,43 @@
+<div id="form-bg" class="setup modal fade">
+	<div class="col-md-12 close-icon">
+		<a class="close_popup close"><span></span></a>
+	</div>
+
+
+	<div class="col-md-12">
+		<h1>What do you do?</h1>
+		<!-- <p>Most people here create or curate stuff they want to share with the world. We like to help with that. Tell us what you're about so we can promote the stuff you're into. Choose up to four.</p> -->
+	</div>
+
+	<div class="col-md-12">
+		<div class="form-box clearfix">
+			<form  method="post" class="form-field" id="setup_form" data-role="submitenter">
+				<fieldset>
+					{{each(i,v)  roles}}
+					<div class="col-md-4">
+						<div class="checkbox checkbox-pink  checkbox-inline">		
+							<input type="checkbox" class="text-input validate[maxCheckbox[10]] rolecheckbox" id="user_roles${v.id}" name="user_roles[]" value="${v.id}"  {{if v.selected}} checked {{/if}} {{if v.default}} disabled {{/if}}>											
+							<label>${v.role}</label>												  
+						</div>						
+					</div>
+					{{/each}}
+					<div class="col-md-12 paddingtop20">
+						<div class="checkbox checkbox-pink  checkbox-inline">	
+							<input type="checkbox" class="text-input" id="none_above" name="none_above" value="none">												
+							<label>
+								 None of the above, I just love music
+							</label>												  
+						</div>						
+					</div>
+
+				</fieldset>								
+				<fieldset>
+					<div class="col-md-12">
+						<a href="javascript:void(0)" id="submitroles" class="creat-btn pull-right progress-button"  data-loading="Working.." data-finished="Finished!" data-type="background-horizontal">Save</a>										
+					</div>
+				</fieldset>
+			</form>
+		</div>
+	</div>
+
+</div>

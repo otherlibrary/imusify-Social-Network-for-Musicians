@@ -1,0 +1,52 @@
+<div class="row">
+	<div class="col-md-8 col-sm-12 licences" id="buynow_main_cont">
+		<h4 class="col-xs-12" id="head_title">${head_title}</h4>
+		<form id="buynow_form" method="post" name="">
+			<input type="hidden" id="albumid" value="" name="albumid">
+			<input type="hidden" id="orderid" value="${orderid}" name="orderid">
+			<div id="list_cont">
+				{{tmpl "#licenceType"}}				
+			</div>
+			<div class="clearfix"></div>
+
+			{{if album_fully_buyable}}
+			{{else}}
+			<div class="col-md-12 col-sm-12 space15 ">
+				<div class="buy_btns">
+					<button type="button" class="creat-btn" id="prev_btn">Previous</button>		
+					<button type="button" class="creat-btn" id="next_btn">Next</button>
+				</div>
+			</div>
+			{{/if}}
+		</form>
+	</div>
+
+	<div class="col-md-4 col-sm-12 cart active ${cart_display_class} displaynone" id="cart_cont">
+		<h4 class="col-xs-12">CHOOSE YOUR LICENCE TYPE</h4>
+		<div class="col-xs-12 inner">
+			<div class="yourcart">
+				<ul class="innerlist col-xs-12">
+					<li><p><span>Item Name</span>${track_title}</p></li>
+					<li><p><span>Item Type</span>MP3 - ${track_kbps}kbps</p></li>
+				</ul>
+				<div class="choose col-xs-12">
+					<small>Licence</small>
+					<ul class="col-xs-12" id="licence_cart_cont">
+					</ul>
+				</div>
+				<div class="total col-xs-12">
+					<ul class="col-xs-12">
+						<li><p>Total 
+							<span>
+								<span class="pull-left">$</span><span id="cart_total">0</span>
+							</span>
+						</p></li>
+					</ul>
+					<div class="col-xs-12 text-center">
+						<button class="buynow buy_btn_js" id="${but_btn_id}" >Buy now</button>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>

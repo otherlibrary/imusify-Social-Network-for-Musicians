@@ -1,0 +1,73 @@
+<section id="top-header">
+	<div class="top-header-part ">
+		<div class="row">
+			<div class="col-md-12 top-heading">
+				<div class="col-md-7 col-sm-12">
+					<ul class="heading">
+						<li><a href="${url}" data-role="home">Headlines</a></li>
+						<li class="borderR"></li>
+						<li><a href="${url}following" class="active" data-role="following">Following</a></li>
+						<li class="borderR"></li>
+						<li><a href="${url}about" data-role="about">About</a></li>
+					</ul>
+				</div>
+				<div class="col-md-5 col-sm-12 search-box">
+					<form method="post">
+						<span class="search-icon search-c search_input_head"></span>
+					</form>
+				</div>
+			</div>
+		</div>
+	</div>
+</section>
+
+<div id="margin-right320">
+	<section id="following-contents" class="marginT50">
+		<div class="col-md-12">
+			<div class="col-md-8 col-sm-12 search-box">
+				<form method="post" action="${url}api/feed_save">
+					<!-- <input type="text" class="form-control gray-color linkPreview" placeholder="Whats crackin?" id="feed_post"> -->
+					<div class="linkPreview" id="feed_post"></div> 
+					<div class="other-box">
+						<a href="Javascript:void(0)" id="following_image_upload" class="attach-icon">ADD FILES</a>
+						<!-- <a href="" class="pull-right">PUBLISH</a> -->
+						<input type="file" name="fileupload_feed" id="fileupload_feed" class="displaynone" accept="image/*">
+					</div>
+				</form>
+				
+			</div>							
+		</div>
+		<div class="col-md-12" id="users_feed">
+			{{if feeds.fail }}
+			<div class="no_rec_found">There are no feeds to display.</div>
+			{{else}}	
+				{{each(i,v)  feeds}}
+					{{tmpl(v) "#following_tab_render"}}	
+				{{/each}}
+			
+			{{/if}}
+		</div>
+	</section>
+	<aside id="following-aside">
+		<div class="slide-btn"></div>
+		<div id="conts-box" class="mCustomScrollbar">
+			<div class="people-follow">
+				<h5>PEOPLE TO FOLLOW <!-- <a href="Javascript:void(0)">SEE MORE</a> --></h5>
+				<div id="following_cont">
+					{{each(i,v)  follow}}
+					{{tmpl(v) "#follow-member"}}
+					{{/each}}
+				</div>
+			</div>
+			<div class="articles">
+				<h5>ARTICLES YOU MIGHT BE INTERESTED IN</h5>
+				{{each(i,v)  articles}}
+				{{tmpl(v) "#article"}}
+				{{/each}}
+			</div>
+		</div>
+	</aside>
+</div>
+{{if loadmore}}												
+	{{tmpl "#loadMore"}}
+{{/if}}

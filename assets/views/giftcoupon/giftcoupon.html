@@ -1,0 +1,36 @@
+<div id="form-bg" class="giftcoupon modal fade">
+	<div class="col-md-12 close-icon">
+		<a class="close_popup close"><span></span></a>
+	</div>
+	<div class="col-md-12">
+		<h1>Apply gift coupon - ${title}</h1>
+		<p>  <a href="${url}sign_up" class="popup" data-t="sign_up">joining</a> is easy.</p>
+	</div>
+	<div class="col-md-1"></div>
+	<div class="col-md-10">
+		<div class="clearfix">			
+			<section id="pricing" class="pricing">
+				<div class="container_1">
+					<div class="form-box form-box2 clearfix">
+					<form method="post" action="${url}api/apply_coupon_api" class="form-field" id="giftcoupon_form" data-role="submitenter">
+
+					<fieldset>           
+						<div class="col-md-12 form-group">    
+							<label for="uname" class="flabel" id="flabel">Gift code</label>      
+							<input type="type" name="code" class="form-control validate[required] text-input" id="uname">          
+						</div>          
+					</fieldset>
+
+					<fieldset>          
+						<div class="col-md-12">           
+							<a href="javascript:void(0)" id="submitcouponform" class="creat-btn pull-left progress-button progress-button" data-loading="Working.." data-finished="Finished!" data-type="background-horizontal">Apply</a>
+						</div>         
+					</fieldset>		
+
+					</form>
+					</div>								
+				</div>
+			</section>
+		</div>
+	</div>
+</div>

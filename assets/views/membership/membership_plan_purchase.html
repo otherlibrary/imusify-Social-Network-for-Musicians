@@ -1,0 +1,30 @@
+<div id="form-bg" class="membership_plan_purchase modal" >
+	<!-- <div class="col-md-12 close-icon">
+		<a class="close_popup close"><span></span></a>
+	</div>
+	 -->
+	<div class="col-md-12">
+		<h1>${plan_details.name} plan - Membership Purchase </h1>						
+	</div>
+	<div class="col-md-12">
+		<div class="form-box clearfix">
+			<!-- <span class="mail-icon"></span> -->
+                        {{if failed}} 
+                           <div class="error">Payment was not successful. Please try again</div>
+                        {{/if}}
+			<form id="checkout" method="post" action="${payment_url}">
+				<div id="payment-form"></div>
+				<input type="submit" value="Pay € ${plan_details.amount}" class="btn btn-info">
+			</form>
+			<script src="https://js.braintreegateway.com/v2/braintree.js"></script>
+			<script>
+				braintree.setup("${client_token}", "dropin", {
+					container: "payment-form"
+				});
+                                
+                                
+                                
+			</script>
+		</div>
+	</div>
+</div>

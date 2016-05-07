@@ -1,0 +1,77 @@
+<div id="form-bg" class="sign_up_mail modal fade">
+	<div class="col-md-12 close-icon">
+		<a class="close_popup close"><span></span></a>
+	</div>
+	<div class="col-md-12">
+		<h1>Join with your email address</h1>						
+	</div>
+	<div class="col-md-12">
+		<div class="form-box clearfix">
+			<span class="mail-icon"></span>
+			<form  method="post" class="form-field" id="signup_form" data-role="submitenter">
+				<fieldset>
+					<div class="col-md-6 form-group">
+						<label for="fname">First Name</label>
+						<input type="type" class="form-control validate[required,maxSize[50]] text-input" id="fname" name="fname" data-prompt-position="topLeft">
+					</div>
+					<div class="col-md-6 form-group">
+						<label for="fname">Last Name</label>
+						<input type="type" class="form-control validate[required,maxSize[50]] text-input" id="lname" name="lname" data-prompt-position="topLeft">
+					</div>
+				</fieldset>
+				<fieldset>
+					<div class="col-md-6 form-group">
+						<label for="uname">Username</label>
+						<input type="type" class="form-control validate[required,custom[onlyLetterNumber],ajax[ajaxusercheck]] text-input" id="uname" name="uname" data-prompt-position="topLeft">
+					</div>
+					<div class="col-md-6 form-group">
+						<label for="passwprd">Password</label>
+						<input type="password" class="form-control validate[required,maxSize[30]] text-input" id="passwprd" name="password" data-prompt-position="topLeft">
+					</div>
+				</fieldset>
+				<fieldset>
+					<div class="col-md-6 form-group">
+						<label for="email">Email</label>
+						<input type="email" class="form-control validate[required,custom[email],ajax[ajaxusercheck]] text-input" id="email" name="email" data-prompt-position="topLeft">
+					</div>
+					<div class="col-md-6 form-group">
+						<label>Select Gender</label>
+						<select class="form-control" name="gender">
+							<option value="m">Male</option>
+							<option value="f">Female</option>
+							<option value="u">Unspecified</option> 						
+						</select>
+					</div>
+				</fieldset>
+
+				<fieldset>
+					<div class="col-md-6 form-group">
+						<label for="passwprd">Date of Birth</label>
+						<input type="type" class="form-control width84 blackc validate[required,custom[integer],max[12]]" id="dob_mm" placeholder="MM" name="mm"   maxlength="2">
+						<input type="type" class="form-control width84 blackc validate[required,custom[integer],max[31]]"  id="dob_dd" placeholder="DD" name="dd" maxlength="2" data-prompt-position="bottomLeft">
+						<input type="type" class="form-control width84 blackc validate[required],custom[integer],max[2014]"  id="dob_yy" placeholder="YYYY" name="yy" maxlength="4">
+					</div>
+
+					<div class="col-md-6 form-group">
+						<label for="uname">Invitation Code</label>
+						<input type="type" class="form-control validate[required] text-input" id="invitecode" name="invitecode" data-prompt-position="topLeft">
+					</div>
+				</fieldset>
+				<fieldset class="check-box">
+					<div class="col-mad-12 borTop checkbox checkbox-pink checkbox-inline">
+						<input type="checkbox" class="validate[required] checkbox" id="agree" name="agree" data-prompt-position="topLeft" data-errormessage="This field is Required">
+						<label>I acknowledge that I have read and accept the 
+							<a href="${url}content/use-agreement" target="_blank">Terms of Use Agreement</a> and consent to the 
+							<a href="${url}content/privacy" target="_blank">Privacy Policy</a> and <a href="${url}content/video-privacy" target="_blank">Video Privacy Policy</a>.</label>
+						</div>
+					</fieldset>
+					<fieldset>
+						<div class="col-md-12">
+							<p>Already have a Imusify account? <a href="${url}sign_in" data-t="sign_in" id="sign_in" class="popup">Sign in</a></p>
+							<a href="javascript:void(0)" id="submitsignup" class="creat-btn pull-right progress-button"  data-loading="Working.." data-finished="Finished!" data-type="background-horizontal">Create Account</a>										
+						</div>
+					</fieldset>
+				</form>
+			</div>
+		</div>
+	</div>

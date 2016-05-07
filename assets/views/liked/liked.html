@@ -1,0 +1,25 @@
+<section id="all-items-menus">
+	<div id="all-categs">
+		<ul>
+			<li><a href="" class="active">Liked Music</a></li>
+		</ul>
+	</div>
+</section>
+<section id="items-box">
+	<div class="row">
+		<div class="col-md-12 album-cont"></div>
+	</div>
+	<!-- user liked songs -->
+	<div id="my_songs" class="upload_item_box album-box my_liked_songs">
+		<h3>Songs</h3>
+		<div id="my_songs_row">
+			{{each(i,v) my_liked_musics}}		
+				{{tmpl(v) "#songsRow"}}		
+			{{/each}}									
+		</div>			
+	</div>
+	{{if loadmore}}												
+		{{tmpl "#loadMore"}}
+	{{/if}}	
+	<!-- user liked songs ends-->
+</section>

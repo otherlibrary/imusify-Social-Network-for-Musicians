@@ -1,0 +1,35 @@
+<section id="top-header">
+	<div class="top-header-part ">
+		<div class="row">
+			<div class="col-md-12 top-heading">
+				<div class="col-md-7 col-sm-12">
+					<ul class="heading">
+						<li><a href="#" class="active">Notifications</a></li>
+						
+					</ul>
+				</div>
+				<div class="col-md-5 col-sm-12 search-box">
+					<form method="post">
+						<span class="search-icon search-c search_input_head"></span>
+					</form>
+				</div>
+			</div>
+		</div>
+		
+	</div>
+</section>
+
+<section id="all-details" class="tabs-contents">
+	<div class="row">
+		<div class="col-md-12 col-sm-12 col-xs-12 width100 marging-b35">
+			<div class="tab-content" id="tab_e_content">
+				<div class="tab-pane fade in active ${class_nm}" id="explore_songs">	
+					
+					{{each(i,v)  data_array}}
+					{{tmpl(v) "#notificationAllRow"}}
+					{{/each}}
+				</div>
+			</div>
+		</div>
+	</div>
+</section>

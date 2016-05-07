@@ -1,0 +1,108 @@
+<div id="form-bg" class="edit_profile modal fade">
+	<div class="col-md-12 close-icon">
+		<a class="close_popup close"><span></span></a>
+	</div>
+	<div class="col-md-12">
+		<h1>Edit your profile</h1>
+	</div>
+	<div class="col-md-12">
+		<div class="form-box clearfix">
+			
+			<form  method="post" class="form-field album-form" id="edit_profile_form" data-role="submit">
+				<div class="profile-pic edit_user_prof_pic">	
+					<fieldset>
+						<span class="profile-icon">
+							<img src="${profile_image}" id="user_prof_img">
+							<a href="javascript:void(0)" class="pink-btn image_upd" id="user_prof_link" data-uid="${userId}">Upload Images</a>
+							<input id="user_prof_file" class="track_image_upd displaynone validate[required]" name="image" style="display:none;" type="file">
+							<div id="edit_profile_img_modal" style="height:500px;width:500px" class="displaynone"></div>				
+						</span> 
+					</fieldset>
+				</div>
+								<!-- <fieldset>
+								<span class="profile-icon">
+									<img src="${profile_image}" id="user_prof_img" />
+									<a href="Javascript:void(0)" class="pink-btn image_upd" id="user_prof_link">Upload Images</a>
+									<input type="file" id="user_prof_file" class="track_image_upd displaynone validate[required]" name="image" style="display:none;" />				
+								</span> 
+							</fieldset> -->
+							
+							<div class="profile-details">	
+
+								<fieldset>
+									<div class="col-md-6 form-group">
+										<label for="uname">Firstname</label>
+										<input type="type" class="form-control validate[required] text-input " name="fname" id="fname" value="${firstname}">
+									</div>									
+									<div class="col-md-6 form-group">
+										<label for="uname">Lastname</label>
+										<input type="type" class="form-control validate[required] text-input " name="lname" id="lname" value="${lastname}">
+									</div>
+								</fieldset>
+								<fieldset>
+									<div class="col-md-6 form-group">
+										<label for="uname">Website Link</label>
+										<input type="type" class="form-control text-input " name="website" id="website" value="${weburl}">
+									</div>
+									
+									<div class="col-md-6 form-group">
+										<label>Select Country</label>
+										<select class="form-control validate[required] " name="country" id="country" >
+											<option>Please select country</option>
+											{{each(i,v)  countries}}                                                                                            
+											    <option value="${v.location_id}">${v.name}</option>                                                                                            
+											{{/each}}
+                                                                                            {{if active_country}}
+                                                                                            <option selected value="${active_country}">${country_name}</option>
+                                                                                            {{/if}}
+										</select>
+									</div>
+								</fieldset>
+								
+								<fieldset>
+									<div class="col-md-6 form-group">
+										<label>Select State</label>
+										<select class="form-control" name="state" id="state" >
+											<option>Please select state</option>
+                                                                                        {{if active_state}}
+                                                                                        <option selected value="${active_state}">${state_name}</option>
+                                                                                        {{/if}}
+										</select>
+									</div>										
+									<div class="col-md-6 form-group">
+										<label>Select City</label>
+										<select class="form-control" name="city" id="city" >
+											<option>Please select city</option>  
+                                                                                        {{if active_city}}
+                                                                                        <option selected value="${active_city}">${city_name}</option>
+                                                                                        {{/if}}
+										</select>
+									</div>										
+								</fieldset>
+								
+								<fieldset>										
+									<div class="col-md-6 form-group">
+										<label>Description</label>
+										<textarea id="description" name="description" class="form-control user_profile_ta">${description}</textarea>
+									</div>																			
+								</fieldset>
+								
+								<fieldset>
+									<div class="col-md-12 form-group">
+										<label for="passwprd">Date of Birth</label>
+										<input type="type" class="form-control width85 blackc validate[required,custom[integer]]" id="dob_mm" placeholder="MM" name="mm" data-errormessage="*Required" value="${dob_m}">
+										<input type="type" class="form-control width85 blackc validate[required,custom[integer]]" id="dob_dd" placeholder="DD" name="dd" data-errormessage="*Required" value="${dob_d}">
+										<input type="type" class="form-control width85 blackc validate[required,custom[integer]]" id="dob_yy" placeholder="YYYY" name="yy" data-errormessage="*Required" value="${dob_y}">
+									</div>
+								</fieldset>
+								
+								<fieldset>
+									<div class="col-md-12">
+										<a href="javascript:void(0)" id="edit_btn_editprofile" class="creat-btn pull-right progress-button"  data-loading="Working.." data-finished="Finished!" data-type="background-horizontal">Save Settings</a>										
+									</div>
+								</fieldset>
+							</div>
+						</form>
+					</div>
+				</div>
+			</div>

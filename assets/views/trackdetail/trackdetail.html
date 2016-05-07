@@ -1,0 +1,139 @@
+<div id="main-box">
+	<section id="player-box">
+		<figure class="cover-photo">
+			<img src="${cover_image}" alt="" class="img-responsive img_load" id="track_cover_img"></figure>
+			<!-- sc-player big_player -->
+			<div class="left-part">
+				<div class="song-name">
+
+					<a href="javascript:void(0)" class="play-icon tr_item" data-permalink="${current_url}" data-track="${current_url}" data-href="${current_url}"></a>
+
+					<!-- <div class="sc-controls tr_item">
+						<a href="${current_url}" class="play-icon sc-play" data-permalink="${current_url}" data-track="${current_url}"></a>
+						<a href="#pause" class="sc-pause displaynone">Pause</a>
+					</div>
+
+					<div class="sc-trackslist displaynone">									
+					<ol class="sc-trackslist">
+						<li class="active">
+							<a href="${current_url}" class="play-icon sc-play" data-permalink="${current_url}" data-track="${current_url}"></a>
+						</li>
+					</ol>
+																	
+				</div> -->
+
+				<p>${track_title}
+					<span class="like-icon">
+						<a href="Javascript:void(0)" class="${like_class}" data-tid="${trackId}"></a>
+					</span>
+				</p>
+			</div>
+			<div class="sharing">
+				<a href="#" class="play-icon">${track_plays}</a>
+				<a href="#" class="like-no like_track_counter">${track_likes}</a>
+				<a href="#" class="comment-icon">${track_comments}</a>
+				<a href="#" class="share-icon">${track_shares}</a>
+				{{if my_profile}}									
+				<a href="Javascript:void(0)" id="edit_trackcover_img"  class="edit-icon edit_cover_img" data-tid="${trackId}">Change cover</a>									
+				<div id="edit_trackcover_img_modal" style="height:400px;width:960px" class="displaynone"></div>	
+				{{/if}}
+			</div>
+		</div>
+		<div class="right-part">
+			<figure class="profile-img"><a href="${url}${profilelink}" data-role="profile" data-rel="ajax" role="tab" data-toggle="tab">
+				<img src="${artist_profile_pic}" alt="${artist_firstname} ${artist_lastname}" class="img-responsive img_load"></a></figure>
+				<div class="profile-details">
+					<h2><a href="${url}${profilelink}" data-role="profile" data-rel="ajax" role="tab" data-toggle="tab">${artist_firstname} ${artist_lastname}</a> <span>${artist_city} ${artist_country}</span></h2>
+					<ul>
+						<li><a href=""><span>${no_of_followers}</span> FOLLOWERS</a></li>
+						<li><a href=""><span>${no_of_songs}</span> SONGS</a></li>
+						<li><a href=""><span>${no_of_albums}</span> ALBUMS</a></li>
+					</ul>
+
+					<!--<a href="" class="follow-btn">Follow</a>-->
+
+					{{if other_profile}}											
+					{{if follow}}											
+						{{tmpl "#followRow"}}
+					{{/if}}
+
+					{{if following}}										
+						{{tmpl "#folowingRow"}}								
+					{{/if}}
+
+					{{/if}}
+
+				</div>
+			</div>
+
+			<div class="wave-box">
+				<div class="wave sc-time-span">
+					<div class="sc-time-indicators">
+						<span class="sc-position" data-track="${current_url}">0:00</span>				
+					</div>		
+					<div class="waveform_img_div sc-waveform-container" data-waveurl="${url}waveform/${profilelink}/${tracklink}.json" id="" data-track="${current_url}" data-height="50" data-width="1000">							
+						<!--<a href=""> <img src="${waveimg}" alt="" class="img-responsive"></a> -->
+					</div>
+					<div class="sc-buffer"></div>
+					<div class="sc-played"></div>
+					<span>${track_timelength}</span>						
+				</div>				
+			</div>
+			<div style="clear: both;"></div>
+			<div class="track_list_item" data-url="${current_url}"></div>
+			<div class="comments-holder" data-url="${current_url}">
+				<div class="the-bg"></div>
+				<div class="cursour_wave"></div>
+				{{tmpl "#newComment"}}
+			</div>
+		</section>
+
+
+
+		<section id="all-details">
+			<div class="row">
+			<input type="hidden" id="trackid" value="${trackId}">
+				<div class="col-md-12 col-sm-12 col-xs-12 width100 marging-b35">
+					<!-- FOR TABS MENUS -->
+					<ul class="nav nav-tabs user-tabs ul_li_active" role="tablist" id="track_detail_tabs">
+						
+						<li class="{{if biography_active_class}} active {{/if}}"><a href="${current_url}" data-rel="ajax" data-role="trackdetail-biography" role="tab" data-toggle="tab">Biography</a></li>
+						
+						<li class="{{if comment_active_class}} active {{/if}}"><a href="${current_url}/comment" data-rel="ajax" data-role="trackdetail-comments" role="tab" data-toggle="tab">Comment&nbsp;&nbsp;&nbsp;<span>(${track_total_comments})</span></a></li>
+						
+						<li class="{{if like_active_class}} active {{/if}}"><a href="${current_url}/likes" data-rel="ajax" data-role="trackdetail-likes" role="tab" data-toggle="tab">Like&nbsp;&nbsp;&nbsp;(<span class="like_track_counter">${track_total_likes}</span>)</a></li>
+
+
+						{{if buynow_btn_enabled}}
+
+						<li class="{{if buy_now_active_class}} active {{/if}}"><a href="${current_url}/buy" id="buy_track_btn_li" data-rel="ajax" data-role="trackdetail-buy" role="tab" data-toggle="tab">Buy&nbsp;&nbsp;&nbsp;</a></li>
+
+						{{/if}}
+
+					</ul>
+					<div class="tab-content" id="tab_td_content">
+						<!-- Tab1 -->
+						<div class="tab-pane fade in active ${class_nm}" id="${tabid}">	
+						<div class="hide">
+							
+						</div>
+							{{tmpl "#tabRender"}}
+						</div>								  	
+					</div>
+				</div>
+				
+			</div>
+		</section>
+	</div>
+	<aside id="songs-lists-box" class="open-slide">
+		<div class="slide-btn active"></div>
+		<div class="similar-songs">
+			<h2>Similar Songs</h2>
+			<div class="songs-list mCustomScrollbar">
+				{{each(i,v)  similarmusic}}
+				{{tmpl(v) "#similarRow"}}
+				{{/each}}
+			</div>
+		</div>
+	</aside>
+

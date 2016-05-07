@@ -1,0 +1,93 @@
+<div class="playlist-main">
+	<div class="your-playlist-content playlist_page" data-id="${current}">
+		<div class="your-playlist-content-box ">
+			<section id="your-playlist">
+
+				<div id="slider-box2">
+					<div class="playlist_bg"></div>
+					<h2 class="playlist_heading">Your Playlists 
+						<a href="" class="create_playlist operation"><span id="playlist_text">Add New Playlist</span><i class="operation_icon"></i></a></h2>
+						<div class="new_playlist">
+							<div class="dg-wrapper">
+								<div class="songs">
+									<div id="croppic"></div>
+									<div class="play-icon"></div>
+								</div>
+
+							</div>
+
+							<div class="info">
+								<input type="text" name="playlist_nm" id="playlist_nm" placeholder="Name your playlist"/>
+								<input type="hidden" name="playlist_id" id="playlist_id" />
+								<input type="button" id="create_btn" value="Create" style="width:50px !important">
+							</div>
+						</div>
+						<div class="all_playlist">	
+							<div id="slider-container" class="slider-container ">
+
+								<div class="dg-wrapper">
+									{{each(i,v)  playlist}}
+									{{tmpl(v) "#playlist_list"}}
+									{{/each}}	
+								</div>
+
+								<nav>	
+									<span class="dg-prev">&lt;</span>
+									<span class="dg-next">&gt;</span>
+								</nav>
+							</div>
+							<div class="info">
+								<h3><div class="items-box">
+									<div class="lists-box popular-box">
+										<h4>Popular</h4>
+										<article class="popular-list mCustomScrollbar">
+											<ul>
+												{{each(i,v)  playlist}}
+												<li><a href="${v.pl_perlink}" data-role="playlist-detail">${v.name}</a></li>
+												{{/each}}	
+
+											</ul>
+										</article>
+									</div>
+									<div class="lists-box alpha-box">
+										<h4>Alphabetical</h4>
+										<article class="popular-list mCustomScrollbar">
+											{{each(i,v)  alphabetical}}
+											<div class="alpha-list">
+												<p>${i}</p>
+												<ul>
+													{{each(k,j)  v}}
+													<li><a href="${j.pl_perlink}" data-role="playlist-detail">${j.name}</a></li>
+													{{/each}}
+												</ul>
+											</div>
+											{{/each}}
+										</article>
+									</div>
+								</div>
+							</h3>
+
+							<div id="playlist_detail">
+								{{tmpl "#playlistDetail"}}
+							</div>
+
+						</div>
+					</div>
+				</div>
+			</section>
+			<section id="playlist-song">
+				<div class="browse-songs" id="playlist_songs">
+					{{tmpl "#playlistsongsHeader"}}
+					<div id="pl_loading" class="displaynone wh100">
+						<p><img src="${pl_loading_img}" /></p>
+					</div>	
+					<div class="playlist_tracks">
+						{{each(i,v)  songs}}
+							{{tmpl(v) "#songsData"}}
+						{{/each}}
+					</div>
+				</div>
+			</section>
+		</div>
+	</div>
+

@@ -1,0 +1,17 @@
+<section id="all-items-menus">
+	<div id="all-categs">
+		<ul class="ul_li_active_a" id="account_ul_li">
+			<li>
+				<a href="${url}account" data-role="account_change_password" class="{{if change_password }} active {{/if}}">Change Password</a>
+			</li>
+			<li>
+				<a href="${url}account/stripe/connect" data-role="stripe_connect" class="{{if stripe_connect}} active {{/if}}">Stripe Connect</a>
+			</li>
+		</ul>
+	</div>
+</section>
+<section id="" class="margintop30">
+	<div class="row" id="account_content">
+		{{tmpl "#templaterow"}}
+	</div>
+</section>

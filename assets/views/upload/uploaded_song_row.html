@@ -1,0 +1,51 @@
+<div class="${row_id}_${editid} col-xs-12 song-info">
+	<div class="song-play">
+		<figure>
+			<img src="${track_image}" alt="">
+		</figure>
+		<a href="Javascript:void(0)" class="play-btn tr_item" data-href="${track_link}" data-url="${track_link}" data-track="${track_link}"></a>
+	</div>
+	<div class="song-details">
+		<div class="col-xs-12 title">
+			<p>SONG INFO <span>Added on ${release_dd}/${release_mm}/${release_yy}</span></p>
+			<ul class="pull-right">
+				<li>
+					<a class="edit-icon" data-id="${editid}" data-type="${edittype}" href="${url}upload/track/edit/${editid}" id="trackedit"  data-t="trackedit" >EDIT</a>
+				</li>
+				<li>
+					<a class="delete" data-id="${editid}" data-type="${edittype}" data-deltype="au" data-r="${editid}" data-delid="${editid}" data-userid="${userId}">REMOVE</a>
+				</li>
+			</ul>
+		</div>
+		<div class="col-xs-12 arctic">
+			<ul class="heading">
+				<li class="col1"><p class="color">${genre}</p></li>
+				<li class="col2"><span class="time"></span></li>
+				<li class="col3"><p>PLAYS</p></li>
+				<li class="col3"><p>LIKES</p></li>
+				<li class="col3"><p>COMMENTS</p></li>
+				<li class="col3"><p>SHARES</p></li>
+			</ul>
+			<ul class="information">
+				<li class="col1"><p>${main_title}</p></li>
+				<li class="col2"><p>${timelength}</p></li>
+				<li class="col3">
+					<p class="play_counter_disp_js" data-track="${track_link}">${plays}</p>
+				</li>
+				<li class="col3"><p>${likes}</p></li>
+				<li class="col3"><p>${comments}</p></li>
+				<li class="col3"><p>${shares}</p></li>
+			</ul>
+		</div>
+		{{if tags}}
+		<div class="col-xs-12 tags">
+			<p>TAGS</p>
+			<ul>
+				{{each(i,v) tags}}		
+				<li>#${v}</li>
+				{{/each}}
+			</ul>
+		</div>
+		{{/if}}
+	</div>
+</div>
