@@ -142,6 +142,15 @@
 	</aside>
 
 <script type="text/javascript">
+$(document).ready(function(){   
+    console.log('trackdetail ',$player);    
+    if (typeof $player !== 'undefined') {
+        if ($('.sc-player').hasClass("playing")) $("#waveform_sample").hide();         
+    }   
+});
+  
+
+    
 //draw waveform json    
 /*
 $(document).ready(function(){   
