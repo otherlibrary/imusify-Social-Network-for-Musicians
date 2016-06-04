@@ -1077,7 +1077,9 @@ Class commonfn extends CI_Model
 
 
 
-			$row1["stream_url"] = base_url()."stream/".$row["id"];
+			//$row1["stream_url"] = base_url()."stream/".$row["id"];
+                        //andy
+                        $row1["stream_url"] = base_url()."stream/".$row["id"].'.mp3';
 			$row1["playback_count"] = $row["plays"];
 					//$row1["download_count"] = $row["description"];
 			$row1["favoritings_count"] = $row["likes"];

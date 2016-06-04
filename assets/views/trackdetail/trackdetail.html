@@ -1,14 +1,14 @@
 <div id="main-box">
-	<section id="player-box">
+    <section id="player-box" style="z-index: 100 !important;">
 		<figure class="cover-photo">
 			<img src="${cover_image}" alt="" class="img-responsive img_load" id="track_cover_img"></figure>
 			<!-- sc-player big_player -->
 			<div class="left-part">
 				<div class="song-name">
 
-					<a href="javascript:void(0)" class="play-icon tr_item" data-permalink="${current_url}" data-track="${current_url}" data-href="${current_url}"></a>
+					<a href="javascript:void(0)" id="play_track_detail" class="play-icon tr_item" data-permalink="${current_url}" data-track="${current_url}" data-href="${current_url}"></a>
 
-					<!-- <div class="sc-controls tr_item">
+<!--					 <div class="sc-controls tr_item">
 						<a href="${current_url}" class="play-icon sc-play" data-permalink="${current_url}" data-track="${current_url}"></a>
 						<a href="#pause" class="sc-pause displaynone">Pause</a>
 					</div>
@@ -66,17 +66,21 @@
 				</div>
 			</div>
 
-			<div class="wave-box">
-				<div class="wave sc-time-span">
-					<div class="sc-time-indicators">
+                        <div class="wave-box" style="width: 95% !important;">
+				<div class="wave sc-time-span sc-time-indicators wave-box wave-img">
+<!--					<div class="sc-time-indicators">-->
 						<span class="sc-position" data-track="${current_url}">0:00</span>				
-					</div>		
-					<div class="waveform_img_div sc-waveform-container" data-waveurl="${url}waveform/${profilelink}/${tracklink}.json" id="" data-track="${current_url}" data-height="50" data-width="1000">							
-						<!--<a href=""> <img src="${waveimg}" alt="" class="img-responsive"></a> -->
+                                                <span class="pull-right sc-duration">${track_timelength}</span>						
+<!--					</div>		-->
+                                    <figure id="waveform_track_id" class="sc-waveform-container" data-track="${current_url}" style="max-width: 607px !important;margin-left:25%;">
+                                            <canvas width="607" height="30"></canvas>
+                                    </figure>
+                              <div style="margin-left:25%;" class="waveform_img_div sc-waveform-container" data-waveurl="${url}waveform/${profilelink}/${tracklink}.json" id="waveform_sample" data-track="${current_url}" data-height="30" data-width="607">							
+                                  <a href=""> <img style="width: 607px !important; height: 30px !important;" src="${waveimg}" alt="" class=""></a> 
 					</div>
-					<div class="sc-buffer"></div>
-					<div class="sc-played"></div>
-					<span>${track_timelength}</span>						
+<!--					<div class="sc-buffer"></div>
+					<div class="sc-played"></div>-->
+                                        
 				</div>				
 			</div>
 			<div style="clear: both;"></div>
@@ -137,3 +141,116 @@
 		</div>
 	</aside>
 
+<script type="text/javascript">
+//draw waveform json    
+/*
+$(document).ready(function(){   
+    
+  
+    
+    
+     $.getJSON("${url}waveform/${profilelink}/${tracklink}.json", {}, function(d){  
+    
+        var $player2 = $('.big_player');
+        $player2.data
+    //var $list = $player2.find('.sc-trackslist li');
+    var url=$("#play_track_detail").attr("data-href"); 
+    var track=$("#play_track_detail").attr("data-track");
+    var title=$("#play_track_detail").text();
+    
+      $player2.data("queue")[0].waveform_loded=true;
+      $player.data("queue")[0].wavedata=d;
+      console.log('wavedata ', d);
+      
+  
+      var bar_width = 3;
+      var bar_gap = 0.3;
+      generateWaveform2($player2,track);
+  
+             });
+             
+
+function generateWaveform2($player,track){
+  var index=getIndexInQueue($player.data("queue"),track.permalink_url);
+  var track_queue=$player.data("queue")[index];
+  $(".sc-waveform-container[data-track='"+track.permalink_url+"']").each(function(){
+    if($(this).hasClass('loaded')){
+      return true;
+    }
+    $(this).find("canvas").remove();
+    $(this).addClass('loaded')
+    var waveform_width = $(this).outerWidth();
+
+    var waveform_height = 30;
+    $player.data("queue")[index].waveform[$player.data("queue")[index].waveform.length] = new Waveform({
+      container: $(this)[0],
+      outerColor: "transparent",
+      width: waveform_width,
+      height: waveform_height,
+
+      innerColor: function(x){     
+
+       var duration = audioEngine.getDuration(),
+       position = audioEngine.getPosition(),
+       relative = (position / duration);
+       if( x < position / duration){
+        return "rgba(234,63,79, 0.8)";
+      }else if((x*100) < track.buffer){
+        return "rgba(211, 211, 211, 0.5)";
+      }else{
+        return "rgba(255,255,255,1)";
+       
+      }
+    },
+    data: $player.data("queue")[index].wavedata
+  }); 
+  })
+//           $(".sc-waveform-container.loaded[data-track!='"+track.permalink_url+"']").each(function(){
+//
+//                var index=getIndexInQueue($player.data("queue"),$(this).attr("data-track"));
+//                alert(index)
+                $.each( $player.data("queue")[index].waveform,function(i,v){
+                    v.redraw();
+                })
+//})
+}
+
+
+//    
+//    $("#waveform_track_id").find("canvas").remove();
+//    //$(this).addClass('loaded');
+//    var waveform_width = $("#waveform_track_id").outerWidth();
+//
+//    var waveform_height = 30;
+//    $player2 = new Waveform({
+//      container: $("#waveform_track_id")[0],
+//      outerColor: "transparent",
+//      width: waveform_width,
+//      height: waveform_height,
+//
+//      innerColor: function(x){     
+//
+////       var duration = audioEngine.getDuration(),
+////       position = audioEngine.getPosition(),
+////       relative = (position / duration);
+////       if( x < position / duration){
+////        return "rgba(234,63,79, 0.8)";
+////      }else if((x*100) < track.buffer){
+////        return "rgba(211, 211, 211, 0.5)";
+////      }else{
+//          
+//        return "rgba(255,255,255,1)";
+
+//  //    }
+//    },
+//    data: "${url}waveform/${profilelink}/${tracklink}.json"
+//  }); 
+//    
+//       $.each( $player.data("queue")[index].waveform,function(i,v){
+//                    v.redraw();
+//       })
+//    
+});
+    */
+</script>
+    

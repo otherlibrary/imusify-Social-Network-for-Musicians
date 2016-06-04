@@ -48,10 +48,10 @@ class Trackdetail extends MY_Controller {
 
 			/*dump($track_common_detail);*/
 			$buyer_stripe_connected = getvalfromtbl("stripe_connect","users","id='".$track_common_detail["userId"]."'","single");
-			/*echo "<pre>";
-			var_dump($buyer_stripe_connected);
-			var_dump($track_common_detail["album_full_buyable"]);
-			exit();*/
+//			echo "<pre>";
+//			var_dump($buyer_stripe_connected);
+//			var_dump($track_common_detail["album_full_buyable"]);
+//			exit();
 			if(($track_common_detail["album_full_buyable"] == true || $track_common_detail["is_track_sellable"] == true) && $this->sess_id != $track_common_detail["userId"] && $buyer_stripe_connected == 'y')
 			{
 				$buynow_btn_enabled = true;

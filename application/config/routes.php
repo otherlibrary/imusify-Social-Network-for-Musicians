@@ -301,7 +301,9 @@ $route['data_api'] = "api/data_api/output_main/format/json";
 //$route['user_json'] = "api/commonfn_api/get_user_json/format/json";
 //$route['track_json'] = "api/commonfn_api/get_track_json/format/json";
 
-$route['stream/(:num)'] = "stream/index/$1";
+//$route['stream/(:num)'] = "stream/index/$1";
+//andy
+$route['stream/(:any)'] = "stream/index/$1";
 /*Testing json ends*/
 
 /*Content pages*/
@@ -318,6 +320,7 @@ $route['(:any)/(:any)/likes/(:num)'] = "trackdetail/trackdetail/index/$1/$2/like
 $route['(:any)/(:any)/comment'] = "trackdetail/trackdetail/index/$1/$2/comments";
 $route['(:any)/(:any)/likes'] = "trackdetail/trackdetail/index/$1/$2/likes";
 $route['(:any)/(:any)'] = "trackdetail/trackdetail/index/$1/$2";
+
 /*Track Detail section ends*/
 
 $route['(:any)'] = "profile/profile/index/$1";

@@ -14,7 +14,8 @@ class stream extends MY_Controller {
 	{
 		
 		$this->load->helper('file');
-
+                //var_dump ($trackId);exit;
+                $trackId = str_replace('.mp3', '', $trackId);
 
 		if(!$this->agent->is_referral())
 		{
@@ -25,7 +26,7 @@ class stream extends MY_Controller {
 		{		
 			$data = getvalfromtbl("trackName,userId","tracks","id = '".$trackId."'","multiple");
 			$filePath = asset_upload_path()."media/".$data["userId"]."/".$data["trackName"];
-			
+			//var_dump($filePath);exit;
 			$stream = new VideoStream($filePath);
 			$stream->start();			
 		}

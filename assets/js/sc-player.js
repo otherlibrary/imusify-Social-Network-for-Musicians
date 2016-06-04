@@ -4,6 +4,7 @@ var _this = this;
 var _this_comment_form_post;
 var _this_comment_form_url;
 var _this_comment_holder;
+var _force_to_play = false;
 //andy Player loading
 (function($) {
   // Convert milliseconds into Hours (h), Minutes (m), and Seconds (s)
@@ -69,16 +70,20 @@ var _this_comment_holder;
   };
 
   // TODO Expose the audio engine, so it can be unit-tested
+  // Sound Cloud Player
+  //reference http://codepen.io/nicholaspetersen/pen/yyVYMY
   var audioEngine = function() {
     var html5AudioAvailable = function() {
       var state = false;
       try{
-        var a = new Audio();
+        var a = new Audio();//initialization for audio element
         state = a.canPlayType && (/maybe|probably/).test(a.canPlayType('audio/mpeg'));
+        console.log('Browser can play MP3 or not ', state);
           // uncomment the following line, if you want to enable the html5 audio only on mobile devices
           // state = state && (/iPad|iphone|mobile|pre\//i).test(navigator.userAgent);
         }catch(e){
           // there's no audio support here sadly
+          console.log('No HTML 5 Audio support for MP3');
         }
 
         return state;
@@ -88,18 +93,33 @@ var _this_comment_holder;
           $doc.trigger('scPlayer:onAudioReady');
         },
         onPlay: function() {
-          $doc.trigger('scPlayer:onMediaPlay');
+          $doc.trigger('scPlayer:onMediaPlay');           
           /*alert("play");*/
         },
         onPause: function() {
           $doc.trigger('scPlayer:onMediaPause');
+          console.log('Pause');
+          //reset force to play
+          //_force_to_play = false;
         },
         onEnd: function() {
           $doc.trigger('scPlayer:onMediaEnd');
           console.log("Track is played fully");
         },
         onBuffer: function(percent) {
-          $doc.trigger({type: 'scPlayer:onMediaBuffering',percent: percent});
+          $doc.trigger({type: 'scPlayer:onMediaBuffering',percent: percent});          
+          console.log('Track buffer ', percent);
+        var position = audioEngine.getPosition();          
+        if(navigator.userAgent.indexOf("Firefox") != -1 && position == 0) {            
+            console.log('Force to play for Firefox');
+            audioEngine.play();
+        }
+          //if (percent == 100) console.log('Loaded 100%');
+//          if(percent > 10 && !_force_to_play) {
+//                console.log('Force to Play');
+//                _force_to_play = true;//1 time to force
+//                audioEngine.play();
+//          }
         }
       };
 
@@ -132,6 +152,8 @@ var _this_comment_holder;
      player.addEventListener('progress', onProgress, false);
      return {
       load: function(track, apiKey) {
+          console.log('Player HTML5Driver is loading ');
+          console.log('Stream URL ', track.stream_url);
           //alert("a")
           player.pause();
           //player.src = track.stream_url + (/\?/.test(track.stream_url) ? '&' : '?') + 'consumer_key=' + apiKey;
@@ -149,10 +171,10 @@ var _this_comment_holder;
         stop: function(){
           if (player.currentTime) {
             player.currentTime = 0;
-            player.pause();
+            player.pause();            
           }
         },
-        seek: function(relative,track){
+        seek: function(relative,track){//Scrubbing
 
          if(typeof(track)!="undefined" && track!=''){
           player.pause();
@@ -169,7 +191,7 @@ var _this_comment_holder;
 
         player.play();
       },
-      changeCurrentTime:function(track,currentTime){
+      changeCurrentTime:function(track,currentTime){//Scrubbing
        if(typeof track != "undefined" && track != ""){
         player.pause();
 
@@ -563,9 +585,12 @@ updateTrackInfo = function($player,url,kind,track,wavegenerate) {
   },
   updatePlayStatus = function(player, status) {
     if(status){
+        //Play for Firefox
+        //var isFirefox = typeof InstallTrigger !== 'undefined';
           // reset all other players playing status
           //$('div.sc-player.playing').removeClass('playing');
         }
+        console.log('Status of Player ', status);
         $('.sc-player').toggleClass('playing', status)
         $(player).trigger((status ? 'onPlayerPlay' : 'onPlayerPause'));
       },
@@ -573,7 +598,7 @@ updateTrackInfo = function($player,url,kind,track,wavegenerate) {
         console.log('Player start', player);
         console.log(kind);//type or kind: track or playlist
         console.log(url);//url of track
-        console.log("Demo "+url);
+        console.log("Demo "+url);        
         //alert("Play 2");
         addLoading();
         var song_new=false;
@@ -639,6 +664,7 @@ updateTrackInfo = function($player,url,kind,track,wavegenerate) {
        //alert("Pause")
       /* console.log(player);
       console.log(player.url);*/
+      console.log('Pause');       
       $player = $(player);
       /*current_play_url = $('.sc-trackslist li.active', $player).find(".play-icon a").attr("data-href");*/
       current_play_url = $('.sc-trackslist li.active', $player).find(".play-btns a").attr("data-href");
@@ -672,9 +698,10 @@ updateTrackInfo = function($player,url,kind,track,wavegenerate) {
         /*wave_animate removing ends*/
         $player.trigger('onPlayerTrackFinish');        
       },
-      onSeek = function(player, relative,t,track) {
+      onSeek = function(player, relative,t,track) {//seeking
+         console.log('Seeking Relative t ', relative,t);
         if(typeof(t)!="undefined" && t!=''){
-
+            
           audioEngine.changeCurrentTime(track,t);
 
         }
@@ -683,7 +710,12 @@ updateTrackInfo = function($player,url,kind,track,wavegenerate) {
          audioEngine.seek(relative,track);
        }
        
-       $(player).trigger('onPlayerSeek');
+       $(player).trigger('onPlayerSeek');       
+       if(navigator.userAgent.indexOf("Firefox") != -1 && relative == 0) {            
+            console.log('Force to play for Firefox');
+            audioEngine.play();
+        }
+       
      },
      onSkip = function(player) {
       var $player = $(player);
@@ -724,15 +756,18 @@ updateTrackInfo = function($player,url,kind,track,wavegenerate) {
     $doc
     .on('scPlayer:onAudioReady', function(event) {
       log('onPlayerReady: audio engine is ready');
+      console.log("onPlayerReady: audio engine is ready");
       audioEngine.play();
         // set initial volume
         onVolume(soundVolume);
       })
       // when the loaded track started to play
       .on('scPlayer:onMediaPlay', function(event) {
+        //music on Play already no need to force to play
+        _force_to_play = true;
         clearInterval(positionPoll);
         //andy Position to play
-        console.log("p");
+        console.log("Started to play after loading track");
         positionPoll = setInterval(function() {
           var duration = audioEngine.getDuration(),
           position = audioEngine.getPosition(),
@@ -1067,6 +1102,9 @@ if(is_exist < 0)
 {
     //Andy Song clicked to play
   console.log("tr_item clicked Song clicked to play");
+  //hide waveform sample andy 
+  $("#waveform_sample").hide();
+  
   var $player = $('.big_player');
   var $list = $player.find('.sc-trackslist li');
   var url=$(this).attr("data-href"); 
@@ -1372,7 +1410,7 @@ var scrub = function(node, xPos) {
   var clicked_track=$(node).attr("data-track");
 
   var track=findElementByTrack($player.data("tracks"),clicked_track);
-  console.log(track);
+  console.log('Scrubbing Track Info ', track);
   if(!track){
     if($(node).parents(".tr_item").length == 0)
      $(node).parents(".track_item").find(".tr_item").click();
@@ -1495,7 +1533,7 @@ var onTouchMove = function(ev) {
   // the default Auto-Initialization
   $(function() {
 
-
+/*
     $("#volume_slider").slider({
       orientation: "vertical",
       range: "min",
@@ -1506,9 +1544,9 @@ var onTouchMove = function(ev) {
         $doc.trigger({type: 'scPlayer:onVolumeChange', volume: ui.value});
       }
     });
+*/
 
-
-   /* $("#volume_slider").ionRangeSlider({
+    $("#volume_slider").ionRangeSlider({
       min: 0,
       max: 100,
       from: 50,
@@ -1523,7 +1561,7 @@ var onTouchMove = function(ev) {
       },
       onUpdate:function (data) {
       }
-    });*/
+    });
 
   bind_events_commentbar();
   submit_comment_form();
