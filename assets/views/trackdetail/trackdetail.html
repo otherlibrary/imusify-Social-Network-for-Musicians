@@ -5,8 +5,10 @@
 			<!-- sc-player big_player -->
 			<div class="left-part">
 				<div class="song-name">
-
-					<a href="javascript:void(0)" id="play_track_detail" class="play-icon tr_item" data-permalink="${current_url}" data-track="${current_url}" data-href="${current_url}"></a>
+                                    <div class="tr_item" data-permalink="${current_url}" data-track="${current_url}" data-href="${current_url}">
+                                        <a href="javascript:void(0)" id="play_track_detail" class="play-icon" data-permalink="${current_url}" data-track="${current_url}" data-href="${current_url}"></a>
+                                    </div>
+					
 
 <!--					 <div class="sc-controls tr_item">
 						<a href="${current_url}" class="play-icon sc-play" data-permalink="${current_url}" data-track="${current_url}"></a>
@@ -142,11 +144,22 @@
 	</aside>
 
 <script type="text/javascript">
-$(document).ready(function(){   
-    console.log('trackdetail ',$player);    
+$(document).ready(function(){       
     if (typeof $player !== 'undefined') {
-        if ($('.sc-player').hasClass("playing")) $("#waveform_sample").hide();         
-    }   
+        $("#waveform_sample").hide();                     
+    }    
+    $(document).on('click','#play_track_detail', function(event) {
+        console.log('click play_track_detail');
+         if ($('#play_track_detail').hasClass("play-icon")) {
+             $('#play_track_detail').removeClass("play-icon");
+             $('#play_track_detail').toggleClass("pause-icon");             
+         } else{
+             if ($('#play_track_detail').hasClass("pause-icon")) {
+                $('#play_track_detail').removeClass("pause-icon");
+                $('#play_track_detail').toggleClass("play-icon");                 
+             }
+         }        
+    });         
 });
   
 
