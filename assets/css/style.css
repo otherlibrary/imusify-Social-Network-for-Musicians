@@ -398,7 +398,7 @@ input:focus, textarea:focus, select:focus {box-shadow: none !important; -moz-box
  	position: fixed; z-index: 105;
  	bottom: 0; 
  	right: 0px;
- 	padding: 25px 20px 15px 17px; 
+ 	padding: 5px 20px 0px 17px; 
  	padding-left: 210px;
  	/*overflow: hidden;*/
  	background: #121314;

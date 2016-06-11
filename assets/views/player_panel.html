@@ -28,10 +28,18 @@
 		<div class="footer_player player-bg sc-player">
 			<div class="transparent_img_player overflowhidden" style=""></div>
 			<div class="photo-box sc-info">
-				<figure><img src="${img}user-profile-img.jpg" class="sc-avtar" alt=""></figure>
-				<article>
-					<h2></h2>
-					<span></span>
+				<figure>
+<!--                                    <img src="${img}user-profile-img.jpg" class="sc-avtar" alt="">-->
+                                </figure>
+                            <article style="margin-left: 20px;">
+					<h2 id="track_name_player" style="" class="track_name"></h2>
+					<span id="track_artist_player" style="color: #fff !important;"></span>
+                                        <style>
+                                            #track_name_player a, #track_artist_player a {
+                                                color: #fff !important;
+                                            }
+                                        </style>
+                                        
 				</article>
 			</div>
 			<div class="player-box">
@@ -42,8 +50,8 @@
 					<a href="javascript:void(0);" class="next sc-next nexttrack"></a>
 				</div>
 				<div class="wave-img wave-box sc-time-indicators footer_sc_position">
-					<span class="sc-position">-:--</span>
-					<figure class="sc-waveform-container"></figure>
+                                    <span class="sc-position">-:--</span>
+					<figure class="sc-waveform-container" style="margin-left: 10px;"></figure>
 					<span class="sc-duration">-:--</span>
 					<div class="player-setting">
 						<a href="javascript:void(0);" class="shuffle-icon"></a>

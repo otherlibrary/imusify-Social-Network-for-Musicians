@@ -1,3 +1,10 @@
+//variable to detect Player status 
+// true Playing
+// false No play
+var playback = false;
+var track_link = '';
+
+
 var root = document.location.hostname;
 var track_info_loaded = {};
 var _this = this;
@@ -108,11 +115,14 @@ var _force_to_play = false;
         },
         onBuffer: function(percent) {
           $doc.trigger({type: 'scPlayer:onMediaBuffering',percent: percent});          
-          console.log('Track buffer ', percent);
+          
+          //console.log('Track buffer ', percent);
+          
         var position = audioEngine.getPosition();          
         if(navigator.userAgent.indexOf("Firefox") != -1 && position == 0) {            
             console.log('Force to play for Firefox');
             audioEngine.play();
+            playback = true;
         }
           //if (percent == 100) console.log('Loaded 100%');
 //          if(percent > 10 && !_force_to_play) {
@@ -146,6 +156,57 @@ var _force_to_play = false;
      player.addEventListener('play', callbacks.onPlay, false);*/
      player.addEventListener('play', callbacks.onPlay, false);
      
+     
+     //andy resize     
+        $( window ).resize(function() {
+            var time = player.currentTime;
+            console.log('window resize', time);
+            if (time > 0){
+                //from play to pause
+                $('.tr_item.active').trigger("click");
+                //from pause to play to update waveform
+                $('.tr_item.active').trigger("click");                
+                console.log('Player pause and play');
+                //var $player = $('.big_player');
+//                $doc.trigger('scPlayer:onMediaPause');
+//                $doc.trigger('scPlayer:onMediaPlay'); 
+                 // onPause($player);
+//                audioEngine.pause();
+//                $('.big_player').delay(2000);
+//                audioEngine.play();
+                  //onPlay($player);                  
+            }
+            //audioEngine.pause();
+            //audioEngine.play();
+        });
+        
+        //document loaded Update pause-icon if Player is active
+        //get first li of ul id home_left_menu    
+       $(document).on('click',"#home_left_menu li:first, ul.heading li:first", function(event) {
+            var time = player.currentTime;
+            console.log('home loading 187 ', time);
+            if (time > 0 && playback && track_link){                                
+                //wait util ajax call completes
+                $( document ).ajaxComplete(function() {
+                    console.log('Track ',track_link);
+                    var r = $("a[data-track='" + track_link +"']").removeClass('play-icon');  
+                    $("a[data-track='" + track_link +"']").addClass('pause-icon'); 
+                    //console.log('result ',r);
+                });
+                                      
+            } else if (time > 0 && !playback){
+                $( document ).ajaxComplete(function() {
+                    console.log('Track ',track_link);
+                    $("a[data-track='" + track_link +"']").removeClass('pause-icon'); 
+                    var r = $("a[data-track='" + track_link +"']").addClass('play-icon');                      
+                    //console.log('result ',r);
+                });
+            }
+   
+        }); 
+        
+        
+  
      /* handled in the onTimeUpdate for now untill all the browsers support 'ended' event
      player.addEventListener('ended', callbacks.onEnd, false);*/
      player.addEventListener('timeupdate', onTimeUpdate, false);
@@ -249,6 +310,7 @@ var flashDriver = function() {
 
   imusify.addEventListener('onMediaPlay', callbacks.onPlay);
 
+  
 
   imusify.addEventListener('onMediaPause', callbacks.onPause);
 
@@ -454,6 +516,9 @@ generateWaveform=function($player,track){
     if($(this).hasClass('loaded')){
       return true;
     }
+    var container = $(this)[0];
+    //console.log('Waveform Container ', container);
+    //console.log('Waveform Parent Container ', $(this));
     $(this).find("canvas").remove();
     $(this).addClass('loaded')
     var waveform_width = $(this).outerWidth();
@@ -502,7 +567,7 @@ updateWaveform = function($player,url,kind,track){
   }
   if($player.data("queue")[index].waveform_loded==false){
     $.getJSON(track.waveform_url, {}, function(d){  
-        
+      console.log('Waveform URL ', track.waveform_url);  
       $player.data("queue")[index].waveform_loded=true;
       $player.data("queue")[index].wavedata=d;
       console.log('wavedata ', d);
@@ -589,6 +654,9 @@ updateTrackInfo = function($player,url,kind,track,wavegenerate) {
         //var isFirefox = typeof InstallTrigger !== 'undefined';
           // reset all other players playing status
           //$('div.sc-player.playing').removeClass('playing');
+          playback = true;          
+        }else {
+            playback = false;
         }
         console.log('Status of Player ', status);
         $('.sc-player').toggleClass('playing', status)
@@ -677,6 +745,14 @@ updateTrackInfo = function($player,url,kind,track,wavegenerate) {
 
       /*add pause class here*/
       $(".pause-icon[data-track='"+current_play_url+"']").removeClass('pause-icon').addClass('play-icon');
+       //andy add pause-icon
+       if ($('#play_track_detail').hasClass("force-to-pause-icon")) {
+             $('#play_track_detail').removeClass("play-icon");
+             $('#play_track_detail').addClass("pause-icon");  
+             $('#play_track_detail').removeClass("force-to-pause-icon");  
+             console.log('click play_track_detail Force to have pause icon');
+         }   
+
 
     },
     onFinish = function() {
@@ -766,6 +842,14 @@ updateTrackInfo = function($player,url,kind,track,wavegenerate) {
         //music on Play already no need to force to play
         _force_to_play = true;
         clearInterval(positionPoll);
+        
+        if ($('#play_track_detail').hasClass("load_click")) {
+             $('#play_track_detail').trigger("click");      
+             $('#play_track_detail').removeClass("load_click")
+             console.log('Stop Player for track detail page');
+             clearInterval(positionPoll);
+         }        
+        
         //andy Position to play
         console.log("Started to play after loading track");
         positionPoll = setInterval(function() {
@@ -1109,6 +1193,7 @@ if(is_exist < 0)
   var $list = $player.find('.sc-trackslist li');
   var url=$(this).attr("data-href"); 
   var track=$(this).attr("data-track");
+  track_link = track;
   var title=$(this).text();
 
   addLoading();
@@ -1575,3 +1660,5 @@ var onTouchMove = function(ev) {
   });
 
 })(jQuery);
+
+

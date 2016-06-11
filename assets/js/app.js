@@ -2942,12 +2942,16 @@ initTrackBuy:function(){
 });
 },
 initTrackDetail:function(){
-    my.initTrackBuy();
+    //when load track detail page directly
+    console.log('2946 Init Track Detail');
+    my.initTrackBuy();    
     $("body").on("click","a[data-role=trackdetail]",function(e){
         e.preventDefault();     
         my.routingAjax($(this).attr("href"),{},'',function(response){   
+            console.log('2951 Ajax Track Detail', response);
             if(typeof(response)!='undefined'){
                 $(".right_box").html("");   
+                try {
                 $.template("#trackDetail",my.config.loaded_template['trackdetail']);
                 $.template("#followRow",my.config.loaded_template['profile_follow_row']);
                 $.template("#folowingRow",my.config.loaded_template['profile_following_row']);
@@ -2956,14 +2960,29 @@ initTrackDetail:function(){
                 $.template("#arrayData",my.config.loaded_template['comment_row']);
                 $.template("#similarRow",my.config.loaded_template['similar_music_row']);
                 $.template("#loadMore",my.config.loaded_template['loadmore']);
-                $('#search_panel').modal('hide');
+                //$('#search_panel').modal('hide');
                 $.tmpl("#trackDetail",response).appendTo(".right_box");
                 my.initPlugin();
                 my.hint(upload_similar_steps);
                 my.initTrackBuy();
                 my.trackcover_cropic();
-
+                } catch (e){
+                    console.log(e);
+                }
+                var executed = false;
+                //andy
+                $( document ).ajaxComplete(function() {                    
+                    console.log('Trigger Player 2969');                    
+                    if (! executed){
+                        $('#play_track_detail').addClass("load_click");
+                        $('#play_track_detail').trigger("click");
+                        executed = true;
+                    }                    
+                });
+                
             }
+            
+            
         },true,false,"",true);
 });
     $("body").on("click","a[data-role=trackdetail-comments],a[data-role=trackdetail-likes]",function(e){
