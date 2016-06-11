@@ -154,17 +154,16 @@ $(document).ready(function(){
     }
     
     
+    var _executed = false;
     
-    
-    $(document).on('click','#play_track_detail', function(event) {
-        
-        if ($('#play_track_detail').hasClass("play-icon")) {
+    $(document).on('click','#play_track_detail', function(event) {        
+        if ($('#play_track_detail').hasClass("play-icon") && !_executed) {
              $('#play_track_detail').removeClass("play-icon");
              $('#play_track_detail').addClass("pause-icon"); 
              $('#play_track_detail').addClass("force-to-pause-icon");              
              console.log('click play_track_detail Force to have pause icon html');
          }         
-         
+        _executed = true;         
     });         
 });
   
