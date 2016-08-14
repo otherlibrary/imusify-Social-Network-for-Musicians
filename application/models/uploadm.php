@@ -71,7 +71,8 @@ Class uploadm extends CI_Model
 				'isPublic' => $post["ispublic"],
 				'track_buyable_types' => $tracktype,
 				'track_buyable_current_type' => $track_buyable_current_type,
-				'usage_type'=>$usage_type
+				'usage_type'=>$usage_type,
+                                'trackuploadbpm' => $post["trackuploadbpm"],
 				);
 			$where = "(id='".$r."' AND userId ='".$this->sess_userid."' )";
 			$this->db->where($where);
@@ -449,6 +450,7 @@ Class uploadm extends CI_Model
 				'isPublic' => $post["ispublic"],
 				'filesize' => $filesize,
 				'trackuploadType' => $post["trackuploadtype"],
+                                'trackuploadbpm' => $post["trackuploadbpm"],
 				'track_buyable_types' => $tracktype,
 				'track_buyable_current_type' => $track_buyable_current_type,
 				'usage_type'=>$usage_type
@@ -1214,14 +1216,18 @@ Class uploadm extends CI_Model
 				}
 				else{
 					$trackphoto = getvalfromtbl("*","photos","detailId='".$trackdet."' AND type = 't'");
+                                        if (!empty($trackphoto)){
+                                            $filename =  asset_path()."upload/".$trackphoto["dir"].$trackphoto["name"];                                        
+                                            if(file_exists($filename))
+                                            {
+                                                try{
+                                                    unlink($filename);
+                                                } catch(Exception $e) {
 
-					$filename =  asset_path()."upload/".$trackphoto["dir"].$trackphoto["name"];
-
-					if(file_exists($filename))
-					{
-						unlink($filename);
-                                                
-					}
+                                                }                                                
+                                            }
+                                        }    
+					
                                         //remove photo track 
                                         $this->db->where('detailId', $trackdet);
                                         $this->db->where('type',  't');

@@ -14,7 +14,7 @@ class crop extends MY_Controller {
 		if($action == "track_cover"){
 			$trackId = $this->input->post('trackId');
 		}
-		else if($action == "trackImg"){
+		else if($action == "trackImg"){//upload Track Image (Upload new or Edit image)
 			$r = $this->input->post('r');						 
 		}
 		else if($action == "user_profile")
@@ -135,6 +135,37 @@ class crop extends MY_Controller {
 					unlink(asset_upload_path()."track/".$this->session->userdata('image_')->$r);
 				}*/
 				$this->session->set_userdata("image_".$r,$img_name.$type);
+                                $trackphoto_counter = getvalfromtbl("count(*)","photos","detailId='".$r."' AND type = 't'");
+                                //var_dump($trackphoto_counter["count(*)"]);
+                                //if edit, update track image link
+                                $counter = intval($trackphoto_counter["count(*)"]);
+                                if($counter > 0)
+				{
+                                    $photoInfo = getvalfromtbl("*","photos","detailId='".$r."' AND type = 't'");
+                                    $new_picture = $img_name.$type;
+                                    $update_array = array('name'=>$new_picture); 
+                                    //update picture for this track
+                                    //$this->db->set('name', $new_picture, FALSE);
+                                    $this->db->where('id', $photoInfo['id']);
+                                    $this->db->update('photos', $update_array);
+                                    //var_dump($photoInfo);exit;
+				} else {
+                                    //no image but should insert new image for this track                                    
+                                    $new_picture = $img_name.$type;                                    
+                                    $insert_array = array(
+                                    "name"=>$new_picture,
+                                    'detailId'=> $r,
+                                    'type'=> 't',
+                                    'dir' => 'track/'
+                                    );
+                                    $this->db->insert('photos', $insert_array);
+                                    
+                                }
+                                    
+                                //var_dump ($r, $img_name, $type);exit;
+                                
+                                
+                                
 				$response = array(
 					"status" => 'success',
 					"url" => base_url()."assets/upload/track/".$img_name.$type

@@ -66,11 +66,11 @@ Class home_modal extends CI_Model
 		else
 			$orderby ="ORDER BY tt.id DESC";	
 
-		$this->db->select('tt.id,tt.featured,tt.title,tt.release_mm,tt.release_dd,tt.release_yy,tt.createdDate,tt.timelength,tt.plays,tt.comments,tt.shares,tt.perLink,tt.isPublic,tt.userId as trackuserid,g.genre,u.firstname as artist_name,u.lastname,u.id as uid,u.profileLink,a.name as album');
+		$this->db->select('tt.id,tt.featured,tt.title,tt.release_mm,tt.release_dd,tt.release_yy,tt.createdDate,tt.trackuploadbpm,tt.timelength,tt.plays,tt.comments,tt.shares,tt.perLink,tt.isPublic,tt.userId as trackuserid,g.genre,u.firstname as artist_name,u.lastname,u.id as uid,u.profileLink,a.name as album');
 		$this->db->from('tracks as tt');
 		$this->db->join('genre as g', 'tt.genreId = g.id','left');
 		$this->db->join('albums as a', 'tt.albumId = a.id','left');
-		$this->db->join('users as u', 'tt.userId = u.id','left');
+		$this->db->join('users as u', 'tt.userId = u.id','right');
 
 		if($start_limit != NULL && $limit != NULL)	
 		{
@@ -83,20 +83,40 @@ Class home_modal extends CI_Model
 		$this->db->where($cond);
 		$this->db->order_by("tt.id","desc");			
 		$query = $this->db->get();
-
+                //var_dump($query);exit;
 		$total_counter = $query->num_rows();
 
 		if($counter != NULL)
 			return $query->num_rows();
 		$i = 1;
+                                                
 		if($start_limit != NULL)
 			$i = $start_limit+1;
-
+                $query2 = $this->db->query("SELECT id,username from users");
+                $usernames_id = array();                                
+                $usernames = array();                                
+                foreach ($query2->result_array() as $row2){  
+                    $new_array = array($row2['id'] => $row2['username']);                    
+                    $usernames =  array_merge($usernames, $new_array);                    
+                    array_push($usernames_id, $row2['id']);
+                }
+                
+                for($i=0;$i< count($usernames); $i++){
+                    if (! isset($usernames[$usernames_id[$i]]) && $usernames[$i])
+                    $usernames[$usernames_id[$i]] = $usernames[$i];
+                    //var_dump ($usernames[$i]);
+                }
+                //var_dump( $usernames);exit;
+                //load db for home page
 		foreach ($query->result_array() as $row)
-		{
+		{   
+                        //var_dump($row);exit;
+                        
 			$row["track_image"] = $this->commonfn->get_photo('t',$row["id"],$width,$height);
 			$row["user_image"] = $this->commonfn->get_photo('p',$row["uid"],$uwidth,$uheight);
-			$row["main_title"] = character_limiter($row["title"], 20,$end_char = '&#8230;');				
+			//$row["main_title"] = character_limiter($row["title"], 40,$end_char = '&#8230;');
+                        $row["main_title"] = character_limiter($row["title"], 35,$end_char = '');
+                        
 			$row["artist_mini_name"] = character_limiter($row["artist_name"], 20,$end_char = '&#8230;');		
 			$row["i"] = $i;
 			$row["total_songs"] = "";
@@ -108,9 +128,15 @@ Class home_modal extends CI_Model
 			$row["profileLink"] = base_url().$row["profileLink"];				
 			$row["album"] = ($row["album"] == "" || $row["album"] == NULL) ? "-" : $row["album"]; 
 			$row["is_track"] = true;
+                        
 			$row["like_js_class"] = "like_js";
 			$row["like_class"] = "like-icon";
-
+                        
+                        $row["bpm"] = $row["trackuploadbpm"];
+			$row["username"] = $usernames[$row["uid"]];
+			//var_dump ($row);exit;
+                        
+                        
 			if($userId > 0){
 				$is_liked = getvalfromtbl("id","likelog"," userId = '".$userId."'  AND trackId = '".$row["id"]."'","single","");
 				if($is_liked > 0){
@@ -121,6 +147,7 @@ Class home_modal extends CI_Model
 			$output[] = $row;
 			$i++;				
 		}
+                //exit;
 
 		
 

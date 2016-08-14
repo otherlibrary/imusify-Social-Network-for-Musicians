@@ -3082,10 +3082,10 @@ footer .player-bg .photo-box article h2{
   .noarticleprop{
    border-radius: 0 !important; 
    border: none !important; 
-   overflow: hidden !important; 
+/*   overflow: hidden !important; */
    width: 100%  !important;
    height: 42px  !important;
-   display: inline-block  !important;
+/*   display: inline-block  !important;*/
    text-decoration: none  !important;
    color: #ffffff !important; 
  }
@@ -4530,7 +4530,8 @@ footer .player-bg
   margin:0 4px 0px 0;
 }
 .all-items .item .tag-texts article .track-info{
-  height: 45px;
+/*  height: 45px;*/
+/*  height: 75px;*/
   /*   overflow: hidden; */
 }
 /*New hover effect*/
@@ -4566,14 +4567,15 @@ footer .player-bg
 }
 .effect-lily .tag-texts .track-info{
   width: 80%!important;
-  margin-left: 5px!important;
+/*  margin-left: 5px!important;*/
 }
 .effect-lily .tag-texts a.profile-link-url,.effect-lily .tag-texts .links ,.effect-lily .tag-texts .wave-img,.effect-lily .tag-texts .track-info{
- -webkit-transition: opacity 0.2s,-webkit-transform 0.35s;
+    /* andy edit for no effect on home page*/
+/* -webkit-transition: opacity 0.2s,-webkit-transform 0.35s;
  transition: opacity 0.2s,transform 0.35s;
  opacity: 0;
  -webkit-transform: translate3d(0,75px,0);
- transform: translate3d(0,75px,0);
+ transform: translate3d(0,75px,0);*/
 }
 .effect-lily .tag-texts a.profile-link-url{
   opacity: 0.9;
@@ -4581,24 +4583,24 @@ footer .player-bg
 
 
 .effect-lily:hover .tag-texts a.profile-link-url,.effect-lily:hover .tag-texts .links,.effect-lily:hover .tag-texts .wave-img,.effect-lily.active .tag-texts a.profile-link-url,.effect-lily.active .tag-texts .links,.effect-lily.active .tag-texts .wave-img{
-  -webkit-transform: translate3d(0,-10px,0);
+/*  -webkit-transform: translate3d(0,-10px,0);
   transform: translate3d(0,-10px,0);
-  opacity: 1;
+  opacity: 1;*/
 }
 .effect-lily:hover .tag-texts a.profile-link-url,.effect-lily.active .tag-texts a.profile-link-url{
-  -webkit-transition-delay: 0.05s;
+/*  -webkit-transition-delay: 0.05s;
   transition-delay: 0.05s;
   -webkit-transition-duration: 0.35s;
-  transition-duration: 0.35s;
+  transition-duration: 0.35s;*/
 }
 .effect-lily:hover .tag-texts .track-info,.effect-lily.active .tag-texts .track-info{
-  -webkit-transform: translate3d(0,-10px,0);
+/*  -webkit-transform: translate3d(0,-10px,0);
   transform: translate3d(0,-10px,0);
   -webkit-transition-delay: 0.07s;
   transition-delay: 0.07s;
   -webkit-transition-duration: 0.40s;
   transition-duration: 0.40s;
-  opacity: 1;
+  opacity: 1;*/
 }
 .effect-lily:hover .tag-texts .links,.effect-lily.active .tag-texts .links{
   -webkit-transition-delay: 0.09s;

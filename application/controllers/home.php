@@ -48,6 +48,7 @@ class Home extends MY_Controller {
 		}
 		else
 		{
+                    //default home url
 			$loadmore = "true";
 			$load_url = "home/";
 			$load_cont = "#all-items-masonary";
@@ -97,8 +98,9 @@ class Home extends MY_Controller {
 
 
 		$template_arry['playerPanel']="player_panel.html";
+                //var_dump ($data);exit;
 		$data1=get_template_content($template_arry,$data);
-
+                //var_dump ($data1);exit;
 		$a['data'] = $data1;
 		$a['redirectURL']=base_url();
 		$this->load->view('home',$a);

@@ -38,12 +38,14 @@ if(!function_exists('get_template_content')){
 	   			'loggedin'=>$left_panel,
 	   			'username'=>$username,
 	   			'user_id'=>isset($CI->session->userdata('user')->id) ? $CI->session->userdata('user')->id :0,
-	   			'profileLink'=>isset($CI->session->userdata('user')->profileLink) ? $CI->session->userdata('user')->profileLink :" ",
+	   			'profileLink'=>isset($CI->session->userdata('user')->profileLink) ? $CI->session->userdata('user')->profileLink :" ",                                
 	   			'profileImage'=>$temp_uimg,
 	   			'page_class' => $classname."_page"
 	   			);
+                        
 	   		$data =  objectToArray($data);
 	   		$data = array_merge($data,$data1);
+                        //var_dump($data);exit;
 	   	}
 	   	/*dump($data);*/
 	   	if($ajax==true)

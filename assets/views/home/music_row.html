@@ -13,32 +13,48 @@
 			</div>
 			<div class="box-bg">
 			</div>
-			<div class="tag-texts">
-				
+			<div class="tag-texts">				
 				<article>
-					<a href="${profileLink}" data-role="profile" class="noclickplay profile-link-url">
-						<img src="${user_image}" class="noclickplay img_load">
-					</a>
+				
+                                        <h2>${username}</h2>
 					<div class="track-info noclickplay">
 						<!-- <h4>COME AGAIN shared a new song</h4> -->
-						<h2 class="noclickplay">
+                                                <h2 class="noclickplay" style="width: 80% !important;">
 							<a href="${trackLink}" data-role="trackdetail" class="noarticleprop noclickplay"> 
 								${main_title}
 							</a> 
 						</h2>
 					</div>
+                                        <a href="${profileLink}" data-role="profile" class="noclickplay profile-link-url">
+						<img src="${user_image}" class="noclickplay img_load">
+                                                
+					</a>
 				</article>
-				<ul class="links">
+                            <ul class="links" style="width:84% !important;">
+                                    <span class="md-4">${genre}</span>
+                                    <span style="margin-left: 20px;">${bpm} bpm</span>                                    
+                                    <a style="color: #fff !important; border: 1px solid #767778;" class="pull-right follow follow-btn follow_js" data-refreshpanel="yes" data-onlyfollow="yes" data-name="" data-toid="${uid}" href="Javascript:void(0)">FOLLOW</a>
+                            </ul>
+                            
+<!--				<ul class="links">
 					<li><a href="#" class="heart-icon">${plays}</a></li>
 					<li><a href="Javascript:0" data-sharemodal="sharepopup" class="link-icon noclickplay  js-open-modal" data-shareurl="${trackLink}">SHARE</a></li>
 					<li class="border-r"><a href="#" class="plus-icon">ADD</a></li>
-				</ul>
+				</ul>-->
 				<div class="wave-img">
 					<!-- <span class="sc-position text_shadow" data-track="${trackLink}">0.00</span> -->
-					<figure class="waveform_img_div sc-waveform-container" data-waveurl="${waveform}" id="" data-trackurl="${trackLink}" data-track="${trackLink}" data-height="30" data-width="320"></figure>
+<!--					<figure class="sc-waveform-container waveform_img_div" data-waveurl="${waveform}" data-trackurl="${trackLink}" data-track="${trackLink}" data-height="30" data-width="320">                                                                                -->
+                                        <figure class="sc-waveform-container" data-waveurl="${waveform}" data-trackurl="${trackLink}" data-track="${trackLink}" data-height="30" data-width="320">                                                                                    
+                                        </figure>
 					<!-- <span class="text_shadow">${timelength}</span> -->
 				</div>
 			</div>
 		</div>
 	</div>
 </div>
+<script type="text/javascript">
+$(document).ready(function(){   
+    //$("a.follow_js[data-toid=${uid}]").hide();
+});    
+    
+</script>

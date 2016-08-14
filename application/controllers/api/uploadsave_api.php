@@ -27,7 +27,9 @@ class Uploadsave_api extends REST_Controller
 			else
 			{
 				$eaction = $this->get("eaction");
-				$track = $this->uploadm->insert_track($this->post('title'),$this->post('desc'),$this->post('mm'),$this->post('dd'),$this->post('yy'),$this->post('genre'),$this->post('label'),$image,$folder_name,$this->post('sec_genner'),$this->post('add_album'),$this->post('r'),$eaction,$this->post('moods_list'),$this->post('instruments'),$this->post('music_vocals_y'),$this->post('music_vocals_gender'),$this->post('sale_available'),$this->post('sale_available_ar'),$this->post('licence_available'),$this->post('licence_available_ar'),$this->post('nonprofit_available'),$this->post());
+                                //var_dump ($eaction, $this->post());exit;
+				$track = $this->uploadm->insert_track($this->post('title'),$this->post('desc'),$this->post('mm'),$this->post('dd'),$this->post('yy'),$this->post('genre'),$this->post('label'),$image,$folder_name,$this->post('sec_genner'),$this->post('add_album'),$this->post('r'),
+                                        $eaction,$this->post('moods_list'),$this->post('instruments'),$this->post('music_vocals_y'),$this->post('music_vocals_gender'),$this->post('sale_available'),$this->post('sale_available_ar'),$this->post('licence_available'),$this->post('licence_available_ar'),$this->post('nonprofit_available'),$this->post());
 
 				if($track["status"] == "fail")
 				{
@@ -125,6 +127,7 @@ class Uploadsave_api extends REST_Controller
 				$this->response("", 404);	
 			}
 		}else if($trackId != "" && $deltype == "fu"){
+                    
 			$response = $this->uploadm->delete_trackfromdb($userId,$trackId,$deltype);
                         //var_dump ($response);
 			if($response["status"] == "success"){

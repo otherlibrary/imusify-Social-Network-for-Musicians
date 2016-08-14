@@ -52,6 +52,69 @@ class Profile extends MY_Controller {
 		$this->load->view('home',$a);
 	}
 	
+        function strpos_all($haystack, $needle) {
+            $offset = 0;
+            $allpos = array();
+            while (($pos = strpos($haystack, $needle, $offset)) !== FALSE) {
+                $offset   = $pos + 1;
+                $allpos[] = $pos;
+            }
+            return $allpos;
+        }
+
+        //rewrite description for hyperlinks
+        function description_hyperlink($description){                        
+            $number_of_links = intval(floor(substr_count($description, '.') / 2));                                    
+            //var_dump ($description, $number_of_links);
+            for ($i=0; $i< $number_of_links;$i++){
+                $all_dot_position_array = $this->strpos_all($description, '.');
+                //var_dump($all_dot_position_array);
+                $description = $this->change_hyperlink($description, $all_dot_position_array[$i*4]);
+                //var_dump ('end of round ', $description);
+            }
+            //change \n to <br /> html
+            $description = ereg_replace( "\n",'<br />', $description);            
+            //var_dump ($description);exit;
+            return $description;
+        }
+        
+        function change_hyperlink($description, $start){
+            $length = strlen($description);
+            $dot1 = strpos($description, '.', $start);
+            if ($dot1){
+                $temp = substr($description, 0, $dot1);
+                $space1 = strrpos($temp, ' ');
+
+                if (! $space1) {
+                  if (substr($temp, 0, 1) != ' ') $space1 = -1;  
+                } 
+                //var_dump ('start of search ', $start, $temp, $space1,$dot1);                      
+                $temp = substr($description, $dot1 + 1);
+                $dot2 = strpos($temp, '.');
+                if ($dot2){
+                    $temp = substr($description, $dot1 + $dot2+ 1);
+                    $space2 = strpos($temp, ' ');
+                    //var_dump ('space2 dot2', $space2, $dot2);
+                    //if (! $space2) $space2 = 0; 
+                    if (! $space2){
+                        if (substr($description, $length-1, 1) != ' ') $space2 = strlen($temp);  
+                    }
+                    //var_dump ('space2', $space2);
+                    $link = substr($description, $space1+ 1, $dot1+ $dot2+ $space2 - $space1);
+                    $link = trim($link);
+
+                    if (stristr($link, 'http://')){
+                      $description = str_replace($link, '<a href="'.$link.'" target="_blank">'.$link.'</a>', $description);    
+                    } else{
+                      $description = str_replace($link, '<a href="http://'.$link.'" target="_blank">'.$link.'</a>', $description);    
+                    }
+                    //var_dump ($space1, $dot1+ $dot2+ $space2, $description, $link);                                                                      
+                }
+            }
+            return $description;
+        }
+        
+        
 	function user_profile($profileLink,$user_db_details,$action,$page,$start_limit = NULL)
 	{
 		$album_text = "ALBUM";
@@ -294,40 +357,8 @@ class Profile extends MY_Controller {
                 
                 //find all link and add anchor tag for it                                
                 //only support one link
-                $length = strlen($description);
-                $dot1 = strpos($description, '.');
-                if ($dot1){
-                    $temp = substr($description, 0, $dot1);
-                    $space1 = strrpos($temp, ' ');
-                    
-                    if (! $space1) {
-                      if (substr($temp, 0, 1) != ' ') $space1 = -1;  
-                    } 
-                    //var_dump ($temp, $space1,$dot1);exit;                        
-                    $temp = substr($description, $dot1 + 1);
-                    $dot2 = strpos($temp, '.');
-                    if ($dot2){
-                        $temp = substr($description, $dot1 + $dot2+ 1);
-                        $space2 = strpos($temp, ' ');
-                        if (! $space2){
-                            if (substr($description, $length-1, 1) != ' ') $space2 = strlen($temp);  
-                        }
-                        
-                        $link = substr($description, $space1+ 1, $dot1+ $dot2+ $space2 - $space1);
-                        $link = trim($link);
-                        
-                        if (stristr($link, 'http://')){
-                          $description = str_replace($link, '<a href="'.$link.'" target="_blank">'.$link.'</a>', $description);    
-                        } else{
-                          $description = str_replace($link, '<a href="http://'.$link.'" target="_blank">'.$link.'</a>', $description);    
-                        }
-                        //var_dump ($space1, $dot1+ $dot2+ $space2, $description, $link);exit;                                                                        
-                    }
-                }
-                
-                //change \n to <br /> html
-                $description = ereg_replace( "\n",'<br />', $description);
-                 //var_dump ($description);exit;
+                $description = $this->description_hyperlink($description);                
+                //var_dump ($description);exit;
                  
 		$user_profile = array(
 			'no_of_followers'=>$user_db_details["followers"],

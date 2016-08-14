@@ -2943,7 +2943,7 @@ initTrackBuy:function(){
 },
 initTrackDetail:function(){
     //when load track detail page directly
-    console.log('2946 Init Track Detail');
+    //console.log('2946 Init Track Detail');
     my.initTrackBuy();    
     $("body").on("click","a[data-role=trackdetail]",function(e){
         e.preventDefault();     
@@ -5042,7 +5042,7 @@ initGeneral:function(){
             }
         }       
     });
-   /* $("body").on({
+/*    $("body").on({
         mouseenter: function(){
             if(!$(this).hasClass('playing'))
             {
@@ -5055,7 +5055,7 @@ initGeneral:function(){
                 $(this).find(".waveform_img_div").removeClass('whitecanvas');
             }
         }
-    }, '.waveform-hover ul.songs-list');*/
+    }, '.waveform-hover ul.songs-list');  */
     $("body").on("click",".left_panel a",function(event){   
         if($(".your-playlist_popup").hasClass('open')){
             $(".your-playlist_popup").removeClass("open");

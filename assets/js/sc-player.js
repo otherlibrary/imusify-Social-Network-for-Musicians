@@ -514,6 +514,7 @@ generateWaveform=function($player,track){
   var track_queue=$player.data("queue")[index];
   $(".sc-waveform-container[data-track='"+track.permalink_url+"']").each(function(){
     if($(this).hasClass('loaded')){
+      //console.log('loaded', $(this));  
       return true;
     }
     var container = $(this)[0];
