@@ -58,27 +58,29 @@ class Commonfn_Api extends REST_Controller
 	function follow_post(){
 		$to_id = $this->post('toid');
 		$refreshpanel = ($this->post('refreshpanel') != "") ? $this->post('refreshpanel') : null;
-
-		if($to_id > 0)
+                //must log in
+		if($to_id > 0 && !empty ($this->sess_id) )
 		{
+                      if ($this->sess_id == $to_id) return $this->response(array('error' => 'Follow unsuccessfull Can not follow yourself'), 404);				
 			$response = $this->commonfn->follow($to_id,NULL,$refreshpanel);
 			/*print_r($response);*/
 			if($response != "")
 			{	
-
-				if($response["status"] == "successfull_follow" && $refreshpanel == "yes")
+                             if (isset ($response["status"])){
+                                 if($response["status"] == "successfull_follow" && $refreshpanel == "yes")
 				{
 					$us_ar["success"] = "success";
 					$us_ar["data"] = $response["data"];
-					$us_ar["msg"] = "following successfully.";			
+					$us_ar["msg"] = "Following successfully.";			
 					$this->response($us_ar, 200); 
 				}
+                             }				
 
 				if($response == "successfull_follow")
 				{
 					$us_ar["success"] = "success";
 					$us_ar["followingId"] = $to_id;
-					$us_ar["msg"] = "following successfully.";							
+					$us_ar["msg"] = "Following successfully.";							
 				}
 				else if($response == "blocked")
 				{
@@ -96,7 +98,12 @@ class Commonfn_Api extends REST_Controller
 					$us_ar["error"] = "error";
 					$us_ar["followingId"] = $to_id;
 					$us_ar["msg"] = "You are blocked to access ".SITE_NM." Please contact admin for further.";
-				}
+				} 
+                                else if($response == "Alreadyfollowed"){
+                                    $us_ar["error"] = "error";
+				    $us_ar["followingId"] = $to_id;
+				    $us_ar["msg"] = "You already followed this user";
+                                }
 				$this->response($us_ar, 200); 
 			}
 			else
@@ -107,7 +114,8 @@ class Commonfn_Api extends REST_Controller
 		}
 		else
 		{
-			$this->response(array('error' => 'Please try again follow unsuccessfull.'), 404);				
+                    if (empty($this->sess_id)) $this->response(array('error' => 'Please log in Follow unsuccessfull.'), 404);				
+			else $this->response(array('error' => 'Please try again Follow unsuccessfull.'), 404);				
 		}
 
 	}
@@ -154,7 +162,7 @@ class Commonfn_Api extends REST_Controller
 
 	function unfollow_post(){
 		$to_id = $this->post('toid');
-		if($to_id > 0)
+		if($to_id > 0 && !empty ($this->sess_id) )
 		{
 			$response = $this->commonfn->unfollow($to_id);
 			if($response != "")
@@ -175,7 +183,8 @@ class Commonfn_Api extends REST_Controller
 		}
 		else
 		{
-			$this->response(array('error' => 'Please try again follow unsuccessfull.'), 404);				
+                    if (empty($this->sess_id)) $this->response(array('error' => 'Please log in Follow unsuccessfull.'), 404);				
+		    else $this->response(array('error' => 'Please try again follow unsuccessfull.'), 404);				
 		}
 	}
 

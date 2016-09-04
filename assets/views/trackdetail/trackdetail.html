@@ -24,17 +24,23 @@
 																	
 				</div> -->
 
-				<p>${track_title}
-					<span class="like-icon">
+				<p>${track_title}                                    
+                                    {{if liked }}
+                                    <span class="unlike-icon ">
 						<a href="Javascript:void(0)" class="${like_class}" data-tid="${trackId}"></a>
-					</span>
+                                    </span>
+                                    {{else}}
+                                    <span class="like-icon">
+						<a href="Javascript:void(0)" class="${like_class}" data-tid="${trackId}"></a>
+                                    </span>
+                                    {{/if}}                                    					
 				</p>
 			</div>
 			<div class="sharing">
 				<a href="#" class="play-icon">${track_plays}</a>
 				<a href="#" class="like-no like_track_counter">${track_likes}</a>
 				<a href="#" class="comment-icon">${track_comments}</a>
-				<a href="#" class="share-icon">${track_shares}</a>
+				<a href="javascript:void(0)" data-sharemodal="sharepopup" class="share-icon link-icon noclickplay js-open-modal" data-shareurl="${current_url}">${track_shares}</a>
 				{{if my_profile}}									
 				<a href="Javascript:void(0)" id="edit_trackcover_img"  class="edit-icon edit_cover_img" data-tid="${trackId}">Change cover</a>									
 				<div id="edit_trackcover_img_modal" style="height:400px;width:960px" class="displaynone"></div>	
@@ -151,21 +157,18 @@ $(document).ready(function(){
         console.log('Load track to draw waveform trackdetail.html');      
         $('#play_track_detail').trigger("click");
         $('#play_track_detail').addClass("load_click");
-    }
-    
-    
-    var _executed = false;
-    
+        playback = true;
+    }    
+        
     $(document).on('click','#play_track_detail', function(event) {        
-        if ($('#play_track_detail').hasClass("play-icon") && !_executed) {
+        if ($('#play_track_detail').hasClass("play-icon") && !playback) {
              $('#play_track_detail').removeClass("play-icon");
              $('#play_track_detail').addClass("pause-icon"); 
              $('#play_track_detail').addClass("force-to-pause-icon");              
-             console.log('click play_track_detail Force to have pause icon html');
-         }         
-        _executed = true;         
-    });         
-});
-  
+             console.log('click play_track_detail Force to have pause icon html');             
+         }                        
+    });    
+}); 
+
 </script>
     

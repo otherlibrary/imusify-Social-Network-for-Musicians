@@ -202,7 +202,14 @@ var _force_to_play = false;
                     //console.log('result ',r);
                 });
             }
-   
+            
+                //andy
+                $( document ).ajaxComplete(function() {                    
+                    console.log('Home Initialize Share');                                 
+                    //Register Share link popup
+                    my.sharePopup();   
+                });
+  
         }); 
         
         
@@ -853,6 +860,7 @@ updateTrackInfo = function($player,url,kind,track,wavegenerate) {
         
         //andy Position to play
         console.log("Started to play after loading track");
+        playback = true;
         positionPoll = setInterval(function() {
           var duration = audioEngine.getDuration(),
           position = audioEngine.getPosition(),

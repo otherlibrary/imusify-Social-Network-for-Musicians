@@ -4,6 +4,7 @@ body {font-family: 'Roboto', sans-serif; font-weight: 400; font-size: 14px; colo
 
 a {text-decoration: none;}
 a:hover,a:focus {text-decoration: none; color: #ffffff;}
+#sharepopup a:hover,a:focus {text-decoration: none; color: #000;}
 a:focus {outline: none !important;}
 img {border: none; vertical-align: middle;}
 input, button, select, textarea {border: none;}
@@ -641,7 +642,7 @@ input:focus, textarea:focus, select:focus {box-shadow: none !important; -moz-box
  #player-box .song-name a.play-icon {float: left; background: url(../images/play-icon.png) no-repeat 0 0; width: 48px; height: 48px; margin-top: 10px;}
  /*#player-box .song-name a.play-icon:hover {background: url(../images/play-start.png) no-repeat 0 0;}*/
  #player-box .song-name p {font-size: 31px; font-weight:100; margin:0px 0 2px 15px; float: left; padding: 0 10px;}
- #player-box .song-name span.like-icon a {background: url(../images/heart-icon.png) no-repeat 0 -27px; width: 17px; height: 15px; display: inline-block; margin-left: 15px;}
+/* #player-box .song-name span.like-icon a {background: url(../images/heart-icon.png) no-repeat 0 -27px; width: 17px; height: 15px; display: inline-block; margin-left: 15px;}*/
  #player-box .song-name span.like-icon a:hover, #player-box .song-name span.like-icon a:focus {background-position: 0px 0px;}
  #player-box .wave-box {position: absolute; width: 100%; z-index: 11; top: 83%;}
  #player-box .wave-box .wave {padding: 0 20px;}

@@ -26,7 +26,8 @@
     var buy_items = [];
     var order_random_id;
     var $toast;
-    fb_share = "https://www.facebook.com/sharer/sharer.php?u=";
+    //fb_share = "https://www.facebook.com/sharer/sharer.php?u=";  
+    fb_share = "https://www.facebook.com/plugins/share_button.php?layout=button_count&mobile_iframe=false&width=68&height=20&appId&href=";
     twit_share = "https://twitter.com/intent/tweet?url=";
     google_share = "https://plus.google.com/share?url=";
     jQuery.browser = {};
@@ -1136,12 +1137,35 @@ initSocialLinkShare:function(){
         $("body").append(appendthis);
         $(".modal-overlay").fadeTo(500, 0.7);
         var modalBox = $(this).attr('data-sharemodal');
-        $("#sharepopup .facebook").attr("href",fb_share+share_url);
+        var encoded_share_url = encodeURI(share_url);
+        //$("#sharepopup .fb-share-button").attr("data-href", share_url);        
+        //$("#sharepopup .facebook").attr("href",fb_share+encoded_share_url);
+        $("#sharepopup .facebook").attr("src",fb_share+encoded_share_url);
+        //$("#sharepopup .fb-xfbml-parse-ignore").attr("href",fb_share+encoded_share_url);
+                
+        
         $("#sharepopup .twitter").attr("href",twit_share+share_url);
-        $("#sharepopup .google").attr("href",google_share+share_url);
+        
+        $("#sharepopup .google").attr("data-href",share_url);
         $('#'+modalBox).fadeIn($(this).data());
     });  
 },
+//new function for my app Initialize Share Popup
+sharePopup:function(){
+    $('a.share-icon').click(function(e) {        
+        console.log('Share icon clicked');
+        $("body").append('<div class="modal-overlay js-modal-close" style="opacity: 0.7;"></div>');
+        share_url = $(this).attr("data-shareurl");
+        share_desc = $(this).attr("data-sharedesc");
+        var modalBox = $(this).attr('data-sharemodal');
+        var encoded_share_url = encodeURI(share_url);        
+        $("#sharepopup .facebook").attr("src",fb_share+encoded_share_url);       
+        $("#sharepopup .twitter").attr("href",twit_share+share_url);        
+        $("#sharepopup .google").attr("data-href",share_url);
+        $(".modal-overlay").fadeTo(500, 0.7);
+        $('#sharepopup').fadeIn($(this).data());        
+    });
+},        
 initRandomString:function(){
     var chars = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXTZabcdefghiklmnopqrstuvwxyz";
     var string_length = 8;
@@ -2959,33 +2983,35 @@ initTrackDetail:function(){
                 $.template("#tabRender",my.config.loaded_template['tab_render']);
                 $.template("#arrayData",my.config.loaded_template['comment_row']);
                 $.template("#similarRow",my.config.loaded_template['similar_music_row']);
-                $.template("#loadMore",my.config.loaded_template['loadmore']);
-                //$('#search_panel').modal('hide');
-                $.tmpl("#trackDetail",response).appendTo(".right_box");
+                $.template("#loadMore",my.config.loaded_template['loadmore']);                                
+                $.tmpl("#trackDetail",response).appendTo(".right_box");                
                 my.initPlugin();
                 my.hint(upload_similar_steps);
                 my.initTrackBuy();
                 my.trackcover_cropic();
-                } catch (e){
-                    console.log(e);
+                } catch(e){
+                    console.log('Error ', e);
                 }
-                var executed = false;
+                
                 //andy
                 $( document ).ajaxComplete(function() {                    
                     console.log('Trigger Player 2969');                    
-                    if (! executed){
+                    if (! playback){
                         $('#play_track_detail').addClass("load_click");
                         $('#play_track_detail').trigger("click");
-                        executed = true;
-                    }                    
+                        playback = true;                        
+                    }
+                    //Register Share link popup
+                    my.sharePopup();   
                 });
                 
             }
             
             
         },true,false,"",true);
-});
-    $("body").on("click","a[data-role=trackdetail-comments],a[data-role=trackdetail-likes]",function(e){
+    });
+
+    $("body").on("click","a[data-role=trackdetail-comments],a[data-role=trackdetail-likes]", function(e){
         e.preventDefault();     
         my.routingAjax($(this).attr("href"),{},'',function(response){               
             if(typeof(response)!='undefined'){
@@ -3081,7 +3107,8 @@ initProfile:function(){
                     my.removeIds();
                     var croppic2 = new Croppic('edit_cover_img_modal', croppicHeaderOptions_ucover);    
                     $('#slider-container_prof').gallery();
-
+                    
+                    
                     
                 }
                 else if(response.user_type == "artist")
@@ -3099,6 +3126,13 @@ initProfile:function(){
                     var croppic2 = new Croppic('edit_cover_img_modal', croppicHeaderOptions_ucover);                                        
                     
                 }
+                //Profile loading ajax
+                 //andy
+                $( document ).ajaxComplete(function() {                    
+                    console.log('Initialize Share Popup');                                       
+                    my.sharePopup();   
+                });
+                
             }
         },true,false,"",true);
 });
@@ -5105,13 +5139,17 @@ initGeneral:function(){
 
                             $("#following_cont").html("");
                             $.template("u_tmpl_container_e",my.config.loaded_template['feed_follow_suggestion_row']);
-                            $.tmpl("u_tmpl_container_e",response.data).appendTo("#following_cont");                           
-
+                            //check if there is no data
+                            if (response.data){
+                            $.tmpl("u_tmpl_container_e",response.data).appendTo("#following_cont");  
+                            }
+                            
                         }
                     }else{
                         $("#prof_follow_btn").html("");
                         $.template("u_tmpl_container_e",my.config.loaded_template['profile_following_row']);
                         $.tmpl("u_tmpl_container_e",response.data).appendTo("#prof_follow_btn");
+                        $("#folowingRow a").attr('data-toid', toid);
                     }                   
                     my.ShowNotification("success","success",response.msg);  
                 }
@@ -5132,9 +5170,9 @@ return false;
     jQuery("body").on("click",".unfollow_js",function(e){
         e.preventDefault();
         name = $(this).attr("data-name");
-        var confirm_alert = confirm("Are you sure you want to unfollow "+name);
-        if(confirm_alert == true)
-        {
+        //var confirm_alert = confirm("Are you sure you want to unfollow "+name);
+        //if(confirm_alert == true)
+        // {
             if(my.config.loggedIn == true)
             {
                 var that = jQuery(this);
@@ -5142,12 +5180,13 @@ return false;
                 var arr = {};
                 arr["toid"] = toid;                     
                 my.routingAjax(my.config.siteUrl+"unfollow",arr,"",function(response){      
-                    console.log(response);  
+                    console.log('ToID', toid);  
                     if(response.success == "success")
                     {
                         $("#prof_follow_btn").html("");
                         $.template("u_tmpl_container_e",my.config.loaded_template['profile_follow_row']);
                         $.tmpl("u_tmpl_container_e",response.data).appendTo("#prof_follow_btn");
+                        $("#followRow a").attr('data-toid', toid);
                         my.ShowNotification("success","success",response.msg);
                         
                     }
@@ -5160,8 +5199,8 @@ return false;
                 my.ShowNotification("info","info","Kindly login to access this page.");
                 $("#sign_in").click();
             }
-        }else{
-        }       
+//        }else{
+//        }       
         return false;                   
     });
     jQuery("body").off("click",".like_js");
@@ -5172,14 +5211,15 @@ return false;
         {
             var trackId = $(this).attr("data-tid");
             var arr = {};
-            arr["trackId"] = trackId;           
+            arr["trackId"] = trackId;                        
             if(trackId > 0)
-            {
+            {                
                 my.routingAjax(my.config.siteUrl+"like_track",arr,"",function(response){                    
                     if(response.success == "success")
                     {
-                        $(".like_track_counter").html(response.data.likes);
+                        $(".like_track_counter").html(response.data.likes);                        
                         $(myvar).removeClass('like_js').addClass('dislike_js active');
+                        $(myvar).parent().removeClass('like-icon').addClass('unlike-icon');
                         if($("#like").size() > 0)
                         {
                             $.template("u_tmpl_container_e",my.config.loaded_template['box3']);
@@ -5208,7 +5248,7 @@ return false;
         {   
             var trackId = $(this).attr("data-tid");
             var arr = {};
-            arr["trackId"] = trackId;           
+            arr["trackId"] = trackId;                    
             if(trackId > 0)
             {
                 my.routingAjax(my.config.siteUrl+"dislike_track",arr,"",function(response){                 
@@ -5216,6 +5256,7 @@ return false;
                     {                       
                         $(".like_track_counter").html(response.data.likes);
                         $(myvar).removeClass('dislike_js active').addClass('like_js');
+                        $(myvar).parent().removeClass('unlike-icon').addClass('like-icon');
                         if($("#like").size() > 0)
                         {
                             $(response.removeid).fadeOut().remove();    
@@ -5933,10 +5974,12 @@ $(document).ready(function(){
         if (queries.payment == 'success') App.ShowNotification("success","Success","Payment was successful")
         if (queries.cancel == 'success') App.ShowNotification("success","Success","Membership was canceled successful")
     }
-    //    App.ShowNotification("success","Success",'')
+    //    App.ShowNotification("success","Success",'')            
 });
 
 $(window).load(function(){
     $("#startup_progress").remove();
     //redirectLoginAfter();
 });   
+
+

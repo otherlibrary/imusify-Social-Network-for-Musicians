@@ -608,7 +608,19 @@ Class commonfn extends CI_Model
 			return "true";
 		}
 	}
-
+        
+        function follow_exist($toid,$fromId){		
+		$query1 = $this->db->query("SELECT id from followinglog WHERE fromId = $fromId AND toId = $toid ");
+                $row_today = $query1->result_array();
+                //var_dump ($row_today);
+		if( !empty($row_today) && count($row_today) > 0)
+		{				
+				return "Alreadyfollowed";			
+		}else{
+			return false;
+		}
+	}
+        
 	function follow_function($fromid){
 		$date = date('Y-m-d');
 		$intervl_days = FOLLOW_BLOCK_LIMIT_DAY - 1;
@@ -705,7 +717,9 @@ Class commonfn extends CI_Model
 		$session_user_id = $this->session->userdata('user')->id;
 		$fromid = ($fromid != NULL) ? $fromid : $session_user_id;
 		$response_today = $this->follow_today_check($toid,$fromid);
-		if($response_today == "true")
+                $follow_exist = $this->follow_exist($toid,$fromid);     
+                //var_dump ($follow_exist);exit;
+		if($response_today == "true" && ! $follow_exist)
 		{
 			$data = array(
 				'toId' => $toid,
@@ -741,14 +755,17 @@ Class commonfn extends CI_Model
 			return "successfull_follow";
 		}
 		else{
-			return $response_today;
+                    if ($follow_exist) return $follow_exist;
+                    else return $response_today;
 		}
 	}
 
 
 
 
-	function unfollow($toid){			
+	function unfollow($toid){
+            
+            
 		$where = "fromId = '".$this->sess_id."' AND toId = '".$toid."'";
 		$this->db->where($where);
 		$this->db->delete('followinglog');

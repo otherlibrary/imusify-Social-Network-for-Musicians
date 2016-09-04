@@ -237,6 +237,8 @@ class Trackdetail extends MY_Controller {
 			
 			/*dump($sm);
 			exit();*/
+                        $liked = null;
+                        if ($like_class == 'dislike_js') $liked = true;
 			$track_detail = array(			
 			/*'comments' => $c,
 			'likes' => $l,*/
@@ -284,6 +286,7 @@ class Trackdetail extends MY_Controller {
 			'template' => $load_tmpl,
 			'container' => $load_cont,
 			"like_class" => $like_class,
+                        "liked" =>  $liked,   
 			'licence_type_list'=>$licence_type_list,
 			'album_fully_buyable'=>$album_fully_buyable,
 			'head_title' => $head_title,

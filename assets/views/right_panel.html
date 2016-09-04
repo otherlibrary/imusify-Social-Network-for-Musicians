@@ -45,21 +45,29 @@
 
 </div>
 <div class="your-playlist_popup ${class}">{{tmpl "#playlistContent"}}</div>
-<div id="popup">
-	{{tmpl "#popUpContent"}}
 
+<div id="popup">
+    <!-- Place this tag in your head or just before your close body tag. -->
 	<div id="sharepopup" class="modal-box sharepopup">  
+            <script src="https://apis.google.com/js/platform.js" async defer></script>	
+            <div id="fb-root"></div>
 		<header>
-			<a href="#" class="js-modal-close close">×</a>
+			<button href="#" class="js-modal-close close" data-dismiss="modal">×</button>
 			<h3><a href="Javascript:void(0)">Share</a> Track</h3>
 		</header>
 		<div class="modal-body">
-			<p><a href="https://www.facebook.com/sharer/sharer.php?u=" class="share facebook sharelink">Share on Facebook</a></p>
-			<p><a href="https://twitter.com/intent/tweet?url=" class="share twitter sharelink">Share on Twitter</a></p>
-			<p><a href="https://plus.google.com/share?url=" class="share google sharelink">Share on Google+</a></p>
+<!--			<p><a href="https://www.facebook.com/sharer/sharer.php?u=" class="share facebook sharelink">Share on Facebook</a></p>-->
+                        <iframe class="facebook" src="https://www.facebook.com/plugins/share_button.php?href=http%3A%2F%2Fbeta.imusify.com%2F&layout=button&mobile_iframe=false&width=60&height=20" width="60" height="20" style="border:none;overflow:hidden" scrolling="no" frameborder="0" allowTransparency="true">                        
+                        </iframe>                                                
+                        <p><a href="https://twitter.com/intent/tweet?url=" class="share twitter sharelink">Share on Twitter</a></p>			                                                                                                                  
+<!--                        <iframe src="https://platform.twitter.com/widgets/tweet_button.html?size=l&url=https%3A%2F%2Fdev.twitter.com%2Fweb%2Ftweet-button&via=twitterdev&related=twitterapi%2Ctwitter" width="140" height="28" title="Twitter Tweet Button" style="border: 0; overflow: hidden;">
+                        </iframe>                        -->
+                        <!-- Place this tag where you want the share button to render. -->
+                        <div class="google g-plus" data-action="share" data-width="120" data-href="http://beta.imusify.com"></div>
+<!--                        <p><a href="https://plus.google.com/share?url=" class="share google sharelink">Share on Google+</a></p>-->
 		</div>
 		<footer>
-			<a href="#" class="js-modal-close">Close Button</a>
+			<a href="#" class="js-modal-close">Close</a>
 		</footer>
 	</div>
 
