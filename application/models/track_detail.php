@@ -19,7 +19,9 @@ Class track_detail extends CI_Model
 		$row = $query->row_array();
 		/*print_r($row);*/
 		//andy use track cover because the user can upload artwork for track cover
-                $row["cover_image"] = $this->commonfn->get_photo('tc',$row["id"]);
+                //$row["cover_image"] = $this->commonfn->get_photo('tc',$row["id"]);
+                //change to use track thumbnail small version
+                $row["cover_image"] = $this->commonfn->get_photo('t',$row["id"]);
                 //$row["cover_image"] = $this->commonfn->get_photo('t',$row["id"]);//tc track cover t track
 		$row["artist_profile_pic"] = $this->commonfn->get_photo('p',$row["userId"],IMG_66,IMG_66);
 		$row["no_of_followers"] = $this->user_profile->fetch_followers("fl.toId = '".$row["userId"]."'","","","counter");

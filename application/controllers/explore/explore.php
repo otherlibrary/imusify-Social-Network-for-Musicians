@@ -208,7 +208,7 @@ class explore extends MY_Controller {
 
 			if($page != NULL && $page > 0)
 			{
-				$new_limit = $start_limit.",".$this->rec_to_dis;					
+				$new_limit = $start_limit.",".$this->rec_to_dis;
 				$last_page = ceil($total_records/$this->rec_to_dis);	
 				$data_array = $this->browse_recommended->fetch_popular_tracks("",$new_limit,"","",$start_limit);
 				$final_array["data"] = $data_array;	
@@ -220,6 +220,7 @@ class explore extends MY_Controller {
 			}
 
 			$temp_name = "general/browse_rec_music_row.html";
+                        //error data fetched
 			$data_array = $this->browse_recommended->fetch_popular_tracks("",$this->rec_to_dis);
 			$tabid = "popular-songs";
 			$class = "browse-songs";
@@ -252,7 +253,7 @@ class explore extends MY_Controller {
 		$explore_genres = $genres;
 		$moods_list = $this->commonfn->get_moods();
 		$instruments_list = $this->commonfn->get_instuments();
-
+                
 		$recom_Arr = array(
 			'playsets' => $p,
 			'recently_listened' => $rl,
@@ -281,7 +282,7 @@ class explore extends MY_Controller {
 			'moods_list' => $moods_list,
 			'instruments_list' => $instruments_list
 		);
-		
+		//var_dump ($recom_Arr);exit;
 		$template_arry['MainPanel']="main.html";
 		$template_arry['leftPanel']="left_panel.html";
 		$template_arry['rightPanel']="right_panel.html";

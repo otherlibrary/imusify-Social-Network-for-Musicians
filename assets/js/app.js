@@ -2999,7 +2999,10 @@ initTrackDetail:function(){
                     if (! playback){
                         $('#play_track_detail').addClass("load_click");
                         $('#play_track_detail').trigger("click");
-                        playback = true;                        
+                        playback = true; 
+                        //Register event for track cover cropic after 1 second
+                        setTimeout(function(){
+                            my.trackcover_cropic()},1000);                                                
                     }
                     //Register Share link popup
                     my.sharePopup();   
@@ -3429,8 +3432,8 @@ initUpload:function(){
         acceptFileTypes: /(\.|\/)(mp3|mpeg|mpeg3|mpg|x-mpeg|ogg|wav|aiff|flac|alac|mp2|aac|amr|wma)$/i,  
         add: function (e, data) {
                         
-            console.log("Add => ");
-
+            console.log("Add => Type of uploaded file ", data.originalFiles[0]['type']);            
+            
             var uploadErrors = [];
             var acceptFileTypes = /\/(mp3|mpeg|mpeg3|mpg|x-mpeg|ogg|wav|aiff|flac|alac|mp2|aac|amr|wma)$/i;
             if(data.originalFiles[0]['type'].length && !acceptFileTypes.test(data.originalFiles[0]['type'])) {
@@ -3558,20 +3561,40 @@ initUpload:function(){
                 modal:true,
                 processInline:true,
                 loaderHtml:'<div class="loader bubblingG"><span id="bubblingG_1"></span><span id="bubblingG_2"></span><span id="bubblingG_3"></span></div> ',
+                onBeforeImgUpload: 	function(){                     
+                    setTimeout(function(){                     
+                        if ($(".cropImgWrapper").length == 0){
+                        console.log('wrong type');                                               
+                        my.ShowNotification("info","Info","Please only upload image");
+                        setTimeout(function(){
+                            $(".image_upd").show();
+                            jQuery(".image_upd").show();
+                        }, 1000);                                                
+                        }                    
+                    }, 1000);                                                
+                        
+                    
+                },            
                 onAfterImgCrop:function(){
                     if($(".croppedImg").length>0)
                     {
                         $("#track_d_image_"+$r).attr("src",$(".croppedImg").attr("src"));
-                    }   
+                    }
+                    console.log('Cropped image');
                 },
                 onError:function(errormessage){
-                    console.log('onError:'+errormessage)
-                }
+                    console.log('onError: '+errormessage)
+                },
+                onReset:function(){ 
+                    console.log('onReset') 
+                },
             }
-            var croppic_$r = new Croppic('croppic_'+$r, croppicHeaderOptionstrack[$r]);
+            var croppic_$r = new Croppic('croppic_'+$r, croppicHeaderOptionstrack[$r]);            
+            //console.log('Crop ', croppic_$r, name)
+            //croppic_$r.destroy(); 
             //add new valid extension for Image upload
              var id_crop = '#croppic_'+$r+' input';
-             console.log(id_crop);
+             console.log('ID Crop ', id_crop, name);
              $(id_crop).attr("accept", "image/*");
              
             $("#dnd-upload-desc").hide();
@@ -3579,6 +3602,9 @@ initUpload:function(){
             $('select.common').customSelect();
             rows = rows.append(row);
             data.i=i;
+            
+            console.log("Image cropped ", data.originalFiles[0]['type']);
+            
             upload_queue[i]=data;
             ref_q[$r] = name;
             jqXHR[$r]=data.submit(); 
@@ -3641,6 +3667,9 @@ initUpload:function(){
         if(typeof(result.files[0].error) =="undefined" || result.files[0].error=="")
         {
             console.log("Inside Done");
+            //andy show form
+            //$(".album_form").removeClass("displaynone");
+            $(".album-box").show();
             
             var name=result.files[0].name;
             var rn=result.files[0].r;           
@@ -3707,15 +3736,16 @@ $("body").on("click",'.delete',function(e){
     $deltype = $(this).attr("data-deltype");
     $r = $(this).attr("data-r");
     $delete_type = $(this).attr("data-type");
-    var r = confirm("Are you sure?Want to delete this song?");
-    if(r == true)
+    //var r = confirm("Are you sure?Want to delete this song?");
+    //if(r == true)
+    if(true)
     {
         if($delete_type == "a")
         {
             my.routingAjax(my.config.siteUrl+"album_delete",{'userId':$userId,'albumId':$delId,'deltype':$deltype},"",function(response){
                 if(response.status == "success")
                 {   
-                    $(".album_row_"+$delId).fadeOut().remove();
+                    $(".album_row_"+$delId).fadeOut().remove();                    
                     my.ShowNotification("success","Success",response.msg);
                 }else{
                     my.ShowNotification("info","info",response.msg);
@@ -3738,6 +3768,8 @@ $("body").on("click",'.delete',function(e){
                 var current_space = $("body").data("avail_space");
                 var current_new_space = current_space +  response.track_space;
                 $("body").data("avail_space",current_new_space);
+                //Ensure album form hidden
+                $(".album_form").addClass("displaynone");
                 my.ShowNotification("success","Success",response.msg);
             }else{
                 my.ShowNotification("info","info",response.msg);
@@ -3924,11 +3956,11 @@ $("body").on("click",'.delete',function(e){
     }); 
     jQuery("body").off("click",".image_upd");
     jQuery("body").on("click",".image_upd",function(e){
-        
+        //no use Useless
         e.preventDefault();
         
-        var target=$(this).attr("data-target");
-        //console.log('andy upload images clicked', target);
+        var target=$(this).attr("data-target");        
+        //console.log('andy upload images clicked', target);        
         $("#"+target).click();  
         
     });
@@ -4858,7 +4890,9 @@ trackcover_cropic:function(){
     onAfterImgCrop:function(){
         if($(".croppedImg").length>0)
         {
-            $("#track_cover_img").attr("src",$(".croppedImg").attr("src"));
+            //$("#track_cover_img").attr("src",$(".croppedImg").attr("src"));
+            var link = $(".croppedImg").attr("src");
+            $("#track_cover_img").css("background-image",'url(' + link + ')');
         }
         my.ShowNotification("success","success","Cover image uploaded successfully.");
     },
@@ -5974,12 +6008,48 @@ $(document).ready(function(){
         if (queries.payment == 'success') App.ShowNotification("success","Success","Payment was successful")
         if (queries.cancel == 'success') App.ShowNotification("success","Success","Membership was canceled successful")
     }
-    //    App.ShowNotification("success","Success",'')            
+    //    App.ShowNotification("success","Success",'')    
+    
+    //Register upload file for Upload page
+    $("body").on('click', "li #upload_page",function(e) {  
+    console.log('Initiliaze Upload page');
+        setTimeout(function(){        
+        my.initUpload();
+        //Register Image upload
+        croppicHeaderOptions_album  = {
+            cropUrl:my.config.siteUrl+'crop/index/album_image',
+            modal:true,
+            imgEyecandyOpacity:0.8,
+            processInline:true,
+            loaderHtml:'<div class="loader bubblingG"><span id="bubblingG_1"></span><span id="bubblingG_2"></span><span id="bubblingG_3"></span></div>',
+            customUploadButtonId:'album_image_upd',
+            onBeforeImgUpload: function(){},
+            onAfterImgUpload: function(){},
+            onImgDrag: function(){},
+            onImgZoom: function(){},
+            onBeforeImgCrop: function(){},
+            onAfterImgCrop:function(){
+                if($(".croppedImg").length>0)
+                {
+                    $("#album_image_preview").attr("src",$(".croppedImg").attr("src"));
+                }                   
+            },
+            onError:function(errormessage){ console.log('onError:'+errormessage) }
+        }   
+        var croppic2 = new Croppic('album_img_modal', croppicHeaderOptions_album);  
+        
+        }, 1200);
+    });
+ 
+ 
 });
 
 $(window).load(function(){
     $("#startup_progress").remove();
     //redirectLoginAfter();
 });   
+
+
+
 
 

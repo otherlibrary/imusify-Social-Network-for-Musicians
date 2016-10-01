@@ -14,7 +14,12 @@ Class browse_recommended extends CI_Model
 		$output = array();
 
 		if($userId > 0)
-			$cond = " WHERE tt.status = 'y' AND tt.genreId = g.id AND tt.userId = u.id AND tt.albumId = al.id AND ((tt.isPublic='n' and tt.userId='".$userId."') or tt.isPublic='y')";	
+                    //tracks as tt,genre as g,users as u,albums as al
+		    //$cond = " WHERE tt.status = 'y' AND tt.genreId = g.id AND tt.userId = u.id AND tt.albumId = al.id 
+                      //      AND ((tt.isPublic='n' and tt.userId='".$userId."') or tt.isPublic='y')";	
+                    $cond = " WHERE tt.status = 'y' AND tt.genreId = g.id AND tt.userId = u.id 
+                            AND ((tt.isPublic='n' and tt.userId='".$userId."') or tt.isPublic='y')";	        
+                
 		else
 			$cond = " WHERE tt.isPublic='y' AND tt.status = 'y' AND tt.genreId = g.id AND tt.userId = u.id AND tt.albumId = al.id";
 
@@ -25,12 +30,18 @@ Class browse_recommended extends CI_Model
 			$limit = " LIMIT ".$limit." ";
 
 		if($orderby != NULL)
-			$orderby ="ORDER BY plays,tt.id DESC,".$orderby;	
+			$orderby ="ORDER BY plays DESC,tt.id DESC,".$orderby;	
 		else
-			$orderby ="ORDER BY plays,tt.id DESC";	
+			//$orderby ="ORDER BY plays,tt.id DESC";	
+                        $orderby ="ORDER BY tt.id DESC,plays DESC";	
 
-		$query = $this->db->query("SELECT tt.id,tt.title,tt.release_mm,tt.release_dd,tt.release_yy,tt.createdDate,tt.timelength,tt.plays,tt.comments,tt.shares,tt.perLink,g.genre,u.firstname as artist_name,u.lastname,u.profileLink,al.name as album FROM tracks as tt,genre as g,users as u,albums as al ".$cond." ".$orderby." ".$limit." ");
-
+		$query = $this->db->query("SELECT tt.id,tt.title,tt.release_mm,tt.release_dd,tt.release_yy,tt.createdDate,tt.timelength,tt.plays,tt.comments,
+                    tt.shares,tt.perLink,g.genre,u.firstname as artist_name,u.lastname,u.profileLink,
+                    al.name as album, tt.albumId as albumid FROM tracks as tt,genre as g,users as u,albums as al ".$cond." ".$orderby." ".$limit." ");
+//               $query = $this->db->query("SELECT tt.id,tt.title,tt.release_mm,tt.release_dd,tt.release_yy,tt.createdDate,tt.timelength,tt.plays,tt.comments,
+//                    tt.shares,tt.perLink,g.genre,u.firstname as artist_name,u.lastname,u.profileLink
+//                  FROM tracks as tt,genre as g,users as u ".$cond." ".$orderby." ".$limit." "); 
+               //var_dump ($this->db->last_query());exit;
 		if($counter != NULL)
 			return $query->num_rows();		
 
@@ -65,9 +76,11 @@ Class browse_recommended extends CI_Model
 					$row["like_class"] = "unlike-icon";
 				}				
 			}
-
-
-			$output[] = $row;					
+                        if ($row['albumid'] == 0) $row['album'] = '  ';
+                        //$row['album'] = '';
+			$output[] = $row;
+                        //var_dump ($output, $row);exit;
+                        //$output['album'] = 'ABC';
 			$i++;
 		}
 		return $output;
@@ -136,7 +149,7 @@ Class browse_recommended extends CI_Model
 					$row["like_class"] = "unlike-icon";
 				}				
 			}
-			$output[] = $row;
+			$output[] = $row;                        
 			$i++;				
 		}
 		return $output;

@@ -2241,3 +2241,8 @@ background: radial-gradient(ellipse at center, #636160 0%,#000000 70%); */
  }
 
 
+/*  NEW CSS andy */ 
+.intro_bg.zout {
+/*    transform:scale(4, 1.35); */
+    transform:scale(3.8); 
+}

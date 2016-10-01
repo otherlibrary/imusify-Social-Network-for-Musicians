@@ -208,6 +208,8 @@ var _force_to_play = false;
                     console.log('Home Initialize Share');                                 
                     //Register Share link popup
                     my.sharePopup();   
+                    //Register for Upload page
+                    //my.initUpload();
                 });
   
         }); 

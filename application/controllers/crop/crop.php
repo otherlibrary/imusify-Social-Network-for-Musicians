@@ -102,14 +102,16 @@ class crop extends MY_Controller {
 			}
 			else if($action == "track_cover"){
 
-				$temps = getvalfromtbl("id","photos","type = 'tc' AND detailId = '".$trackId."'","single");	
+				//$temps = getvalfromtbl("id","photos","type = 'tc' AND detailId = '".$trackId."'","single");	
+                                $temps = getvalfromtbl("id","photos","type = 't' AND detailId = '".$trackId."'","single");	
 				//echo " temps ".$temps;
 				if($temps > 0)
 				{
 					$data = array(
-						'default_pic' => 'n'					
+						'default_pic' => 'n'                                                
 						);			
-					$where = "(type = 'tc' AND detailId ='".$trackId."' )";			
+					//$where = "(type = 'tc' AND detailId ='".$trackId."' )";	
+                                        $where = "(type = 't' AND detailId ='".$trackId."' )";			
 					$this->db->where($where);
 					$this->db->update('photos', $data);	
 				}
@@ -118,14 +120,16 @@ class crop extends MY_Controller {
 					'detailid' => $trackId,
 					'dir' => $folder_name,
 					'name' => $img_name.$type,
-					'type'=>'tc',
+					//'type'=>'tc',
+                                        'type'=>'t',
 					'default_pic' => 'y'	
 					);				
 				$this->db->insert('photos', $data);
 
 				$response = array(
 					"status" => 'success',
-					"url" => $this->commonfn->get_photo('tc',$trackId)
+					//"url" => $this->commonfn->get_photo('tc',$trackId)
+                                        "url" => $this->commonfn->get_photo('t',$trackId)
 				);// generate an error... or use the log_message() function to log your error				
 			}
 			else if($action == "trackImg"){
