@@ -1,3 +1,4 @@
+    var init_trackcover = false;    
     var croppicHeaderOptions;
     var croppicHeaderOptionstrack = [];
     var interval = 30000;
@@ -2971,6 +2972,7 @@ initTrackDetail:function(){
     my.initTrackBuy();    
     $("body").on("click","a[data-role=trackdetail]",function(e){
         e.preventDefault();     
+        init_trackcover = false;
         my.routingAjax($(this).attr("href"),{},'',function(response){   
             console.log('2951 Ajax Track Detail', response);
             if(typeof(response)!='undefined'){
@@ -2989,20 +2991,20 @@ initTrackDetail:function(){
                 my.hint(upload_similar_steps);
                 my.initTrackBuy();
                 my.trackcover_cropic();
-                } catch(e){
-                    console.log('Error ', e);
-                }
-                
-                //andy
+                } catch(e){ }                                
                 $( document ).ajaxComplete(function() {                    
-                    console.log('Trigger Player 2969');                    
+                    console.log('Trigger Player 2969');  
+                    //Register event for track cover cropic after 1 second
+                    if (! init_trackcover) {
+                        setTimeout(function(){
+                            my.trackcover_cropic()},1000);                         
+                        init_trackcover = true;
+                    }
+                    
                     if (! playback){
                         $('#play_track_detail').addClass("load_click");
                         $('#play_track_detail').trigger("click");
-                        playback = true; 
-                        //Register event for track cover cropic after 1 second
-                        setTimeout(function(){
-                            my.trackcover_cropic()},1000);                                                
+                        playback = true;                                                                       
                     }
                     //Register Share link popup
                     my.sharePopup();   
@@ -6014,7 +6016,7 @@ $(document).ready(function(){
     $("body").on('click', "li #upload_page",function(e) {  
     console.log('Initiliaze Upload page');
         setTimeout(function(){        
-        my.initUpload();
+        my.initUpload();        
         //Register Image upload
         croppicHeaderOptions_album  = {
             cropUrl:my.config.siteUrl+'crop/index/album_image',

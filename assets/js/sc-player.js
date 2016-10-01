@@ -207,7 +207,8 @@ var _force_to_play = false;
                 $( document ).ajaxComplete(function() {                    
                     console.log('Home Initialize Share');                                 
                     //Register Share link popup
-                    my.sharePopup();   
+                    my.sharePopup();  
+                    //my.trackcover_cropic();
                     //Register for Upload page
                     //my.initUpload();
                 });
