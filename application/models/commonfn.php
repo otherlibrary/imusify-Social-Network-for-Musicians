@@ -128,11 +128,17 @@ Class commonfn extends CI_Model
 			$this -> db -> from('track_licence_types as tlt');
 		}
 
-		if($cond != NULL)
+		if($cond != NULL){
+                    //andy
 			$where = "(tlt.status='y' AND ".$cond.")";	
-		else
-			$where = "(tlt.status='y')";
-
+                        if ($flag) $where = "(".$cond.")";
+                }                    
+		else {
+                        	$where = "(tlt.status='y')";
+                                if ($flag) $where = '';
+                }
+		
+                        
 		if($limit != NULL)
 			$this -> db -> limit($limit);
 		$this->db->where($where);	   

@@ -1,3 +1,5 @@
+    var url_location_static = window.location.href;
+    var hide_number_license = 1;
     var init_trackcover = false;    
     var croppicHeaderOptions;
     var croppicHeaderOptionstrack = [];
@@ -1193,6 +1195,7 @@ scrollElem:function($target,source){
         var height = $(window).height();          
         var left_panel_width = $(".left-panel").outerWidth(true);
         var w = width-left_panel_width + 5;
+        
         //console.log('Width left panel ', w);
         $(".content-box").width(w);
         $("#big-player").css({"width":w,"left":left_panel_width});
@@ -1241,6 +1244,12 @@ scrollElem:function($target,source){
             var temps = "edit_save_track";
         }else{
             var temps = "save_track";
+            if (type != 'no_change_never_sell') {
+                console.log('Change value for Never Sell');
+                if ($(".never_sell").val() == 1 || $(".never_sell").val() == '1'){
+                    config.never_sell = 'y';                
+                }  else config.never_sell = 'n';
+            }
         }
         console.log(new FormData($("#track_form"+r)[0]));
 
@@ -1334,11 +1343,54 @@ initCheckboxUpdateDisplay:function($button,$checkbox,settings,color){
         $button
         .removeClass('btn-default')
         .addClass('btn-' + color + ' active');
+        var temp2 = $button.data('id');
+        if (temp2 > 2 && temp2 < 8) {
+           $button.find('a').editable({
+                source: [
+                       {id: '1000', text: 'Music Production and Audio Project / Lease (Up to 1000 copies)', selected: 'selected'},
+                       {id: '10000', text: 'Music Production and Audio Project / Lease (1001 to 10000 copies)'},
+                       {id: '50000', text: 'Music Production and Audio Project / Lease (10001 to 50000 copies)'},
+                       {id: '100000', text: 'Music Production and Audio Project / Lease (Over 50000 copies)'}
+                    ],
+                 success: function(response, newValue) {
+                     hid_id = $(this).attr('data-val');
+                     var licenseId = 4;
+                     if (newValue == 1000 || newValue == '1000'){
+                        licenseId = 4;
+                     } else if (newValue == 10000 || newValue == '10000') {
+                        licenseId = 5;
+                     } else if (newValue == 50000 || newValue == '50000') {
+                         licenseId = 6;                
+                     } else if (newValue == 100000 || newValue == '100000') {
+                         licenseId = 7;                
+                     }
+                     //hid_id 4 no change
+                     console.log('ID of selection new Value edit: ', newValue, licenseId);            
+                     $("#license_number_"+hid_id).val(licenseId);
+
+                     $(this).parent().parent().addClass('active');            
+                     $(".edit_license_number").parent().parent().find("i").removeClass('fa-unchecked').addClass('fa-check');
+                     //$(this).parent().parent().prepend('<i class="state-icon fa fa-check"></i> ');
+                 }
+                 }); 
+        }
     }
     else {
         $button
         .removeClass('btn-' + color + ' active')
         .addClass('btn-default');
+        //andy hide any not active checkbox
+        var temp = $button.data('val');
+        var temp2 = $button.data('id');        
+        if (/edit/.test(url_location_static)){
+            //4 times to hide Only for Edit
+            if (temp2 > 2 && temp2 < 8 && hide_number_license < 5) {
+                hide_number_license++;
+                $button.hide();
+                console.log('ID of button not active: ', temp2);
+            }                    
+        }
+        
     }
 },
 initCheckboxInit:function($button,$checkbox,settings,color){
@@ -1356,8 +1408,37 @@ initEditableCheckbox:function(){
     });
     $('.licence_type_edit_val').editable({
         success: function(response, newValue) {
+            //set new value ID for license option             
             hid_id = $(this).attr('data-val');  
             $("#music_vals_"+hid_id).val(newValue);
+        }
+    }); 
+   $('.edit_license_number').editable({
+       source: [
+              {id: '1000', text: 'Music Production and Audio Project / Lease (Up to 1000 copies)', selected: 'selected'},
+              {id: '10000', text: 'Music Production and Audio Project / Lease (1001 to 10000 copies)'},
+              {id: '50000', text: 'Music Production and Audio Project / Lease (10001 to 50000 copies)'},
+              {id: '100000', text: 'Music Production and Audio Project / Lease (Over 50000 copies)'}
+           ],
+        success: function(response, newValue) {
+            hid_id = $(this).attr('data-val');
+            var licenseId = 4;
+            if (newValue == 1000 || newValue == '1000'){
+               licenseId = 4;
+            } else if (newValue == 10000 || newValue == '10000') {
+               licenseId = 5;
+            } else if (newValue == 50000 || newValue == '50000') {
+                licenseId = 6;                
+            } else if (newValue == 100000 || newValue == '100000') {
+                licenseId = 7;                
+            }
+            //hid_id 4 no change
+            console.log('ID of selection new Value: ', newValue, licenseId);            
+            $("#license_number_"+hid_id).val(licenseId);
+                        
+            $(this).parent().parent().addClass('active');            
+            $(".edit_license_number").parent().parent().find("i").removeClass('fa-unchecked').addClass('fa-check');
+            //$(this).parent().parent().prepend('<i class="state-icon fa fa-check"></i> ');
         }
     }); 
     $('.np_type_edit_val').editable({
@@ -1450,6 +1531,36 @@ $('.nonprofit_avail_switch').on('switchChange.bootstrapSwitch', function (event,
     else
         $(".np_avail_disp").addClass("displaynone").fadeOut();
 }); 
+
+var never_sell_music_state = $('.never_sell').bootstrapSwitch('state');
+
+if(never_sell_music_state)
+{
+    my.UploadAgreeCheckbox();
+    if(never_sell_music_state == true)
+      {
+          $(".never_sell").val(1);  
+          config.never_sell = 'y';
+      }
+    else {
+        $(".never_sell").val(0);
+        config.never_sell = 'n';
+    }
+      
+}
+
+$('.never_sell').on('switchChange.bootstrapSwitch', function (event, state) {
+    my.UploadAgreeCheckbox();
+    if(state == true) {
+      $(".never_sell").val(1);    
+      config.never_sell = 'y';
+    } else {
+        $(".never_sell").val(0);
+        config.never_sell = 'n';
+    }
+      
+});
+
 },
 UploadAgreeCheckbox:function(){
    nonprofit_avail_switch_state = $('.nonprofit_avail_switch').bootstrapSwitch('state');
@@ -2348,6 +2459,11 @@ initLogin:function(){
             my.routingAjax(my.config.siteUrl+"api/login",postarray,"",function(response){
                 if(response.id > 0)
                 {
+                    //set all values for config object
+                    config.loggedIn = true;
+                    config.never_sell = response.never_sell;
+                    config.userIdJs = response.id;                    
+                    
                     $("body").data("avail_space",response.avail_space);
                     if (typeof(Storage) != "undefined" ) {
                         localStorage.setItem("localstorage_avail_space",response.avail_space);
@@ -3431,15 +3547,21 @@ initUpload:function(){
             $("#drag_block").show();
         },
         maxFileSize:config.max_upload_file_size,
-        acceptFileTypes: /(\.|\/)(mp3|mpeg|mpeg3|mpg|x-mpeg|ogg|wav|aiff|flac|alac|mp2|aac|amr|wma)$/i,  
+        //andy reduce audio format
+        //acceptFileTypes: /(\.|\/)(mp3|mpeg|mpeg3|mpg|x-mpeg|ogg|wav|aiff|flac|alac|mp2|aac|amr|wma)$/i,  
+        acceptFileTypes: /(\.|\/)(mp3|mpeg|mpeg3|mpg|wav|flac|alac|mp2)$/i,  
         add: function (e, data) {
                         
-            console.log("Add => Type of uploaded file ", data.originalFiles[0]['type']);            
+            console.log("Add => Type of uploaded file ", data.originalFiles[0]['type']);             
+            //console.log("Original file ", data.originalFiles[0]);
             
+            if(data.originalFiles[0]['type'] == 'audio/mp3' || data.originalFiles[0]['type'] == 'audio/mpeg') loadFromFile(data.originalFiles[0]);
+                        
             var uploadErrors = [];
             var acceptFileTypes = /\/(mp3|mpeg|mpeg3|mpg|x-mpeg|ogg|wav|aiff|flac|alac|mp2|aac|amr|wma)$/i;
             if(data.originalFiles[0]['type'].length && !acceptFileTypes.test(data.originalFiles[0]['type'])) {
-                uploadErrors.push('Please upload valid track.Accepted file types are .mp3,.wav,.ogg,.flac,.aac,.amr,.wma,.aiff');
+                //uploadErrors.push('Please upload valid track.Accepted file types are .mp3,.wav,.ogg,.flac,.aac,.amr,.wma,.aiff');
+                uploadErrors.push('Please upload valid track.Accepted file types are .mp3,.wav,.flac,.alac');
             }
             if(data.originalFiles[0]['size'].length && data.originalFiles[0]['size'] > config.max_upload_file_size) {
                 uploadErrors.push('Filesize is too big');
@@ -3656,6 +3778,21 @@ initUpload:function(){
     },
     done: function (e, data) {
         console.log("Done => ");
+                
+        //andy edit never_sell
+        //Edit buttons if config.never_sell 'y' (default is 'n' )
+        if (config.never_sell == 'y'){
+            var datar = $(".text-right .next-upload-btn").attr("data-r");
+            $('<a href="javascript:void(0)" id="" class="pink-btn creat-btn save_track progress-button page1" '+ 
+            'data-loading="Working.." data-finished="Saved" data-type="background-horizontal" ' +
+            'data-r="'+datar+'">Save</a>').insertBefore(".text-right .next-upload-btn");
+            $(".text-right .next-upload-btn").html("Sell My Music");            
+            $(".text-right .next-upload-btn").css("margin-left", "10px");
+            $(".text-right .next-upload-btn").css("margin-top","-24px");
+        }
+        
+        
+        
         var result = $.parseJSON(data.result);
         console.log(result);
         
@@ -3741,43 +3878,79 @@ $("body").on("click",'.delete',function(e){
     //var r = confirm("Are you sure?Want to delete this song?");
     //if(r == true)
     if(true)
-    {
-        if($delete_type == "a")
-        {
-            my.routingAjax(my.config.siteUrl+"album_delete",{'userId':$userId,'albumId':$delId,'deltype':$deltype},"",function(response){
-                if(response.status == "success")
-                {   
-                    $(".album_row_"+$delId).fadeOut().remove();                    
+    {        
+            if($delete_type == "a")
+            {
+                var r = confirm("Are you sure?Want to delete this song?");
+                if(r == true) {
+                my.routingAjax(my.config.siteUrl+"album_delete",{'userId':$userId,'albumId':$delId,'deltype':$deltype},"",function(response){
+                    if(response.status == "success")
+                    {   
+                        $(".album_row_"+$delId).fadeOut().remove();                    
+                        my.ShowNotification("success","Success",response.msg);
+                    }else{
+                        my.ShowNotification("info","info",response.msg);
+                    }   
+
+                },false,false);
+            }
+        }
+        else{
+            if($deltype == "fu"){
+                    my.routingAjax(my.config.siteUrl+"track_delete",{'userId':$userId,'trackId':$delId,'deltype':$deltype},"",function(response){
+                    if(response.status == "success")
+                    {   
+                     if(typeof response.track_type != "undefined" && response.track_type == "n")
+                     {
+
+                        $("#u_container_"+$r).fadeOut();
+                    }else{
+
+                        $(".music_row_"+$delId).fadeOut().remove();
+                    }
+                    var current_space = $("body").data("avail_space");
+                    var current_new_space = current_space +  response.track_space;
+                    $("body").data("avail_space",current_new_space);
+                    //Ensure album form hidden
+                    $(".album_form").addClass("displaynone");
                     my.ShowNotification("success","Success",response.msg);
                 }else{
                     my.ShowNotification("info","info",response.msg);
                 }   
 
-            },false,false);
-        }
-        else{
-            my.routingAjax(my.config.siteUrl+"track_delete",{'userId':$userId,'trackId':$delId,'deltype':$deltype},"",function(response){
-                if(response.status == "success")
-                {   
-                 if(typeof response.track_type != "undefined" && response.track_type == "n")
-                 {
+            },false,false); 
+            
+           } else {
+               var r = confirm("Are you sure?Want to delete this song?");
+                if(r == true) {
+                      my.routingAjax(my.config.siteUrl+"track_delete",{'userId':$userId,'trackId':$delId,'deltype':$deltype},"",function(response){
+                        if(response.status == "success")
+                        {   
+                         if(typeof response.track_type != "undefined" && response.track_type == "n")
+                         {
 
-                    $("#u_container_"+$r).fadeOut();
-                }else{
+                            $("#u_container_"+$r).fadeOut();
+                        }else{
 
-                    $(".music_row_"+$delId).fadeOut().remove();
+                            $(".music_row_"+$delId).fadeOut().remove();
+                        }
+                        var current_space = $("body").data("avail_space");
+                        var current_new_space = current_space +  response.track_space;
+                        $("body").data("avail_space",current_new_space);
+                        //Ensure album form hidden
+                        $(".album_form").addClass("displaynone");
+                        my.ShowNotification("success","Success",response.msg);
+                    }else{
+                        my.ShowNotification("info","info",response.msg);
+                    }   
+
+                },false,false); 
+                    
                 }
-                var current_space = $("body").data("avail_space");
-                var current_new_space = current_space +  response.track_space;
-                $("body").data("avail_space",current_new_space);
-                //Ensure album form hidden
-                $(".album_form").addClass("displaynone");
-                my.ShowNotification("success","Success",response.msg);
-            }else{
-                my.ShowNotification("info","info",response.msg);
-            }   
+                
+           }
+            
 
-        },false,false); 
         }
     }else{
     }       
@@ -3986,13 +4159,15 @@ $("body").on("click",'.delete',function(e){
             if(completed_q.hasOwnProperty(r))
             {       
                 console.log("before save function called");
-                my.initSaveTrack(r);
+                if ( $(this).hasClass("page1") ) my.initSaveTrack(r,'no_change_never_sell');
+                else my.initSaveTrack(r);
                 my.initGeneral();
             }
             return false;   
         }
         else{
-            console.log("Else 2 ");
+            console.log("Else 2 Form invalid!");
+            
         }
     });
     jQuery("body").off("click",".edit_track");
@@ -5964,6 +6139,7 @@ refreshLeftPanel:function(response){
     });                         
 
 },
+//after logging in successfully
 redirectLoginAfter:function(msg){
     console.log(my.config.history_redirect_url);
     var $notification = msg;
@@ -6051,7 +6227,126 @@ $(window).load(function(){
     //redirectLoginAfter();
 });   
 
+//MP3 meta data extraction
+function loadUrl(url, callback, reader) {
+    var startDate = new Date().getTime();
+    ID3.loadTags(url, function() {
+        var endDate = new Date().getTime();
+        if (typeof console !== "undefined") console.log("Time: " + ((endDate-startDate)/1000)+"s");
+        var tags = ID3.getAllTags(url);
+        //console.log('Tags ',tags);
+        $(".album-form #title").val(tags.title);
+        
+        var description = 'Artist '+ tags.artist;
+        //if(tags.album) description = description+' Album '+ tags.album
+        if(tags.album) description = description+' Track number of album '+tags.track;
+        if(tags.year) description = description+' Published year '+tags.year;
+        $(".album-form #des").val(description);
+                
+//        $("artist").textContent = tags.artist || "";
+//        $("title").textContent = tags.title || "";
+//        $("album").textContent = tags.album || "";
+//        $("artist").textContent = tags.artist || "";
+//        $("year").textContent = tags.year || "";
+//        $("comment").textContent = (tags.comment||{}).text || "";
+//        $("genre").textContent = tags.genre || "";
+//        $("track").textContent = tags.track || "";
+//        $("lyrics").textContent = (tags.lyrics||{}).lyrics || "";
+        if( "picture" in tags ) {
+            var image = tags.picture;
+            //console.log(JSON.stringify(image));
+            var base64String = "";
+            for (var i = 0; i < image.data.length; i++) {
+                base64String += String.fromCharCode(image.data[i]);
+            }
+            var image_base64 = "data:" + image.format + ";base64," + window.btoa(base64String);
+            //console.log('Image base64: ', image_base64);
+            var full_image_format = image.format+ ";base64";
+            var imagebase64 = window.btoa(base64String);
+            //not show it until the image base64 is uploaded to the server
+//            $(".album-form img").attr("src", image_base64); 
+//            $(".album-form #cover_base64").val(image_base64); 
+            //end of local thumbnail
+            
+            //var mediaBlob = base64ToBlob(imagebase64 ,image.format);
+            var formData = new FormData();
+            formData.append("img", imagebase64); 
+            formData.append("imgType", image.format);             
+                        
+            $.ajax({
+              url:config.siteUrl+'crop/index/trackImg',              
+              type:'POST',
+              cache: false,
+              //contentType: 'multipart/form-data',
+              contentType:false,
+              processData: false,
+//              data:{
+//                  imgType: image.format, imgUrl: imagebase64,
+//                  artwork: true
+//              },
+              data: formData,
+              dataType:'json',
+              success: function(data) {
+                  //console.log(data);
+                  if(data.status == "success")
+                  {                      
+                      $(".album-form img").attr("src", data.url);  
+                      $(".album-form .cover_base64_uploaded").val(data.url);
+                      console.log('Artwork inside track Uploaded');
+                  }
+                                     
+              },
+              done: function(data){
+              
+              }        
+          })
+            
+            
+            
+//	    $("art").src = "data:" + image.format + ";base64," + window.btoa(base64String);
+//	    $("art").style.display = "block";
+	} else {
+	    //$("art").style.display = "none";
+	}
+	if( callback ) { callback(); };
+    },
+    {tags: ["artist", "title", "album", "year", "comment", "track", "genre", "lyrics", "picture"],
+     dataReader: reader});
+}
 
+function base64ToBlob(base64, mime) 
+{
+    mime = mime || '';
+    var sliceSize = 1024;
+    var byteChars = window.atob(base64);
+    var byteArrays = [];
+
+    for (var offset = 0, len = byteChars.length; offset < len; offset += sliceSize) {
+        var slice = byteChars.slice(offset, offset + sliceSize);
+
+        var byteNumbers = new Array(slice.length);
+        for (var i = 0; i < slice.length; i++) {
+            byteNumbers[i] = slice.charCodeAt(i);
+        }
+
+        var byteArray = new Uint8Array(byteNumbers);
+
+        byteArrays.push(byteArray);
+    }
+
+    return new Blob(byteArrays, {type: mime});
+}
+
+function loadFromFile(file) {
+    var url = file.urn ||file.name;
+    loadUrl(url, null, FileAPIReader(file));
+}
+
+function load(elem) {
+    if (elem.id === "file") {
+        loadFromFile(elem.files[0]);
+    } 
+}
 
 
 

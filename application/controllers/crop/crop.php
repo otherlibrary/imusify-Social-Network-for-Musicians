@@ -11,6 +11,7 @@ class crop extends MY_Controller {
 
 	function index($action = NULL)
 	{
+                
 		if($action == "track_cover"){
 			$trackId = $this->input->post('trackId');
 		}

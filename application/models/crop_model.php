@@ -27,6 +27,9 @@ Class crop_model extends CI_Model
 	function image_crop($image_data,$folder_name,$action){
 		$imgUrl = $this->input->post('imgUrl',false);
 		$imgType = $this->input->post('imgType',false);
+                
+                //var_dump ($this->input->post('img'));
+                //var_dump ($_FILES);
 
 		$imgUrl=$imgType.",".$imgUrl;
 		// original sizes
@@ -46,11 +49,48 @@ Class crop_model extends CI_Model
 
 		$jpeg_quality = 100;
 		$img_name = md5(time()).mt_rand();
-
-		if(file_exists(asset_upload_path().$folder_name)==false){
+                $output_filename = asset_upload_path().$folder_name.$img_name;
+                //check artwork from track or uploaded image
+                if ($this->input->post('img')){
+                    $type = $this->input->post('imgType');
+                    if (stristr($type,'jpeg')){
+                        $img_full_name = $img_name.'.jpeg';
+                        $type = '.jpeg';
+                    } else if (stristr($type,'jpg')){
+                        $img_full_name = $img_name.'.jpeg';
+                        $type = '.jpeg';
+                    } else if (stristr($type,'png')){
+                        $img_full_name = $img_name.'.png';
+                        $type = '.png';
+                    } else {
+                        $img_full_name = $img_name.'.gif';
+                        $type = '.gif';
+                    }
+                    $data = base64_decode($this->input->post('img'));
+                    //from root folder imusify (not from model)
+                    $r = file_put_contents('./assets/upload/track/'.$img_full_name, $data);
+                    if (! $r) {
+                        //false to save picture cover artwork
+                            $response = array(
+                            "status" => 'error',
+                            "message" => 'Can`t write artwork from track'
+                            );
+                    } else{
+                        //success to save file
+                        $response["status"] = "success";
+			$response["msg"] = "Uploaded successfully.";
+			$response["img_name"] = $img_name;
+			$response["type"] = $type;
+			$response["folder_name"] = $folder_name;
+			$response["output_filename"] = $output_filename;
+                    }                    
+                    
+                } else {
+                    //uploaded image
+                    if(file_exists(asset_upload_path().$folder_name)==false){
 			mkdir(asset_upload_path().$folder_name,0777);
-		}
-		$output_filename = asset_upload_path().$folder_name.$img_name;
+                    }
+		
 
 
 		$pos  = strpos($imgUrl, ";");
@@ -113,7 +153,9 @@ Class crop_model extends CI_Model
 			$response["type"] = $type;
 			$response["folder_name"] = $folder_name;
 			$response["output_filename"] = $output_filename;
-		}
+                    }
+                }
+                                		
 		return $response; 
 	}
 

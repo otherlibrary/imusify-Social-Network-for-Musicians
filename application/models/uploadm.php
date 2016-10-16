@@ -8,7 +8,8 @@ Class uploadm extends CI_Model
 	}
 	
 	/*Insert track*/
-	function insert_track($title,$desc,$mm,$dd,$yy,$genre,$label,$image,$folder_name,$sec_tags_genid,$album_id,$r,$eaction,$moods_list,$instruments_list,$music_vocals_y = NULL,$music_vocals_gender = NULL,$sale_available = NULL,$sale_available_ar = NULL,$licence_available = NULL,$licence_available_ar = NULL,$nonprofit_available = NULL,$post = NULL)
+	function insert_track($title,$desc,$mm,$dd,$yy,$genre,$label,$image,$folder_name,$sec_tags_genid,$album_id,$r,$eaction,$moods_list,$instruments_list,$music_vocals_y = NULL,
+                $music_vocals_gender = NULL,$sale_available = NULL,$sale_available_ar = NULL,$licence_available = NULL,$licence_available_ar = NULL,$nonprofit_available = NULL,$post = NULL)
 	{	
 		$this->load->model('commonfn');
                                 
@@ -279,6 +280,9 @@ Class uploadm extends CI_Model
 		}
 		else{
                     //insert new track
+                    //andy
+                    //var_dump ($post);exit;
+                    
 			$this->load->library('getid3/getID3');
 			$this->load->library('MP3Waveform');
 			$this->load->model('commonfn');
@@ -432,7 +436,7 @@ Class uploadm extends CI_Model
 				$usage_type = rtrim($usage_type,",");
 			}
 			
-
+                            
 			$data = array(
 				'albumId' => $album_id,
 				'userId' =>  $session_user_id,
@@ -498,8 +502,18 @@ Class uploadm extends CI_Model
 			//$this->db->query("insert into temp(data)  values('".$this->db->last_query()."')");
 			/*print $this -> db ->last_query();*/
 			$track_id = $this->db->insert_id();					
-
-			
+                        
+                        //andy add new flag check never sell my music
+			if($post["never_sell"] && ( $post["never_sell"] == "1" || $post["never_sell"] == "1") ){
+                            $data=array('never_sell'=> 'y');
+                            $this->session->userdata('user')->never_sell = 'y';
+                            $this->db->where('id',$this->sess_userid);
+                            $this->db->update('users',$data);
+                        } else {
+                            $data=array('never_sell'=> 'n');
+                            $this->db->where('id',$this->sess_userid);
+                            $this->db->update('users',$data);
+                        }
 
 			/*Save tags to db*/
 
@@ -568,7 +582,15 @@ Class uploadm extends CI_Model
 				$this->db->insert_batch('track_instruments', $data3);
 			}	
 			/*save instuments to db ends*/
-
+                        
+                        //andy insert artwork from track
+                        if (!empty ($post["cover_base64_uploaded"])){
+                            $folder_name = "track/";
+                            $temp = explode("/", $post["cover_base64_uploaded"]);
+                            $length = count($temp);
+                            $image_update = $temp[$length - 1];
+                        }
+                        
 			if($this->session->userdata('image_'.$r) != "")
 			{
 				$image_update = $this->session->userdata('image_'.$r);
@@ -576,6 +598,7 @@ Class uploadm extends CI_Model
 				$this->session->unset_userdata('image_'.$r);
 			}
 
+                        
 			$data_alb_photo = array(
 				'detailId' => $track_id,
 				'dir' => $folder_name,
@@ -626,7 +649,10 @@ Class uploadm extends CI_Model
 			/*Price non-profit licence calculation ends */
 			foreach ($licence_id_ar as $key => $value) {
 				$licence_price_arr[$m]["trackId"] = $track_id;
-				$licence_price_arr[$m]["licenceId"] = $value;
+                                if (!empty($post["license_number_4"]) ){
+                                    $licence_price_arr[$m]["licenceId"] = $post["license_number_4"];
+                                } else $licence_price_arr[$m]["licenceId"] = $value;  
+				                                
 				$licence_price_arr[$m]["licencePrice"] = $post[$key];
 				$licence_price_arr[$m]["createdDate"] = date('Y-m-d H:i:s');
 				$m++;
@@ -885,6 +911,7 @@ Class uploadm extends CI_Model
 		$output = array();			
 		if($cond == NULL)
 			$cond = " WHERE status = 'y' AND id = ".$id."";
+                        if ($type == 't') $cond = " WHERE id = ".$id.""; //change query for track
 		else
 			$cond = " WHERE status = 'y' AND id = ".$id." AND ".$cond."";	
 		if($limit != NULL)
@@ -1262,8 +1289,10 @@ Class uploadm extends CI_Model
                         //first time fu just upload track
 			else if(($trackdet != "" || $trackdet != NULL) && $deltype == "fu"){
 				$filename =  asset_path()."temp/".$userId."/".$trackdet;
-					
-				$file_size = filesize($filename);
+                                $file_size = 0;
+				if(file_exists($filecname)){
+                                    $file_size = filesize($filename);
+                                }					
 				$response["track_sapce"] = $file_size;
 				$response["status"] = "success";
 				$response["msg"] = "Upload cancelled - ".$trackdet;

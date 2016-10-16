@@ -235,17 +235,19 @@
 
 									<div class="form-group displaynone lic_avail_disp" class="">
 										<div class="checkbox_container">
-											{{each(i,v) licence_type_list}}
+											{{each(i,v) licence_type_list}}                                                                                        
 											<span class="button-checkbox">				
 												<button type="button" class="btn btn-xs check_btn " data-color="primary" data-val="${v.mp3}" data-id="${v.id}">
-													<span class="lic_avail_disp_name">${v.name}</span>
+													<span class="lic_avail_disp_name">                                                                                                                                                                                                                        
+                                                                                                            <a style="color: white !important;" href="Javascript:void(0)" data-val="${v.id}" data-type="select2" data-title="Select number of copies">${v.name}</a>                                                                                                            
+                                                                                                        </span>
 													<span class="lic_avail_disp_edit_span edit_price_operation">
 														$ <a href="Javascript:void(0)" data-val="${v.id}" class="edit_price_operation licence_type_edit_val" data-type="text" data-title="${v.name}" class="licence_type_edit_val">${v.mp3}<i class="fa fa-pencil-square-o"></i></a>
 													</span>
 												</button>				
 												<input type="checkbox" class="hidden edit_price_operation" name="licence_available_ar[]" value="${v.id}" ${v.selected} />				
 												<input type="hidden" value="" name="lic_${v.id}" class="edit_price_operation" id="music_vals_${v.id}">
-											</span>
+											</span>                                                                                        
 											{{/each}}
 										</div>
 									</div>
@@ -271,7 +273,16 @@
 												{{/each}}
 											</div>
 										</div>
-
+                                                                                
+                                                                                <!-- Never sell my music -->
+                                                                                <div class="form-group">
+                                                                                        <div class="make-switch" data-on-text="True" data-on="primary" data-off="info">
+                                                                                                <label for="genner">Never sell my music?</label>
+                                                                                                <input type="checkbox" value="0" class="never_sell" name="never_sell">
+                                                                                        </div>
+                                                                                </div>
+                                                                                <!-- end of Never sell my music -->
+                                                                    
 										<div class="form-group ${display_checkbox_class} checkbox checkbox-pink checkbox-success checkbox-inline" id="certify_checkbox">
 											<input type="checkbox" name="agree" id="agree" {{if checkboxselected}} checked {{/if}} class="validate[required]">	
 
@@ -303,8 +314,17 @@
 	</div>
 <script type="text/javascript">    
 $(document).ready(function(){       
-//    var bpm = $("#trackuploadbpm").attr("data-bpm");
-//    $('#trackuploadbpm option[value='+bpm+']').attr('selected','selected');        
+    
+        if (config.never_sell == 'y'){
+            var datar = $(".text-right .next-upload-btn").attr("data-r");
+            $('<a href="javascript:void(0)" id="" class="pink-btn creat-btn save_track progress-button page1" '+ 
+            'data-loading="Working.." data-finished="Saved" data-type="background-horizontal" ' +
+            'data-r="'+datar+'">Save</a>').insertBefore(".text-right .next-upload-btn");
+            $(".text-right .next-upload-btn").html("Sell My Music");            
+            $(".text-right .next-upload-btn").css("margin-left", "10px");
+            $(".text-right .next-upload-btn").css("margin-top","-24px");
+        }
+        
 });
   
 </script>

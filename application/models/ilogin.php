@@ -8,7 +8,7 @@ Class ilogin extends CI_Model
 	public function login($username = "", $password="",$rememberme = NULL,$id = NULL,$type = null)
 	{
            if (empty($this)) return;
-	   $this->db->select('id,email,username,password,usertype,role_added,profileLink,firstname,lastname,braintreecustId,avail_space');
+	   $this->db->select('id,email,username,password,usertype,role_added,profileLink,firstname,lastname,braintreecustId,avail_space,never_sell');
 	   $this->db-> from('users');
            //var_dump ($id, $type, $password, $username);exit;
 	   if($id != NULL)

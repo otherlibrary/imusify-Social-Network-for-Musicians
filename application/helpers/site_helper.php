@@ -9,6 +9,7 @@ if(!function_exists('get_template_content')){
 		$CI->load->model('commonfn');
 		$ajax=$CI->config->item('ajax');
 		$temp_uimg = NULL;
+                //var_dump($CI->session->all_userdata());exit;
 		if($data!=''){
 			if(isset($CI->session->userdata('user')->id) && $CI->session->userdata('user')->id > 0)
 			{
@@ -40,7 +41,8 @@ if(!function_exists('get_template_content')){
 	   			'user_id'=>isset($CI->session->userdata('user')->id) ? $CI->session->userdata('user')->id :0,
 	   			'profileLink'=>isset($CI->session->userdata('user')->profileLink) ? $CI->session->userdata('user')->profileLink :" ",                                
 	   			'profileImage'=>$temp_uimg,
-	   			'page_class' => $classname."_page"
+	   			'page_class' => $classname."_page",
+                                'never_sell' => $CI->session->userdata('user')->never_sell,
 	   			);
                         
 	   		$data =  objectToArray($data);

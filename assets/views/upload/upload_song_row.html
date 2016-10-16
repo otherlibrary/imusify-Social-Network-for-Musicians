@@ -28,7 +28,8 @@
 					<div class="col-lg-3 col-md-4 col-sm-12 col-xs-12 cover-img">
 						<figure>
 							<img src="${track_image}" class="img-responsive" alt="" id="track_d_image_${r}">
-							
+							<input type="hidden" value="" name="cover_base64" class="" id="cover_base64">
+                                                        <input name="cover_base64_uploaded" type="hidden" value="" class="cover_base64_uploaded">
 							<div id="croppic_${r}" style="height:300px;width:300px" class="displaynone"></div>	
 						</figure>
 						<p>Track image</p>
@@ -70,7 +71,7 @@
 
 						<div class="form-group">
 							<label for="genner">Secondary Genres (Pick two)</label>
-							<select class="form-control validate[required] select2 " multiple  id="sec_genner${r}" name="sec_genner[]">
+							<select class="form-control select2 " multiple  id="sec_genner${r}" name="sec_genner[]">
 								{{each(i,v) sec_genre_list}}		
 								<option value="${v.id}">${v.genre}</option>
 								{{/each}}
@@ -78,7 +79,7 @@
 						</div>
                                                 <div class="form-group">
 							<label for="genner">BPM (Beats Per Minute)</label>
-                                                        <input type="text" class="form-control validate[required]" id="trackuploadbpm${r}" name="trackuploadbpm" data-r="${r}"/>
+                                                        <input type="text" class="form-control" id="trackuploadbpm${r}" name="trackuploadbpm" data-r="${r}"/>
 <!--							<select class="common fullwidth genre_select" name="trackuploadbpm" id="trackuploadbpm${r}" data-r="${r}">								
                                                                 <option value="40">40</option>
                                                                 <option value="50">50</option>
@@ -100,7 +101,7 @@
                                             
 						<div class="form-group">
 							<label for="genner">pick moods</label>
-							<select class="form-control validate[required] select2" multiple  id="mood${r}" name="moods_list[]">
+							<select class="form-control select2" multiple  id="mood${r}" name="moods_list[]">
 								{{each(i,v)  moods_list}}		
 								<option value="${v.id}">${v.mood}</option>
 								{{/each}}
@@ -165,7 +166,7 @@
 
 						<div class="form-group">
 							<label for="genner">Instruments</label>
-							<select class="form-control validate[required] select2" multiple  id="instruments${r}" name="instruments[]" >
+							<select class="form-control select2" multiple  id="instruments${r}" name="instruments[]" >
 								{{each(i,v)  instuments_list}}		
 								<option value="${v.id}">${v.name}</option>
 								{{/each}}
@@ -244,13 +245,21 @@
 							{{each(i,v) licence_type_list}}
 							<span class="button-checkbox">				
 								<button type="button" class="btn btn-xs check_btn" data-color="primary" data-val="{{if higher_type}} ${v.wave} {{else}} ${v.mp3} {{/if}}" data-id="${v.id}">
-									<span class="lic_avail_disp_name">${v.name}</span>
+                                                                        <span class="lic_avail_disp_name">
+                                                                            {{if v.id == 4}}
+                                                                            <a style="color: white !important;" href="Javascript:void(0)" data-val="${v.id}" class="edit_license_number" data-type="select2" data-title="Select number of copies">${v.name}<i class="fa fa-pencil-square-o"></i></a>
+                                                                            {{else}}
+                                                                            	${v.name}
+									    {{/if}}	
+                                                                            
+                                                                        </span>
 									<span class="lic_avail_disp_edit_span edit_price_operation">
 										$ <a href="Javascript:void(0)" data-val="${v.id}" class="edit_price_operation licence_type_edit_val" data-type="text" data-title="${v.name}" class="licence_type_edit_val">{{if higher_type}} ${v.wave} {{else}} ${v.mp3} {{/if}}<i class="fa fa-pencil-square-o"></i></a>
 									</span>
 								</button>				
 								<input type="checkbox" class="hidden edit_price_operation" name="licence_available_ar[]" value="${v.id}" />				
 								<input type="hidden" value="" name="lic_${v.id}" class="edit_price_operation" id="music_vals_${v.id}">
+                                                                <input type="hidden" value="" name="license_number_${v.id}" class="edit_license_number_hidden" id="license_number_${v.id}">
 							</span>
 							{{/each}}
 						</div>
@@ -264,7 +273,7 @@
 							<input type="checkbox" value="1" class="nonprofit_avail_switch" name="nonprofit_available">
 						</div>
 					</div>
-
+                                       
 					<!-- music available for non profit then display this -->
 					<div class="form-group displaynone np_avail_disp" class="">
 						<div class="checkbox_container">
@@ -281,9 +290,18 @@
 							</div>
 						</div>
 						<!-- music available for non profit then display this ends -->
-
+                                                 <!-- Never sell my music -->
+                                                <div class="form-group">
+                                                        <div class="make-switch" data-on-text="True" data-on="primary" data-off="info">
+                                                                <label for="genner">Never sell my music?</label>
+                                                                <input type="checkbox" value="0" class="never_sell" name="never_sell">
+                                                        </div>
+                                                </div>
+                                                <!-- end of Never sell my music -->
+                                        
+                                        
 						<div class="form-group ${display_checkbox_class} checkbox checkbox-pink checkbox-success checkbox-inline" id="certify_checkbox">
-							<input type="checkbox" name="agree" id="agree" {{if checkboxselected}} checked {{/if}} class="validate[required]">	
+							<input type="checkbox" name="agree" id="agree" {{if checkboxselected}} checked {{/if}} class="">	
 							<label for="agree">I certify that I own the copyright in or have all the necessary rights related to such content to upload it.</label>
 							
 						</div>

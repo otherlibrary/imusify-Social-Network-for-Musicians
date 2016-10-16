@@ -55,6 +55,8 @@ Version: 3.5.1 Timestamp: Tue Jul 22 18:58:56 EDT 2014
     background-image: -moz-linear-gradient(center bottom, #eee 0%, #fff 50%);
     filter: progid:DXImageTransform.Microsoft.gradient(startColorstr = '#ffffff', endColorstr = '#eeeeee', GradientType = 0);
     background-image: linear-gradient(to top, #eee 0%, #fff 50%);
+    min-width: 150px;
+    max-width: 255px;
 }
 
 html[dir="rtl"] .select2-container .select2-choice {

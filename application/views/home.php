@@ -2,10 +2,12 @@
 {
 	$loggedin = "true";
 	$userIdJs = $this->session->userdata('user')->id;
+        $never_sell = $this->session->userdata('user')->never_sell;
 }
 else
 {
 	$loggedin = "false";
+        $never_sell = 'n';
 	$userIdJs = 0;
 } 
 
@@ -52,7 +54,8 @@ if(isset($this->session->userdata('user')->avail_space) && ($this->session->user
 			method:'<?php  echo $this->router->fetch_method(); ?>',
 			sitename:'<?php  echo SITE_NM; ?>',
 			stripe_public_key:'<?php  echo STRIPE_PUBLIC_API_KEY; ?>',
-			max_upload_file_size:'<?php  echo MAX_UPLOAD_FILE_SIZE_ALLOWED; ?>',
+			max_upload_file_size:'<?php  echo MAX_UPLOAD_FILE_SIZE_ALLOWED; ?>',                        
+                        never_sell:'<?php echo $never_sell; ?>',
 
 		};
 
