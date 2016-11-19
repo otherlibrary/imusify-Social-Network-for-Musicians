@@ -120,9 +120,9 @@ Class user_profile extends CI_Model
 
 				//admin set default roles
 		$user_def_db_roles = $this->get_user_roles("is_default='y'","","true");
-
-		$f_array = array_merge($roles,$user_def_db_roles);
-
+                if( is_array(($user_def_db_roles)) )
+		     $f_array = array_merge($roles,$user_def_db_roles);
+                else $f_array = $role;
 		if(count($user_def_db_roles) > 0)
 		{
 			$roles = array_unique($f_array);
