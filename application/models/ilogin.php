@@ -5,7 +5,7 @@ Class ilogin extends CI_Model
 		parent::__construct();		
 		$this->load->model('commonfn');	
 	}
-	public function login($username = "", $password="",$rememberme = NULL,$id = NULL,$type = null)
+	public function login($username = "", $password="",$rememberme = NULL,$id = NULL,$type = null, $post_array = null)
 	{
            if (empty($this)) return;
 	   $this->db->select('id,email,username,password,usertype,role_added,profileLink,firstname,lastname,braintreecustId,avail_space,never_sell');
@@ -15,17 +15,19 @@ Class ilogin extends CI_Model
 			$where = "id='".$id."'"; 	
 	   else
 			$where = "(username='".$username."' or email='".$username."' ) AND password='".md5($password)."'";
+           if (!empty ($post_array['fbid']))  $where = "(username='".$username."')";
 
 		if($type == "user")
 		{
 			$where .= "AND usertype = '".$type."'";
 		}
-
+                
+                
 	   $this->db->where($where);
 	   $this -> db -> limit(1);
-
+           
 	   $query = $this -> db -> get();
-	   
+	   //var_dump($this->db->last_query());exit;
 	   if($query -> num_rows() == 1)
 	   {
 	   		$user=$query->row();

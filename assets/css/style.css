@@ -451,6 +451,7 @@ input:focus, textarea:focus, select:focus {box-shadow: none !important; -moz-box
  	footer .player-bg .wave-img .player-setting a.shuffle-icon:hover {background-position: -116px -277px;}
  	footer .player-bg .wave-img .player-setting a.repeat-icon {background-position: -148px -260px;}
  	footer .player-bg .wave-img .player-setting a.repeat-icon:hover {background-position: -148px -277px;}
+        footer .player-bg .wave-img .player-setting a.repeat-icon.active {background-position: -148px -277px;}
  	footer .player-bg .file-lists {float: right; margin-top: 10px;}
  	footer .player-bg .file-lists a.icons {float: left; width: 21px; height: 18px; margin-left: 30px; cursor: pointer;}
  	footer .player-bg .file-lists a.list-icon {background-position: -118px -302px;}
@@ -528,9 +529,18 @@ input:focus, textarea:focus, select:focus {box-shadow: none !important; -moz-box
  #form-bg .form-box .form-field input.width85, #items-box .album-box .album-form input.width85 {width: 85px; display: inline-block;}
  #form-bg .form-box .form-field input.width84, #items-box .album-box .album-form input.width84 {width: 84px; display: inline-block;}
  #form-bg .form-box .form-field .check-box {padding: 0 15px; margin: 15px 0;}
- #form-bg .form-box .form-field .check-box .borTop { border-top: 1px solid #2C2A2A; padding-top: 22px;}
- #form-bg .form-box .form-field .check-box input, #items-box .album-box .album-form .check-box input {float: left; margin: 3px 12px 0 0;}
- #form-bg .form-box .form-field .check-box label, #items-box .album-box .album-form .check-box label {float: left; text-transform:inherit; width: 80%;}
+ #form-bg .form-box .form-field .check-box .borTop { 
+/*     border-top: 1px solid #2C2A2A; padding-top: 22px;*/
+    padding-top: 8px;
+ }
+ #form-bg .form-box .form-field .check-box input, #items-box .album-box .album-form .check-box input {float: left; 
+/*                  margin: 3px 12px 0 0;*/
+ }
+ #form-bg .form-box .form-field .check-box label, #items-box .album-box .album-form .check-box label {float: left; text-transform:inherit; 
+/*                  width: 80%;*/
+ }
+
+ 
  #form-bg .form-box .form-field input.creat-btn,#form-bg .form-box .form-field a.creat-btn, #items-box .album-box .album-form button.creat-btn,.creat-btn {background-color: #EA3F4F; color: #ffffff; font-weight: 500; padding: 6px 20px 10px; width: auto;}
  #form-bg .form-box .form-field a.creat-btn,.creat-btn{
  	padding:10px 20px;

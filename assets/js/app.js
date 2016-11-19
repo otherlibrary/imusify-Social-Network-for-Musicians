@@ -1,3 +1,5 @@
+    var add_save_never_sell = false;
+    var init_upload = false;
     var url_location_static = window.location.href;
     var hide_number_license = 1;
     var init_trackcover = false;    
@@ -8,7 +10,7 @@
     var queue=[];
     var temp={};    
     var root = document.location.hostname;
-    var genre,subgenre,d_genre,d_mood,s_price,s_duration,loaded,response_genre,response_sec_genre,response_album_list,mood_list,response_instruments_list,licence_types_list,sell_type_list,np_type_list,track_upload_type_list,lower_type_list,higher_type_list;
+    var genre,subgenre,d_genre,d_mood,s_price,s_duration,loaded,response_genre,response_sec_genre,response_soundlike,response_album_list,mood_list,response_instruments_list,licence_types_list,sell_type_list,np_type_list,track_upload_type_list,lower_type_list,higher_type_list;
     var search_params={};
     var request_array = [];
     var r_flag;     
@@ -1249,14 +1251,21 @@ scrollElem:function($target,source){
                 if ($(".never_sell").val() == 1 || $(".never_sell").val() == '1'){
                     config.never_sell = 'y';                
                 }  else config.never_sell = 'n';
-            }
+            } 
+            //else {
+                //change value for never_sell to 2
+                //$(".never_sell").val("2");
+            //}
         }
         console.log(new FormData($("#track_form"+r)[0]));
 
         /*my.addProgressBarButton(function(){*/
             var postarray = new FormData($("#track_form"+r)[0]);
+            //console.log('POST track save: ', JSON.stringify(postarray));
             postarray['progressButton']=$(this);
-            my.routingAjax(my.config.siteUrl+temps,postarray,"",function(response){
+            var link_ajax = my.config.siteUrl+temps; 
+            if (type == 'no_change_never_sell') link_ajax = link_ajax+'?nonevermusic=true';
+            my.routingAjax(link_ajax,postarray,"",function(response){
                 console.log("success");
                 my.initRemoveItem(ref_q,r);
                 if(typeof type != "undefined" && type == "edit")
@@ -1285,6 +1294,7 @@ scrollElem:function($target,source){
                     }               
                 }               
                 my.ShowNotification("success","Success",response.msg);
+               // $(".never_sell").val(0);
                 localstorage_avail_space = localStorage.getItem("localstorage_avail_space");
 
                 if(parseInt(localstorage_avail_space) != parseInt("-1")){
@@ -1543,7 +1553,7 @@ if(never_sell_music_state)
           config.never_sell = 'y';
       }
     else {
-        $(".never_sell").val(0);
+        $(".never_sell").val(2);
         config.never_sell = 'n';
     }
       
@@ -1555,7 +1565,7 @@ $('.never_sell').on('switchChange.bootstrapSwitch', function (event, state) {
       $(".never_sell").val(1);    
       config.never_sell = 'y';
     } else {
-        $(".never_sell").val(0);
+        $(".never_sell").val(2);
         config.never_sell = 'n';
     }
       
@@ -1912,6 +1922,7 @@ initUploadDetails:function(){
         my.routingAjax(my.config.siteUrl+"upload_details","","",function(response){
             response_genre = response.genre;
             response_sec_genre = response.sec_genre;
+            response_soundlike = response.sound_like_list;
             response_album_list = response.album_list;
             mood_list = response.mood_list; 
             response_instruments_list = response.instuments_list; 
@@ -1921,7 +1932,7 @@ initUploadDetails:function(){
             track_upload_type_list = response.track_upload_type_list;  
             lower_type_list = response.lower_type_list; 
             higher_type_list = response.higher_type_list; 
-
+            console.log('Fetch upload form selection');
             
         },false,false,true);    
     }           
@@ -2054,7 +2065,18 @@ initPopup:function(){
                 var $a=$.template("popUpContent",my.config.loaded_template[response.extra.temp]);
                 $.tmpl("popUpContent",response).appendTo("#popup");
                 $.when($a).then(function(){    
-                    console.log(response.extra.temp);                           
+                    console.log(response.extra.temp);       
+                    //reload FB sdk after ajax (because it only loads for initial page)
+                    if (response.extra.temp == 'sign_in' || response.extra.temp == 'sign_up') {
+                        setTimeout(function(){
+                            intializeFB()},300); 
+                        //intializeFB();
+                    }                                        
+                        if (response.extra.temp == 'invite') {                            
+                            setTimeout(function(){
+                            my.initPlugin()},1000); 
+                        }
+                    
                     $(".modal."+response.extra.temp).modal("show");
                     if($(".invite_page").size()>0){
                         $(".invite").addClass("show");
@@ -2249,13 +2271,14 @@ initInviteFriends:function(){
     {
         e.preventDefault();
         var seldata = $(".invite_email_tagmanage").tagsManager('tags');
-        if(seldata.length == 0 || typeof seldata == "undefined")
+        //if(seldata.length == 0 || typeof seldata == "undefined")
+        if(typeof seldata == "undefined")
         {
             e.preventDefault();
             $("#invite_form").validationEngine();
             if($("#invite_form").validationEngine('validate'))
             {
-
+                my.ShowNotification("info","info",'Please enter to add an email address OR email is not valid');
             }
         }
         else{
@@ -2263,8 +2286,7 @@ initInviteFriends:function(){
                 $("#invite_form").addClass("disabled");
                 var postarray=$("#invite_form").serializeArray();
                 postarray['progressButton']=$("#submitinvite");
-                my.routingAjax(my.config.siteUrl+"api/invitefriends",postarray,"",function(response){
-                    $("#invite_form").removeClass("disabled")
+                my.routingAjax(my.config.siteUrl+"api/invitefriends",postarray,"",function(response){                    
                     if(response.status == "success")
                     {
                         $(".invite_email_tagmanage").tagsManager('empty');
@@ -2272,8 +2294,11 @@ initInviteFriends:function(){
                     }  
                     else{
                         my.ShowNotification("info","info",response.msg); 
-                    }     
+                    }
+                    $("#invite_form").removeClass("disabled");
+                    
                 },false,false); 
+                $("#invite_form").removeClass("disabled");
             } 
         }
     });
@@ -2398,8 +2423,8 @@ initLogin:function(){
         else if(type == "in")
             url = "linklogin";
 
-        var xhr = my.config.siteUrl+url ;
-        window.open(xhr, "", "width=800, height=700");
+//        var xhr = my.config.siteUrl+url ;
+//        window.open(xhr, "", "width=800, height=700");
     });
 
     $("body").on('show.bs.modal','.sign_in', function (e) { 
@@ -3252,6 +3277,10 @@ initProfile:function(){
                 $( document ).ajaxComplete(function() {                    
                     console.log('Initialize Share Popup');                                       
                     my.sharePopup();   
+                    //Hide Top playlist for Profile page
+                    if ($("#slider-box2").length == 1){
+                        if($("#slider-box2 #slider-container_prof .songs").length == 0) $("#slider-box2").hide();
+                    } 
                 });
                 
             }
@@ -3522,6 +3551,7 @@ initUpload:function(){
         $(this).toggleClass('On').toggleClass('Off');
     }); 
     var fileupd = $("#fileupload");
+    //$('#mainupload').fileupload('destroy');
     $('.vocal_switch').bootstrapSwitch('state', true);
     $("#drag_block").on('dragleave', function(e){
         $("#drag_block").hide();
@@ -3538,6 +3568,10 @@ initUpload:function(){
 
         return false;
     });
+    //stop registration event for no Upload form
+    //andy upload form
+    if($("#mainupload").length > 0) {
+    
     fn = fileupd.fileupload({
         maxChunkSize: 1048576, 
         url: my.config.siteUrl+'api/uploadfiles/',
@@ -3627,6 +3661,7 @@ initUpload:function(){
                 $tmp["r"] = $r;
                 $tmp["genre_list"] = response_genre;
                 $tmp["sec_genre_list"] = response_sec_genre;
+                $tmp["sound_like_list"] = response_soundlike;
                 $tmp["moods_list"] = mood_list;     
                 $tmp["album_list"] = response_album_list;
                 $tmp["instuments_list"] = response_instruments_list;
@@ -3737,6 +3772,11 @@ initUpload:function(){
                 placeholder: "Select a Genre",
                 allowClear: true
             });
+            jQuery("#sound_like"+$r).select2({
+                placeholder: "Select Sound Like",
+                allowClear: true,
+                minimumInputLength :3,
+            });
             jQuery("#mood"+$r).select2({
                 placeholder: "Select a mood",
                 allowClear: true
@@ -3768,20 +3808,9 @@ initUpload:function(){
         }
     },
     progressall: function (e, data) {
-        var progress = Math.floor(data.loaded / data.total * 100);
-        $(".pace").removeClass("hidden");
-        $(".pace").find('.pace-activity').text(progress+"%");
-        if(progress==100)
-        {
-            $(".pace").addClass("hidden");
-        }
-    },
-    done: function (e, data) {
-        console.log("Done => ");
-                
-        //andy edit never_sell
-        //Edit buttons if config.never_sell 'y' (default is 'n' )
-        if (config.never_sell == 'y'){
+        $(".album-box").show();
+        if (config.never_sell == 'y' && !add_save_never_sell){
+            add_save_never_sell = true;
             var datar = $(".text-right .next-upload-btn").attr("data-r");
             $('<a href="javascript:void(0)" id="" class="pink-btn creat-btn save_track progress-button page1" '+ 
             'data-loading="Working.." data-finished="Saved" data-type="background-horizontal" ' +
@@ -3790,9 +3819,21 @@ initUpload:function(){
             $(".text-right .next-upload-btn").css("margin-left", "10px");
             $(".text-right .next-upload-btn").css("margin-top","-24px");
         }
+        var progress = Math.floor(data.loaded / data.total * 100);
+        $(".pace").removeClass("hidden");
+        $(".pace").find('.pace-activity').text(progress+"%");
+        if(progress==100)
+        {
+            $(".pace").addClass("hidden");
+        }
         
-        
-        
+    },
+    done: function (e, data) {
+        console.log("Done => ");
+        add_save_never_sell = false;        
+        //andy edit never_sell
+        //Edit buttons if config.never_sell 'y' (default is 'n' )
+                      
         var result = $.parseJSON(data.result);
         console.log(result);
         
@@ -3826,6 +3867,7 @@ initUpload:function(){
         }
     },
     fail:function(e,data){
+        add_save_never_sell = false;
         var temp = data.formData.r;
         $.ajax({
             url: my.config.siteUrl+'api/uploadfiles/?file='+data.files[0].name,
@@ -3869,6 +3911,11 @@ initUpload:function(){
         'r':$r
     }
 });
+
+    }//end
+
+  
+
 $("body").on("click",'.delete',function(e){
     $userId = ($(this).attr("data-userid") > 0) ? $(this).attr("data-userid") : config.userIdJs;
     $delId = $(this).attr("data-delid");
@@ -3955,6 +4002,7 @@ $("body").on("click",'.delete',function(e){
     }else{
     }       
 });
+    
     $("body").on("change",'.genre_select',function(e){
         e.preventDefault();
         $r = $(this).attr("data-r");
@@ -3971,6 +4019,7 @@ $("body").on("click",'.delete',function(e){
             }
         },false,false);
     });
+    
     /*$("body").on('click',"#mainupload",function(e){
         e.preventDefault();
         $("#footer_upload_btn").click();        
@@ -4295,6 +4344,11 @@ $("body").on("click",'.delete',function(e){
         jQuery("#sec_genner").select2({
             placeholder: "Select a Genre",
             allowClear: true
+        }); 
+        jQuery("#sound_like").select2({
+            placeholder: "Select Sound Like",
+            allowClear: true,
+            minimumInputLength :3,
         }); 
         jQuery("#moods_list").select2({
             placeholder: "Select a mood",
@@ -6161,7 +6215,8 @@ redirectLoginAfter:function(msg){
             my.ShowNotification("success","Success",$notification);
         $(".logo").find("a").click();
     }   
-}       
+}
+
 }
 google.setOnLoadCallback(function()
 {
@@ -6188,11 +6243,32 @@ $(document).ready(function(){
     }
     //    App.ShowNotification("success","Success",'')    
     
+    /*
+    $("body").on('click', "#home_left_menu li a",function(e) {
+        var role = $(this).attr("data-role");
+        console.log('click Home menu');
+        if ( role != 'upload' ) {
+          //  console.log('Not upload');
+            //Deregister any upload event
+            //$('#mainupload').fileupload('disable');
+            $('#mainupload').fileupload('destroy');
+            $('#fileupload').fileupload('destroy');
+            //$('#mainupload').fileupload('destroy');
+        }
+    });
+    */
+    
     //Register upload file for Upload page
     $("body").on('click', "li #upload_page",function(e) {  
     console.log('Initiliaze Upload page');
-        setTimeout(function(){        
-        my.initUpload();        
+        setTimeout(function(){                       
+        $('#mainupload').fileupload('destroy');    
+        setTimeout(function(){  
+            if (! init_upload) {
+                my.initUpload();
+                init_upload = true;
+            }  
+        //my.initSwitchApply();
         //Register Image upload
         croppicHeaderOptions_album  = {
             cropUrl:my.config.siteUrl+'crop/index/album_image',
@@ -6215,8 +6291,8 @@ $(document).ready(function(){
             onError:function(errormessage){ console.log('onError:'+errormessage) }
         }   
         var croppic2 = new Croppic('album_img_modal', croppicHeaderOptions_album);  
-        
-        }, 1200);
+        }, 1500);
+        }, 300);
     });
  
  
@@ -6234,12 +6310,12 @@ function loadUrl(url, callback, reader) {
         var endDate = new Date().getTime();
         if (typeof console !== "undefined") console.log("Time: " + ((endDate-startDate)/1000)+"s");
         var tags = ID3.getAllTags(url);
-        //console.log('Tags ',tags);
+        console.log('Tags ',tags);
         $(".album-form #title").val(tags.title);
         
         var description = 'Artist '+ tags.artist;
         //if(tags.album) description = description+' Album '+ tags.album
-        if(tags.album) description = description+' Track number of album '+tags.track;
+        if(tags.track) description = description+' Track number of album '+tags.track;
         if(tags.year) description = description+' Published year '+tags.year;
         $(".album-form #des").val(description);
                 
@@ -6347,6 +6423,142 @@ function load(elem) {
         loadFromFile(elem.files[0]);
     } 
 }
+//Facebook Login
+function fblogin_func(){
+    FB.XFBML.parse();
+    console.log('FB Sign up');
+    var facebook_id;
+    FB.login(function(response) {
+    if (response.authResponse) {
+     console.log('Welcome!  Fetching your information.... ', response);
+     facebook_id = response.authResponse.userID;
+     FB.api('/me?fields=first_name,last_name,email,gender', function(response2) {
+       //console.log('Good to see you, ' + response2.name + '.');
+       console.log('Field fetched: ',response2);
+       var email;
+       if (typeof response2.email !== 'undefined') email = response2.email
+       else email = 'N/A';
+       var uname = 'fb'+ facebook_id;
+       $.ajax({
+            url:config.siteUrl+'api/signup',
+            cache: false,
+            data:{
+                'fname':  response2.first_name, 'lname' : response2.last_name,
+                'uname': uname, 'fbid': facebook_id,
+                'email': email, 'password': 'N/A', 'facebook': true, 'gender' : response2.gender,
+                'password': facebook_id,
+            },
+            type:'POST',
+            dataType:'json',
+            success: function(response) {                
+                my.refreshLeftPanel(response);
+                my.redirectLoginAfter("Registered Successfully.");  
+                if(response.role_added == "n")
+                {
+                    $('<a href="'+my.config.siteUrl+'setup" id="setup" data-t="setup" class="popup"></a>').appendTo("body").click();                                    
+                }   
+                                               
+            },
+            done: function(response, status){
+                console.log(response, status);                
+                if (status == 404){
+                    App.ShowNotification("info","Info","The email with this Facebook account is already in use. Please try again with other Facebook account.");                    
+                }
+            }        
+        });
+    
+         
+     });
+    } else {
+        console.log('User cancelled login or did not fully authorize.');
+        App.ShowNotification("info","Info","Please log in Facebook to register");
+    }
+    }, {scope: 'email'});
+    //});
+}
+//Login via facebook ID
+function fbsignin_func(){
+    //FB.XFBML.parse();
+    //intializeFB();
+    console.log('Log in');   
+    checkLoginFB();            
+}
 
+//Reload FB sdk for AJAX call 
+function intializeFB(){
+ if(typeof(FB) !== "undefined"){
+  delete FB;
+ }
+ $.getScript("http://connect.facebook.net/en_US/all.js#xfbml=1",      function () {
+   FB.init({
+     appId      : '356111844733367',
+     cookie     : true,  // enable cookies to allow the server to access 
+                         // the session
+     xfbml      : true,  // parse social plugins on this page
+     oauth      : true,
+     status     : true,
+     version    : 'v2.4' // use version 2.4
+   });
+      
+ });
+  
+}
 
+function checkLoginFB(){
+     FB.login(function(response) {
+            if (response.authResponse) {
+                var facebook_id = response.authResponse.userID;
+                var uname = 'fb'+ facebook_id;
+                //console.log(response.authResponse);
+                $.ajax({
+                    url:config.siteUrl+'api/login',
+                    cache: false,
+                    data:{                
+                        'fbid': facebook_id,                
+                        'username': uname,
+                    },
+                    type:'POST',
+                    dataType:'json',
+                    success: function(response) {  
+                        console.log(response);  
+                         if(response.id > 0)
+                            {
+                                //set all values for config object
+                                config.loggedIn = true;
+                                config.never_sell = response.never_sell;
+                                config.userIdJs = response.id;                    
 
+                                $("body").data("avail_space",response.avail_space);
+                                if (typeof(Storage) != "undefined" ) {
+                                    localStorage.setItem("localstorage_avail_space",response.avail_space);
+                                }
+
+                                 my.refreshLeftPanel(response);                      
+                                 my.redirectLoginAfter("Logged in successfully.");
+
+                             if(response.role_added == "n")
+                             {
+                                $('<a href="'+my.config.siteUrl+'setup" id="setup" data-t="setup" class="popup"></a>').appendTo("body").click();                    
+                            }                                                               
+                        }
+                    },
+                    error: function(xhr, textStatus, error){
+                        console.log(textStatus, error);                
+                        if (error == 'Not Found'){
+                            App.ShowNotification("info","Info","No Facebook account is found. Please try again with other Facebook account.");                    
+                        }
+                    }, 
+                });
+
+            } else{
+                 App.ShowNotification("info","Info","Please log in Facebook to sign in");
+                }    
+            });
+}
+
+function initFacebooklogin(){    
+    $('body').on('click','#fb_login',function (e) {
+        fbsignin_func();
+    });    
+}
+ //end of Facebook Login

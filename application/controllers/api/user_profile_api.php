@@ -184,6 +184,7 @@ class User_profile_Api extends REST_Controller
     /*Function to invite friends*/
     function invite_friends_post(){
     	$this->form_validation->set_rules('hidden-email', 'Email', 'trim|required|xss_clean');
+        //$this->form_validation->set_rules('email', 'Email', 'trim|required|xss_clean');
 		if ($this->form_validation->run() == FALSE)
 		{			
 			//$this->load->view('myform');
@@ -191,6 +192,7 @@ class User_profile_Api extends REST_Controller
 		}
 		else
 		{
+                    
 				$user = $this->user_profile->invite_friends($this->post('userid'),$this->post());
 				
 				if($user)

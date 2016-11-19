@@ -74,9 +74,12 @@ class Login_Api extends REST_Controller
 		else{
 				//echo "  ".$this->post('username');
 				//echo "  ".$this->post('password');
-				
+//				if ($this->post('email')){
+//                                    
+//                                    
+//                                }
 				$this->form_validation->set_rules('username', 'Username', 'trim|required|xss_clean');
-				$this->form_validation->set_rules('password', 'Password', 'trim|required|xss_clean');	
+				//$this->form_validation->set_rules('password', 'Password', 'trim|required|xss_clean');	
 				
 				if ($this->form_validation->run() == FALSE)
 				{
@@ -85,7 +88,7 @@ class Login_Api extends REST_Controller
 				}
 				else
 				{
-					$user = $this->Ilogin->login($this->post('username'),$this->post('password'),$this->post('rememberme'),null,$this->post('type'));
+					$user = $this->Ilogin->login($this->post('username'),$this->post('password'),$this->post('rememberme'),null,$this->post('type'), $this->post());
 					
 					if($user)
 					{	

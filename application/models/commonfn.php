@@ -7,6 +7,28 @@ Class commonfn extends CI_Model
 			$this->sess_id = $this->session->userdata('user')->id;	
 	}
 	
+        //Function to get genre from database
+	public function get_soundlike()
+	{
+		$output = array();
+		$this -> db -> select('id,name');
+		$this -> db -> from('soundlike');
+								
+		$this->db->order_by("id ASC");
+                $this->db->limit(20000);
+		$query = $this -> db -> get();	   
+	  
+		if($query -> num_rows() > 0)
+		{
+			foreach ($query->result_array() as $row)
+			{				
+				$output[] = $row;
+			}
+			return $output;
+		}	   
+	}
+        
+        
 	//Function to get genre from database
 	public function get_genre($cond = NULL,$limit = NULL,$start_limit = NULL,$subgenre_id = NULL,$counter = NULL)
 	{

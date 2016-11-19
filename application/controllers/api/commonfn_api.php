@@ -16,6 +16,7 @@ class Commonfn_Api extends REST_Controller
 
 		$genre_list = $this->commonfn->get_genre("type='p'");
 		$sec_genre_list = $this->commonfn->get_genre("type = 's'");
+                $sound_like_list = $this->commonfn->get_soundlike();
 		$mood_list = $this->commonfn->get_moods();
 		$instuments_list = $this->commonfn->get_instuments();
 		$sell_type_list = $this->commonfn->get_licence_types("lic_type='s'");
@@ -34,6 +35,7 @@ class Commonfn_Api extends REST_Controller
 		}	
 		$response["genre"] = $genre_list;
 		$response["sec_genre"] = $sec_genre_list;
+                $response["sound_like_list"] = $sound_like_list;
 		$response["album_list"] = $album_list;
 		$response["mood_list"] = $mood_list;
 		$response["instuments_list"] = $instuments_list;

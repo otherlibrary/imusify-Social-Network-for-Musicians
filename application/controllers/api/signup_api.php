@@ -15,13 +15,13 @@ class signup_Api extends REST_Controller
 		$this->form_validation->set_rules('fname', 'Firstname', 'trim|required|xss_clean');
 		$this->form_validation->set_rules('lname', 'Lastname', 'trim|required|xss_clean');
 		$this->form_validation->set_rules('uname', 'Username', 'trim|required|xss_clean');
-		$this->form_validation->set_rules('email', 'Email', 'trim|required|valid_email|xss_clean');
+		$this->form_validation->set_rules('email', 'Email', 'trim|required|xss_clean');
 		$this->form_validation->set_rules('password', 'Password', 'trim|required|xss_clean');		
-		$this->form_validation->set_rules('mm', 'Month', 'trim|required|xss_clean|numeric');
-		$this->form_validation->set_rules('dd', 'Date', 'trim|required|xss_clean|numeric');
-		$this->form_validation->set_rules('yy', 'Year', 'trim|required|xss_clean|numeric');
-		$this->form_validation->set_rules('agree','Agree','required');
-		$this->form_validation->set_rules('invitecode','Invitecode','required');
+		$this->form_validation->set_rules('mm', 'Month', 'trim|xss_clean|numeric');
+		$this->form_validation->set_rules('dd', 'Date', 'trim|xss_clean|numeric');
+		$this->form_validation->set_rules('yy', 'Year', 'trim|xss_clean|numeric');
+		//$this->form_validation->set_rules('agree','Agree','required');
+		//$this->form_validation->set_rules('invitecode','Invitecode','required');
 
 		
 		if ($this->form_validation->run() == FALSE)
@@ -32,13 +32,14 @@ class signup_Api extends REST_Controller
 		else
 		{
 			//$this->load->view('formsuccess');			
-			$user = $this->signup->sign_up($this->post('fname'),$this->post('lname'),$this->post('uname'),$this->post('email'),$this->post('password'),$this->post('gender'),$this->post('mm'),$this->post('dd'),$this->post('yy'),$this->post('invitecode'));
+			$user = $this->signup->sign_up($this->post('fname'),$this->post('lname'),$this->post('uname'),$this->post('email'),$this->post('password'),$this->post('gender'),$this->post('mm'),$this->post('dd'),$this->post('yy'),$this->post('invitecode')
+                                ,$this->post());
 			/*var_dump($user);*/
 			if($user>0)
 			{	
 					//$us_ar=array("id"=>$user);
-					//var_dump($this->session->userdata('user'));
-					$us_ar = $this->ilogin->login($this->post('uname'),$this->post('password'),"");
+					//var_dump($this->session->userdata('user'));                            
+					$us_ar = $this->ilogin->login($this->post('uname'),$this->post('password'),"",null,null,$this->post());
 					$this->response($us_ar, 200); // 200 being the HTTP response code					
 			}
 			else if($user == "notinvitedyet"){

@@ -8,8 +8,8 @@ Class uploadm extends CI_Model
 	}
 	
 	/*Insert track*/
-	function insert_track($title,$desc,$mm,$dd,$yy,$genre,$label,$image,$folder_name,$sec_tags_genid,$album_id,$r,$eaction,$moods_list,$instruments_list,$music_vocals_y = NULL,
-                $music_vocals_gender = NULL,$sale_available = NULL,$sale_available_ar = NULL,$licence_available = NULL,$licence_available_ar = NULL,$nonprofit_available = NULL,$post = NULL)
+	function insert_track($title,$desc,$mm,$dd,$yy,$genre,$label,$image,$folder_name,$sec_tags_genid,$album_id,$r,$eaction,$moods_list,$soundlike_list,$instruments_list,$music_vocals_y = NULL,
+                $music_vocals_gender = NULL,$sale_available = NULL,$sale_available_ar = NULL,$licence_available = NULL,$licence_available_ar = NULL,$nonprofit_available = NULL,$post = NULL, $no_update_never_sell = NULL)
 	{	
 		$this->load->model('commonfn');
                                 
@@ -145,6 +145,44 @@ Class uploadm extends CI_Model
                             }
                             /*Handle moods ends*/
                         }
+                        
+                        
+                        /*Save soundlike to db*/	
+                        $track_exists_moods =  $this->track_db_soundlike($track_id);
+			$db_count_m = count($track_exists_moods);	
+			if($db_count_m > 0)
+			{
+				$diff_m = array_diff($track_exists_moods,$soundlike_list);
+                              //  var_dump('1st dif ',$diff_m);
+				if(!empty($diff_m))
+				{
+					$this->db->where('trackId', $track_id);
+					$this->db->where_in('soundlikeId', $diff_m);
+					$this->db->delete('track_soundlike');
+				}				
+			}			
+                        
+			if (!empty ($soundlike_list)){
+                            $diff_m1 = array_diff($soundlike_list,$track_exists_moods);
+                            //var_dump($diff_m1);
+                            if(!empty($diff_m1))
+                            {
+                                    $i = 0;
+                                    foreach($diff_m1 as $roles1) {
+                                            $data_m[$i]["trackId"] = $track_id;	
+                                            $data_m[$i]["userId"] = $session_user_id;
+                                            $data_m[$i]["soundlikeId"] = $roles1;
+                                            $data_m[$i]["createdDate"] = date('Y-m-d H:i:s');
+                                            $i++;
+                                    };	
+                                    $this->db->insert_batch('track_soundlike', $data_m);
+                            }
+                            
+                        }
+                        
+			/*Save soundlike to db ends*/
+                        //var_dump($soundlike_list);exit;
+                        
                         
 
 			/*Handle instruments moods_list instruments*/
@@ -504,16 +542,18 @@ Class uploadm extends CI_Model
 			$track_id = $this->db->insert_id();					
                         
                         //andy add new flag check never sell my music
-			if($post["never_sell"] && ( $post["never_sell"] == "1" || $post["never_sell"] == "1") ){
+                        //var_dump ($_GET["nonevermusic"]);exit;
+			if($post["never_sell"] && ( $post["never_sell"] == "1" || $post["never_sell"] == 1) ){
                             $data=array('never_sell'=> 'y');
                             $this->session->userdata('user')->never_sell = 'y';
                             $this->db->where('id',$this->sess_userid);
                             $this->db->update('users',$data);
-                        } else {
-                            $data=array('never_sell'=> 'n');
-                            $this->db->where('id',$this->sess_userid);
-                            $this->db->update('users',$data);
-                        }
+                        } else if (! $no_update_never_sell){                            
+                                 $this->session->userdata('user')->never_sell = 'n';
+                                $data=array('never_sell'=> 'n');
+                                $this->db->where('id',$this->sess_userid);
+                                $this->db->update('users',$data);                    
+                         } 
 
 			/*Save tags to db*/
 
@@ -567,6 +607,25 @@ Class uploadm extends CI_Model
 				$this->db->insert_batch('track_moods', $data2);
 			}
 			/*Save moods to db ends*/
+                        /*Save soundlike to db*/
+			$j = 0;		
+			$data2 = array();
+			/*	print_r($sec_tags_genid);*/
+			if(!empty($soundlike_list))
+			{
+				foreach($soundlike_list as $mood) {
+					/*$arr[$i] = $roles;*/
+					$data2[$j]["trackId"] = $track_id;
+					$data2[$j]["userId"] = $session_user_id;
+					$data2[$j]["soundlikeId"] = $mood;
+					$data2[$j]["createdDate"] = date('Y-m-d H:i:s');	
+					$j++;
+				};					
+				$this->db->insert_batch('track_soundlike', $data2);
+			}
+			/*Save soundlike to db ends*/
+                        
+                        
 			/*$instruments_list*/
 			/*save instuments to db*/
 			$in = 0;		
@@ -1120,6 +1179,22 @@ Class uploadm extends CI_Model
 		}
 		$row->sec_genre_list = $sec_genre_final_array;
 		/*Secondary genres*/
+                
+                
+                $sound_like_list = $this->commonfn->get_soundlike();
+                $sound_like_final_array = array();
+		$valuearray = $this->track_db_soundlike($id);
+                if(!empty($sound_like_list)){
+			foreach ($sound_like_list as $key => $value) {
+				if(in_array($value["id"], $valuearray)){
+					$value["selected"] = "true";
+				}
+				$sound_like_final_array[] = $value;
+			}	
+		}
+                
+                $row->sound_like_list = $sound_like_final_array;
+                                                
 		$row->track_upload_type_list = $this->commonfn->get_track_upload_types();
 		$row->r = $row->id;
 		$row->delid = $row->id;
@@ -1187,7 +1262,32 @@ Class uploadm extends CI_Model
 		return $sec_genre_exist_role;
 
 	}
+	function track_db_soundlike($trackid = 0){		
+		if($trackid > 0)
+		{
+			$licence_exist_list = array();
+			$where = "(trackId='".$trackid."')";
+			$this -> db -> select("soundlikeId");
+			$this -> db -> from("track_soundlike");	  
 
+			$this->db->where($where);	   
+			$query = $this -> db -> get();	   
+			
+			if($query -> num_rows() > 0)
+			{
+				$data = $query->result_array();	
+				foreach ($data as $row)
+				{
+					$licence_exist_list[] = $row["soundlikeId"];
+				}
+			}		
+			return $licence_exist_list;
+
+			
+		}
+
+	}
+        
 	function track_db_licences($trackid = 0){
 		/*echo $trackid." z ";*/
 		if($trackid > 0)

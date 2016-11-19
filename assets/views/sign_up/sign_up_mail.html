@@ -52,18 +52,24 @@
 						<input type="type" class="form-control width84 blackc validate[required],custom[integer],max[2014]"  id="dob_yy" placeholder="YYYY" name="yy" maxlength="4">
 					</div>
 
-					<div class="col-md-6 form-group">
+<!--					<div class="col-md-6 form-group">
 						<label for="uname">Invitation Code</label>
 						<input type="type" class="form-control validate[required] text-input" id="invitecode" name="invitecode" data-prompt-position="topLeft">
-					</div>
+					</div>-->
 				</fieldset>
 				<fieldset class="check-box">
+                                        <div class="col-mad-12 borTop checkbox checkbox-pink checkbox-inline newsletter" style="padding-top: 0px; margin-left: 10px;">
+						<input type="checkbox" class="checkbox" id="newsletter" name="newsletter" data-prompt-position="topLeft" checked>
+						<label>Receive email newsletters from Imusify</label>
+                                        </div>  
 					<div class="col-mad-12 borTop checkbox checkbox-pink checkbox-inline">
 						<input type="checkbox" class="validate[required] checkbox" id="agree" name="agree" data-prompt-position="topLeft" data-errormessage="This field is Required">
 						<label>I acknowledge that I have read and accept the 
 							<a href="${url}content/use-agreement" target="_blank">Terms of Use Agreement</a> and consent to the 
 							<a href="${url}content/privacy" target="_blank">Privacy Policy</a> and <a href="${url}content/video-privacy" target="_blank">Video Privacy Policy</a>.</label>
-						</div>
+                                        </div>
+                                  
+                                    
 					</fieldset>
 					<fieldset>
 						<div class="col-md-12">

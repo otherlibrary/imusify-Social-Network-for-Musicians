@@ -33,6 +33,8 @@ class Upload extends MY_Controller {
 
 		$genre_list	 = $this->commonfn->get_genre("type='p'");
 		$sec_genre_list = $this->commonfn->get_genre("type='s'");
+                $sound_like_list = $this->commonfn->get_soundlike();
+                //var_dump ($sound_like_list);exit;
 		$moods_list = $this->commonfn->get_moods();
 		$session_user_id = $this->session->userdata('user')->id;
 		$albumform_dis_class = "displaynone";
@@ -101,18 +103,19 @@ class Upload extends MY_Controller {
 				echo json_encode( $final_array );
 				exit;
 			}	
-
+                        //fetch list of uploaded songs/tracks for Upload page
 			$temp_name = "upload/uploaded_song_row.html";
 			$data_array = $this->uploadm->fetch_user_tracks("tt.userId = '".$session_user_id."' AND tt.albumId = '0'",$this->def_rec_dis_m);
 			$tabid = "my_songs_row";
 			$class = "audiotab";
 			$music_active = 'active';
 		}
-		/*dump($data_array);*/
+		//var_dump($data_array);exit;
 		$track_detail = array(			
 			'cover_image' =>img_url()."cover-img.png",
 			'genre_list' => $genre_list	,
 			'sec_genre_list' => $sec_genre_list,
+                        'sound_like_list' => $sound_like_list,
 			"upload_page" => "true",
 			'data_array' => $data_array,
 			'tabid' => $tabid,
@@ -124,7 +127,7 @@ class Upload extends MY_Controller {
 			'load_more_url' => $load_url,
 			'template' => $load_tmpl,
 			'container' => $load_cont,
-			'load_extra_class'=>$load_extra_class
+			'load_extra_class'=>$load_extra_class                        
 			);
 
 		$template_arry['MainPanel'] = "main.html";
@@ -144,8 +147,9 @@ class Upload extends MY_Controller {
 
 		$template_arry['playerPanel'] = "player_panel.html";
 		$data1=get_template_content($template_arry,$track_detail);
-
+                //var_dump ($data1);exit;
 		$a['data'] = $data1;
+                
 		$a['redirectURL']=base_url();
 		$a['current_tm']='';
 		$this->load->view('home',$a);

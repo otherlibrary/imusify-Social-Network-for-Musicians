@@ -36,6 +36,7 @@ public function insert_invite($type = NULL,$useremail = NULL,$userId = NULL)
 	//$email=$this->input->post('email');
 	$email=$this->input->post('hidden-email');
 	$codeId=$this->input->post('code');
+        if (empty($codeId)) $codeId = 0;
 	$prepare_arr = array();
 	$already_existed = array();
 	$mail_array = array();
@@ -47,30 +48,31 @@ public function insert_invite($type = NULL,$useremail = NULL,$userId = NULL)
 	$i = 0;
 
 	$email_ar = explode(",",$email);
-	$email_ar = array_filter($email_ar);
+	//$email_ar = array_filter($email_ar);
+        //var_dump ($email_ar);exit;
 	if(count($email_ar) > 0)
 	{
 		
 		foreach ($email_ar as $key => $value) {
-			$query = $this->db->query("select (SELECT id from invitation_user_detail where email='".$value."' AND codeId = '".$codeId."') as id, (SELECT id from users WHERE email = '".$value."') as reg_user");
-			$row = $query->row_array();
-			$is_exist = $row["id"];
-			$is_already_reg = $row["reg_user"];
-			if($is_already_reg > 0)
-			{
-				$already_existed[] = $value;			
-			}
-			else if($is_exist > 0){
-				$mail_array[] = $value;
-			}
-			else{
+//			$query = $this->db->query("select (SELECT id from invitation_user_detail where email='".$value."' AND codeId = '".$codeId."') as id, (SELECT id from users WHERE email = '".$value."') as reg_user");
+//			$row = $query->row_array();
+//			$is_exist = $row["id"];
+//			$is_already_reg = $row["reg_user"];
+//			if($is_already_reg > 0)
+//			{
+//				$already_existed[] = $value;			
+//			}
+//			else if($is_exist > 0){
+//				$mail_array[] = $value;
+//			}
+//			else{
 				$prepare_arr[$i]["codeId"] = $codeId;
 				$prepare_arr[$i]["fromId"] = $invite_from_id;
 				$prepare_arr[$i]["email"] = $value;			
 				$prepare_arr[$i]["createdDate"] = date('Y-m-d H:i:s');
 				$prepare_arr[$i]["endDate"] = date('Y-m-d H:i:s', strtotime("+365 days"));
 				$i++;			
-			}
+			//}
 		}
 
 		if($type == "user")
@@ -92,7 +94,9 @@ public function insert_invite($type = NULL,$useremail = NULL,$userId = NULL)
 
 					);			
 				$abc=$this->template->load('mail/email_template','mail/invite',$data_mail,TRUE);
-				send_mail($send_mail,$value["email"],"Imusify signup invitation",$abc);	
+				$result = send_mail(ADMIN_MAIL,$value["email"],"Imusify signup invitation",$abc);	
+                                //send_mail(ADMIN_MAIL,$email,"Reset Password",$abc);
+                                //var_dump($abc);exit;
 			}
 
 		}

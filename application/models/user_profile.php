@@ -614,9 +614,11 @@ Class user_profile extends CI_Model
 		{	
 			if(!empty($return_type))
 			{
-				foreach ($return_type as $key => $value) {
-					$msg .= "<br />".$value." Already Invited.";
-				}
+                            $msg = "Your Friends invited successfully.";
+                            //var_dump($return_type);exit;
+//				foreach ($return_type as $key => $value) {
+//					$msg .= "<br />".$value." Already Invited.";
+//				}
 			}
 			$response["status"] = "success";
 			$response["msg"] = $msg;

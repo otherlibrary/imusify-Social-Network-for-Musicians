@@ -1,9 +1,11 @@
 <?php
 Class Signup extends CI_Model
 {
-	function sign_up($fname,$lname,$uname,$email,$password,$gender,$mm,$dd,$yy,$invitecode = NULL)
+	function sign_up($fname,$lname,$uname,$email,$password,$gender,$mm,$dd,$yy,$invitecode = NULL, $post_array)
 	{
-		$is_invited = "";
+		$is_invited = "";                
+                if ($gender ==  'male') $gender = 'm';
+                else if ($gender == 'female') $gender = 'f';
 		$this->db->select('id');
 		$this->db->from('users');
 		$where = "(username='".$uname."' or email='".$email."')";
@@ -20,13 +22,13 @@ Class Signup extends CI_Model
 			//$this->db->escape			
 			$token = md5(time());			
 			$temp = $this->session->userdata("socialuser");
-			$this->load->model("invitation");
-			$is_invited = $this->invitation->email_invited_check_exist($email,$invitecode);
-			if($is_invited == false)
-			{
-				return "notinvitedyet";
-				exit;
-			}
+//			$this->load->model("invitation");
+//			$is_invited = $this->invitation->email_invited_check_exist($email,$invitecode);
+//			if($is_invited == false)
+//			{
+//				return "notinvitedyet";
+//				exit;
+//			}
 			/*Prepare all membership details*/
 			
 			$plan_id_ar = getvalfromtbl("id,amount","membership_plan","amount = '0'");
@@ -52,7 +54,8 @@ Class Signup extends CI_Model
 						'fbid' =>  $temp["id"]
 						);
 				}
-				else if($temp["provider"] == "in")
+				/*
+                                else if($temp["provider"] == "in")
 				{
 					
 					$temp_array = array(
@@ -67,7 +70,8 @@ Class Signup extends CI_Model
 						'scid' =>  $temp["id"],
 						'sc_username' => $temp["sc_username"]
 						);
-				}				
+				}
+                                */
 				$commmon_detail_array = array(
 					'username' => $this->db->escape_str($uname),
 					'email' => $this->db->escape_str($email),
@@ -81,7 +85,8 @@ Class Signup extends CI_Model
 					'profileLink' => $this->db->escape_str($uname),
 					'total_space' => $total_space,
 					'avail_space' => $avail_space,
-					'used_space' => $used_space
+					'used_space' => $used_space,
+                                        'newsletter' => ($post_array['newsletter'] == 'on') ? 'on' : 'off',
 				);				
 				$data = array_merge($temp_array,$commmon_detail_array);				
 			}
@@ -102,7 +107,9 @@ Class Signup extends CI_Model
 					'invitedFromId' => $is_invited,
 					'total_space' => $total_space,
 					'avail_space' => $avail_space,
-					'used_space' => $used_space
+					'used_space' => $used_space,
+                                        'newsletter' => ($post_array['newsletter'] == 'on') ? 'on' : 'off',
+                                        'fbid' => ( isset($post_array['fbid']) ) ? $post_array['fbid']:''
 					);		
 			}
 			/*var_dump($data);*/
@@ -130,7 +137,7 @@ Class Signup extends CI_Model
 				'verify_link' => base_url()."api/verifyuser/token/".$token
 				);			
 			$abc=$this->template->load('mail/email_template','mail/register',$data_mail,TRUE);
-			send_mail(ADMIN_MAIL,$email,"Successfully registered with Imusify",$abc);
+			if(empty ($post_array['facebook']) ) send_mail(ADMIN_MAIL,$email,"Successfully registered with Imusify",$abc);
 			return $user_id;
 		}
 	}

@@ -2,6 +2,7 @@
 // true Playing
 // false No play
 var playback = false;
+var loop = false;
 var track_link = '';
 
 
@@ -13,7 +14,9 @@ var _this_comment_form_url;
 var _this_comment_holder;
 var _force_to_play = false;
 //andy Player loading
-(function($) {
+//(function($) {
+
+
   // Convert milliseconds into Hours (h), Minutes (m), and Seconds (s)
   var waveform;
   var wave_animate = '<span class="musicbar inline m-l-sm animate" style="width:20px;height:20px;" id="animate_span"><span class="bar1 a1 bg-primary lter"></span><span class="bar2 a2 bg-info lt"></span><span class="bar3 a3 bg-success"></span><span class="bar4 a4 bg-warning dk"></span><span class="bar5 a5 bg-danger dker"></span><span class="bar6 a3 bg-success"></span> <span class="bar7 a1 bg-primary lter"></span><span class="bar8 a4 bg-warning dk"></span><span class="bar9 a2 bg-info lt"></span><span class="bar10 a5 bg-danger dker"></span></span>';
@@ -180,6 +183,22 @@ var _force_to_play = false;
             //audioEngine.play();
         });
         
+        
+        //control Repeat or Loop for track
+        $(document).on('click',".repeat-icon", function(event) {
+            if (!loop) {
+                $(this).addClass("active");
+                audioEngine.loop();
+                loop = true;
+            }
+            else {
+                $(this).removeClass("active");
+                audioEngine.unloop();
+                loop = false;
+            }             
+        })
+        
+        
         //document loaded Update pause-icon if Player is active
         //get first li of ul id home_left_menu    
        $(document).on('click',"#home_left_menu li:first, ul.heading li:first", function(event) {
@@ -239,6 +258,12 @@ var _force_to_play = false;
         pause: function() {
           player.pause();
         },
+        loop: function() {
+          player.loop = true;
+        },
+        unloop: function() {
+          player.loop = false;
+        },        
         stop: function(){
           if (player.currentTime) {
             player.currentTime = 0;
@@ -275,6 +300,7 @@ var _force_to_play = false;
       player.currentTime = v;
       player.play();
     },
+    //add new function for Object audioEngine andy
     getDuration: function() {
       return player.duration * 1000;
     },
@@ -346,6 +372,7 @@ var flashDriver = function() {
         seek: function(relative){
           player && player.api_seekTo((player.api_getTrackDuration() * relative));
         },
+       //no use for below code It is for Flash Player
         getDuration: function() {
           return player && player.api_getTrackDuration && player.api_getTrackDuration() * 1000;
         },
@@ -1671,6 +1698,6 @@ var onTouchMove = function(ev) {
     }
   });
 
-})(jQuery);
+//})(jQuery);
 
 

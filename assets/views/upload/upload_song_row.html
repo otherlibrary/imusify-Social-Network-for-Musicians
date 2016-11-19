@@ -77,6 +77,16 @@
 								{{/each}}
 							</select>
 						</div>
+                                            	
+                                                <div class="form-group">
+							<label for="sound">Sounds Like</label>
+							<select class="form-control select2" multiple  id="sound_like${r}" name="sound_like[]">
+								{{each(i,v)  sound_like_list}}		
+								<option value="${v.id}">${v.name}</option>
+								{{/each}}
+							</select>
+						</div>
+                                            
                                                 <div class="form-group">
 							<label for="genner">BPM (Beats Per Minute)</label>
                                                         <input type="text" class="form-control" id="trackuploadbpm${r}" name="trackuploadbpm" data-r="${r}"/>
@@ -294,7 +304,7 @@
                                                 <div class="form-group">
                                                         <div class="make-switch" data-on-text="True" data-on="primary" data-off="info">
                                                                 <label for="genner">Never sell my music?</label>
-                                                                <input type="checkbox" value="0" class="never_sell" name="never_sell">
+                                                                <input type="checkbox" value="2" class="never_sell" name="never_sell">
                                                         </div>
                                                 </div>
                                                 <!-- end of Never sell my music -->

@@ -79,6 +79,15 @@
 											</select>
 										</div>
                                                                                 <div class="form-group">
+                                                                                    <label for="sound">Sounds Like</label>
+                                                                                    <select class="form-control select2" multiple  id="sound_like" name="sound_like[]">
+                                                                                            {{each(i,v)  sound_like_list}}		
+                                                                                            <option  {{if v.selected}} selected="selected" {{/if}} value="${v.id}">${v.name}</option>
+                                                                                            {{/each}}
+                                                                                    </select>
+                                                                                </div>
+                                                                            
+                                                                                <div class="form-group">
                                                                                 <label for="genner">BPM (Beats Per Minute)</label>
                                                                                 <input type="text" class="form-control validate[required]" id="trackuploadbpm" name="trackuploadbpm" value="${trackuploadbpm}" data-bpm="${trackuploadbpm}"/>
 <!--                                                                                <select class="common fullwidth genre_select" name="trackuploadbpm" id="trackuploadbpm" data-bpm="${trackuploadbpm}">								                                                                                    
