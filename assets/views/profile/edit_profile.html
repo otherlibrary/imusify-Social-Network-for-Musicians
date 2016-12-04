@@ -2,7 +2,7 @@
 	<div class="col-md-12 close-icon">
 		<a class="close_popup close"><span></span></a>
 	</div>
-	<div class="col-md-12">
+	<div class="col-md-12" style="margin-top: -55px;">
 		<h1>Edit your profile</h1>
 	</div>
 	<div class="col-md-12">
@@ -12,6 +12,8 @@
 				<div class="profile-pic edit_user_prof_pic">	
 					<fieldset>
 						<span class="profile-icon">
+                                                        <div id="" style="" class="">Username:</div>				
+                                                        <div id="" style="" class="">${username}</div>				
 							<img src="${profile_image}" id="user_prof_img">
 							<a href="javascript:void(0)" class="pink-btn image_upd" id="user_prof_link" data-uid="${userId}">Upload Images</a>
 							<input id="user_prof_file" class="track_image_upd displaynone validate[required]" name="image" style="display:none;" type="file">
@@ -95,7 +97,17 @@
 										<input type="type" class="form-control width85 blackc validate[required,custom[integer]]" id="dob_yy" placeholder="YYYY" name="yy" data-errormessage="*Required" value="${dob_y}">
 									</div>
 								</fieldset>
-								
+								<fieldset>
+									<div class="col-md-6 form-group">
+										<label for="uname">Company name</label>
+										<input type="type" class="form-control text-input " name="cname" id="cname" value="${company_name}">
+									</div>									
+									<div class="col-md-6 form-group">
+										<label for="uname">Company name 2 (Optional)</label>
+										<input type="type" class="form-control text-input " name="cname2" id="cname2" value="${company_name2}">
+									</div>
+								</fieldset>
+                                                            
 								<fieldset>
 									<div class="col-md-12">
 										<a href="javascript:void(0)" id="edit_btn_editprofile" class="creat-btn pull-right progress-button"  data-loading="Working.." data-finished="Finished!" data-type="background-horizontal">Save Settings</a>										
