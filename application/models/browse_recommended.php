@@ -282,13 +282,23 @@ Class browse_recommended extends CI_Model
 	{
 		$this->load->model('commonfn');
                 
+                $query = $this->db->query("select distinct userId from user_roles_details");
+                $string_user_ids = "(";
+                foreach ($query->result_array() as $row)
+                {
+                    foreach($row as $key=>$val){$string_user_ids.="$val,";}
+                }
+                $string_user_ids = rtrim($string_user_ids, ",");
+                $string_user_ids .= ')';
+                
                 
 		$output = array();
 
 		if($cond != NULL)
-			$cond = " WHERE u.status = 'y' AND ".$cond."";	
+			$cond = " WHERE u.status = 'y' AND u.id IN $string_user_ids AND ".$cond."";	
 		else				
-			$cond = " WHERE u.status = 'y'";
+			$cond = " WHERE u.status = 'y' AND u.id IN $string_user_ids";
+                        //$cond = " WHERE u.status = 'y'";
 
 		if($limit != NULL)
 			$limit = " LIMIT ".$limit." ";
