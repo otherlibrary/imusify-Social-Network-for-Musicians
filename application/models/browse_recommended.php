@@ -216,7 +216,18 @@ Class browse_recommended extends CI_Model
 	function fetch_popular_artist($cond = NULL,$limit = NULL,$orderby = NULL,$counter = NULL,$start_limit = NULL,$big_img = NULL)
 	{
 		$this->load->model('commonfn');
-
+                
+                //get all artist IDs from user_roles_details
+                $query = $this->db->query("select distinct userId from user_roles_details");
+                $string_user_ids = "(";
+                foreach ($query->result_array() as $row)
+                {
+                    foreach($row as $key=>$val){$string_user_ids.="$val,";}
+                }
+                $string_user_ids = rtrim($string_user_ids, ",");
+                $string_user_ids .= ')';
+                //var_dump ($string_user_ids);exit;
+                
 		$output = array();
 
 		if($big_img != NULL)
@@ -241,8 +252,10 @@ Class browse_recommended extends CI_Model
 
 			//$query = $this->db->query("select u.*,songs_plays,tot_songs,COALESCE((t.songs_plays/t.tot_songs),0) as avg from (SELECT u.id,(SELECT COALESCE(COUNT(id),0) from tracks where tracks.userId = u.id) as tot_songs,(SELECT COALESCE(SUM(plays),0) from tracks where tracks.userId = u.id) as songs_plays FROM users as u WHERE u.status = 'y' ORDER BY u.id DESC) as t ,users u".$cond." ".$orderby." ".$limit." ");
 
-		$query = $this->db->query("select u.id,u.firstname,u.lastname,u.profileLink,songs_plays,tot_songs,COALESCE((t.songs_plays/t.tot_songs),0) as avg from (SELECT u.id,(SELECT COALESCE(COUNT(id),0) from tracks where tracks.userId = u.id) as tot_songs,(SELECT COALESCE(SUM(plays),0) from tracks where tracks.userId = u.id) as songs_plays FROM users as u WHERE u.status = 'y' ORDER BY u.id DESC) as t ,users u where u.id=t.id order by avg desc,tot_songs desc ".$limit."");
-		if($counter != NULL)
+		$query = $this->db->query("select u.id,u.firstname,u.lastname,u.profileLink,songs_plays,tot_songs,COALESCE((t.songs_plays/t.tot_songs),0) as avg from (SELECT u.id,(SELECT COALESCE(COUNT(id),0) from tracks where tracks.userId = u.id) as tot_songs,(SELECT COALESCE(SUM(plays),0) from tracks where tracks.userId = u.id) as songs_plays FROM users as u WHERE u.status = 'y' ORDER BY u.id DESC) 
+                    as t ,users u where u.id=t.id AND u.id IN $string_user_ids order by avg desc,tot_songs desc ".$limit."");
+		//var_dump ($this->db->last_query());exit;
+                if($counter != NULL)
 			return $query->num_rows();
 			//echo print_query();
 		$i = 1;
@@ -268,7 +281,8 @@ Class browse_recommended extends CI_Model
 	function fetch_new_artist($cond = NULL,$limit = NULL,$orderby = NULL,$counter = NULL,$start_limit = NULL)
 	{
 		$this->load->model('commonfn');
-
+                
+                
 		$output = array();
 
 		if($cond != NULL)
@@ -285,7 +299,9 @@ Class browse_recommended extends CI_Model
 			$orderby ="ORDER BY u.id DESC";	
 
 		$query = $this->db->query("SELECT u.id,u.firstname,u.lastname,u.profileLink FROM users as u ".$cond." ".$orderby." ".$limit." ");
-
+//                $last = $query->last_query();
+//                var_dump($last);
+//                exit;
 		if($counter != NULL)
 			return $query->num_rows();
 			//echo print_query();

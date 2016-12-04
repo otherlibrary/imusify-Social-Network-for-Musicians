@@ -281,6 +281,7 @@ $route['(:any)/listened-songs'] = "profile/profile/index/$1/listened-songs/";
 $route['(:any)/uploaded-songs'] = "profile/profile/index/$1/uploaded-songs/";
 $route['(:any)/new-songs'] = "profile/profile/index/$1/new-songs/";
 $route['(:any)/albums'] = "profile/profile/index/$1/albums/";
+$route['(:any)/feed'] = "profile/profile/index/$1/feeds/";
 $route['(:any)/followers'] = "profile/profile/index/$1/followers/";
 $route['(:any)/following'] = "profile/profile/index/$1/followings/";
 

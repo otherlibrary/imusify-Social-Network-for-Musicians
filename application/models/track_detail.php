@@ -322,20 +322,27 @@ Class track_detail extends CI_Model
 		$cur_genre_id = getvalfromtbl("genreId,userId","tracks","id = '".$trackId."'");
 
 		if($cond != NULL)
-			$cond = " WHERE tt.status = 'y' AND u.id = tt.userId AND tt.id != '".$trackId."' AND (tt.genreId = '".$cur_genre_id["genreId"]."' OR tt.userId = '".$cur_genre_id["userId"]."') ".$cond."";	
+			//$cond = " WHERE tt.status = 'y' AND u.id = tt.userId AND tt.id != '".$trackId."' AND (tt.genreId = '".$cur_genre_id["genreId"]."' OR tt.userId != '".$cur_genre_id["userId"]."') ".$cond."";	
+                        $cond = " WHERE tt.status = 'y' AND u.id = tt.userId AND tt.id != '".$trackId."' AND (tt.genreId = '".$cur_genre_id["genreId"]."') ".$cond."";
 		else				
-			$cond = " WHERE tt.status = 'y' AND u.id = tt.userId AND tt.id != '".$trackId."'  AND (tt.genreId = '".$cur_genre_id["genreId"]."' OR tt.userId = '".$cur_genre_id["userId"]."')";
-
+			//$cond = " WHERE tt.status = 'y' AND u.id = tt.userId AND tt.id != '".$trackId."'  AND (tt.genreId = '".$cur_genre_id["genreId"]."' OR tt.userId != '".$cur_genre_id["userId"]."')";
+                        $cond = " WHERE tt.status = 'y' AND u.id = tt.userId AND tt.id != '".$trackId."'  AND (tt.genreId = '".$cur_genre_id["genreId"]."')";
+                
 		if($limit != NULL)
 			$limit = " LIMIT ".$limit." ";
-
+                else $limit = " LIMIT 100";
 		if($orderby != NULL)
 			$orderby ="ORDER BY tt.id DESC,".$orderby;	
 		else
 			$orderby ="ORDER BY tt.id DESC";	
 
 		$query = $this->db->query("SELECT tt.id as tid,tt.title,tt.perLink,u.firstname,u.lastname,u.profileLink FROM tracks as tt,users as u ".$cond." ".$orderby." ".$limit." ");
-			//print_query();
+                
+                if ($query->num_rows() == 0){
+                    $cond = " WHERE tt.status = 'y' AND u.id = tt.userId AND tt.id != '".$trackId."'  AND (tt.userId != '".$cur_genre_id["userId"]."')";
+                    $query = $this->db->query("SELECT tt.id as tid,tt.title,tt.perLink,u.firstname,u.lastname,u.profileLink FROM tracks as tt,users as u ".$cond." ".$orderby." ".$limit." ");
+                }                
+                //print_query();exit;
 		if($counter != NULL)
 			return $query->num_rows();	
 
@@ -350,7 +357,21 @@ Class track_detail extends CI_Model
 
 			$output[] = $row;			
 		}
-		return $output;
+                $length = count($output);
+                //Choose random 10 tracks from 100
+                for( $k=0; $k < $length; $k++){
+                        //$j = (int)($length * rand(0,1));
+                        $j = array_rand($output,1);
+                        $temp= $output[$k];
+                        $output[$k]= $output[$j];
+                        $output[$j]= $temp;
+                }
+                $output_random = array();
+                for( $k=0; $k < 10; $k++){
+                    $output_random[] =$output[$k]; 
+                }
+                
+		return $output_random;
 	}
 	/*similar songs ends*/
 

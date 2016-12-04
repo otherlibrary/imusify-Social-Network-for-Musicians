@@ -155,18 +155,18 @@ class Profile extends MY_Controller {
 			$this->config->set_item('title','Uploaded Songs');
 			$data_array = $this->user_profile->fetch_uploaded_tracks("tt.userId = '".$profile_link_uid."'",$this->rec_to_dis);
 			$temp_name = "profile/artist_popular_row.html";
-			$class_nm = "browse-songs prof_uploaded_songs";
-			$tabid = "prof_uploaded_songs";
+			$class_nm = "browse-songs prof_feed";
+			$tabid = "prof_feed";
 			$header_tmp = "true";
-			$upload_active_class = "uploaded-songs";
+			$upload_active_class = "feed";
 			$total_records = $this->user_profile->fetch_uploaded_tracks("tt.userId = '".$profile_link_uid."'",'','','counter');
 
 			if($total_records > $this->rec_to_dis)
 			{
 				$loadmore = "true";
-				$load_url = $profileLink."/uploaded-songs/";
-				$load_cont = "#prof_uploaded_songs";
-				$load_tmpl = "profile_artist_popular_songs";
+				$load_url = $profileLink."/feed/";
+				$load_cont = "#prof_feed";
+				$load_tmpl = "profile_artist_feed";
 			}else{
 				$loadmore = "";
 			}
@@ -185,10 +185,45 @@ class Profile extends MY_Controller {
     			exit;
 			}			
 		}
+                else if($action == "feeds")
+		{
+			$this->config->set_item('title','Feeds');
+			$data_array = $this->user_profile->fetch_feeds("u.id = '".$profile_link_uid."'",$this->rec_to_dis);
+			$class_nm = "vedio-songs-list";
+			$tabid = "feeds";
+			//class vedio-songs-list
+			$album_active_class = "albums";
+			$total_records = $this->user_profile->fetch_feeds("u.id = '".$profile_link_uid."'",'','','counter');
+
+			if($total_records > $this->rec_to_dis)
+			{
+				$loadmore = "true";
+				$load_url = $profileLink."/albums/";
+				$load_cont = "#feeds";
+				$load_tmpl = "profile_recent_listen";
+			}else{
+				$loadmore = "";
+			}
+			//var_dump($page);exit;
+			//$page 
+			if($page != NULL && $page > 0)
+			{
+				$new_limit = $start_limit.",".$this->rec_to_dis;
+				$last_page = ceil($total_records/$this->rec_to_dis);	
+				$data_array = $this->user_profile->fetch_feeds("u.id = '".$profile_link_uid."'",$new_limit);	
+				$final_array["data"] = $data_array;	
+				$final_array["page"] = $page+1;
+				$final_array["last_page"] = $last_page;
+				header('Content-Type: application/json');
+    			echo json_encode( $final_array );
+    			exit;
+			}
+		}
 		else if($action == "albums")
 		{
 			$this->config->set_item('title','Albums');
 			$data_array = $this->user_profile->fetch_albums("a.userId = '".$profile_link_uid."'",$this->rec_to_dis);
+                        //var_dump($data_array);exit;
 			$class_nm = "vedio-songs-list";
 			$tabid = "albums";
 			//class vedio-songs-list

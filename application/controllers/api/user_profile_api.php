@@ -16,8 +16,20 @@ class User_profile_Api extends REST_Controller
 		$this->form_validation->set_rules('user_roles[]','Roles', 'required');
 		
 		if ($this->form_validation->run() == FALSE)
-		{			
-			$this->response(array('error' => lang('error_user_roles_val_required')), 400);
+		{						
+                    //$this->response(array('error' => lang('error_user_roles_val_required')), 400);
+                    //No Role Just Music Lover
+                    //empty role
+                    $user_roles_response = $this->user_profile->insert_roles(array());
+                    //print_r($user_roles_response);				
+                    if($user_roles_response != "")
+                    {	
+                            $this->response($user_roles_response, 200); // 200 being the HTTP response code					
+                    }
+                    else
+                    {
+                            $this->response(array('error' => lang('error_try_again')), 404);
+                    }
 		}
 		else
 		{
@@ -96,7 +108,8 @@ class User_profile_Api extends REST_Controller
 				}
 			}	
                         */
-				$user = $this->user_profile->update_profile($this->post('fname'),$this->post('lname'),$this->post('country'),$this->post('website'),$this->post('description'),$this->post('mm'),$this->post('dd'),$this->post('yy'),$image,$folder_name,$this->post('state'),$this->post('city'));
+				$user = $this->user_profile->update_profile($this->post('fname'),$this->post('lname'),$this->post('country'),$this->post('website'),$this->post('description'),$this->post('mm'),$this->post('dd'),$this->post('yy'),$image,$folder_name,$this->post('state'),$this->post('city'),
+                                        $this->post('cname'),$this->post('cname2'));
 				
 				if($user)
 				{	

@@ -187,7 +187,7 @@ Class user_profile extends CI_Model
 			return "usernotexist";
 		}
 		//echo $this->db->last_query();		
-		$query = $this->db->query("select u.id,u.countryId, u.cityId, u.stateId, u.gender,u.firstname,u.lastname,u.username,u.description,u.dob_m,u.dob_d,u.dob_y,u.weburl,(SELECT COUNT(id) from followinglog where toId = '".$userid."') as followers, (SELECT COUNT(id) from followinglog where fromId = '".$userid."') as following,(SELECT COUNT(id) from tracks where userId = '".$userid."') as tracks,(SELECT COUNT(id) from albums where userId = '".$userid."') as albums,(SELECT name from location where location.location_id = u.countryId) as countryName,(SELECT name from location where location.location_id = u.cityId) as cityName from users as u where profileLink = '".$profileLink."'");
+		$query = $this->db->query("select u.company_name,u.company_name2,u.id,u.countryId, u.cityId, u.stateId, u.gender,u.firstname,u.lastname,u.username,u.description,u.dob_m,u.dob_d,u.dob_y,u.weburl,(SELECT COUNT(id) from followinglog where toId = '".$userid."') as followers, (SELECT COUNT(id) from followinglog where fromId = '".$userid."') as following,(SELECT COUNT(id) from tracks where userId = '".$userid."') as tracks,(SELECT COUNT(id) from albums where userId = '".$userid."') as albums,(SELECT name from location where location.location_id = u.countryId) as countryName,(SELECT name from location where location.location_id = u.cityId) as cityName from users as u where profileLink = '".$profileLink."'");
 
 		$user_roles_ar = $this->user_db_roles("all");
 		$row = $query->result_array();
@@ -197,7 +197,7 @@ Class user_profile extends CI_Model
 	} 
 	
 	/*update_profile*/
-	function update_profile($fname,$lname,$country,$website,$description,$mm,$dd,$yy,$image,$folder_name,$state,$city)
+	function update_profile($fname,$lname,$country,$website,$description,$mm,$dd,$yy,$image,$folder_name,$state,$city,$company_name,$company_name2)
 	{
                 
                 //$description = ereg_replace( "\n",'|', $description);
@@ -217,8 +217,9 @@ Class user_profile extends CI_Model
 			'weburl' => $this->db->escape_str($website),
 			'countryId' => $this->db->escape_str($country),
 			'stateId' => $this->db->escape_str($state),
-			'cityId' => $this->db->escape_str($city)
-
+			'cityId' => $this->db->escape_str($city),
+                        'company_name' => $this->db->escape_str($company_name),
+                        'company_name2' => $this->db->escape_str($company_name2)
 			);			
 		$where = "(id ='".$this->sess_uid."' )";			
 		$this->db->where($where);
@@ -338,6 +339,63 @@ Class user_profile extends CI_Model
 	}
 	/*Listened songs ends*/
 	
+        /*Feeds Uploaded songs and comments*/
+	function fetch_feeds($cond = NULL,$limit = NULL,$orderby = NULL,$counter = NULL,$startlimit = NULL)
+	{
+		$this->load->model('commonfn');
+                
+		$output = array();
+
+		if($cond != NULL)
+			$cond = " WHERE tt.status = 'y' AND u.id = tt.userId AND ".$cond."";	
+		else				
+			$cond = " WHERE tt.status = 'y' AND u.id = tt.userId";
+                //$limit = 6;
+		if($limit != NULL)
+			$limit = " LIMIT ".$limit." ";
+                
+		if($orderby != NULL)
+			$orderby ="ORDER BY tt.id DESC,".$orderby;	
+		else
+			$orderby ="ORDER BY tt.id DESC";	
+                
+		$query = $this->db->query("SELECT tt.id,tt.title,tt.timelength,tt.perLink,u.profileLink,u.firstname as artist_name,u.lastname FROM tracks as tt,users as u ".$cond." ".$orderby." ".$limit." ");
+                //print $this -> db ->last_query();exit;
+		if($counter != NULL)
+			return $query->num_rows();	
+			//echo print_query();
+		$i = 1;
+		if($startlimit != NULL)
+			$i = $startlimit+1;	
+
+		foreach ($query->result_array() as $row)
+		{				
+			$row["tab_image"] = $this->commonfn->get_photo('t',$row["id"]);
+			$row["index"] = $i;	
+
+			if($i % 2 != 0)
+				$row["gray_bg"] = "gray-bg";
+			else
+				$row["gray_bg"] = "";
+
+				//$row["song_name"] = $row["title"];
+			$row["song_name"] = character_limiter($row["title"], 20, $end_char = '&#8230;');
+
+			$row["album_name"] = $row["album_nm"];
+			$row["song_length"] = $row["timelength"];	
+                                                                        
+			$row["role"] = 	"trackdetail";
+			$row["link"] = base_url().$row["profileLink"]."/".$row["perLink"];
+                        //andy add new field for Feeds
+                        $row["tab_name"] = $row["song_name"];
+                        
+			$output[] = $row;
+			$i++;			
+		}
+		return $output;
+	}
+	/*feeds ends*/
+        
 	/*Uploaded songs*/
 	function fetch_uploaded_tracks($cond = NULL,$limit = NULL,$orderby = NULL,$counter = NULL,$startlimit = NULL)
 	{
@@ -382,9 +440,12 @@ Class user_profile extends CI_Model
 
 			$row["album_name"] = $row["album_nm"];
 			$row["song_length"] = $row["timelength"];	
-
+                                                                        
 			$row["role"] = 	"trackdetail";
 			$row["link"] = base_url().$row["profileLink"]."/".$row["perLink"];
+                        //andy add new field for Feeds
+                        $row["tab_name"] = $row["song_name"];
+                        
 			$output[] = $row;
 			$i++;			
 		}

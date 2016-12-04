@@ -3286,7 +3286,7 @@ initProfile:function(){
             }
         },true,false,"",true);
 });
-    $("body").on("click","a[data-role=p-albums],a[data-role=p-followers],a[data-role=p-followings]",function(e){
+    $("body").on("click","a[data-role=p-albums],a[data-role=p-followers],a[data-role=p-followings],a[data-role=p-feed]",function(e){
         e.preventDefault();
         my.routingAjax($(this).attr("href"),{},'',function(response){   
             if(typeof(response)!='undefined'){
@@ -4874,11 +4874,26 @@ initSubmitRoles:function(){
         $("#setup_form").validationEngine();
         if($("#setup_form").validationEngine('validate'))
         {
+            
+            //check whether the user is an artist or not
+            var artist = true;
+            var form_data = $("#setup_form").serializeArray();
+            console.log('role setup', form_data);
+            if (form_data.length == 1){
+                if (form_data[0].name == "none_above") artist = false; //music lover
+            }
             my.routingAjax(my.config.siteUrl+"api/userrolesapi",$("#setup_form").serializeArray(),"",function(response){
                 if(response)
-                {
-                    $('.modal').modal('hide').removeClass("show");
-                    my.redirectLoginAfter("Roles updated successfully.");
+                {                    
+                    if (artist){                        
+                        //show Upload page
+                        $("#upload_page").click();                        
+                        $('.modal').modal('hide').removeClass("show");
+                    } else {
+                        $('.modal').modal('hide').removeClass("show");
+                        my.redirectLoginAfter("Roles updated successfully.");    
+                    }
+                    
                 }                       
             },false,false);
         }
@@ -6195,7 +6210,7 @@ refreshLeftPanel:function(response){
 },
 //after logging in successfully
 redirectLoginAfter:function(msg){
-    console.log(my.config.history_redirect_url);
+    console.log('Redirect URL from previous link: ',my.config.history_redirect_url);
     var $notification = msg;
     e=my.config.stack[my.config.history_redirect_url];
     f=my.tof(e);
@@ -6241,6 +6256,14 @@ $(document).ready(function(){
         if (queries.payment == 'success') App.ShowNotification("success","Success","Payment was successful")
         if (queries.cancel == 'success') App.ShowNotification("success","Success","Membership was canceled successful")
     }
+    //Redirect guest to About page
+    if (config.userIdJs == 0 ||config.userIdJs == 0){//not log in
+        if (window.location.pathname == "/imusify/") {
+            $(".heading li a[data-role=about]").click();   
+        }        
+    }
+    
+    
     //    App.ShowNotification("success","Success",'')    
     
     /*

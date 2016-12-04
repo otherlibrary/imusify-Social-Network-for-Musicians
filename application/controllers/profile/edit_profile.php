@@ -85,7 +85,9 @@ class edit_profile extends MY_Controller {
 			"countries" => $countries,
                         "active_country" => $user_db_details["countryId"],
                         "active_state" => $user_db_details["stateId"],
-                        "active_city" => $user_db_details["cityId"]                        
+                        "active_city" => $user_db_details["cityId"],
+                        "company_name" => $user_db_details["company_name"],
+                        "company_name2" => $user_db_details["company_name2"],
 		);
                 
                 $country_name = '';
