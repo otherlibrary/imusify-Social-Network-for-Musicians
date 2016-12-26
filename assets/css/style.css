@@ -472,7 +472,7 @@ input:focus, textarea:focus, select:focus {box-shadow: none !important; -moz-box
  #slide-toggle-box article a {padding:12px 16px 16px 14px; font-weight: 300; display: block; color: #ffffff; border-left: 2px solid #1b1b1b;}
  #slide-toggle-box article a.blue-light-bg {background-color: #1e1e1f; border-left: 2px solid #1e1e1f;}
  #slide-toggle-box article a:hover {border-left-color: #ea3f4f;}
-
+ #slide-toggle-box article a.active {border-left-color: #ea3f4f !important;}
 
 
 /******************

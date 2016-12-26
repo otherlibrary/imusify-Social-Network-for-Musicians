@@ -22,7 +22,7 @@ Class Liked_model extends CI_Model
 		else
 			$orderby ="l.id DESC";	
 
-		$this->db->select('tt.id,tt.title,tt.release_mm,tt.release_dd,tt.release_yy,tt.createdDate,tt.timelength,tt.plays,tt.comments,tt.shares,tt.userId,g.genre');
+		$this->db->select('tt.id,tt.title,tt.release_mm,tt.release_dd,tt.release_yy,tt.createdDate,tt.timelength,tt.plays,tt.comments,tt.shares,tt.userId,tt.perLink,u.profileLink,u.username,g.genre');
 		$this->db->from('likelog as l');
 		$this->db->join('tracks as tt', 'l.trackId = tt.id','left');
 		$this->db->join('genre as g', 'tt.genreId = g.id','left');
@@ -49,6 +49,7 @@ Class Liked_model extends CI_Model
 			$row["total_songs"] = "";
 			$row["song_list"][] = $row;
 			$row["row_id"] = "music_row";
+                        $row["trackLink"] = base_url().$row["profileLink"]."/".$row["perLink"];
 			if($row["userId"] == $userId)
 			{
 				$row["my_song"] = "true";

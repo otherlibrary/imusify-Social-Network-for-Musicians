@@ -330,17 +330,17 @@ Class track_detail extends CI_Model
                 
 		if($limit != NULL)
 			$limit = " LIMIT ".$limit." ";
-                else $limit = " LIMIT 100";
+                else $limit = " LIMIT 10";
 		if($orderby != NULL)
 			$orderby ="ORDER BY tt.id DESC,".$orderby;	
 		else
 			$orderby ="ORDER BY tt.id DESC";	
 
-		$query = $this->db->query("SELECT tt.id as tid,tt.title,tt.perLink,u.firstname,u.lastname,u.profileLink FROM tracks as tt,users as u ".$cond." ".$orderby." ".$limit." ");
+		$query = $this->db->query("SELECT tt.id as tid,tt.title,tt.perLink,u.firstname,u.lastname,u.profileLink,u.username FROM tracks as tt,users as u ".$cond." ".$orderby." ".$limit." ");
                 
                 if ($query->num_rows() == 0){
                     $cond = " WHERE tt.status = 'y' AND u.id = tt.userId AND tt.id != '".$trackId."'  AND (tt.userId != '".$cur_genre_id["userId"]."')";
-                    $query = $this->db->query("SELECT tt.id as tid,tt.title,tt.perLink,u.firstname,u.lastname,u.profileLink FROM tracks as tt,users as u ".$cond." ".$orderby." ".$limit." ");
+                    $query = $this->db->query("SELECT tt.id as tid,tt.title,tt.perLink,u.firstname,u.lastname,u.profileLink,u.username FROM tracks as tt,users as u ".$cond." ".$orderby." ".$limit." ");
                 }                
                 //print_query();exit;
 		if($counter != NULL)
@@ -350,28 +350,29 @@ Class track_detail extends CI_Model
 		foreach ($query->result_array() as $row)
 		{
 			$row["track_pic"] = $this->commonfn->get_photo('t',$row["tid"],IMG_41,IMG_41);
-			$row["user_name"] = $row["firstname"]." ".$row["lastname"];
+			$row["user_name"] = $row["firstname"]." ".$row["lastname"];                        
 			$row["trackLink"] = base_url().$row["profileLink"]."/".$row["perLink"];
 			$row["profileLink"] = base_url().$row["profileLink"];
 			$row["minititle"] =  character_limiter($row["title"], 20,$end_char = '...');
 
 			$output[] = $row;			
 		}
-                $length = count($output);
-                //Choose random 10 tracks from 100
-                for( $k=0; $k < $length; $k++){
-                        //$j = (int)($length * rand(0,1));
-                        $j = array_rand($output,1);
-                        $temp= $output[$k];
-                        $output[$k]= $output[$j];
-                        $output[$j]= $temp;
-                }
-                $output_random = array();
-                for( $k=0; $k < 10; $k++){
-                    $output_random[] =$output[$k]; 
-                }
+//                $length = count($output);
+//                //Choose random 10 tracks from 100
+//                for( $k=0; $k < $length; $k++){
+//                        //$j = (int)($length * rand(0,1));
+//                        $j = array_rand($output,1);
+//                        $temp= $output[$k];
+//                        $output[$k]= $output[$j];
+//                        $output[$j]= $temp;
+//                }
+//                $output_random = array();
+//                for( $k=0; $k < 10; $k++){
+//                    $output_random[] =$output[$k]; 
+//                }
                 
-		return $output_random;
+		//return $output_random;
+                return $output;
 	}
 	/*similar songs ends*/
 

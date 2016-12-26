@@ -77,7 +77,7 @@ class Upload extends MY_Controller {
 		}else{
 
 			$total_records = $this->uploadm->fetch_user_tracks("tt.userId = '".$session_user_id."' AND tt.albumId = '0'",NULL,NULL,100,150,'counter');
-
+                        
 			/*dump($total_records);exit();*/
 			/*echo $total_records;*/
 
@@ -94,7 +94,7 @@ class Upload extends MY_Controller {
 			if($page != NULL && $page > 0)
 			{
 				$new_limit = $start_limit.",".$this->def_rec_dis_m;	
-				$last_page = ceil($total_records/$this->def_rec_dis_m);	
+				$last_page = ceil($total_records/$this->def_rec_dis_m);	                                
 				$data_array = $this->uploadm->fetch_user_tracks("tt.userId = '".$session_user_id."' AND tt.albumId = '0' ",$new_limit,NULL,86,86);
 				$final_array["data"] = $data_array;	
 				$final_array["page"] = $page+1;
@@ -191,13 +191,14 @@ class Upload extends MY_Controller {
 
 	function trackedit($id){
 		$userId = $this->session->userdata('user')->id;
+                //var_dump($userId);exit();
 		$is_exist = getvalfromtbl("id","tracks","id='".$id."' AND userId = '".$userId."'");
 		if($is_exist)
 		{
 			if($this->session->userdata('user')->id > 0)
 			{
 				$data = $this->uploadm->fetch_info($id,'t');
-				/*dump($data);exit();*/
+                                				
 				$this->config->set_item('title','Edit Track');
 				$template_arry['MainPanel']="main.html";
 				$template_arry['leftPanel']="left_panel.html";

@@ -62,7 +62,14 @@ class Feed_api extends REST_Controller
 		$array["url"] =  $postdata['hrefUrl'] ? $postdata['hrefUrl'] : "";	
 		$array["feedType"] =  $postdata['feedType'] ? $postdata['feedType'] : "";		
 		$array["imgType"] =  $postdata['imgType'] ? $postdata['imgType'] : "";			
-		$array["imgUrl"] =  $postdata['imgUrl'] ? $postdata['imgUrl'] : "";		
+		$array["imgUrl"] =  $postdata['imgUrl'] ? $postdata['imgUrl'] : "";	
+                
+                if (empty($array["title"])) {
+                    $array["title"] = $this->post('text');
+                    $array["feedType"] = $this->post('feedType');
+                    //var_dump ($array["title"], $array["feedType"]);exit;                    
+                }                
+                
 		/*echo "<pre>";
 			print_r($array);*/
 		$data = $this->following_model->insert_feed($array);

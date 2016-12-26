@@ -9,7 +9,12 @@ class Commonfn_Api extends REST_Controller
 		parent::__construct();
 		$this->load->model('commonfn');
 		$this->load->model('playlist_model');
-		$this->sess_id = $this->session->userdata('user')->id;			
+                $this->load->model('browse_recommended');		
+		$this->load->model('home_modal');
+                $this->load->model("liked_model");
+                $this->load->model('track_detail');
+		$this->sess_id = $this->session->userdata('user')->id;	
+                $this->rec_to_dis = 10;  
 	}
 
 	function upload_list_post(){
@@ -537,6 +542,54 @@ class Commonfn_Api extends REST_Controller
 		}	
 	}
 	
+        /*Initial Playlist json data*/
+	function initial_playlist_json_get(){
+		$type = $this->get("type");                                                    
+                if (empty($type)) $type = 'home';
+                switch ($type){
+                    case 'home':
+                        $response = $this->home_modal->get_overview("",$this->rec_to_dis,NULL,NULL,NULL,373,373,'','',38,38);	
+                    break;
+                    case 'browse':                        
+                        $start_limit = 0;                        
+                        $new_limit = $start_limit.",".$this->rec_to_dis;					                        	
+                        $response = $this->browse_recommended->fetch_popular_tracks("",$new_limit,"","",$start_limit);                                                
+                    break;
+                    case 'playlist':  //link /sets                      
+                        $response = $this->playlist_model->get_playlists($playlistLink,$profileLink);
+                    break;
+                    case 'favorite':                        
+                        $response = $this->liked_model->fetch_user_liked_tracks(NULL,NULL,2);
+                    break;
+                    default: 
+                        //track detail 
+                        //get similar songs
+                        //$track_exists = true;
+                        
+                        $temp = $this->get("current_link");  
+                        $temp_arr = explode('/', $temp);
+                        $count = count($temp_arr);
+                        $trackLink = $temp_arr[$count - 1];                        
+                        $cond = "isPublic = 'y' AND perLink = ".$this->db->escape($trackLink)."";
+                        $track_exists = getvalfromtbl("id","tracks",$cond,"single","");
+                        //var_dump($track_exists);exit;
+                        $response = $this->track_detail->fetch_similar_tracks($track_exists);
+                        
+                }
+                
+                
+                if (is_array(($response))) $response = array_slice($response, 0, 10);
+                //dump($response);
+                if($response)
+                {
+                        $us_ar["success"] = "success";
+                        $us_ar["data"] = $response;
+                        //$us_ar["msg"] = "";													
+                }				
+                $this->response($us_ar, 200); // 200 being the HTTP response code			
+	}
+        
+        
 	
 	/*Playset json*/
 	function get_playlist_json_get(){

@@ -161,6 +161,8 @@ $route['removefromplaylist'] = "api/commonfn_api/removetrack_from_playlist/forma
 $route['create_album'] = "api/commonfn_api/create_album/format/json";
 $route['album_list'] = "api/commonfn_api/album_list";
 
+$route['initial_playlist'] = "api/commonfn_api/initial_playlist_json/format/json";
+
 $route['download/(:any)/(:any)'] = "download/index/$1/$2";
 $route['download/(:any)'] = "download/index/$1";
 

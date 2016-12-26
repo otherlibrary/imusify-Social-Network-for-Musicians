@@ -1,3 +1,5 @@
+    var ajax_popupdata = {};
+    var sc_trackslist_current= '';
     var add_save_never_sell = false;
     var init_upload = false;
     var url_location_static = window.location.href;
@@ -41,8 +43,7 @@
     var window_height = $(window).height();
     var window_outer_height = $(window).outerHeight(true);
     var window_width = $(window).width();
-    var window_outer_width = $(window).outerWidth(true);
-
+    var window_outer_width = $(window).outerWidth(true);        
 
 
     /*Hint share tips*/
@@ -96,7 +97,7 @@
     };
     $.fn.linkPreview = function (options) {
         var defaults = {
-            placeholder: "Whats crackin?",
+            placeholder: "What is on your mind?",
             imageQuantity: -1
             
         };
@@ -123,8 +124,8 @@
         
 
         $.when(my.renderTemplate("crawl_feed_row")).done(function(){
-            console.log("1");
-            console.log(my.config.loaded_template);
+            //console.log("1");
+            //console.log('Crawl feed row: ',my.config.loaded_template);
             $.template("u_tmpl_container",my.config.loaded_template['crawl_feed_row']);
             $.tmpl('u_tmpl_container',$tmp2).appendTo($elm);  
         });
@@ -543,6 +544,7 @@ $('body').on('blur','#text_' + selector,function(e){
     crawlText();       
 });
 $("body").on('click','.leave-reply',function (e) {
+    //show reply form for Post a reply
     var id = $(this).attr("data-id");
     var feedlogId = $(this).attr("data-feedlogId");
     var profileImg = $(this).attr("data-profileimg");
@@ -671,7 +673,14 @@ $("body").on('click','.leave-reply',function (e) {
                 });
                 $("body").on('click', '#videoPostPlay' + imageId,function (e) {
                     e.stopPropagation();
-                    iframenize($(this).parent().find(".imgIframe"));
+                    iframenize($(this).parent().find(".imgIframe"));                                        
+                    //Register listener for Video playback
+//                    setTimeout(function(){
+//                        //load all available videos and audios
+//                        //hide all Play buttons
+//                        $(".videoPostPlay").click();
+//                        $(".videoPostPlay").hide();
+//                    }, 500);
                 });
             });
 
@@ -1139,6 +1148,7 @@ initSocialLinkShare:function(){
         e.preventDefault();
         share_url = $(this).attr("data-shareurl");
         share_desc = $(this).attr("data-sharedesc");
+        console.log('Share icon Init');
         $("body").append(appendthis);
         $(".modal-overlay").fadeTo(500, 0.7);
         var modalBox = $(this).attr('data-sharemodal');
@@ -1153,22 +1163,62 @@ initSocialLinkShare:function(){
         
         $("#sharepopup .google").attr("data-href",share_url);
         $('#'+modalBox).fadeIn($(this).data());
+        
+        var temp = share_url.split('/');
+        var track_name = temp[temp.length - 1];
+        track_name = track_name.replace(/_/g, ' ');
+        track_name = 'Shared track '+ track_name;
+        console.log('Track name', track_name);
+        //add Share feed for this user Following page
+            $.ajax({
+              url:App.config.siteUrl+'api/feed_save',              
+              type:'POST',
+              cache: false,              
+              data: {
+                 text: track_name,
+                 feedType: 'text',
+              },                          
+              dataType:'json',
+              success: function(data) {                
+              }});
+        
+        
+        
     });  
 },
 //new function for my app Initialize Share Popup
 sharePopup:function(){
     $('a.share-icon').click(function(e) {        
-        console.log('Share icon clicked');
         $("body").append('<div class="modal-overlay js-modal-close" style="opacity: 0.7;"></div>');
         share_url = $(this).attr("data-shareurl");
         share_desc = $(this).attr("data-sharedesc");
         var modalBox = $(this).attr('data-sharemodal');
+        console.log('Share icon clicked');
         var encoded_share_url = encodeURI(share_url);        
         $("#sharepopup .facebook").attr("src",fb_share+encoded_share_url);       
         $("#sharepopup .twitter").attr("href",twit_share+share_url);        
         $("#sharepopup .google").attr("data-href",share_url);
         $(".modal-overlay").fadeTo(500, 0.7);
-        $('#sharepopup').fadeIn($(this).data());        
+        $('#sharepopup').fadeIn($(this).data());      
+        
+        var temp = share_url.split('/');
+        var track_name = temp[temp.length - 1];
+        track_name = track_name.replace(/_/g, ' ');
+        track_name = 'Shared track '+ track_name;
+        console.log('Track name', track_name);
+        //add Share feed for this user Following page
+            $.ajax({
+              url:App.config.siteUrl+'api/feed_save',              
+              type:'POST',
+              cache: false,              
+              data: {
+                 text: track_name,
+                 feedType: 'text',
+              },                          
+              dataType:'json',
+              success: function(data) {                
+              }});
+                
     });
 },        
 initRandomString:function(){
@@ -2058,12 +2108,24 @@ initPopup:function(){
             my.config.history_redirect_url = document.URL;
         }
         var a={"temp":temp};
-        my.routingAjax(href,{},JSON.stringify(a),function(response){
+        my.routingAjax(href,{},JSON.stringify(a),function(response){            
             if(typeof(response)!='undefined'){
+                console.log('Ajax response for Popup: ',response);
+                ajax_popupdata = response;
                 $('.modal').modal('hide');
                 $("#popup").html('');                       
                 var $a=$.template("popUpContent",my.config.loaded_template[response.extra.temp]);
-                $.tmpl("popUpContent",response).appendTo("#popup");
+                
+//                var temp = $.tmpl("popUpContent",response);
+//                console.log('Temp html: ',temp[0], typeof temp);
+//                var new_html = temp[0].toString();
+//                new_html = new_html.replace(/[object Object]/g, '42');
+//                temp[0] = new_html;
+//                temp.appendTo("#popup");
+                //$("#popup").append(temp);
+                //temp.appendTo("#popup");
+                $.tmpl("popUpContent",response).appendTo("#popup");                                                
+                
                 $.when($a).then(function(){    
                     console.log(response.extra.temp);       
                     //reload FB sdk after ajax (because it only loads for initial page)
@@ -2562,7 +2624,10 @@ initFollowing:function(){
                 $.template("#loadMore",my.config.loaded_template['loadmore']);  
                 $.template("#contentPanel",my.config.loaded_template['following']);
                 $.tmpl('#contentPanel',response).appendTo(".right_box");
-                my.initPlugin();
+                setTimeout(function(){
+                    my.initPlugin();                    
+                },500);
+                console.log('following ajax');
                 my.removeIds();
             }
         },true,false);
@@ -2615,7 +2680,6 @@ initFollowing:function(){
                 if(response.id > 0)
                 {
                     $("#feed_new_comment_form").removeClass("disabled");
-
                     $("#feed_com_cont_"+id).html("").fadeOut();
                     $.template("u_tmpl_container_e",my.config.loaded_template['follow_comment_row']);
                     $.tmpl("u_tmpl_container_e",response.feed_comments).appendTo("#feed_com_cont_"+id);     
@@ -2628,6 +2692,23 @@ initFollowing:function(){
         }
         return false;
     });
+    //cancel reply feed
+        jQuery("body").on('click', "#cancelreply",function(e) {     
+        e.preventDefault();     
+        disable = $(this).hasClass('disable');
+        var id = $("#feedlogId").val();
+        
+        $("#feed_new_comment_form").removeClass("disabled");
+        $("#feed_com_cont_"+id).html("").fadeOut();
+        $.template("u_tmpl_container_e",my.config.loaded_template['follow_comment_row']);
+        $.tmpl("u_tmpl_container_e",response.feed_comments).appendTo("#feed_com_cont_"+id);     
+        $("#feed_com_cont_"+id).fadeIn();  
+        console.log('Cancel reply', id);
+        App.initPlugin(true);   
+        return false;
+    });
+    
+    
 },
 initEditProfile:function(){
     jQuery("body").on('show.bs.modal','.edit_profile', function (e) {
@@ -3863,7 +3944,25 @@ initUpload:function(){
             if(saved_q.hasOwnProperty(rn))
             {
                 my.initSaveTrack(rn);
-            }
+            }            
+            var temp = name.replace(/.mp3/g, '');
+            temp = 'Uploaded track '+ temp;
+            //add Upload feed for this user Following page
+            $.ajax({
+              url:App.config.siteUrl+'api/feed_save',              
+              type:'POST',
+              cache: false,              
+              data: {
+                 text: temp,
+                 feedType: 'text',
+              },                          
+              dataType:'json',
+              success: function(data) {
+                //console.log('Response Feed:', data);
+              }});
+                      
+                      
+            
         }
     },
     fail:function(e,data){
@@ -4316,11 +4415,16 @@ $("body").on("click",'.delete',function(e){
     });
 
     jQuery("body").on('show.bs.modal','.trackedit', function (e) {
-        var $r = $("#r_val").val();
-
+        //var $r = $("#r_val").val();
+        
+        var url = window.location.href;
+        var temp = url.split('/');
+        var track_id = temp[temp.length - 1];  
+        var $r = track_id;    
+        console.log('Track Edit');
         croppicHeaderOptionstrack[$r] = {
             cropData:{
-                "r":$r
+                "r": $r
             },                      
             cropUrl:my.config.siteUrl+'crop/index/trackImg',    
             customUploadButtonId:'track_image_'+$r, 
@@ -4337,8 +4441,8 @@ $("body").on("click",'.delete',function(e){
                 console.log('onError:'+errormessage)
             }
         }
-        var croppic_$r = new Croppic('croppic_'+$r, croppicHeaderOptionstrack[$r]);
-
+        var croppic = new Croppic('croppic_'+track_id, croppicHeaderOptionstrack[track_id]);
+        
 
         $('select.common').customSelect();                          
         jQuery("#sec_genner").select2({
@@ -4350,6 +4454,11 @@ $("body").on("click",'.delete',function(e){
             allowClear: true,
             minimumInputLength :3,
         }); 
+         jQuery("#mood"+$r).select2({
+                placeholder: "Select a mood",
+                allowClear: true
+            });
+            
         jQuery("#moods_list").select2({
             placeholder: "Select a mood",
             allowClear: true
@@ -4361,6 +4470,26 @@ $("body").on("click",'.delete',function(e){
         my.initCheckboxApplies();
         my.initEditableCheckbox(); 
         my.initSwitchApply();        
+        my.initUploadDetails();
+        
+        
+        setTimeout(function(e){            
+            var i = 0;
+            if (ajax_popupdata.data_array[i].id != track_id) i = i+1;            
+            //Initialize data for Track detail
+            var thumnail_link = ajax_popupdata.data_array[i].track_image;
+            $(".u_song_detail  figure img").attr('src', thumnail_link);
+            $(".u_song_detail #title").attr('value', ajax_popupdata.data_array[i].title);
+            $(".u_song_detail input[name='dd']").attr('value', ajax_popupdata.data_array[i].release_dd);
+            $(".u_song_detail input[name='mm']").attr('value', ajax_popupdata.data_array[i].release_mm);
+            $(".u_song_detail input[name='yy']").attr('value', ajax_popupdata.data_array[i].release_yy);            
+            $(".u_song_detail textarea[name='desc']").html(ajax_popupdata.data_array[i].description);
+            $(".upload_item_box h1").html('Edit track - '+ajax_popupdata.data_array[i].title);
+            
+        }, 500)
+        
+        
+        
     });
     
 
@@ -5081,6 +5210,14 @@ if($(".following_page").size()==1){
     if($("#previewLoading_feed_post").size() == 0)
     {
         $('#feed_post').linkPreview();
+        //click Play to show all videos and waveforms
+        setTimeout(function(){
+            //load all available videos and audios
+            //hide all Play buttons
+            $(".videoPostPlay").click();
+            $(".videoPostPlay").hide();
+        }, 500);
+        
     }
     $('aside#following-aside #conts-box, #chat-msg-container .members-list, #chat-msg-container .members-list .other, #chat-msg-container .chat-box').css("height","100%")
     $("aside#following-aside #conts-box").mCustomScrollbar("update");
@@ -5490,6 +5627,8 @@ return false;
         if(my.config.loggedIn == true)
         {
             var trackId = $(this).attr("data-tid");
+            var track_name = $(this).attr("data-tname");
+            track_name = 'Liked track '+ track_name;
             var arr = {};
             arr["trackId"] = trackId;                        
             if(trackId > 0)
@@ -5506,7 +5645,22 @@ return false;
                             $.tmpl("u_tmpl_container_e",response.data).prependTo("#like");                            
                         }
                         my.ShowNotification(response.msgtype,response.msgtitle,response.msg);
-                        
+                        //add Like feed for this user Following page
+                        $.ajax({
+                          url:App.config.siteUrl+'api/feed_save',              
+                          type:'POST',
+                          cache: false,
+                          //contentType: 'multipart/form-data',
+                          //contentType:false,
+                          //processData: false,
+                          data: {
+                             text: track_name,
+                             feedType: 'text',
+                          },                          
+                          dataType:'json',
+                          success: function(data) {
+                            console.log('Response:', data);
+                          }});
                     }
                     else if(response.error == "error")                      
                     {
@@ -6317,7 +6471,12 @@ $(document).ready(function(){
         }, 1500);
         }, 300);
     });
- 
+    
+    
+    //Intialize Playlist    
+    setTimeout(function(){
+        createPlaylist();
+    },500);
  
 });
 
@@ -6583,5 +6742,95 @@ function initFacebooklogin(){
     $('body').on('click','#fb_login',function (e) {
         fbsignin_func();
     });    
-}
+};
  //end of Facebook Login
+ 
+ //Player UI update for Playlist
+ 
+ 
+ function addTrackToPlaylist(track_link, name, artist,track_image){
+     var temp_html = '<article class="tr_item" data-href="'+track_link+'" data-track="'+track_link+'"><a href="javascript:void(0)" class="blue-light-bg"><span>'+name+'</span> '+artist+'</a></article>';
+     var sc_tracklist_temp = '<li><div class="col-lg-2 col-md-2 col-sm-2 col-xs-12 item-box"><div class="songs"><figure class="loading"><div class="img"></div><img src="'
+     +track_image+'" alt="'+name+'" title="'+name+'" class="img-responsive"></figure><div class="play-btns" data-href="'
+     +track_link+'" data-track="'+track_link+'"><a class="pause-icon" data-href="'+track_link+'" data-track="'
+     +track_link+'" href="javascript:void(0);"></a></div></div><article><h3>'+name+'</h3><span>a</span></article></div></li>';
+     if ( $(".sc-queuelist .tr_item:last").length != 0) {
+         $(".sc-queuelist .tr_item:last").after(temp_html);
+        //$(".sc-trackslist li:last").after(sc_tracklist_temp);
+     } else {
+         $(".sc-queuelist").append(temp_html);
+         //$(".sc-trackslist").append(sc_tracklist_temp);
+     }
+     sc_trackslist_current = $(".sc-trackslist").html();     
+ }
+ 
+ function removeDuplicateTrack(){
+     $(".sc-queuelist .tr_item").each(function(){
+        var temp_link = $(this).attr('data-href');
+        if(typeof temp_link != 'undefined'){
+            if ( $(".sc-queuelist .tr_item[data-href='"+temp_link+"']").length > 1) {
+            $(".sc-queuelist .tr_item[data-href='"+temp_link+"']:last").remove();
+            console.log('Remove redundant item ', temp_link);
+            }        
+        }
+        
+     });     
+ }
+ 
+ function createPlaylist(){
+     var current_location = window.location.pathname;
+     var type;
+     switch(current_location){
+             case "/imusify/":
+                type = 'home';   
+             break;
+             case "/imusify/browse":
+                 type = 'browse';
+             break;
+             case "/imusify/sets":
+                 type = 'playlist';
+             break;
+             case "/imusify/liked":
+                 type = 'favorite';
+             break;             
+             default:
+                  var temp = current_location.split('/');
+                  if (temp.length == 4)
+                  type = 'trackdetail';
+                  else type = false;
+             }
+         
+      if (type !== false){
+          $.ajax({
+            url:App.config.siteUrl+'initial_playlist',              
+            type:'GET',
+            cache: false,              
+            data: {
+               current_link: current_location,
+               type: type,
+            },                          
+            dataType:'json',
+            success: function(data) {     
+                 if (typeof data.data === 'undefined'){
+                     console.log('Invalid data', data);
+                 } else {
+                    var tracks_array = data.data;    
+                    tracks_array.forEach(function(x){
+                        if (typeof x.trackLink === 'undefined' || typeof x.title === 'undefined' || typeof x.username === 'undefined') return;
+                        addTrackToPlaylist(x.trackLink, x.title, x.username,'');                    
+                    })
+                 }                                       
+
+
+             }});
+      }
+      
+          
+          
+//     addTrackToPlaylist('http://localhost/imusify/a/test_27','Test 27','a','');
+//     addTrackToPlaylist('http://localhost/imusify/a/test_29','Test 29','a','');
+//     addTrackToPlaylist('http://localhost/imusify/a/test_26','Test 26','a','');
+ }
+ 
+ 
+ 

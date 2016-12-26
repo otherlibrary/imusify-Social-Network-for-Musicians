@@ -484,8 +484,7 @@ Class commonfn extends CI_Model
 			$cond = " WHERE status = 'y' AND ".$cond."";	
 
 		$query = $this->db->query("SELECT ".$dbcolumn." FROM ".$table." WHERE ".$dbcolumn." LIKE '".$title."-%' Order by ".$orderby." DESC LIMIT 1");
-		$row = $query->result_array();	
-		
+		$row = $query->result_array();	                		
 		if(!empty($row))
 		{
 			$temp = $row[0][$dbcolumn];	

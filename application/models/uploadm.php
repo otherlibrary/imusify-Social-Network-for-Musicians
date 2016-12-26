@@ -324,7 +324,12 @@ Class uploadm extends CI_Model
 			$this->load->library('getid3/getID3');
 			$this->load->library('MP3Waveform');
 			$this->load->model('commonfn');
-			$permalink = $this->commonfn->get_permalink($title,"tracks","perLink","id");
+                        //unique link for any track
+			$permalink = $this->commonfn->get_permalink($title,"tracks","perLink","id");                        
+                        $random_string = uniqid();
+                        $permalink = $permalink.'_'.$random_string;
+                        
+                        
 			$session_user_id = $this->session->userdata('user')->id;
 			$file_name = $this->session->userdata('song_'.$r);
 			$old_physical_path = asset_path()."temp/".$session_user_id."/".$file_name;
@@ -819,7 +824,7 @@ Class uploadm extends CI_Model
 			$orderby ="ORDER BY tt.id DESC";	
 
 
-		$query = $this->db->query("SELECT tt.id,tt.perLink,tt.title,tt.release_mm,tt.release_dd,tt.release_yy,tt.createdDate,tt.timelength,tt.plays,tt.likes,tt.comments,tt.shares,g.genre,(SELECT profileLink from users where id = tt.userId) AS userperlink FROM tracks as tt,genre as g ".$cond." ".$orderby." ".$limit." ");
+		$query = $this->db->query("SELECT tt.description,tt.id,tt.perLink,tt.title,tt.release_mm,tt.release_dd,tt.release_yy,tt.createdDate,tt.timelength,tt.plays,tt.likes,tt.comments,tt.shares,g.genre,(SELECT profileLink from users where id = tt.userId) AS userperlink FROM tracks as tt,genre as g ".$cond." ".$orderby." ".$limit." ");
 
 		/*echo $this->db->last_query();*/
 
@@ -839,7 +844,7 @@ Class uploadm extends CI_Model
 			$row["song_list"][] = $row;
 			$row["userId"] = $this->session->userdata('user')->id;
 			$row["row_id"] = "music_row";
-			$row["tags"] = $this->fetch_track_genre($row["id"]);
+			$row["tags"] = $this->fetch_track_genre($row["id"]);                        
 			$output[] = $row;					
 		}
 		return $output;
@@ -1000,6 +1005,7 @@ Class uploadm extends CI_Model
 			$row->save_class = 'create_album_submit';
 		}else{
 			$row->name = $row->title;
+                        //$row->des = $row->description;
 			$row->track_image = $this->commonfn->get_photo($type,$row->id);
 			if($row->isPublic =='y')
 			{

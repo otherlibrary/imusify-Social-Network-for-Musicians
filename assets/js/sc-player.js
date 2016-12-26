@@ -4,7 +4,7 @@
 var playback = false;
 var loop = false;
 var track_link = '';
-
+var active_addtrack = false;
 
 var root = document.location.hostname;
 var track_info_loaded = {};
@@ -225,8 +225,11 @@ var _force_to_play = false;
                 //andy
                 $( document ).ajaxComplete(function() {                    
                     console.log('Home Initialize Share');                                 
-                    //Register Share link popup
-                    my.sharePopup();  
+                    //Register Share link popup                     
+                    setTimeout(function(){ 
+                        my.sharePopup();
+                    },500);
+                                                     
                     //my.trackcover_cropic();
                     //Register for Upload page
                     //my.initUpload();
@@ -608,11 +611,13 @@ updateWaveform = function($player,url,kind,track){
       console.log('Waveform URL ', track.waveform_url);  
       $player.data("queue")[index].waveform_loded=true;
       $player.data("queue")[index].wavedata=d;
-      console.log('wavedata ', d);
+      //console.log('wavedata ', d);
       var bar_width = 3;
       var bar_gap = 0.3;
       generateWaveform($player,track);
-               console.log($player.data()) ;
+               console.log('Player current data: ',$player.data()) ;
+               
+               
                $player.trigger('onPlayerTrackSwitch.scPlayer', [track]);    
              });
   }
@@ -701,10 +706,10 @@ updateTrackInfo = function($player,url,kind,track,wavegenerate) {
         $(player).trigger((status ? 'onPlayerPlay' : 'onPlayerPause'));
       },
       onPlay = function(player,kind,url,track) {
-        console.log('Player start', player);
-        console.log(kind);//type or kind: track or playlist
-        console.log(url);//url of track
-        console.log("Demo "+url);        
+        console.log('Player start ', player);
+        console.log('Type of playback: ',kind);//type or kind: track or playlist
+        //console.log(url);//url of track
+        console.log("URL of track "+url);        
         //alert("Play 2");
         addLoading();
         var song_new=false;
@@ -772,7 +777,7 @@ updateTrackInfo = function($player,url,kind,track,wavegenerate) {
       console.log(player.url);*/
       console.log('Pause');       
       $player = $(player);
-      /*current_play_url = $('.sc-trackslist li.active', $player).find(".play-icon a").attr("data-href");*/
+//      current_play_url = $('.sc-trackslist li.active', $player).find(".play-icon a").attr("data-href");
       current_play_url = $('.sc-trackslist li.active', $player).find(".play-btns a").attr("data-href");
       /*wave_animate*/
       var wave_playing_selector = jQuery(".waveform_cont[data-track='" +current_play_url+"']");
@@ -835,12 +840,17 @@ updateTrackInfo = function($player,url,kind,track,wavegenerate) {
       var $player = $(player);
         // continue playing through all players
         log('track finished get the next one');
+        console.log('Track Finished Get the next one');
         $nextItem = $('.sc-trackslist li.active', $player).next('li');
         // try to find the next track in other player
-        if(!$nextItem.length){
+        if(!$nextItem.length){ //if no more track to play
           $nextItem = $player.nextAll('div.big_player:first').find('.sc-trackslist li.active');
         }
-        $nextItem.click();
+        if(!$nextItem.length){
+            $nextItem = $('.sc-queuelist .tr_item.active').next('article');
+        }                
+        $nextItem.click();                
+        if(!$nextItem.length) App.ShowNotification("info","Info","No more track to be played");
       },
       soundVolume = function() {
         var vol = 80,
@@ -985,7 +995,7 @@ updateTrackInfo = function($player,url,kind,track,wavegenerate) {
     if(queue.length > 0)
       loadTracksData($player, queue, opts.apiKey);
 
-		// init the player GUI, when the tracks data was laoded
+		// init the player GUI, when the tracks data was loaded
     $(document).on('onTrackDataLoaded', function(event) {
 
       //log('onTrackDataLoaded.scPlayer', event.playerObj, playerId, event.target);
@@ -1011,20 +1021,33 @@ updateTrackInfo = function($player,url,kind,track,wavegenerate) {
         clearQueue($player,$queuelist);
       }
 		//var q_track=$player.data('tracks');
+        
+        
         // create the playlist
         $.each(tracks, function(index, track) {
           var active = index === 0;
           if(type=="track"){
             url=track.permalink_url;
           }
-          if($queuelist.find('a[data-href="' + track.permalink_url +'"]').length==0){
-            $player.data('queue').push(track);
+          
+          //andy Important 
+          if($queuelist.find('a[data-href="' + track.permalink_url +'"]').length==0){ //new track Played
+            $player.data('queue').push(track);            
             $('<li><div class="col-lg-2 col-md-2 col-sm-2 col-xs-12 item-box"><div class="songs"><figure class="loading"><div class="img"></div><img src="'+track.track_avtar+'" alt="'+ track.mini_title+'" title="'+ track.title+'" class="img-responsive"></figure><div class="play-btns" data-href="'+track.permalink_url+'" data-track="'+track.permalink_url+'"><a class="play-icon" data-href="'+track.permalink_url+'" data-track="'+track.permalink_url+'" href="javascript:void(0);"></a></div></div><article><h3>'+ track.mini_title+'</h3><span>'+track.user.username+'</span></article></li>').data('sc-track', {id:track.id,kind:type,url:url,track:track.permalink_url}).toggleClass('active', active).appendTo($queuelist);
-            $('<article class="tr_item" data-href="'+url+'" data-track="'+track.permalink_url+'" ><a href="javascript:void(0)" class="blue-light-bg"><span>' + track.mini_title + '</span> ' + track.user.username + '</a></article>').appendTo($queuelist_small);
+            //check current list has track or not to add active class 
+            console.log('Track link: ', track.permalink_url);            
+            if ( $(".sc-queuelist article[data-track='"+track.permalink_url+"']").length > 0){
+                if (! active_addtrack){
+                    $(".sc-queuelist article[data-track='"+track.permalink_url+"']").addClass("active");
+                    $(".sc-queuelist article[data-track='"+track.permalink_url+"'] a").addClass("active");
+                }                 
+            } else $('<article class="tr_item" data-href="'+url+'" data-track="'+track.permalink_url+'" ><a href="javascript:void(0)" class="blue-light-bg"><span>' + track.mini_title + '</span> ' + track.user.username + '</a></article>').appendTo($queuelist_small);            
+            active_addtrack = true;
             //$('<li><a href="' + track.permalink_url +'">' + track.title + '</a><span class="sc-track-duration">' + timecode(track.duration) + '</span></li>').data('sc-track', {id:track.id,kind:type,url:url,track:track.permalink_url}).toggleClass('active', active).appendTo($queuelist);
-          }
+          }                                
         });
-
+        removeDuplicateTrack();        
+                        
         // update the element before rendering it in the DOM
         $player.each(function() {
           if($.isFunction(opts.beforeRender)){
@@ -1176,17 +1199,19 @@ updateTrackInfo = function($player,url,kind,track,wavegenerate) {
     return false;
   }); 
 
+//Forward and Backward buttons
 /*click next j */
 jQuery(document).on('click', ".nexttrack",function(e) {
   e.preventDefault();
   var $track = $(this),
   $player = $('.big_player');
-  $nextItem = $('.sc-trackslist li.active', $player).next('li');
+  $nextItem = $('.sc-queuelist .tr_item.active').next('article');    
   if(!$nextItem.length){
-    /*$nextItem = $player.nextAll('div.big_player:first').find('.sc-trackslist li.active');*/
-
+      $nextItem = $('.sc-trackslist li.active', $player).next('li');            
   }
-  $nextItem.click();
+  $nextItem.click();  
+  if(!$nextItem.length) App.ShowNotification("info","Info","No more track to be played");
+  
 }); 
 /*click next ends j */
 
@@ -1195,12 +1220,13 @@ jQuery(document).on('click', ".prevtrack",function(e) {
   e.preventDefault();
   var $track = $(this),
   $player = $('.big_player');
-  $prevItem = $('.sc-trackslist li.active', $player).prev('li');
+  $prevItem = $('.sc-queuelist .tr_item.active').prev('article');    
   if(!$prevItem.length){
-    /* $prevItem = $player.nextAll('div.big_player:first').find('.sc-trackslist li.active');*/
-
+      $prevItem = $('.sc-trackslist li.active', $player).prev('li');
+    /* $prevItem = $player.nextAll('div.big_player:first').find('.sc-trackslist li.active');*/    
   }
-  $prevItem.click();
+  $prevItem.click();  
+  if(!$prevItem.length) App.ShowNotification("info","Info","No more track to be played")
 }); 
 /*click prev ends j */
 
@@ -1213,6 +1239,12 @@ $(document).on('click','.tr_item', function(event) {
  var clicked_class = event.target.className+" ";
  clicked_class_ar = clicked_class.split(/ +/);
  is_exist = $.inArray('noclickplay', clicked_class_ar);
+ //removeDuplicateTrack();
+ //remove all current active article and anchor for .sc-queuelist
+ $(".sc-queuelist .tr_item").each(function(){
+    $(this).removeClass('active');
+    $(this).children('a').removeClass('active'); 
+ });
 
 
  //if(e.target.className == "delete_conversation")
@@ -1225,6 +1257,7 @@ if(is_exist < 0)
 {
     //Andy Song clicked to play
   console.log("tr_item clicked Song clicked to play");
+  active_addtrack = false;
   //hide waveform sample andy 
   $("#waveform_sample").hide();
   
@@ -1232,9 +1265,19 @@ if(is_exist < 0)
   var $list = $player.find('.sc-trackslist li');
   var url=$(this).attr("data-href"); 
   var track=$(this).attr("data-track");
+  //add class active for it
+  $(this).addClass('active');
+  $(this).children('a').addClass('active');
+  
   track_link = track;
   var title=$(this).text();
-
+  
+  if ( $(".sc-queuelist article[data-track='"+track+"']").length > 0 ){
+    $(".sc-queuelist article[data-track='"+track+"']").addClass("active");
+    $(".sc-queuelist article[data-track='"+track+"'] a").addClass("active");
+    active_addtrack = true;
+  }
+  
   addLoading();
   var exists=false;
   var current_type;

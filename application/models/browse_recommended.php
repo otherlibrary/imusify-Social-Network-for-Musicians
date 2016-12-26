@@ -30,13 +30,13 @@ Class browse_recommended extends CI_Model
 			$limit = " LIMIT ".$limit." ";
 
 		if($orderby != NULL)
-			$orderby ="ORDER BY plays DESC,tt.id DESC,".$orderby;	
+			$orderby ="ORDER BY plays DESC,".$orderby;	
 		else
 			//$orderby ="ORDER BY plays,tt.id DESC";	
-                        $orderby ="ORDER BY tt.id DESC,plays DESC";	
+                        $orderby ="ORDER BY plays DESC";	
 
 		$query = $this->db->query("SELECT tt.id,tt.title,tt.release_mm,tt.release_dd,tt.release_yy,tt.createdDate,tt.timelength,tt.plays,tt.comments,
-                    tt.shares,tt.perLink,g.genre,u.firstname as artist_name,u.lastname,u.profileLink,
+                    tt.shares,tt.perLink,g.genre,u.firstname as artist_name,u.lastname,u.username,u.profileLink,
                     al.name as album, tt.albumId as albumid FROM tracks as tt,genre as g,users as u,albums as al ".$cond." ".$orderby." ".$limit." ");
 //               $query = $this->db->query("SELECT tt.id,tt.title,tt.release_mm,tt.release_dd,tt.release_yy,tt.createdDate,tt.timelength,tt.plays,tt.comments,
 //                    tt.shares,tt.perLink,g.genre,u.firstname as artist_name,u.lastname,u.profileLink

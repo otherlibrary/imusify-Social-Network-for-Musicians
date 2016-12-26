@@ -64,30 +64,49 @@ class Profile extends MY_Controller {
 
         //rewrite description for hyperlinks
         function description_hyperlink($description){                        
-            $number_of_links = intval(floor(substr_count($description, '.') / 2));                                    
-            //var_dump ($description, $number_of_links);
+            $number_of_links = intval(floor(substr_count($description, '.') / 2));     
+            $description = $this->remove_end_dot($description);
+            //var_dump($description);exit;
+            //var_dump ($description, $number_of_links);exit;
             for ($i=0; $i< $number_of_links;$i++){
-                $all_dot_position_array = $this->strpos_all($description, '.');
-                //var_dump($all_dot_position_array);
+                $all_dot_position_array = $this->strpos_all($description, '.');                
                 $description = $this->change_hyperlink($description, $all_dot_position_array[$i*4]);
                 //var_dump ('end of round ', $description);
             }
+            //exit;
             //change \n to <br /> html
             $description = ereg_replace( "\n",'<br />', $description);            
             //var_dump ($description);exit;
             return $description;
         }
         
+        function remove_end_dot($description){
+            $all_dot_position_array = $this->strpos_all($description, '.'); 
+            $arr_temp = str_split($description);
+            for($i=0; $i < count($all_dot_position_array); $i++){
+                if ($arr_temp[$all_dot_position_array[$i] -1] != ' ' && $arr_temp[$all_dot_position_array[$i] + 1] == ' ') 
+                    $arr_temp[$all_dot_position_array[$i]] = '';    
+            }
+            $temp = '';
+            for($i=0; $i < count($arr_temp); $i++){
+                $temp = $temp.$arr_temp[$i];
+            }
+            return $temp;            
+        }
+        
         function change_hyperlink($description, $start){
             $length = strlen($description);
             $dot1 = strpos($description, '.', $start);
+            //var_dump('dot1 ', $dot1);
             if ($dot1){
                 $temp = substr($description, 0, $dot1);
+                
                 $space1 = strrpos($temp, ' ');
-
+                //var_dump('temp ', $temp, $space1);
                 if (! $space1) {
                   if (substr($temp, 0, 1) != ' ') $space1 = -1;  
                 } 
+                
                 //var_dump ('start of search ', $start, $temp, $space1,$dot1);                      
                 $temp = substr($description, $dot1 + 1);
                 $dot2 = strpos($temp, '.');
