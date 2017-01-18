@@ -411,9 +411,11 @@ class Profile extends MY_Controller {
                 
                 //find all link and add anchor tag for it                                
                 //only support one link
-                $description = $this->description_hyperlink($description);                
+                //$description = $this->description_hyperlink($description);                
                 //var_dump ($description);exit;
                  
+                $description = html_entity_decode($description);
+                
 		$user_profile = array(
 			'no_of_followers'=>$user_db_details["followers"],
 			'no_of_following' => $user_db_details["following"],

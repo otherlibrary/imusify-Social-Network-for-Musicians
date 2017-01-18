@@ -212,7 +212,9 @@
 											<input type="checkbox" class="sale_avail_switch" ${sell_type_switch} name="sale_available">
 										</div>
 									</div>	
-
+                                                                        
+                                                                    
+                                        
 
 									<div class="form-group displaynone music_available_sale_disp">
 										<div class="checkbox_container">
@@ -260,7 +262,42 @@
 											{{/each}}
 										</div>
 									</div>
+                                                                        
+                                                                    <!-- Available for exclusive -->                                                                              
+                                                                    <div class="form-group">
+                                                                            <div class="make-switch" data-on-text="True" data-on="primary" data-off="info">
+                                                                                <label for="genner">Exclusive Licence?</label>
+                                                                                <input type="checkbox" class="exclusive_license_switch"  ${el_type_switch} name="exclusive_available">                                                        							
+                                                                            </div>
+                                                                    </div>
 
+                                                                    <div class="form-group displaynone el_avail_disp" class="">
+                                                                            <div class="checkbox_container">
+                                                                                    {{each(i,v) el_type_list}}
+                                                                                    <span class="button-checkbox">
+                                                                                        <button type="button" class="btn btn-xs check_btn " data-color="primary" data-val="${v.mp3}" data-id="${v.id}">
+													<span class="el_avail_disp_name">                                                                                                                                                                                                                        
+                                                                                                            <a style="color: white !important;" href="Javascript:void(0)" data-val="${v.id}" data-type="select2" data-title="Select number of copies">${v.name}</a>                                                                                                            
+                                                                                                        </span>
+													<span class="el_avail_disp_edit_span edit_price_operation">
+														$ <a href="Javascript:void(0)" data-val="${v.id}" class="edit_price_operation el_type_edit_val" data-type="text" data-title="${v.name}" class="licence_type_edit_val">${v.mp3}<i class="fa fa-pencil-square-o"></i></a>
+													</span>
+												</button>	
+                                                                                        
+                                                                                        
+<!--                                                                                            <button type="button" class="btn btn-xs" data-color="primary">
+                                                                                                    <span class="el_avail_disp_name">${v.name}</span>
+                                                                                                    <span class="el_avail_disp_edit_span"> $ {{if higher_type}} ${v.wave} {{else}} ${v.mp3} {{/if}}	</span>
+                                                                                            </button>        -->
+                                                                                                    <input type="checkbox" class="hidden" name="exclusive_licence_ar[]" value="${v.id}" ${v.selected} />
+                                                                                                    <input type="hidden" value="" name="el_${v.id}" class="" id="el_price" />
+                                                                                            </span>
+                                                                                            {{/each}}
+                                                                                    </div>
+                                                                            </div>						
+
+                                                        <!-- Available for exclusive -->
+                                                        
 									<div class="form-group">
 										<div class="make-switch" data-on-text="True" data-on="primary" data-off="info">
 											<label for="genner">Wanna make your music available for Non-Profit use?</label>

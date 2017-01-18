@@ -12,6 +12,7 @@ class Trackdetail extends MY_Controller {
 
 	function index($profileLink,$trackLink,$action = NULL,$page = NULL)
 	{
+                //echo 'test';exit;
 		$this->load->helper('url');
 		$cm=$this->config->item('meta_keyword').',def,';
 		$this->config->set_item('meta_keyword',$cm);
@@ -25,7 +26,8 @@ class Trackdetail extends MY_Controller {
 		else
 		{	
 			$left_panel = false;$username = null;
-		}		
+		}	
+                //var_dump($action);exit;
 		/*$trackLink = sanitize($trackLink);
 		$profileLink = sanitize($profileLink);*/
 		if($this->sess_id > 0){
@@ -35,13 +37,14 @@ class Trackdetail extends MY_Controller {
 			$cond = "isPublic = 'y' AND perLink = ".$this->db->escape($trackLink)."";
 
 		$track_exists = getvalfromtbl("id","tracks",$cond,"single","");
-			/*echo $this->db->last_query();
-			var_dump($track_exists);exit;	*/
-
+//			echo $this->db->last_query();
+//			var_dump($track_exists);exit;	
+                        //var_dump($action);exit;
 			if($track_exists <= 0)
 			{
 				redirect('home', 'refresh');		
 			}
+                        
 			$track_common_detail = $this->track_detail->get_song_details($track_exists);
 
 			/*echo " ID ".$track_common_detail["userId"];*/
@@ -50,17 +53,33 @@ class Trackdetail extends MY_Controller {
 			$buyer_stripe_connected = getvalfromtbl("stripe_connect","users","id='".$track_common_detail["userId"]."'","single");
 //			echo "<pre>";
 //			var_dump($buyer_stripe_connected);
-//			var_dump($track_common_detail["album_full_buyable"]);
+//			var_dump($track_common_detail);
 //			exit();
 			if(($track_common_detail["album_full_buyable"] == true || $track_common_detail["is_track_sellable"] == true) && $this->sess_id != $track_common_detail["userId"] && $buyer_stripe_connected == 'y')
 			{
 				$buynow_btn_enabled = true;
-			}else if($this->sess_id == $track_common_detail["userId"] && $action == "buy"){
-
+			}else if($this->sess_id == $track_common_detail["userId"] && $action == "buy" ){
+                            
+				
+                                if ($this->input->post("ajax") == true){
+                                    
+				$resp["status"] = "error";
+                                $resp["msg"] = "You can't buy your own song.";
+				header('Content-Type: application/json');
+				echo json_encode( $resp );
+				exit;
+                                }
+				
+				
+			
 				$this->session->flashdata("notification","You can't buy your own song.");
 				redirect(site_url(),"refresh");
-			}
-			/*var_dump($buynow_btn_enabled);exit;*/
+                                
+			} else if($track_common_detail["is_track_sellable"] == true && $buyer_stripe_connected == 'y'){
+                            //track selling
+                            $buynow_btn_enabled = true;
+                        }
+			//var_dump($buynow_btn_enabled);exit;
 			if($page != "" && $page > 0)
 				$start_limit = (($page - 1)*$this->rec_to_dis) ;
 
@@ -75,7 +94,7 @@ class Trackdetail extends MY_Controller {
 			else{
 				$like_class = "like_js";
 			}
-
+                        //var_dump($action);exit;
 			if($action == "likes")
 			{
 				$data_array = $this->track_detail->fetch_track_likes($track_exists,'',$this->rec_to_dis);
@@ -178,9 +197,12 @@ class Trackdetail extends MY_Controller {
 			}
 			else if($action == "buy"){
 				$album_fully_buyable = "";
-
+                                //var_dump($track_common_detail);exit;
 				if($track_common_detail["is_track_sellable"] == true && $buynow_btn_enabled == true)
-				{}
+				{
+//                                    $album_fully_buyable = $track_common_detail["album_full_buyable"];
+//					$but_btn_id = "album_track_btn";
+                                }
 				else if($track_common_detail["album_full_buyable"] == true && $buynow_btn_enabled == true)
 				{
 					$album_fully_buyable = $track_common_detail["album_full_buyable"];

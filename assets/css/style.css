@@ -1257,7 +1257,7 @@ background: radial-gradient(ellipse at center, #636160 0%,#000000 70%); */
  .your-playlist_popup.open .your-playlist-content {box-shadow: 0 0 20px #040404; -moz-box-shadow: 0 0 20px #040404; -webkit-box-shadow: 0 0 20px #040404; -ms-box-shadow: 0 0 20px #040404; -o-box-shadow: 0 0 20px #040404;}
  section#playlist-song {border-top: 1px solid #27292b;}
 
- .music_available_sale_disp button, .lic_avail_disp button, .np_avail_disp button {padding: 6px 24px !important;}
+ .music_available_sale_disp button, .lic_avail_disp button, .np_avail_disp button, .el_avail_disp button {padding: 6px 24px !important;}
  /*.music_available_sale_disp button a, .lic_avail_disp button a, .np_avail_disp button a {text-shadow:none; -moz-text-shadow:none; -webkit-text-shadow:none; color: #eaeaea;}*/
 
 /******************

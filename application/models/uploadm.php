@@ -9,7 +9,7 @@ Class uploadm extends CI_Model
 	
 	/*Insert track*/
 	function insert_track($title,$desc,$mm,$dd,$yy,$genre,$label,$image,$folder_name,$sec_tags_genid,$album_id,$r,$eaction,$moods_list,$soundlike_list,$instruments_list,$music_vocals_y = NULL,
-                $music_vocals_gender = NULL,$sale_available = NULL,$sale_available_ar = NULL,$licence_available = NULL,$licence_available_ar = NULL,$nonprofit_available = NULL,$post = NULL, $no_update_never_sell = NULL)
+                $music_vocals_gender = NULL,$sale_available = NULL,$sale_available_ar = NULL,$licence_available = NULL,$licence_available_ar = NULL,$nonprofit_available = NULL,$exclusive_available= NULL,$post = NULL, $no_update_never_sell = NULL)
 	{	
 		$this->load->model('commonfn');
                                 
@@ -54,6 +54,11 @@ Class uploadm extends CI_Model
 			if($post["nonprofit_available"] && $post["nonprofit_available"] != "")
 			{
 				$usage_type .= getvalfromtbl("id","buy_usage_types","type = 'np'","single").",";
+			}
+                        
+                        if($post["exclusive_available"] && $post["exclusive_available"] != "")
+			{
+				$usage_type .= getvalfromtbl("id","buy_usage_types","type = 'el'","single").",";
 			}
 
 			if($usage_type != null){
@@ -247,6 +252,15 @@ Class uploadm extends CI_Model
 			}
 			/*Price licence calculation ends */
 
+                        if(!empty($post["exclusive_licence_ar"]))
+			{
+				foreach ($post["exclusive_licence_ar"] as $key => $value)
+				{
+					$licence_id_ar["el_".$value] = $value;
+				}
+			}
+                        
+                        
 			/*Price non-profit licence calculation */
 			if(!empty($post["np_licence_ar"]))
 			{
@@ -537,6 +551,11 @@ Class uploadm extends CI_Model
 			{
 				$data["track_nonprofit_avail"] = $nonprofit_available;
 			}
+                        
+//                        if($exclusive_available != NULL)
+//			{
+//				$data["track_exclusive_avail"] = $exclusive_available;
+//			}
 			//$sale_available_ar = NULL,$licence_available_ar = NULL
 			//print_r($data);	
 			$result = $this->db->insert('tracks', $data);
@@ -725,12 +744,45 @@ Class uploadm extends CI_Model
 			if(!empty($licence_price_arr)){
 				$this->db->insert_batch('track_licence_price_details', $licence_price_arr);
 			}/*Licence price insert ends*/
-
-			if(!empty($after_track_upload_ar))
+                        
+                        if(!empty($after_track_upload_ar))
 			{
 				$this->db->where('id',$track_id);
 				$this->db->update('tracks',$after_track_upload_ar);
 			}
+                        
+                        $exclusive_price_arr = array();
+			$exclusive_id_ar = array();
+			$m = 0;                        
+                        /*Price exclusive licence calculation */
+			if(!empty($post["exclusive_licence_ar"]))
+			{				
+				foreach ($post["exclusive_licence_ar"] as $key => $value)
+				{
+					$exclusive_id_ar["el_".$value] = $value;
+				}
+			}
+			/*Price licence calculation ends */
+                        foreach ($exclusive_id_ar as $key => $value) {
+				$exclusive_price_arr[$m]["trackId"] = $track_id;
+                                if (!empty($post["el_number_4"]) ){
+                                    $exclusive_price_arr[$m]["licenceId"] = $post["el_number_4"];
+                                } else $exclusive_price_arr[$m]["licenceId"] = $value;  
+				                                
+				$exclusive_price_arr[$m]["licencePrice"] = $post[$key];
+				$exclusive_price_arr[$m]["createdDate"] = date('Y-m-d H:i:s');
+				$m++;
+			}
+                        
+                        
+//                        var_dump($exclusive_price_arr);
+//                        var_dump($licence_price_arr);
+//                        exit;
+                        if(!empty($exclusive_price_arr)){
+				$this->db->insert_batch('track_licence_price_details', $exclusive_price_arr);
+			}/*Licence price Exclusive insert ends*/
+                        
+			
 		}
 		$user_data = $this->session->userdata('user');
 		/*Fetch name*/
@@ -1118,7 +1170,26 @@ Class uploadm extends CI_Model
 				}	
 			}
 			/*Licence type list*/
-
+                        
+                        	/*Exclusive Licence type list*/
+			$licence_type_list_array = $this->commonfn->get_licence_types("tlt.lic_type='el'",null,null,true,$id,$high_quality_flag);
+			$licence_type_list = array();
+			
+			if(!empty($licence_type_list_array)){
+				foreach ($licence_type_list_array as $key => $value) {
+					if(in_array($value["id"], $sell_valuearray)){
+						$value["selected"] = " checked";
+						$row->el_type_switch = "checked";
+					}
+					else{
+						$value["selected"] = " ";
+					}
+					$row->el_type_list[] = $value;
+				}	
+			}
+			/*Licence type list*/
+                        
+                        
 			/*np type list*/
 			$np_type_list_array = $this->commonfn->get_licence_types("tlt.lic_type='np'",null,null,true,$id,$high_quality_flag);
 			$np_type_list = array();

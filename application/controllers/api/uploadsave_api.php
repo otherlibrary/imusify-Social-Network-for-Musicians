@@ -33,7 +33,7 @@ class Uploadsave_api extends REST_Controller
                                 //var_dump($no_update_never_sell);exit;
                                 //var_dump ($eaction, $this->post());exit;
 				$track = $this->uploadm->insert_track($this->post('title'),$this->post('desc'),$this->post('mm'),$this->post('dd'),$this->post('yy'),$this->post('genre'),$this->post('label'),$image,$folder_name,$this->post('sec_genner'),$this->post('add_album'),$this->post('r'),
-                                        $eaction,$this->post('moods_list'),$this->post('sound_like'),$this->post('instruments'),$this->post('music_vocals_y'),$this->post('music_vocals_gender'),$this->post('sale_available'),$this->post('sale_available_ar'),$this->post('licence_available'),$this->post('licence_available_ar'),$this->post('nonprofit_available'),$this->post(),$no_update_never_sell);
+                                        $eaction,$this->post('moods_list'),$this->post('sound_like'),$this->post('instruments'),$this->post('music_vocals_y'),$this->post('music_vocals_gender'),$this->post('sale_available'),$this->post('sale_available_ar'),$this->post('licence_available'),$this->post('licence_available_ar'),$this->post('nonprofit_available'),$this->post('exclusive_licence_ar'),$this->post(),$no_update_never_sell);
 
 				if($track["status"] == "fail")
 				{

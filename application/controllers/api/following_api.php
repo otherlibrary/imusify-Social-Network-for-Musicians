@@ -105,4 +105,31 @@ class following_api extends REST_Controller
 		}	
 	}
 	/*Function for deleting a feed ends*/
+        
+        /*Function for deleting a feed*/
+	function edit_feed_post(){
+		$id = $this->post('id') ? $this->post('id') : 0;
+                $value = $this->post('value') ? $this->post('value') : '';
+                $type = $this->post('type') ? $this->post('type') : '';
+                $image = $this->post('image') ? $this->post('image') : '';
+                $canonicalurl = $this->post('$canonicalurl') ? $this->post('$canonicalurl') : '';
+                $iframe = $this->post('iframe') ? $this->post('iframe') : '';
+                $description = $this->post('description') ? $this->post('description') : '';
+                
+		if($id > 0 && !empty($type) && !empty($value))
+		{
+			$param_arr1 = array('id'=> $id, 'value' => $value, 'type' => $type,
+                            'iframe' => $iframe, 'image' => $image, 'canonicalurl' => $canonicalurl, 'description' => $description);	
+			$data = $this->following_model->edit_feed($param_arr1);
+			if(!empty($data))
+				$this->response($data,200);
+			else
+				$this->response('error',404);		
+		}
+		else{
+
+		}	
+	}
+	/*Function for deleting a feed ends*/
+        
 }

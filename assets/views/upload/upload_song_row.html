@@ -240,7 +240,7 @@
 						</div>
 					</div>
 					<!-- if select yes then display this two checkboxes ends -->
-
+                                       
 
 					<div class="form-group">
 						<div class="make-switch" data-on-text="True" data-on="primary" data-off="info">
@@ -275,7 +275,45 @@
 						</div>
 					</div>
 					<!-- music available for licence then display this ends -->
-
+                                         <!-- Available for exclusive -->                                                                              
+                                        <div class="form-group">
+						<div class="make-switch" data-on-text="True" data-on="primary" data-off="info">
+                                                    <label for="genner">Exclusive Licence?</label>
+                                                    <input type="checkbox" value="1" class="exclusive_license_switch" name="exclusive_available">                                                        							
+						</div>
+					</div>
+                                       					
+					<div class="form-group displaynone el_avail_disp" class="">
+						<div class="checkbox_container">
+							{{each(i,v) el_type_list}}
+							<span class="button-checkbox">
+                                                              <button type="button" class="btn btn-xs check_btn" data-color="primary" data-val="{{if higher_type}} ${v.wave} {{else}} ${v.mp3} {{/if}}" data-id="${v.id}">
+                                                                        <span class="el_avail_disp_name">                                                                           
+                                                                            	${v.name}									    
+                                                                        </span>
+									<span class="el_avail_disp_edit_span edit_price_operation">
+										$ <a href="Javascript:void(0)" data-val="${v.id}" class="edit_price_operation licence_type_edit_val" data-type="text" data-title="${v.name}" class="licence_type_edit_val">{{if higher_type}} ${v.wave} {{else}} ${v.mp3} {{/if}}<i class="fa fa-pencil-square-o"></i></a>
+									</span>
+								</button>
+                                                                        <input type="checkbox" class="hidden" name="exclusive_licence_ar[]" value="${v.id}" />
+									<input type="hidden" value="" name="el_${v.id}" class="" id="el_price_${v.id}" />
+                                                                        <input type="hidden" value="" name="exclusive_number_${v.id}" class="edit_exclusive_number_hidden" id="exclusive_number_${v.id}">
+                                                            
+<!--								<button type="button" class="btn btn-xs" data-color="primary">
+									<span class="el_avail_disp_name">${v.name}</span>
+									<span class="el_avail_disp_edit_span"> $ {{if higher_type}} ${v.wave} {{else}} ${v.mp3} {{/if}}	</span>
+									
+									<input type="checkbox" class="hidden" name="exclusive_licence_ar[]" value="${v.id}" />
+									<input type="hidden" value="" name="el_${v.id}" class="" id="el_price_${v.id}" />
+                                                                        <input type="hidden" value="" name="exclusive_number_${v.id}" class="edit_exclusive_number_hidden" id="exclusive_number_${v.id}">
+                                                                </button>-->
+                                                            
+								</span>
+								{{/each}}
+							</div>
+						</div>						
+                                                
+                                        <!-- Available for exclusive -->
 
 					<div class="form-group">
 						<div class="make-switch" data-on-text="True" data-on="primary" data-off="info">
@@ -300,6 +338,8 @@
 							</div>
 						</div>
 						<!-- music available for non profit then display this ends -->
+               
+                                                
                                                  <!-- Never sell my music -->
                                                 <div class="form-group">
                                                         <div class="make-switch" data-on-text="True" data-on="primary" data-off="info">

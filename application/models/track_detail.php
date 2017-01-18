@@ -17,6 +17,8 @@ Class track_detail extends CI_Model
 		$query = $this->db->query("select tt.*,u.firstname as artist_firstname,u.lastname as artist_lastname,g.genre,(SELECT name from location where location_type = '0' AND location_id = u.countryId) as country,(SELECT name from location where location_type = '2' AND location_id = u.cityId) as city FROM tracks as tt,users as u,genre as g WHERE u.id = tt.userId AND  g.id = tt.genreId AND tt.id = '".$trackId."' LIMIT 1");		
 		/*print_query();*/
 		$row = $query->row_array();
+//                	echo $this->db->last_query();
+//			var_dump($row);exit;
 		/*print_r($row);*/
 		//andy use track cover because the user can upload artwork for track cover
                 //$row["cover_image"] = $this->commonfn->get_photo('tc',$row["id"]);
@@ -36,7 +38,7 @@ Class track_detail extends CI_Model
 		$albumId = $row["albumId"];
 		$flag_temp = false;
 		if($albumId > 0)
-		{
+		{  //album fully buyable
 			$where = " (id ='".$albumId."') ";
 			$this->db->select('selleble_type');
 			$this->db->from('albums');

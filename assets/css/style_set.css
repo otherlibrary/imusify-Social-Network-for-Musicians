@@ -2771,7 +2771,7 @@ footer .player-bg .photo-box article h2{
 }
 /*Upload design page set*/
 
-.music_available_sale_disp button,.lic_avail_disp button,.np_avail_disp button 
+.music_available_sale_disp button,.lic_avail_disp button,.np_avail_disp button,.el_avail_disp button 
 {
   display: inline-block;
   background-color: #28292c;
@@ -2788,15 +2788,15 @@ footer .player-bg .photo-box article h2{
   padding: 2px 20px !important;
   margin: 10px 5px 10px 0px !important;
 }
-.music_available_sale_disp button a,.lic_avail_disp button a,.np_avail_disp button a
+.music_available_sale_disp button a,.lic_avail_disp button a,.np_avail_disp button a, .el_avail_disp button a
 {
   color:#333 !important;
   font-weight: normal !important;
   border-radius: 0 !important;  
 }
 
-.music_available_sale_disp button.active,.lic_avail_disp button.active,.np_avail_disp button.active,
-.music_available_sale_disp button:hover,.lic_avail_disp button:hover,.np_avail_disp button:hover
+.music_available_sale_disp button.active,.lic_avail_disp button.active,.np_avail_disp button.active,.el_avail_disp button.active,
+.music_available_sale_disp button:hover,.lic_avail_disp button:hover,.np_avail_disp button:hover, .el_avail_disp button:hover
 {
   background-color: #ea3f4f !important;
   border-color: #717172 !important;
@@ -2811,8 +2811,8 @@ footer .player-bg .photo-box article h2{
   padding-bottom: 0 !important;
 }
 
-.music_available_sale_disp button.active a,.lic_avail_disp button.active a,.np_avail_disp button.active a,
-.music_available_sale_disp button:hover a,.lic_avail_disp button:hover a,.np_avail_disp button:hover a
+.music_available_sale_disp button.active a,.lic_avail_disp button.active a,.np_avail_disp button.active a,.el_avail_disp button.active a,
+.music_available_sale_disp button:hover a,.lic_avail_disp button:hover a,.np_avail_disp button:hover a,.el_avail_disp button:hover a
 {
   color:#333 !important; 
   font-weight:normal!important;
@@ -2820,7 +2820,7 @@ footer .player-bg .photo-box article h2{
   border-color:#fff !important;
 }
 
-.music_avail_sale_edit_span,.lic_avail_disp_edit_span,.np_avail_disp_edit_span{
+.music_avail_sale_edit_span,.lic_avail_disp_edit_span,.np_avail_disp_edit_span,.el_avail_disp_edit_span{
  position: relative;  
  height: 100%;  
  padding: 6px 0px 6px 6px;
@@ -2833,11 +2833,11 @@ footer .player-bg .photo-box article h2{
   padding-left:6px; 
   padding-right: 6px;
 }
-.music_available_sale_disp button a i, .lic_avail_disp button a i, .np_avail_disp button a i{
+.music_available_sale_disp button a i, .lic_avail_disp button a i, .np_avail_disp button a i, .el_avail_disp button a i{
   padding-left:6px; 
   padding-right: 6px;
 }
-.music_avail_sale_disp_name,.lic_avail_disp_name,.np_avail_disp_name{padding-right: 20px;}
+.music_avail_sale_disp_name,.lic_avail_disp_name,.np_avail_disp_name,.el_avail_disp_name{padding-right: 20px;}
 /*Upload design page set ends*/
 
 
@@ -3090,7 +3090,8 @@ footer .player-bg .photo-box article h2{
    color: #ffffff !important; 
  }
  .profile-details a{color: white !important;text-decoration: none !important;}
-
+ #description a, .jqte_editor a{ color: #0066FF !important;}
+ 
 
  /*Membership Plans*/
  .membership .pricing {
@@ -3621,6 +3622,20 @@ a.delete-icon {
   margin-right: 3px;
 }
 
+#following-contents a.edit-icon {
+  background-image: url(../images/edit-icons.png);
+  background-position: 0 bottom;
+  background-repeat: no-repeat;
+  width: 25px;
+  height: 25px;
+  float: right;
+  margin-right: 28px;
+}
+
+input.feed_content {
+    color: #000 !important;
+    min-width: 350px;
+}
 /*Feed page overs*/
 
 

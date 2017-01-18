@@ -27,6 +27,8 @@ class Commonfn_Api extends REST_Controller
 		$sell_type_list = $this->commonfn->get_licence_types("lic_type='s'");
 		$licence_types_list = $this->commonfn->get_licence_types("lic_type='l'");
 		$np_type_list = $this->commonfn->get_licence_types("lic_type='np'");
+                //exclusive license
+                $el_type_list = $this->commonfn->get_licence_types("lic_type='el'");
 		$track_upload_type_list = $this->commonfn->get_track_upload_types();
 		
 		$tracktypes = $this->commonfn->gettracktypes();
@@ -47,6 +49,7 @@ class Commonfn_Api extends REST_Controller
 		$response["sell_type_list"] = $sell_type_list;
 		$response["licence_type_list"] = $licence_types_list;
 		$response["np_type_list"] = $np_type_list;
+                $response["el_type_list"] = $el_type_list;
 		$response["track_upload_type_list"] = $track_upload_type_list;
 		$response["lower_type_list"] = $tracktypes["lower_type_list"];
 		$response["higher_type_list"] = $tracktypes["higher_type_list"];

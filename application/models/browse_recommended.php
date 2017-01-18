@@ -17,7 +17,7 @@ Class browse_recommended extends CI_Model
                     //tracks as tt,genre as g,users as u,albums as al
 		    //$cond = " WHERE tt.status = 'y' AND tt.genreId = g.id AND tt.userId = u.id AND tt.albumId = al.id 
                       //      AND ((tt.isPublic='n' and tt.userId='".$userId."') or tt.isPublic='y')";	
-                    $cond = " WHERE tt.status = 'y' AND tt.genreId = g.id AND tt.userId = u.id 
+                    $cond = " WHERE tt.status = 'y' AND tt.genreId = g.id AND tt.userId = u.id  AND tt.albumId = al.id 
                             AND ((tt.isPublic='n' and tt.userId='".$userId."') or tt.isPublic='y')";	        
                 
 		else

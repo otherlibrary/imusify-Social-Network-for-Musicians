@@ -114,6 +114,7 @@ $route['api/feed_new_comment'] = "api/following_api/new_comment/format/json";
 $route['api/feed_delete_comment'] = "api/following_api/delete_comment/format/json";
 $route['api/feed_repost'] = "api/following_api/feed_repost/format/json";
 $route['api/feed_delete'] = "api/following_api/delete_feed/format/json";
+$route['api/feed_edit'] = "api/following_api/edit_feed/format/json";
 
 $route['api/notification/read'] = "api/unread_msgs_api/read_notifications/format/json";
 $route['api/notification/list'] = "api/unread_msgs_api/notifications_list/format/json";
@@ -321,6 +322,7 @@ $route['(:any)/edit'] = "profile/edit_profile/index/$1";
 $route['(:any)/(:any)/comment/(:num)'] = "trackdetail/trackdetail/index/$1/$2/comments/$3";
 $route['(:any)/(:any)/likes/(:num)'] = "trackdetail/trackdetail/index/$1/$2/likes/$3";
 $route['(:any)/(:any)/comment'] = "trackdetail/trackdetail/index/$1/$2/comments";
+$route['(:any)/(:any)/buy'] = "trackdetail/trackdetail/index/$1/$2/buy/$3";
 $route['(:any)/(:any)/likes'] = "trackdetail/trackdetail/index/$1/$2/likes";
 $route['(:any)/(:any)'] = "trackdetail/trackdetail/index/$1/$2";
 

@@ -12,7 +12,7 @@
     var queue=[];
     var temp={};    
     var root = document.location.hostname;
-    var genre,subgenre,d_genre,d_mood,s_price,s_duration,loaded,response_genre,response_sec_genre,response_soundlike,response_album_list,mood_list,response_instruments_list,licence_types_list,sell_type_list,np_type_list,track_upload_type_list,lower_type_list,higher_type_list;
+    var genre,subgenre,d_genre,d_mood,s_price,s_duration,loaded,response_genre,response_sec_genre,response_soundlike,response_album_list,mood_list,response_instruments_list,licence_types_list,sell_type_list,np_type_list,el_type_list,track_upload_type_list,lower_type_list,higher_type_list;
     var search_params={};
     var request_array = [];
     var r_flag;     
@@ -95,6 +95,7 @@
         });
         return this;
     };
+    
     $.fn.linkPreview = function (options) {
         var defaults = {
             placeholder: "What is on your mind?",
@@ -466,6 +467,7 @@ function iframenize(obj) {
         'width': '495px'
     });
 }
+var first_time_crawl = false;
 var crawlText = function ($imgupload,e,input,extensions) {
     allowPosting = true;
     block = false;
@@ -505,6 +507,17 @@ var crawlText = function ($imgupload,e,input,extensions) {
             $('#previewButtons_' + selector).hide();
             $('#previewLoading_' + selector).html("<img src='"+App.config.siteUrl+"assets/images/loader_posts.gif' />");
             $('#photoNumber_' + selector).val(0);
+            console.log('Crawl link ', firstPosting);
+            if(firstPosting) {
+//                if (first_time_crawl) setTimeout(function(){
+//                    first_time_crawl = false;
+//                    firstPosting = false;
+//                    $('#postPreviewButton_feed_post').click();                    
+//                }, 300);
+                
+                first_time_crawl = true;
+                //load post                
+            }
             allowPosting = false;
             isCrawling = true;
             $.post(App.config.siteUrl+'api/linkcrawler',{text: text,crawlurl:text,imagequantity: opts.imageQuantity},function(answer){
@@ -595,7 +608,10 @@ $("body").on('click','.leave-reply',function (e) {
         }                       
     });
     $("body").off('click','#postPreviewButton_'+ selector);
-    $("body").on('click','#postPreviewButton_' + selector,function (e) {
+    //$("body").on('click','#postPreviewButton_' + selector,function (e) {            
+    $("body").on('click','#postPreviewButton_feed_post',function (e) {       
+        var selector = 'feed_post';
+        console.log('Clicked Add Post on Folowing page', selector);
         e.stopPropagation();  
         var $img ='';          
         imageId = "";
@@ -642,6 +658,7 @@ $("body").on('click','.leave-reply',function (e) {
             else if(response.feed_detail.videofeed == true)
             {
                 $template_name = "external_link";
+                console.log('Video post ');                                
             }
             else if(response.feed_detail.imagefeed == true)
             {
@@ -651,6 +668,16 @@ $("body").on('click','.leave-reply',function (e) {
             {
                 $template_name = "external_link"; 
             }
+            
+            setTimeout(function(){
+                //load all available videos and audios
+                //hide all Play buttons
+                if($(".videoPostPlay:visible").length > 0 ){
+                    $(".videoPostPlay:visible").click();
+                    $(".videoPostPlay:visible").hide();
+                }                        
+            }, 500);
+            
             $.template("u_tmpl_container",App.config.loaded_template[$template_name]);
             $('#preview_' + selector).fadeOut("fast", function () {
                 if (response.url != null && response.url.indexOf("vine.co") != -1) {
@@ -678,8 +705,10 @@ $("body").on('click','.leave-reply',function (e) {
 //                    setTimeout(function(){
 //                        //load all available videos and audios
 //                        //hide all Play buttons
-//                        $(".videoPostPlay").click();
-//                        $(".videoPostPlay").hide();
+//                        if($(".videoPostPlay").length > 0 ){
+//                            $(".videoPostPlay").click();
+//                            $(".videoPostPlay").hide();
+//                        }                        
 //                    }, 500);
                 });
             });
@@ -694,6 +723,7 @@ $("body").on('click','.leave-reply',function (e) {
 });
     text = "";     
 });
+
     function replaceAll(find, replace, str) {
         return str.replace(new RegExp(find, 'g'), replace);
     }
@@ -1398,7 +1428,10 @@ initCheckboxUpdateDisplay:function($button,$checkbox,settings,color){
     $button.data('state', (isChecked) ? "on" : "off");
     $button.find('.state-icon')
     .removeClass()
+    //if (typeof settings[$button.data('state')] !== 'undefined')
     .addClass('state-icon ' + settings[$button.data('state')].icon);
+    //.addClass('state-icon fa fa-check');
+    
     if (isChecked) {
         $button
         .removeClass('btn-default')
@@ -1573,6 +1606,27 @@ $('.licence_avail_switch').on('switchChange.bootstrapSwitch', function (event, s
         $(".lic_avail_disp").addClass("displaynone").fadeOut();
 });
 
+//exclusive license
+var exclusive_avail_switch_state =  $('.exclusive_license_switch').bootstrapSwitch('state');
+
+if(exclusive_avail_switch_state)
+{
+    my.UploadAgreeCheckbox();
+    if(exclusive_avail_switch_state == true)
+        $(".el_avail_disp").removeClass("displaynone").fadeIn();
+    else
+        $(".el_avail_disp").addClass("displaynone").fadeOut();
+}
+
+$('.exclusive_license_switch').on('switchChange.bootstrapSwitch', function (event, state) {
+    my.UploadAgreeCheckbox();
+    if(state == true)
+        $(".el_avail_disp").removeClass("displaynone").fadeIn();
+    else
+        $(".el_avail_disp").addClass("displaynone").fadeOut();
+}); 
+
+
 var nonprofit_avail_switch_state =  $('.nonprofit_avail_switch').bootstrapSwitch('state');
 
 if(nonprofit_avail_switch_state)
@@ -1624,9 +1678,11 @@ $('.never_sell').on('switchChange.bootstrapSwitch', function (event, state) {
 },
 UploadAgreeCheckbox:function(){
    nonprofit_avail_switch_state = $('.nonprofit_avail_switch').bootstrapSwitch('state');
+   exclusive_avail_switch_state = $('.exclusive_license_switch').bootstrapSwitch('state');
    licence_avail_switch_state = $('.licence_avail_switch').bootstrapSwitch('state');
    sale_avail_switch_state = $('.sale_avail_switch').bootstrapSwitch('state');
-   if(nonprofit_avail_switch_state == true || licence_avail_switch_state == true || sale_avail_switch_state == true)
+   if(nonprofit_avail_switch_state == true || licence_avail_switch_state == true || sale_avail_switch_state == true ||
+       exclusive_avail_switch_state == true)
    {
     $("#certify_checkbox").removeClass('displaynone');
 }
@@ -1967,7 +2023,8 @@ IncreaseTrackCounter:function(trackId){
     }
 },
 initUploadDetails:function(){
-    if(my.config.loggedIn == true && document.URL == my.config.siteUrl+"upload")
+    //if(my.config.loggedIn == true && (document.URL == my.config.siteUrl+"upload" || /edit/g.test(document.URL)))
+    if(my.config.loggedIn == true && document.URL == my.config.siteUrl+"upload" )
     {
         my.routingAjax(my.config.siteUrl+"upload_details","","",function(response){
             response_genre = response.genre;
@@ -1979,6 +2036,7 @@ initUploadDetails:function(){
             sell_type_list = response.sell_type_list;
             licence_types_list = response.licence_type_list;
             np_type_list = response.np_type_list;
+            el_type_list = response.el_type_list;
             track_upload_type_list = response.track_upload_type_list;  
             lower_type_list = response.lower_type_list; 
             higher_type_list = response.higher_type_list; 
@@ -2664,12 +2722,106 @@ initFollowing:function(){
                     if($cur_rec < 2)
                     {
                         $("body").find(".load_more").click();
+                        setTimeout(function(){                
+                        if($(".videoPostPlay:visible").length > 0 ){
+                            $(".videoPostPlay:visible").click();
+                            $(".videoPostPlay:visible").hide();
+                        }                        
+                        }, 500);
                     }
                 },false,false); 
             }
             return false;
         }
     });
+    jQuery("body").on('click', ".edit_feed_js",function(e) {     
+        e.preventDefault();   
+        var id = $(this).attr('data-id');
+        var type = $(this).attr('data-type');            
+        if ($(this).hasClass('editing_feed_js')){
+            //confirm to edit
+            var new_value = $("input[data-id="+id+"]").val();
+            console.log('new value ', new_value, type);
+            if (new_value){
+                $("h3[data-id="+id+"]").html(new_value);
+                arr = {};
+                arr["id"] = id;
+                arr["value"] = new_value;
+                arr["type"] = type;
+                
+            if (type == 'text'){
+                my.routingAjax(my.config.siteUrl+"api/feed_edit",arr,"",function(response){                    
+                    App.ShowNotification("info","Success",response.msg);                                    
+                },false,false);     
+            } else {
+                //video or soundcloud
+                if (typeof App.data.video !== 'undefined'){
+                    arr["iframe"] = App.data.video.videoIframe;
+                    arr["image"] = App.data.video.images;
+                    arr["description"] = App.data.video.description;
+                    arr["canonicalUrl"] = App.data.video.canonicalUrl;
+                    my.routingAjax(my.config.siteUrl+"api/feed_edit",arr,"",function(response){                    
+                        App.ShowNotification("info","Success",response.msg);                     
+                        delete App.data.video;
+                    },false,false);  
+                }           
+             }            
+             
+            }
+            $(this).removeClass('editing_feed_js');
+            $(this).css('background-position', '0 bottom');                        
+            $("h3[data-id="+id+"]").show();
+            $("input[data-id="+id+"]").hide();
+            
+        } else {
+            if (type != 'text'){
+                //$("input[data-id="+id+"]").change(function() {
+                $("input[data-id="+id+"]").on('change paste', function(e) {    
+                    setTimeout(function () { 
+                    var new_value = $("input[data-id="+id+"]").val();
+                    var arr = {};
+                    arr['text'] = new_value;
+                    arr['crawlurl'] = new_value;
+                    arr['imagequantity'] = -1;
+                    console.log('new value video link ', new_value);
+                    //crawlText();
+                    //ajax to fetch link detail  api/linkcrawler
+                    my.routingAjax(my.config.siteUrl+"api/linkcrawler",arr,"",function(response){                                                                                        
+                        var iframe = response.videoIframe ? response.videoIframe: '';
+                        if(iframe != ''){
+                            App.data.video = response;
+                            var temp = iframe.split('"');
+                            var video_link = ''; 
+                            for(var i=0; i < temp.length; i++){
+                                if (/www.youtube.com\/embed/i.test(temp[i])) video_link = temp[i];
+                                if (/soundcloud.com/i.test(temp[i])) video_link = temp[i];
+                            }
+                            if(video_link != ''){
+                            var description = response.description;
+                            var images = response.images;
+                            console.log(iframe, description, images, video_link);          
+                            //update iframe src
+                            $("#videoPostPlay_"+id).next().attr('src', video_link);
+                            $("figure[data-id="+id+"] img").attr('src', images);
+                            $("article[data-id="+id+"] .previewSpanDescription").html(description);
+                            }
+                        }       
+                    },false,false);     
+                                                        
+                    }, 200);
+                });
+            }                
+            $(this).css('background-position', '0 top');
+            $(this).addClass('editing_feed_js');
+            console.log('Edit id ', id, type);
+            $("h3[data-id="+id+"]").hide();
+            $("input[data-id="+id+"]").show();
+            
+        }                               
+    });   
+    
+    
+    
     jQuery("body").on('click', "#submitfeedcomment",function(e) {     
         e.preventDefault();     
         disable = $(this).hasClass('disable');
@@ -2711,10 +2863,19 @@ initFollowing:function(){
     
 },
 initEditProfile:function(){
+    if ($('#description').length > 0) setTimeout(function(){
+            $('#description').jqte({source:false, b: false, br: false, color: false, center: false, fsize: false, format: false,i: false, u:false,ol: false,ul: false, outdent: false, p: false,remove:false,rule:false, right:false,left:false, sup: false,strike:false, sub:false,indent:false,
+        linktypes: ['Web Address']});
+            if ($("#description").length > 0)   $('#description').jqte({source:false, b: false, br: false, color: false, center: false, fsize: false, format: false,i: false, u:false,ol: false,ul: false, outdent: false, p: false,remove:false,rule:false, right:false,left:false, sup: false,strike:false, sub:false,indent:false,
+        linktypes: ['Web Address']});
+        } ,200)        
     jQuery("body").on('show.bs.modal','.edit_profile', function (e) {
         //show Edit Profile popup modal 
         //select active country if the user has
-        
+        if ($('#description').length > 0) setTimeout(function(){
+            $('#description').jqte({source:false, b: false, br: false, color: false, center: false, fsize: false, format: false,i: false, u:false,ol: false,ul: false, outdent: false, p: false,remove:false,rule:false, right:false,left:false, sup: false,strike:false, sub:false,indent:false,
+        linktypes: ['Web Address']});           
+        } ,200)
         
         
         $("#edit_profile_form").validationEngine("attach",{             
@@ -3254,7 +3415,7 @@ initTrackDetail:function(){
         },true,false,"",true);
     }); 
 
-
+    //andy Track detail Load Buy tab   
     $("body").on("click","a[data-role=trackdetail-buy]",function(e){
         e.preventDefault();     
         my.routingAjax($(this).attr("href"),{},'',function(response){               
@@ -3264,7 +3425,15 @@ initTrackDetail:function(){
                 $.template("#licenceType",my.config.loaded_template["buynow_licence_row"]);
                 $.tmpl("#tabRender",response).appendTo("#tab_td_content .tab-pane");
                 my.initTrackBuy();
-            }
+                //hide Previous and Next if got error for returned message
+                if(typeof response.status !== 'undefined'){
+                    if (response.status == 'error'){
+                        $("#buynow_main_cont .buy_btns").hide()
+                       if(typeof response.msg !== 'undefined') $("#buynow_main_cont .space15").html(response.msg)
+                        
+                    }
+                }
+            } 
         },true,false,"",true);
     }); 
 
@@ -3749,6 +3918,7 @@ initUpload:function(){
                 $tmp["licence_type_list"] = licence_types_list;
                 $tmp["sell_type_list"] = sell_type_list;
                 $tmp["np_type_list"] = np_type_list;
+                $tmp["el_type_list"] = el_type_list;
                 $tmp["track_upload_type_list"] = track_upload_type_list; 
                 $tmp["trackuploadType"] = '';             
                 $tmp["deltype"] = "fu";
@@ -3929,7 +4099,7 @@ initUpload:function(){
         {
             console.log("Inside Done");
             //andy show form
-            //$(".album_form").removeClass("displaynone");
+            $(".album-box").removeClass("displaynone");
             $(".album-box").show();
             
             var name=result.files[0].name;
@@ -4475,8 +4645,9 @@ $("body").on("click",'.delete',function(e){
         
         setTimeout(function(e){            
             var i = 0;
-            if (ajax_popupdata.data_array[i].id != track_id) i = i+1;            
-            //Initialize data for Track detail
+            if(typeof ajax_popupdata.data_array !== 'undefined'){
+                if (ajax_popupdata.data_array[i].id != track_id) i = i+1;   
+                //Initialize data for Track detail
             var thumnail_link = ajax_popupdata.data_array[i].track_image;
             $(".u_song_detail  figure img").attr('src', thumnail_link);
             $(".u_song_detail #title").attr('value', ajax_popupdata.data_array[i].title);
@@ -4485,6 +4656,10 @@ $("body").on("click",'.delete',function(e){
             $(".u_song_detail input[name='yy']").attr('value', ajax_popupdata.data_array[i].release_yy);            
             $(".u_song_detail textarea[name='desc']").html(ajax_popupdata.data_array[i].description);
             $(".upload_item_box h1").html('Edit track - '+ajax_popupdata.data_array[i].title);
+                                
+            }
+            
+            
             
         }, 500)
         
@@ -5206,6 +5381,8 @@ if($(".playlist_page").size()>=1){
         }
     });
 }   
+
+
 if($(".following_page").size()==1){    
     if($("#previewLoading_feed_post").size() == 0)
     {
@@ -6400,7 +6577,8 @@ google.setOnLoadCallback(function()
 $(document).ready(function(){   
     App.init(config);   
     //update message for successful payment
-    var queries = {};
+    var queries = {};    
+
     $.each(document.location.search.substr(1).split('&'), function(c,q){
         var i = q.split('=');
        if(typeof i[1] !== 'undefined') queries[i[0].toString()] = i[1].toString();

@@ -348,7 +348,7 @@ Class following_model extends CI_Model
 			$this->db->where('id', $id);
 			$this->db->where('userId', $userId);
 			$this->db->delete('feeds');
-			if ($this->db->_error_message()) {
+			if ($this->db->_error_message()) {                                                        
 				$response["status"] = "fail";
 				$response["msg"] = 'Error! ['.$this->db->_error_message().']';
 			} 
@@ -358,6 +358,11 @@ Class following_model extends CI_Model
 			} 
 			else 
 			{
+                            //delete log
+                            $this->db->where('feedId', $id);
+                            $this->db->where('userId', $userId);
+                            $this->db->delete('feed_log');
+                            
 				$response["status"] = "success";
 				$response["msg"] = "Feed deleted successfully.";
 			}
@@ -369,7 +374,50 @@ Class following_model extends CI_Model
 	}
 	/*Delete feed comment*/
 
-
+        /*Edit feed*/
+	function edit_feed($array = array()){
+		$response = array();
+                //var_dump($array);exit;
+		if(!empty($array))
+		{			
+			$userId = (isset($userId) && $userId > 0) ? $userId : $this->sess_userid;		
+			$this->db->where('id', $array['id']);
+			$this->db->where('userId', $userId);
+                        $this->db->set('title',$array['value']);
+                        if ($array['type'] == 'text')
+			$this->db->update('feeds');
+                        else {
+                            //update video
+                            $this->db->set('url',$array['value']);
+                            $this->db->set('description',$array['description']);
+                            $this->db->set('image',$array['image']);
+                            $this->db->set('canonicalUrl',$array['canonicalurl']);
+                            //$array['iframe'] = htmlspecialchars ($array['iframe'], ENT_NOQUOTES);
+                            $this->db->set('iframe',$array['iframe']);
+                            
+                            $this->db->update('feeds');
+                        }
+			if ($this->db->_error_message()) {                                                        
+				$response["status"] = "fail";
+				$response["msg"] = 'Error! ['.$this->db->_error_message().']';
+			} 
+			else if (!$this->db->affected_rows()) {
+				$response["status"] = "fail";
+				$response["msg"] = 'Error! ID '.$array['id'].' not found';
+			} 
+			else 
+			{                                                        
+				$response["status"] = "success";
+				$response["msg"] = "Feed was edited successfully.";
+			}
+		}else{
+			$response["status"] = "fail";
+			$response["msg"] = "Failed to edit feed";
+		}
+		return $response;
+	}
+	/*Edit feed comment*/
+        
 
 	/*Function for inserting a record in feed*/
 	function insert_feed($array = array()){	
@@ -443,17 +491,17 @@ Class following_model extends CI_Model
 				}
 				else{
 					$response["status"] = 'fail';
-					$response["msg"] = '';
+					$response["msg"] = 'Can not insert log No new FEED LOG ID';
 				}
 			}
 			else{
 				$response["status"] = 'fail';
-				$response["msg"] = '';
+				$response["msg"] = 'Can not insert No new FEED ID';
 			}							
 		}
 		else{
 			$response["status"] = 'fail';
-			$response["msg"] = '';
+			$response["msg"] = 'No Input array';
 		}
 		return $response;
 	}

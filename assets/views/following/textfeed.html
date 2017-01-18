@@ -9,10 +9,12 @@
 	<div class="col-md-8 song-info">
 		<div class="row1">
 			<article class="title">
-				<h3>{{html feedtitle}}</h3>
+				<h3 data-id="${id}" data-type="text">{{html feedtitle}}</h3>
+                                <input hidden class="feed_content" data-id="${id}" data-type="text" value="{{html feedtitle}}" />
 				<span>${feed_ago}</span>
 				{{if own_feed}}
 					<a href="Javascript:void(0)" class="delete-icon  delete_feed_js" data-id="${id}" class="" title="delete"></a>
+                                        <a href="Javascript:void(0)" class="edit-icon edit_feed_js" data-id="${id}" class="" title="edit" data-type="text"></a>
 				{{/if}}
 
 			</article>			
@@ -24,7 +26,7 @@
 							<a href="Javascript:void(0)" class="repost repost_js" data-feedpostid="${id}">REPOST</a>
 						</li>
 						<li>
-							<h4 class="comments">${total_comments} Comments <a  href="${detailpage_url}" data-role="following_detail" >SEE ALL</a></h4>
+							<h4 class="comments">&nbsp; ${total_comments} Comments <a href="${detailpage_url}" data-role="following_detail" >SEE ALL</a></h4>
 						</li>
 					</ul>
 				</div>
