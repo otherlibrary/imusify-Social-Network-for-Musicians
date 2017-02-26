@@ -44,7 +44,8 @@
     var window_outer_height = $(window).outerHeight(true);
     var window_width = $(window).width();
     var window_outer_width = $(window).outerWidth(true);        
-
+        
+        
 
     /*Hint share tips*/
     var upload_similar_steps = [
@@ -2607,8 +2608,13 @@ initLogin:function(){
                     //set all values for config object
                     config.loggedIn = true;
                     config.never_sell = response.never_sell;
-                    config.userIdJs = response.id;                    
+                    config.userIdJs = response.id;         
                     
+                    if (!response.artist) {
+                        //console.log('hide upload');
+                        config.usertype = 'user';   
+                        //normal user, not artist or admin                        
+                    } else config.usertype = 'artist';                       
                     $("body").data("avail_space",response.avail_space);
                     if (typeof(Storage) != "undefined" ) {
                         localStorage.setItem("localstorage_avail_space",response.avail_space);
@@ -3185,6 +3191,7 @@ stripeToken:function(res){
  var $input = $('<input type=hidden name=stripeToken />').val(res.id);
  var tokenId = $input.val();
  /* var email = res.email;*/
+ //after successful payment
  setTimeout(function(){
   $.ajax({
     url:config.siteUrl+'stripeoperations/trackpayment',
@@ -3195,9 +3202,9 @@ stripeToken:function(res){
     success: function(data) {
         if(data.status == "success")
         {
+            //Successful payment after Stripe
             my.ShowNotification("success","Success",data.msg);
-
-            $("#buy_track_btn").click();
+            //$("#buy_track_btn").click();
         }
     }
 }).done(function(data){            
@@ -3228,7 +3235,24 @@ initTrackBuy:function(){
         var orderid = $("#orderid").val();
         click_url = my.config.siteUrl+"api/cartitem";
         my.routingAjax(click_url,{id:id,trackid:trackid,price:price,orderid:orderid},'',function(response){
-
+           //Update cart after success message
+           console.log('Cart updated ', response);
+           if(response.status == "success"){
+              //Refresh the cart 
+//              $("#prev_btn").click();
+//              setTimeout(function(){
+//                            $("#next_btn").click();},150);                                                               
+                
+                my.ShowNotification("success","Success",response.msg);    
+                //andy refresh the page to update the cart
+                setTimeout(function(){
+                          location.reload(); },1900);                                                               
+           }
+            
+           else {
+               my.ShowNotification("success","Success",response.status);
+           }
+           
         },false,false,"",true);
 
 
@@ -3309,8 +3333,7 @@ initTrackBuy:function(){
                     });
                     return false;
                 }else{
-                    my.ShowNotification(response.status,response.status,response.msg);
-                    
+                    my.ShowNotification(response.status,response.status,response.msg);                    
                 }
             }
         },false,false,"",true);
@@ -5185,17 +5208,34 @@ initSubmitRoles:function(){
             console.log('role setup', form_data);
             if (form_data.length == 1){
                 if (form_data[0].name == "none_above") artist = false; //music lover
+            } 
+            else if (form_data.length > 0){
+                var i = 0;
+                for(i; i< form_data.length; i++){
+                    if(form_data[i].value == 14 || form_data[i].value == 15 || form_data[i].value == 13 || form_data[i].value == 4
+                || form_data[i].value == 23 || form_data[i].value == 38 || form_data[i].value == 16 || form_data[i].value == 36 || form_data[i].value == 17
+                || form_data[i].value == 34 || form_data[i].value == 19 || form_data[i].value == 31 || form_data[i].value == 29 || form_data[i].value == 26 
+                || form_data[i].value == 27) {
+                        artist = true;
+                        break;
+                    } else artist = false;
+                }                
             }
+                                    
             my.routingAjax(my.config.siteUrl+"api/userrolesapi",$("#setup_form").serializeArray(),"",function(response){
                 if(response)
                 {                    
                     if (artist){                        
+                        //$("#upload_page").show();
                         //show Upload page
-                        $("#upload_page").click();                        
+                        $("#upload_page").click(); 
+                        config.usertype = 'artist';
                         $('.modal').modal('hide').removeClass("show");
                     } else {
+                        config.usertype = 'user';
                         $('.modal').modal('hide').removeClass("show");
-                        my.redirectLoginAfter("Roles updated successfully.");    
+                        my.redirectLoginAfter("Roles updated successfully.");  
+                        //$("#upload_page").hide();
                     }
                     
                 }                       
@@ -6510,6 +6550,7 @@ routingAjax:function(url,data,callback_arg,start_callback,routing,replaceState,f
                 }
             },
             error:function(error){
+                console.log(error);
                 e(error);   
             },
             complete: function() {
@@ -6576,6 +6617,7 @@ google.setOnLoadCallback(function()
 });
 $(document).ready(function(){   
     App.init(config);   
+    
     //update message for successful payment
     var queries = {};    
 
@@ -6594,7 +6636,30 @@ $(document).ready(function(){
             $(".heading li a[data-role=about]").click();   
         }        
     }
-    
+    //check whether the user type is an artist
+    if (config.loggedIn == 'true' || config.loggedIn){
+        $.ajax({
+              url:config.siteUrl+'usertype_json',              
+              type:'GET',
+              cache: false,            
+              contentType:false,
+              processData: false,              
+              dataType:'json',
+              success: function(data) {    
+                   // console.log('User JSON: ', data);
+                  if (! data)  config.usertype = 'user';                                     
+                  if(data.status == "success" && data.data == "artist")
+                  {                                          
+                      config.usertype = 'artist';
+                  } else config.usertype = 'user';                                     
+              },
+              complete: function(data){
+                   //console.log('User JSON 2: ', data);                 
+              }        
+          })
+    }
+     
+        
     
     //    App.ShowNotification("success","Success",'')    
     
@@ -6616,6 +6681,12 @@ $(document).ready(function(){
     //Register upload file for Upload page
     $("body").on('click', "li #upload_page",function(e) {  
     console.log('Initiliaze Upload page');
+    if (config.usertype == 'user'){        
+       App.ShowNotification("info","Info","Please change roles to artists in order to upload your music");                    
+       $("#home_left_menu li a:first").click(); 
+       return false;
+    }
+    
         setTimeout(function(){                       
         $('#mainupload').fileupload('destroy');    
         setTimeout(function(){  
@@ -6887,7 +6958,7 @@ function checkLoginFB(){
                                 config.loggedIn = true;
                                 config.never_sell = response.never_sell;
                                 config.userIdJs = response.id;                    
-
+                                //config.usertype = 'user';                    
                                 $("body").data("avail_space",response.avail_space);
                                 if (typeof(Storage) != "undefined" ) {
                                     localStorage.setItem("localstorage_avail_space",response.avail_space);

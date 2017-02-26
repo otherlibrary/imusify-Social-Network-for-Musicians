@@ -176,9 +176,12 @@ Class stripe_operation extends CI_Model
 					}
 				}		
 
-				$licence_selected_ar = $track_data["order"]["details"];
-				$values = array_column($licence_selected_ar, 'licenceId');
-				$licence_selected_ar_comma_sep_id = implode(",",$licence_selected_ar_id);
+				$licence_selected_ar = $track_data["order"]["details"];				
+                                if (!empty ($licence_selected_ar)){
+                                    $values = array_column($licence_selected_ar, 'licenceId');
+                                } else $values = array();
+                                //andy comment out below line
+				//$licence_selected_ar_comma_sep_id = implode(",",$licence_selected_ar_id);
 				if(!empty($values))
 				{
 					/*print("J");*/
@@ -252,6 +255,10 @@ Class stripe_operation extends CI_Model
 							$this->db->where('licenceId',$value1["licenceId"]);
 							$this->db->update("orders_details",$update_order_det_ar);
 						}
+                                                //convert it to integer with max 2 decimals
+                                                //andy
+                                                $order_composer_price = round($order_composer_price, 2);
+                                                $order_imusify_price = round($order_imusify_price, 2);     
 						$order_update_ar = array(
 							'total'=>$order_total,
 							'imusifyPrice'=>$order_imusify_price,

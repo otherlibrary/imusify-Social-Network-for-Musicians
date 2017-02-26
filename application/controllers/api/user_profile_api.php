@@ -13,8 +13,7 @@ class User_profile_Api extends REST_Controller
 	function user_roles_post()
     {
 	
-		$this->form_validation->set_rules('user_roles[]','Roles', 'required');
-		
+		$this->form_validation->set_rules('user_roles[]','Roles', 'required');		
 		if ($this->form_validation->run() == FALSE)
 		{						
                     //$this->response(array('error' => lang('error_user_roles_val_required')), 400);

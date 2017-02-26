@@ -302,9 +302,10 @@ $route['data_api/(:any)'] = "api/data_api/output/$1/usertype/format/json"; */
 
 $route['data_api'] = "api/data_api/output_main/format/json";
 
+
 //$route['user_json'] = "api/commonfn_api/get_user_json/format/json";
 //$route['track_json'] = "api/commonfn_api/get_track_json/format/json";
-
+$route['usertype_json'] = "api/commonfn_api/get_usertype_json/format/json";
 //$route['stream/(:num)'] = "stream/index/$1";
 //andy
 $route['stream/(:any)'] = "stream/index/$1";

@@ -1,8 +1,10 @@
 <?php  		if(isset($this->session->userdata('user')->id) && $this->session->userdata('user')->id > 0)
 {
 	$loggedin = "true";
+        //var_dump($this->session->userdata('user'));exit;
 	$userIdJs = $this->session->userdata('user')->id;
-        $never_sell = $this->session->userdata('user')->never_sell;
+        $never_sell = $this->session->userdata('user')->never_sell;        
+        $usertype = $this->session->userdata('user')->artist;        
 }
 else
 {
@@ -56,6 +58,7 @@ if(isset($this->session->userdata('user')->avail_space) && ($this->session->user
 			stripe_public_key:'<?php  echo STRIPE_PUBLIC_API_KEY; ?>',
 			max_upload_file_size:'<?php  echo MAX_UPLOAD_FILE_SIZE_ALLOWED; ?>',                        
                         never_sell:'<?php echo $never_sell; ?>',
+                        usertype:'<?php echo $usertype; ?>',
 
 		};
 

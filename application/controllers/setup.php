@@ -32,7 +32,8 @@ class setup extends MY_Controller {
 		$username = $this->session->userdata('user')->username;
 		
 		$user_selected_array = $this->user_profile->user_db_roles("roles");
-		
+                //$user_selected_array = array();
+		//var_dump($user_selected_array);exit;
 		//admin set default roles
 		$user_def_db_roles = $this->user_profile->get_user_roles("is_default='y'","","true");
 		//print_r($user_def_db_roles);			

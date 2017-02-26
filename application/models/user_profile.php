@@ -164,7 +164,50 @@ Class user_profile extends CI_Model
 			);				
 		$this->db->where('id', $session_user_id);
 		$this->db->update('users', $data_update); 
+               
 
+                
+                //check role of user: artist or normal user
+//                $user_id = $user->id;
+//                //get all roles ID if available
+//                $this->db->select('ud.roleId, ur.type, ur.role');
+//                $this->db->from('user_roles_details as ud');                                                
+//                $this->db->join('user_roles as ur', 'ur.id = ud.roleId AND ud.userId = "'.$session_user_id.'"','inner');                        
+//                $this->db->limit(100);
+//
+//                $query = $this -> db -> get();
+//                //var_dump($this->db->last_query());exit;                
+//                if($query -> num_rows() > 0)
+//                {
+//                    $set_artist = false;
+//                        foreach ($query->result_array() as $row)
+//                        {
+//                                if ($row['type'] == 'artist') {
+//                                    //$user->usertype = "artist";//specify: it is artist profile
+//                                    $this->session->userdata('user')->artist = true;                                    
+//                                    $this->session->userdata('user')->changed_artist = true;                                    
+//                                    $set_artist = true;
+//                                }
+//                        }
+//                        if (! $set_artist) {
+//                            $this->session->userdata('user')->artist = false;  
+//                            $this->session->unset_userdata('changed_artist');
+//                        }
+//                        
+//                } else if(!empty($diff1)){
+//                    //call again
+//                    foreach($diff1 as $roles1) {																
+//                        if($roles1 == 14 || $roles1 == 15 || $roles1 == 13 || $roles1 == 4
+//                || $roles1 == 23 || $roles1 == 38 || $roles1 == 16 || $roles1 == 36 || $roles1 == 17
+//                || $roles1 == 34 || $roles1 == 19 || $roles1 == 31 || $roles1 == 29 || $roles1 == 26 
+//                || $roles1 == 27) {
+//                                   $this->session->userdata('user')->artist = true;                                    
+//                                    $this->session->userdata('user')->changed_artist = true;                                           
+//                                }
+//                                
+//                    };                                        
+//                } 
+                                                                        
 		return "Success";		
 	}
 	

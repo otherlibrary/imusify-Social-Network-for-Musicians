@@ -36,7 +36,32 @@ Class ilogin extends CI_Model
 	   		//$temp_uimg = end($temp_array);
 	   		$user->profileImage =$temp_uimg;	
 	   		$user->loggedin=true;
-			
+                        
+			//check role of user: artist or normal user
+                        $user_id = $user->id;
+                        //get all roles ID if available
+                        $this->db->select('ud.roleId, ur.type, ur.role');
+                        $this->db->from('user_roles_details as ud');                                                
+//                        $where = "userId='".$user_id."'";                         
+//                        $this->db->where($where);
+                        $this->db->join('user_roles as ur', 'ur.id = ud.roleId AND ud.userId = "'.$user_id.'"','inner');                        
+                        $this->db->limit(100);
+                        
+                        $query = $this -> db -> get();
+                        //var_dump($this->db->last_query());exit;
+                        $user->artist = false;
+                        if($query -> num_rows() > 0)
+                        {
+                                foreach ($query->result_array() as $row)
+                                {
+                                        if ($row['type'] == 'artist') {
+                                            $user->artist = true;//specify: it is artist profile
+                                            break;
+                                        }
+                                }                                                                
+                        } 
+                        
+                        
 	   		if($user->usertype == "a" || $user->usertype == "s")
 	   		{
                             //admin account
@@ -47,6 +72,7 @@ Class ilogin extends CI_Model
 	   			$this->session->set_userdata(USER_SESSION_NAME,$user);
 	   		} 
 			
+                                                
 			//print_r($this->session->all_userdata());
 			if(isset($rememberme) && $rememberme == '1')
 			{

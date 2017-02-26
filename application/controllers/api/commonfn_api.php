@@ -642,6 +642,41 @@ class Commonfn_Api extends REST_Controller
 		}	
 	}
 
+        function get_usertype_json_get(){
+				
+                if( !empty($this->session->userdata('user')->id)){
+                    $user_id = $this->session->userdata('user')->id;
+                    //get all roles ID if available
+                        $this->db->select('ud.roleId, ur.type, ur.role');
+                        $this->db->from('user_roles_details as ud');                                                
+                        $this->db->join('user_roles as ur', 'ur.id = ud.roleId AND ud.userId = "'.$user_id.'"','inner');                        
+                        $this->db->limit(100);                        
+                        $query = $this -> db -> get();    
+                           $artist_found = false;
+                        if($query -> num_rows() > 0)
+                        {
+                         
+                                foreach ($query->result_array() as $row)
+                                {
+                                        if ($row['type'] == 'artist') {
+                                            $artist_found = true;
+                                            $us_ar["status"] = "success";
+                                            $us_ar["data"] = 'artist';
+                                            $this->response($us_ar, 200); // 200 being the HTTP response code	                                                                                        
+                                        }
+                                }
+                                
+                        } 
+                        if (!$artist_found) {
+                                    $us_ar["status"] = "success";
+                                    $us_ar["data"] = 'user';
+                                    $this->response($us_ar, 200); // 200 being the HTTP response code	                                                                                        
+                                }
+                        
+                    
+                } else $this->response("", 404);             
+                                                                        	
+	}
 
 	function browse_pop_users_post(){
 		$this->load->model('browse_recommended');

@@ -54,7 +54,9 @@ Class icart extends CI_Model
 		{
 			foreach ($licence_list as $key => $value) 
 			{
-				if($value["id"] == $usage_id)
+                                //var_dump($value);exit;
+				//if($value["id"] == $usage_id)
+                                if($value == $usage_id)
 				{
 					$found_flag = true;
 					break;
@@ -209,9 +211,9 @@ Class icart extends CI_Model
 		if(!empty($licence_selected_ar))
 		{
 			$licence_selected_ar_id = array_column($licence_selected_ar, 'licenceId');
-			
+			//var_dump($licence_selected_ar, $licence_selected_ar_id, $order);exit;
 			$licence_selected_ar_comma_sep_id = implode(",",$licence_selected_ar_id);
-
+                        
 
 			if(!empty($order) && $order["status"] == "p")
 			{
@@ -324,13 +326,16 @@ Class icart extends CI_Model
 					$new_price = ($row["licencePrice"] *  $exclusive_percent) / 100;
 					$row["licencePrice"] = $new_price;
 				}
-				if(in_array($row["id"],$licence_selected_ar_id))
-				{
-					$row["row_class"] .= " active";	
-					$row["preselected"] .= "yes";
-					$row["licenceTotalPrice"] = $db_selected_licence_price_ar[$row["id"]];	
+                                if(!empty ($licence_selected_ar_id)){
+                                    if(in_array($row["id"],$licence_selected_ar_id))
+                                    {
+                                            $row["row_class"] .= " active";	
+                                            $row["preselected"] .= "yes";
+                                            $row["licenceTotalPrice"] = $db_selected_licence_price_ar[$row["id"]];	
 
-				}
+                                    }
+                                }
+				
 				$response[] = $row;
 			}
 		}
@@ -343,8 +348,10 @@ Class icart extends CI_Model
 		$order_check_exist = getvalfromtbl("id,orderId","orders_details","orderId = '".$orderId."' AND licenceId = '".$values."'","multiple");
 		/*echo $this->db->last_query();*/
 		$order_details = getvalfromtbl("filetype_id","orders","id = '".$orderId."'","single");
-		/*echo $this->db->last_query();*/
-		$lic_orig_filetype_name = getvalfromtbl("name","tracktypes","id = '".$order_details["filetype_id"]."'","single");
+		//echo $this->db->last_query();
+                
+		$lic_orig_filetype_name = getvalfromtbl("name","tracktypes","id = '".$order_details."'","single");
+                //var_dump($order_details, $lic_orig_filetype_name);exit;
 		/*printr($lic_orig_filetype_name);*/
 		if($order_check_exist && $order_check_exist["id"] > 0)
 		{
