@@ -3220,7 +3220,7 @@ stripeToken:function(res){
 },
 initTrackBuy:function(){
     trackid = $("#trackid").val();
-
+    $( ".licence_type_sel_js").off( "click" );
     $("body").off("click",".buy_row_li");
     $("body").on('click','.buy_row_li',function(){
         $(".buy_row_li").not(this).removeClass("active");
@@ -3233,43 +3233,73 @@ initTrackBuy:function(){
         var name = $(this).attr("data-name");
         var id = $(this).attr("data-id");
         var orderid = $("#orderid").val();
+        
         click_url = my.config.siteUrl+"api/cartitem";
-        my.routingAjax(click_url,{id:id,trackid:trackid,price:price,orderid:orderid},'',function(response){
-           //Update cart after success message
-           console.log('Cart updated ', response);
-           if(response.status == "success"){
-              //Refresh the cart 
-//              $("#prev_btn").click();
-//              setTimeout(function(){
-//                            $("#next_btn").click();},150);                                                               
-                
-                my.ShowNotification("success","Success",response.msg);    
+//        my.routingAjax(click_url,{id:id,trackid:trackid,price:price,orderid:orderid},'',function(response){
+//           //Update cart after success message
+//           console.log('Cart updated ', response);
+//           if(response.status == "success"){            
+//                console.log('Response: ', response);                            
+//                my.ShowNotification("success","Success",response.msg);                 
+//                //andy refresh the page to update the cart
+//                setTimeout(function(){
+//                          location.reload(); },1500);                                                               
+//           }            
+//           else {
+//               my.ShowNotification("success","Success",response.status);               
+//           }                   
+//        },false,false,"",true);
+        
+         $.ajax({
+              url: click_url,              
+              type:'POST',
+              cache: false,              
+              data: {
+                 id:id,
+                  trackid:trackid,
+                  price:price,
+                  orderid:orderid,                 
+              },                          
+              dataType:'json',
+              success: function(response) {
+                console.log('Cart updated ', response);
+           if(response.status == "success"){            
+                console.log('Response: ', response);                            
+                my.ShowNotification("success","Success",response.msg);                 
                 //andy refresh the page to update the cart
 //                setTimeout(function(){
-//                          location.reload(); },1900);                                                               
-           }
-            
-           else {
-               my.ShowNotification("success","Success",response.status);
-           }
-           
-        },false,false,"",true);
+//                          location.reload(); },1500);                                                               
+                }            
+                else {
+                    my.ShowNotification("success","Success",response.status);               
+                }    
+              },
+              error: function(e){
+                console.log(e);
+              },
+                  
+              });
+        
+        
+        
+        
 
-
-        $cur_class = $(this).hasClass("active");
-        $(this).toggleClass("active");
-        $cart_total = $("#cart_total").html();
-        $cart_total = parseFloat($cart_total);
-        if($cur_class)
-        {
-            $("#subitem"+id).remove();
-            new_price = $cart_total - parseFloat(price);
-        }else{
-            html = '<li id="subitem'+id+'"><p>'+name+'<span>$'+price+'</span></p></li>';
-            $("#licence_cart_cont").append(html);
-            new_price = $cart_total + parseFloat(price);
-        }
-        $("#cart_total").html(new_price);
+            $cur_class = $(this).hasClass("active");
+            $(this).toggleClass("active");
+            $cart_total = $("#cart_total").html();
+            $cart_total = parseFloat($cart_total);
+            if($cur_class)
+            {
+                $("#subitem"+id).remove();
+                new_price = $cart_total - parseFloat(price);
+            }else{
+                html = '<li id="subitem'+id+'"><p>'+name+'<span>$'+price+'</span></p></li>';
+                $("#licence_cart_cont").append(html);
+                new_price = $cart_total + parseFloat(price);
+            }
+            console.log('Update new price:',new_price);
+            $("#cart_total").html(new_price);
+       
     });
 
     if($(".buy_btn_js").size() > 0)
@@ -3414,7 +3444,7 @@ initTrackBuy:function(){
                 if(response.status == "success"){    
                     var environment = 'sandbox';
                     if (window.location.host != 'local.imusify.com' 
-                            && window.location.host != 'local.imusify.com') environment = 'production'
+                            && window.location.host != 'beta.imusify.com' && window.location.host != 'dev.imusify.com') environment = 'production'
                     paypal.checkout.setup(response.merchant_account_id, {
                     environment: environment,
                     container: 'checkout_paypal',
@@ -3442,7 +3472,9 @@ initTrackBuy:function(){
 initTrackDetail:function(){
     //when load track detail page directly
     //console.log('2946 Init Track Detail');
-    my.initTrackBuy();    
+    //the current link should have buy text
+    var current_url = window.location.href;
+    if(/buy/.test(current_url)) my.initTrackBuy();    
     $("body").on("click","a[data-role=trackdetail]",function(e){
         e.preventDefault();     
         init_trackcover = false;
@@ -3513,14 +3545,16 @@ initTrackDetail:function(){
                 $("#tab_td_content").find(".tab-pane").html("").addClass(response.class_nm).attr("id",response.tabid);                          
                 $.template("#tabRender",my.config.loaded_template['buynow']);
                 $.template("#licenceType",my.config.loaded_template["buynow_licence_row"]);
-                $.tmpl("#tabRender",response).appendTo("#tab_td_content .tab-pane");
-                my.initTrackBuy();
+                $.tmpl("#tabRender",response).appendTo("#tab_td_content .tab-pane");  
+                $( ".licence_type_sel_js").off( "click" );
+                setTimeout(function(){
+                        my.initTrackBuy()},300);
                 //hide Previous and Next if got error for returned message
                 if(typeof response.status !== 'undefined'){
+                    
                     if (response.status == 'error'){
                         $("#buynow_main_cont .buy_btns").hide()
-                       if(typeof response.msg !== 'undefined') $("#buynow_main_cont .space15").html(response.msg)
-                        
+                       if(typeof response.msg !== 'undefined') $("#buynow_main_cont .space15").html(response.msg)                        
                     }
                 }
             } 

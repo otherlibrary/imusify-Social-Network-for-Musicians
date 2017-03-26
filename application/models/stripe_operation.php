@@ -239,12 +239,18 @@ Class stripe_operation extends CI_Model
 								$value1["licencePrice"] = $new_price;
 							}
 							$order_total += $value1["licencePrice"];
+                                                        if($value1["licencePrice"] == 0) $value1["licencePrice"] = $value1["licenceMainPrice"];
 							$order_imusify_price += ($value1["licencePrice"] * $split_ar["imusify"]) / 100;
 							$order_composer_price += ($value1["licencePrice"] * $split_ar["composer"]) / 100 ;
 							$imusify_order_detail_price = ($value1["licencePrice"] * $split_ar["imusify"]) / 100;
 							$composer_order_detail_price = ($value1["licencePrice"] * $split_ar["composer"]) / 100 ;
 							/*$update_order_det_ar["orderId"] = $track_data["order"]["id"];
 							$update_order_det_ar["licenceId"] = $value1["licenceId"];*/
+                                                        //andy
+                                                        //check if these prices are equal to 0
+                                                        //var_dump($value1, $split_ar);exit;
+                                                        
+                                                        
 							$update_order_det_ar["licenceMainPrice"] = $value1["licenceMainPrice"];
 							$update_order_det_ar["licenceTotalPrice"] = $value1["licencePrice"];
 							$update_order_det_ar["licenceComposerPer"] = $split_ar["composer"];
@@ -258,7 +264,11 @@ Class stripe_operation extends CI_Model
                                                 //convert it to integer with max 2 decimals
                                                 //andy
                                                 $order_composer_price = round($order_composer_price, 2);
-                                                $order_imusify_price = round($order_imusify_price, 2);     
+                                                $order_imusify_price = round($order_imusify_price, 2);   
+                                                
+                                                
+                                                
+                                                
 						$order_update_ar = array(
 							'total'=>$order_total,
 							'imusifyPrice'=>$order_imusify_price,

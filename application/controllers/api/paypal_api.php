@@ -47,7 +47,7 @@ public function process_get(){
     //var_dump($result,$result2);
     //exit;
             
-    $token_current = $this->session->userdata('ec_token');
+    //$token_current = $this->session->userdata('ec_token');
     $url = $this->session->userdata('url');
     if($success) $url = $url.'?payment='.$token;
     else $url = $url.'?failed='.$token; 
@@ -62,7 +62,7 @@ public function cancel_get(){
     
     $token = $this->get("token");    
     
-    $token_current = $this->session->userdata('ec_token');
+    //$token_current = $this->session->userdata('ec_token');
     $url = $this->session->userdata('url');
     $url = $url.'?cancel='.$token;
     //var_dump($url);exit;
@@ -87,9 +87,10 @@ public function buytrack_post(){
    $products = [];
 		
     // set an item via POST request
-
+        //var_dump($data);exit;
         $products[0]['ItemName'] = $data['title'];
-        $products[0]['ItemPrice'] = (float) ($data['total'] / 100);
+        //$products[0]['ItemPrice'] = (float) ($data['total'] / 100);
+        $products[0]['ItemPrice'] = (float) ($data['composer_price'] + $data['imusify_price']);
         $products[0]['ItemNumber'] = 1;
         $products[0]['ItemDesc'] = $data['title'];
         $products[0]['ItemQty']	= 1;

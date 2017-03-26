@@ -1034,18 +1034,21 @@ updateTrackInfo = function($player,url,kind,track,wavegenerate) {
           if($queuelist.find('a[data-href="' + track.permalink_url +'"]').length==0){ //new track Played
             $player.data('queue').push(track);   
             console.log('User data: ', track.user);
-            $('<li><div class="col-lg-2 col-md-2 col-sm-2 col-xs-12 item-box"><div class="songs"><figure class="loading"><div class="img"></div><img src="'+track.track_avtar+'" alt="'+ track.mini_title+'" title="'+ track.title+'" class="img-responsive"></figure><div class="play-btns" data-href="'+track.permalink_url+'" data-track="'+track.permalink_url+'"><a class="play-icon" data-href="'+track.permalink_url+'" data-track="'+track.permalink_url+'" href="javascript:void(0);"></a></div></div><article><h3>'+ track.mini_title+'</h3><span>'+track.user.username+'</span></article></li>').data('sc-track', {id:track.id,kind:type,url:url,track:track.permalink_url}).toggleClass('active', active).appendTo($queuelist);
+            if (track.user != null) {
+                $('<li><div class="col-lg-2 col-md-2 col-sm-2 col-xs-12 item-box"><div class="songs"><figure class="loading"><div class="img"></div><img src="'+track.track_avtar+'" alt="'+ track.mini_title+'" title="'+ track.title+'" class="img-responsive"></figure><div class="play-btns" data-href="'+track.permalink_url+'" data-track="'+track.permalink_url+'"><a class="play-icon" data-href="'+track.permalink_url+'" data-track="'+track.permalink_url+'" href="javascript:void(0);"></a></div></div><article><h3>'+ track.mini_title+'</h3><span>'+track.user.username+'</span></article></li>').data('sc-track', {id:track.id,kind:type,url:url,track:track.permalink_url}).toggleClass('active', active).appendTo($queuelist);
 //            if(track.user) $('<li><div class="col-lg-2 col-md-2 col-sm-2 col-xs-12 item-box"><div class="songs"><figure class="loading"><div class="img"></div><img src="'+track.track_avtar+'" alt="'+ track.mini_title+'" title="'+ track.title+'" class="img-responsive"></figure><div class="play-btns" data-href="'+track.permalink_url+'" data-track="'+track.permalink_url+'"><a class="play-icon" data-href="'+track.permalink_url+'" data-track="'+track.permalink_url+'" href="javascript:void(0);"></a></div></div><article><h3>'+ track.mini_title+'</h3><span>'+track.user.username+'</span></article></li>').data('sc-track', {id:track.id,kind:type,url:url,track:track.permalink_url}).toggleClass('active', active).appendTo($queuelist);
 //            else $('<li><div class="col-lg-2 col-md-2 col-sm-2 col-xs-12 item-box"><div class="songs"><figure class="loading"><div class="img"></div><img src="'+track.track_avtar+'" alt="'+ track.mini_title+'" title="'+ track.title+'" class="img-responsive"></figure><div class="play-btns" data-href="'+track.permalink_url+'" data-track="'+track.permalink_url+'"><a class="play-icon" data-href="'+track.permalink_url+'" data-track="'+track.permalink_url+'" href="javascript:void(0);"></a></div></div><article><h3>'+ track.mini_title+'</h3><span></span></article></li>').data('sc-track', {id:track.id,kind:type,url:url,track:track.permalink_url}).toggleClass('active', active).appendTo($queuelist); 
             //check current list has track or not to add active class 
-            console.log('Track link: ', track.permalink_url);            
-            if ( $(".sc-queuelist article[data-track='"+track.permalink_url+"']").length > 0){
-                if (! active_addtrack){
-                    $(".sc-queuelist article[data-track='"+track.permalink_url+"']").addClass("active");
-                    $(".sc-queuelist article[data-track='"+track.permalink_url+"'] a").addClass("active");
-                }                 
-            } else $('<article class="tr_item" data-href="'+url+'" data-track="'+track.permalink_url+'" ><a href="javascript:void(0)" class="blue-light-bg"><span>' + track.mini_title + '</span> ' + track.user.username + '</a></article>').appendTo($queuelist_small);            
-            active_addtrack = true;
+                console.log('Track link: ', track.permalink_url);            
+                if ( $(".sc-queuelist article[data-track='"+track.permalink_url+"']").length > 0){
+                    if (! active_addtrack){
+                        $(".sc-queuelist article[data-track='"+track.permalink_url+"']").addClass("active");
+                        $(".sc-queuelist article[data-track='"+track.permalink_url+"'] a").addClass("active");
+                    }                 
+                } else $('<article class="tr_item" data-href="'+url+'" data-track="'+track.permalink_url+'" ><a href="javascript:void(0)" class="blue-light-bg"><span>' + track.mini_title + '</span> ' + track.user.username + '</a></article>').appendTo($queuelist_small);            
+                active_addtrack = true;
+            }
+            
             //$('<li><a href="' + track.permalink_url +'">' + track.title + '</a><span class="sc-track-duration">' + timecode(track.duration) + '</span></li>').data('sc-track', {id:track.id,kind:type,url:url,track:track.permalink_url}).toggleClass('active', active).appendTo($queuelist);
           }                                
         });

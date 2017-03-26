@@ -357,6 +357,7 @@ Class icart extends CI_Model
 		{
 			/*Delete code*/
 			$response_del = $this->db->delete('orders_details', array('id' => $order_check_exist["id"]));
+                        $response_del_2 = $this->db->delete('orders_details', array('orderId' => $orderId, 'licenceId'=> $values));
 			if($response_del)
 			{
 				$response["status"] = "success";
@@ -391,7 +392,9 @@ Class icart extends CI_Model
 						$i++;
 					}
 					/*printr($insert_order_det_ar);*/
-					$status = $this->db->insert_batch("orders_details",$insert_order_det_ar);
+                                        //$check_duplicate = getvalfromtbl("id","orders_details","orderId = '".$orderId."'"." AND licenceId='".$value1["licenceId"]."'","single");
+					//if (! $check_duplicate) 
+                                        $status = $this->db->insert_batch("orders_details",$insert_order_det_ar);
 					$response["status"] = "success";
 					$response["msg"] = "Licence added to cart successfully.";
 				}
