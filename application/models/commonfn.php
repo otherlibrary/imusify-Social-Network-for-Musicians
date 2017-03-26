@@ -276,7 +276,7 @@ Class commonfn extends CI_Model
 	}
 
 	/*Insert album*/
-	function insert_album($image,$title,$desc,$mm,$dd,$yy,$label,$genre,$image,$folder_name,$sec_genre,$isupdate = false,$album_id = null,$album_avail_for_sale,$album_fully_avail,$album_price)
+	function insert_album($image,$title,$desc,$mm,$dd,$yy,$label,$genre,$folder_name,$sec_genre,$isupdate = false,$album_id = null,$album_avail_for_sale,$album_fully_avail,$album_price)
 	{
 
 		if($album_avail_for_sale == 'y')

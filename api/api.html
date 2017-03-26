@@ -1,0 +1,1980 @@
+<html><head>
+<meta charset="utf-8">
+<!--meta name="viewport" content="width=device-width, initial-scale=1.0"-->
+<meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<title>Imusify API Docs</title>
+<link rel="stylesheet" href="https://stackedit.io/res-min/themes/base.css">
+<script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS_HTML"></script>
+
+<style type="text/css">  
+
+.navbar {
+  position: fixed;
+  width: 100%;
+  height: 50px;
+  top:0px;
+  background-color: #ddd;
+  z-index: 101;
+}
+
+.navbar button{
+  background-color: transparent;
+  border: 1px solid #ccc;
+  margin: 5px;
+  font-size: 20px;
+  font-weight: bold;  
+}
+
+.container {
+  max-width: 500px;
+  padding: 50px 30px;
+}
+
+nav{
+  padding: 3em 2em;  
+}
+
+.table-of-contents {
+  float: left;
+  position: fixed;
+  height:100%;
+  background: #eee;
+  overflow:scroll;
+  z-index: 100;
+  max-width: 320px;
+}
+
+.main_heading {
+  font-size: 1.2em;
+}
+.sub_heading {
+  font-size: 0.9em;
+  margin-left: 0.5em;
+}
+
+.table-of-contents a {
+  color: #888;
+}
+
+.table-of-contents a:hover,
+.table-of-contents a:active {
+  text-decoration: underline;
+  color: #222;
+}
+
+.container h1, h2 {
+  padding-top:60px;
+  padding-bottom: 20px;
+  margin: 0px;
+}
+
+.container h1, h2 {
+  padding-top:60px;
+  padding-bottom: 20px;
+  margin: 0px;
+}
+
+ h3 {
+  padding-top:30px;
+  padding-bottom: 10px;
+  margin: 0px;
+}
+
+.container h1:target {
+  animation: highlight 3s ease;
+}
+.container h2:target {
+  animation: highlight 3s ease;
+}
+@keyframes highlight {
+  from {
+    background: rgba(125,125,5,0.4);
+  }
+  to {
+    background: white;
+  }
+}
+
+  </style>
+  <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+  <script type="text/javascript">
+      $(document).ready(function(){
+        var ToC ="<nav role='navigation'>" + "<h3> API Topics:</h3>" 
+        var newLine, el, title, link;
+        $("h1, h2").each(function() {
+          el = $(this);
+          title = el.html();
+          link = "#" + el.attr("id");
+          tag=el.prop("tagName")
+          cl='main_heading'
+          if(tag=='H2')
+            cl='sub_heading'
+          newLine = "<a href='" + link + "' id='toc-"+ el.attr("id")+"' class='"+cl+"'>" +title +"</a>" +'<br>'
+          if(tag=='H1') newLine='<br>'+newLine;
+          ToC += newLine;
+        });
+
+        ToC +="<br></nav>";
+        $(".table-of-contents").prepend(ToC);
+
+        $(document).bind('scroll',function(e){
+            $('h1, h2').each(function(){
+                if (
+                   $(this).offset().top < window.pageYOffset + 10
+                && $(this).offset().top + $(this).height() > window.pageYOffset + 10
+                ) {
+                    window.location.hash = $(this).attr('id');
+                    $('.table-of-contents a').css('color','')
+                    $('.table-of-contents a').css('padding','')
+                    $('.table-of-contents a').css('background','')
+
+                    $('a#toc-'+$(this).attr('id')).css('color','#fff')                    
+                    $('a#toc-'+$(this).attr('id')).css('background','#aa0')                    
+                    $('a#toc-'+$(this).attr('id')).css('padding','0 10px')                    
+
+                }
+            });
+        });
+
+        var menu_hidden=false;
+        var menu_width=320;
+        $('.table-of-contents a').css('width',menu_width)
+        setTimeout(function(){
+          if(window.innerWidth>500) $('.container').css('margin-left',menu_width)     
+        },500);
+
+        $('button#topics-menu').on('click',function(e){
+          if(!menu_hidden){
+            $('.table-of-contents').animate({width:0},200)       
+            $('.container').css('margin-left','')                             
+            menu_hidden=true;
+          }else{
+            $('.table-of-contents').animate({width:menu_width},200)
+            if(window.innerWidth>500) $('.container').css('margin-left',menu_width)     
+            menu_hidden=false;
+
+          }
+        })        
+        $('.table-of-contents a').on('click',function(e){
+            $('.table-of-contents').animate({width:0},200)            
+            $('.container').css('margin-left','')                                         
+            menu_hidden=true;
+            $('.table-of-contents a').css('color','')
+            $('.table-of-contents a').css('padding','')
+            $('.table-of-contents a').css('background','')
+
+            $('a#toc-'+e.target.getAttribute('id')).css('color','#fff')                     
+            $('a#toc-'+e.target.getAttribute('id')).css('background','#aa0')                     
+            $('a#toc-'+e.target.getAttribute('id')).css('padding','0 10px')                     
+
+        })          
+      });
+  </script>
+  </head>
+<body>
+  <!--div id="MathJax_Message" style="display: none;"></div-->
+
+<div class="navbar"><button id="topics-menu">☰</button></div>
+<div class="table-of-contents">      
+</div>
+
+<div class="container"><h1 id="introduction">Introduction</h1>
+
+<p>This Imusify API guide provides a comprehensive listing of methods available to team or third-party developers to build powerful web and mobile music applications that deliver a streaming experience to end-users, buy or sell music online, manage personal profile and music</p>
+
+<p>Please note that Imusify API works over the HTTP or HTTPS (later) protocol and currently supports JSON or JSON/HTML or HTML (chunk) response only. </p>
+
+
+
+<h2 id="requests">Requests</h2>
+
+<p>Requests should be made up of the following components:</p>
+
+<ul>
+<li>Route - to access an object, like Users or Tracks</li>
+<li>Action - to perform a method related to the object, default Index</li>
+<li>Parameters - to provide parameters required by the method (Form data, POST method)</li>
+</ul>
+
+<p>To construct a proper request, you will need to format the URI as follow:</p>
+
+<pre><code>Live: http://www.imusify.com/imusify/{route}/{action}?{parameters} <br>
+Development and Testing: http://beta.imusify.com/imusify/{route}/{action}?{parameters}
+</code></pre>
+<p>An example request to fetch About page and the response is in JSON </p>
+
+<pre><code>Live: http://www.imusify.com/imusify/about/ 
+POST method, Form data ajax=true
+
+Development and Testing: http://beta.imusify.com/imusify/about/
+POST method, Form data ajax=true
+</code></pre>
+
+<p>By default, requests are based on HTTP POST. However there are also methods to update objects which require GET data to be submitted.  <br>
+Now there is no support for PUT or DELETE methods</p>
+
+<h2 id="responses">Responses</h2>
+
+<p>The response of your request will contain the following:</p>
+
+<ul>
+<li>HTTP status code (for example: <code>200</code> for success or <code>500</code> for error)</li>
+<li>API response status if applicable (for example: <code>ok</code> or <code>success</code> for <code>success or</code> <code>false</code> for error)</li>
+<li>API response status message (either a JSON object or array of strings or HTML or JSON with HTML chunk)</li>
+</ul>
+
+<h1 id="authentication">User/Authentication</h1>
+
+
+
+<h2 id="sign-up-as-new-user">Sign Up as New User</h2>
+
+<p>Allows signing up for a new user account. If successful, a new user account will be created and a valid authentication token will be returned.</p>
+
+<pre><code>POST /imusify/api/signup
+</code></pre>
+
+
+
+<h3 id="parameters">Parameters</h3>
+
+<table>
+<thead>
+<tr>
+  <th><em>Field</em></th>
+  <th><em>Description</em></th>
+</tr>
+</thead>
+<tbody><tr>
+  <td><code>fname</code></td>
+  <td><em>First name of new user</em></td>
+</tr>
+<tr>
+  <td><code>lname</code></td>
+  <td><em>Last name of new user</em></td>
+</tr>
+<tr>
+  <td><code>uname</code></td>
+  <td><em>Username of new user</em></td>
+</tr>
+<tr>
+  <td><code>email</code></td>
+  <td><em>Email address of new user. Must be valid, unique and unused</em></td>
+</tr>
+<tr>
+  <td><code>password</code></td>
+  <td><em>Must be greater than 6 characters</em></td>
+</tr>
+<tr>
+  <td><code>gender</code></td>
+  <td><em>Must be m or f ,male or female</em></td>
+</tr>
+<tr>
+  <td><code>mm</code></td>
+  <td><em>Month of Birth, Must be an integer</em></td>
+</tr>
+<tr>
+  <td><code>dd</code></td>
+  <td><em>Date of Birth, Must be an integer</em></td>
+</tr>
+<tr>
+  <td><code>yy</code></td>
+  <td><em>Year of Birth, Must be an integer</em></td>
+</tr>
+<tr>
+  <td><code>password</code></td>
+  <td><em>Password</em></td>
+</tr>
+<tr>
+  <td><code>newsletter</code></td>
+  <td><em>Optional, Newsletter Subscription</em></td>
+</tr>
+<tr>
+  <td><code>agree</code></td>
+  <td><em>Must be on</em></td>
+</tr>
+</tbody></table>
+
+
+
+
+<h3 id="response">Response</h3>
+
+<table>
+<thead>
+<tr>
+  <th><em>Field</em></th>
+  <th><em>Description</em></th>
+</tr>
+</thead>
+<tbody><tr>
+  <td><code>status</code></td>
+  <td><em>ok (200) or error (500)</em></td>
+</tr>
+<tr>
+  <td><code>avail_space</code></td>
+  <td><em>Available space for Upload</em></td>
+</tr>
+<tr>
+  <td><code>id</code></td>
+  <td><em>User account ID</em></td>
+</tr>
+<tr>
+  <td><code>firstname</code></td>
+  <td><em>First name of user</em></td>
+</tr>
+<tr>
+  <td><code>lastname</code></td>
+  <td><em>Last name of user</em></td>
+</tr>
+<tr>
+  <td><code>email</code></td>
+  <td><em>Email address of user</em></td>
+</tr>
+<tr>
+  <td><code>password</code></td>
+  <td><em>Hash password of new user</em></td>
+</tr>
+<tr>
+  <td><code>artist</code></td>
+  <td><em>Boolean value, artist or user Profile</em></td>
+</tr>
+<tr>
+  <td><code>never_sell</code></td>
+  <td><em>Boolean value, Never sell personal music or not</em></td>
+</tr>
+<tr>
+  <td><code>braintreecustId</code></td>
+  <td><em>Braintree Customer ID if applicable</em></td>
+</tr>
+<tr>
+  <td><code>loggedin</code></td>
+  <td><em>Boolean value, true or false</em></td>
+</tr>
+<tr>
+  <td><code>profileImage</code></td>
+  <td><em>Image profile link (avatar)</em></td>
+</tr>
+<tr>
+  <td><code>profileLink</code></td>
+  <td><em>Profile link</em></td>
+</tr>
+<tr>
+  <td><code>role_added</code></td>
+  <td><em>y or n, Updated roles (e.g. band, music lover …) or not</em></td>
+</tr>
+<tr>
+  <td><code>usertype</code></td>
+  <td><em>u or a, User or Artist</em></td>
+</tr>
+</tbody></table>
+
+
+
+
+<h2 id="log-in-as-existing-user">Log In as Existing User</h2>
+
+<p>Allows an existing user to log in. If successful, a valid ID will be returned</p>
+
+<pre><code>POST /imusify/api/login
+</code></pre>
+
+
+
+<h3 id="parameters-1">Parameters</h3>
+
+<table>
+<thead>
+<tr>
+  <th><em>Field</em></th>
+  <th><em>Description</em></th>
+</tr>
+</thead>
+<tbody><tr>
+  <td><code>username</code></td>
+  <td><em>Registered username of existing user</em></td>
+</tr>
+<tr>
+  <td><code>password</code></td>
+  <td><em>Must be a string</em></td>
+</tr>
+</tbody></table>
+
+
+
+
+<h4 id="response-1">Response</h4>
+
+<table>
+<thead>
+<tr>
+  <th>Field</th>
+  <th>Description</th>
+</tr>
+</thead>
+<tbody><tr>
+  <td><code>status</code></td>
+  <td><em>ok (200) or error (500)</em></td>
+</tr>
+<tr>
+  <td><code>avail_space</code></td>
+  <td><em>Available space for Upload</em></td>
+</tr>
+<tr>
+  <td><code>id</code></td>
+  <td><em>User account ID</em></td>
+</tr>
+<tr>
+  <td><code>firstname</code></td>
+  <td><em>First name of user</em></td>
+</tr>
+<tr>
+  <td><code>lastname</code></td>
+  <td><em>Last name of user</em></td>
+</tr>
+<tr>
+  <td><code>email</code></td>
+  <td><em>Email address of user</em></td>
+</tr>
+<tr>
+  <td><code>password</code></td>
+  <td><em>Hash password of new user</em></td>
+</tr>
+<tr>
+  <td><code>artist</code></td>
+  <td><em>Boolean value, artist or user Profile</em></td>
+</tr>
+<tr>
+  <td><code>never_sell</code></td>
+  <td><em>Boolean value, Never sell personal music or not</em></td>
+</tr>
+<tr>
+  <td><code>braintreecustId</code></td>
+  <td><em>Braintree Customer ID if applicable</em></td>
+</tr>
+<tr>
+  <td><code>loggedin</code></td>
+  <td><em>Boolean value, true or false</em></td>
+</tr>
+<tr>
+  <td><code>profileImage</code></td>
+  <td><em>Image profile link (avatar)</em></td>
+</tr>
+<tr>
+  <td><code>profileLink</code></td>
+  <td><em>Profile link</em></td>
+</tr>
+<tr>
+  <td><code>role_added</code></td>
+  <td><em>y or n, Updated roles (e.g. band, music lover …) or not</em></td>
+</tr>
+<tr>
+  <td><code>usertype</code></td>
+  <td><em>u or a, User or Artist</em></td>
+</tr>
+</tbody></table>
+
+
+
+
+<h2 id="log-out">Log Out</h2>
+
+<p>Allows user to log out. If successful, his session ID will be reset.</p>
+
+<pre><code>POST /imusify/ulogout
+</code></pre>
+
+
+
+<h3 id="parameters-2">Parameters</h3>
+
+<table>
+<thead>
+<tr>
+  <th><em>Field</em></th>
+  <th><em>Description</em></th>
+</tr>
+</thead>
+</table>
+
+
+
+
+<h3 id="response-2">Response</h3>
+
+<table>
+<thead>
+<tr>
+  <th><em>Field</em></th>
+  <th><em>Description</em></th>
+</tr>
+</thead>
+<tbody><tr>
+  <td><code>status</code></td>
+  <td><em>ok (200) or error (500)</em></td>
+</tr>
+<tr>
+  <td><code>loggedin</code></td>
+  <td><em>Boolean value, false</em></td>
+</tr>
+<tr>
+  <td><code>last_login_time</code></td>
+  <td><em>Timestamp</em></td>
+</tr>
+</tbody></table>
+
+
+
+<h2 id="profile-detail">Profile detail</h2>
+
+<p>Allows user to view all profile details</p>
+
+<pre><code>POST /imusify/profileLink (e.g. /imusify/a for the account with the username a)
+</code></pre>
+
+
+
+<h3 id="parameters-3">Parameters</h3>
+
+<table>
+<thead>
+<tr>
+  <th><em>Field</em></th>
+  <th><em>Description</em></th>
+</tr>
+</thead>
+<tbody><tr>
+  <td><code>ajax</code></td>
+  <td><em>true, boolean value, Call Ajax request</em></td>
+</tr>
+</tbody></table>
+
+
+
+
+<h3 id="response-3">Response</h3>
+
+<table>
+<thead>
+<tr>
+  <th><em>Field</em></th>
+  <th><em>Description</em></th>
+</tr>
+</thead>
+<tbody><tr>
+  <td><code>status</code></td>
+  <td><em>ok (200) or error (500)</em></td>
+</tr>
+<tr>
+  <td><code>country</code></td>
+  <td><em>Country of user</em></td>
+</tr>
+<tr>
+  <td><code>description</code></td>
+  <td><em>Description of user profile</em></td>
+</tr>
+<tr>
+  <td><code>firstname</code></td>
+  <td><em>First name of user</em></td>
+</tr>
+<tr>
+  <td><code>lastname</code></td>
+  <td><em>Last name of user</em></td>
+</tr>
+<tr>
+  <td><code>never_sell</code></td>
+  <td><em>Never sell music, e.g. y or n</em></td>
+</tr>
+<tr>
+  <td><code>no_of_songs</code></td>
+  <td><em>No of uploaded songs</em></td>
+</tr>
+<tr>
+  <td><code>pg_title</code></td>
+  <td><em>Title of current page</em></td>
+</tr>
+<tr>
+  <td><code>profileImage</code></td>
+  <td><em>Link of user avatar</em></td>
+</tr>
+<tr>
+  <td><code>profileLink</code></td>
+  <td><em>Link of profile</em></td>
+</tr>
+<tr>
+  <td><code>user_id</code></td>
+  <td><em>User ID</em></td>
+</tr>
+<tr>
+  <td><code>user_roles_ar</code></td>
+  <td><em>Roles of user</em></td>
+</tr>
+<tr>
+  <td><code>cover_image</code></td>
+  <td><em>Link of Cover Image</em></td>
+</tr>
+<tr>
+  <td><code>data_array</code></td>
+  <td><em>Data of uploaded or relevant tracks on Profile page, JSON objects, it has multiple fields: tab_waveform, tab_name, tab_image, title, link (full link), perLink, id …</em></td>
+</tr>
+<tr>
+  <td><code>playsets</code></td>
+  <td><em>Data of playlist on Profile page, JSON objects, it has multiple fields: song_cover_image, name, link (full link), perLink, id …</em></td>
+</tr>
+</tbody></table>
+
+
+
+
+<h2 id="get-list-of-roles">Get list of roles</h2>
+
+<p>Allows user to view current roles of account. User or Artist. Only artist can upload new songs</p>
+
+<pre><code>POST /imusify/setup
+</code></pre>
+
+
+
+<h3 id="parameters-4">Parameters</h3>
+
+<table>
+<thead>
+<tr>
+  <th><em>Field</em></th>
+  <th><em>Description</em></th>
+</tr>
+</thead>
+<tbody><tr>
+  <td><code>ajax</code></td>
+  <td><em>true, boolean value, Call Ajax request</em></td>
+</tr>
+</tbody></table>
+
+
+
+
+<h3 id="response-4">Response</h3>
+
+<table>
+<thead>
+<tr>
+  <th><em>Field</em></th>
+  <th><em>Description</em></th>
+</tr>
+</thead>
+<tbody><tr>
+  <td><code>status</code></td>
+  <td><em>ok (200) or error (500)</em></td>
+</tr>
+<tr>
+  <td><code>roles</code></td>
+  <td><em>Data of roles, JSON objects, it has multiple fields:id, role, selected (true or false), default</em></td>
+</tr>
+<tr>
+  <td><code>u_db_roles</code></td>
+  <td><em>Current roles ID of user, array of integers, e.g. [“38”]</em></td>
+</tr>
+</tbody></table>
+
+
+
+
+<h2 id="update-list-of-roles">Update list of roles</h2>
+
+<p>Allows user to edit current roles of account. User or Artist. Only artist can upload new songs</p>
+
+<pre><code>POST /imusify/api/userrolesapi
+</code></pre>
+
+
+
+<h3 id="parameters-5">Parameters</h3>
+
+<table>
+<thead>
+<tr>
+  <th><em>Field</em></th>
+  <th><em>Description</em></th>
+</tr>
+</thead>
+<tbody><tr>
+  <td><code>user_roles[]</code></td>
+  <td><em>New roles ID of user, array of integers, e.g. [“38”]</em></td>
+</tr>
+</tbody></table>
+
+
+
+
+<h3 id="response-5">Response</h3>
+
+<table>
+<thead>
+<tr>
+  <th><em>Field</em></th>
+  <th><em>Description</em></th>
+</tr>
+</thead>
+<tbody><tr>
+  <td><code>status</code></td>
+  <td><em>ok (200) or error (500)</em></td>
+</tr>
+<tr>
+  <td><code>text</code></td>
+  <td><em>Message, e.g. Success</em></td>
+</tr>
+</tbody></table>
+
+
+
+
+<h2 id="view-current-profile-details">View current profile details</h2>
+
+<p>Allows user to view profile details</p>
+
+<pre><code>POST /imusify/profileLink/edit (e.g. /imusify/a/edit for the account with the username a)
+</code></pre>
+
+
+
+<h3 id="parameters-6">Parameters</h3>
+
+<table>
+<thead>
+<tr>
+  <th><em>Field</em></th>
+  <th><em>Description</em></th>
+</tr>
+</thead>
+<tbody><tr>
+  <td><code>ajax</code></td>
+  <td><em>true, boolean value, Call Ajax request</em></td>
+</tr>
+</tbody></table>
+
+
+
+
+<h3 id="response-6">Response</h3>
+
+<table>
+<thead>
+<tr>
+  <th><em>Field</em></th>
+  <th><em>Description</em></th>
+</tr>
+</thead>
+<tbody><tr>
+  <td><code>status</code></td>
+  <td><em>ok (200) or error (500)</em></td>
+</tr>
+<tr>
+  <td><code>city_name</code></td>
+  <td><em>Name of city</em></td>
+</tr>
+<tr>
+  <td><code>country_name</code></td>
+  <td><em>Name of country</em></td>
+</tr>
+<tr>
+  <td><code>state_name</code></td>
+  <td><em>Name of state</em></td>
+</tr>
+<tr>
+  <td><code>description</code></td>
+  <td><em>Description of the user</em></td>
+</tr>
+<tr>
+  <td><code>company_name</code></td>
+  <td><em>Company name</em></td>
+</tr>
+<tr>
+  <td><code>company_name2</code></td>
+  <td><em>Company name 2</em></td>
+</tr>
+<tr>
+  <td><code>weburl</code></td>
+  <td><em>External web URL of the user</em></td>
+</tr>
+<tr>
+  <td><code>profileImage</code></td>
+  <td><em>Link of profile image</em></td>
+</tr>
+<tr>
+  <td><code>profileLink</code></td>
+  <td><em>Link of the username</em></td>
+</tr>
+<tr>
+  <td><code>firstname</code></td>
+  <td><em>First name of the user</em></td>
+</tr>
+<tr>
+  <td><code>lastname</code></td>
+  <td><em>Last name of the user</em></td>
+</tr>
+<tr>
+  <td><code>countries</code></td>
+  <td><em>List of available countries to choose, array of Objects, it has multiple fields: location_id, name</em></td>
+</tr>
+<tr>
+  <td><code>active_city</code></td>
+  <td><em>Id of current city</em></td>
+</tr>
+<tr>
+  <td><code>active_country</code></td>
+  <td><em>Id of current country</em></td>
+</tr>
+<tr>
+  <td><code>active_state</code></td>
+  <td><em>Id of current state</em></td>
+</tr>
+<tr>
+  <td><code>dob_d</code></td>
+  <td><em>Date of birth</em></td>
+</tr>
+<tr>
+  <td><code>dob_m</code></td>
+  <td><em>Month of birth</em></td>
+</tr>
+<tr>
+  <td><code>dob_y</code></td>
+  <td><em>Year of birth</em></td>
+</tr>
+</tbody></table>
+
+
+
+
+<h2 id="edit-current-profile-details">Edit current profile details</h2>
+
+<p>Allows user to edit profile details</p>
+
+<pre><code>POST /imusify/api/editprofile 
+</code></pre>
+
+
+
+<h3 id="parameters-7">Parameters</h3>
+
+<table>
+<thead>
+<tr>
+  <th><em>Field</em></th>
+  <th><em>Description</em></th>
+</tr>
+</thead>
+<tbody><tr>
+  <td><code>fname</code></td>
+  <td><em>First name of the user</em></td>
+</tr>
+<tr>
+  <td><code>lname</code></td>
+  <td><em>Last name of the user</em></td>
+</tr>
+<tr>
+  <td><code>website</code></td>
+  <td><em>Website URL</em></td>
+</tr>
+<tr>
+  <td><code>country</code></td>
+  <td><em>ID of country</em></td>
+</tr>
+<tr>
+  <td><code>state</code></td>
+  <td><em>ID of state</em></td>
+</tr>
+<tr>
+  <td><code>city</code></td>
+  <td><em>ID of city</em></td>
+</tr>
+<tr>
+  <td><code>description</code></td>
+  <td><em>description of user</em></td>
+</tr>
+<tr>
+  <td><code>mm</code></td>
+  <td><em>Month of birth</em></td>
+</tr>
+<tr>
+  <td><code>yy</code></td>
+  <td><em>Year of birth</em></td>
+</tr>
+<tr>
+  <td><code>dd</code></td>
+  <td><em>Date of birth</em></td>
+</tr>
+<tr>
+  <td><code>cname</code></td>
+  <td><em>Company name</em></td>
+</tr>
+<tr>
+  <td><code>cname2</code></td>
+  <td><em>Company name 2</em></td>
+</tr>
+</tbody></table>
+
+
+
+
+<h3 id="response-7">Response</h3>
+
+<table>
+<thead>
+<tr>
+  <th><em>Field</em></th>
+  <th><em>Description</em></th>
+</tr>
+</thead>
+<tbody><tr>
+  <td><code>status</code></td>
+  <td><em>ok (200) or error (500)</em></td>
+</tr>
+<tr>
+  <td><code>success</code></td>
+  <td><em>Message, e.g. success</em></td>
+</tr>
+<tr>
+  <td><code>msg</code></td>
+  <td><em>Full message of response</em></td>
+</tr>
+</tbody></table>
+
+
+
+<h1 id="upload">Upload</h1>
+
+
+
+<h2 id="get-list-of-genres-instrument-list-license-list">Get list of uploaded tracks for current user or artist</h2>
+
+<p>Allow the user (artists) to list all uploaded tracks</p>
+
+<pre><code>POST /imusify/upload
+</code></pre>
+
+
+
+<h3 id="parameters-3">Parameters</h3>
+
+<table>
+<thead>
+<tr>
+  <th><em>Field</em></th>
+  <th><em>Description</em></th>
+</tr>
+</thead>
+<tbody><tr>
+  <td><code>ajax</code></td>
+  <td><em>true, boolean value, Call Ajax request</em></td>
+</tr>
+</tbody></table>
+
+
+
+
+<h3 id="response-3">Response</h3>
+
+<table>
+<thead>
+<tr>
+  <th><em>Field</em></th>
+  <th><em>Description</em></th>
+</tr>
+</thead>
+<tbody><tr>
+  <td><code>status</code></td>
+  <td><em>ok (200) or error (500)</em></td>
+</tr>
+<tr>
+  <td><code>data_array</code></td>
+  <td><em>List of uploaded tracks, JSON object, it includes multiple fields: description, main_title, title, per_link, length, track_image, track_link, song_lists, tags, …</em></td>
+</tr>
+<tr>
+  <td><code>pg_title</code></td>
+  <td><em>Title of Upload page</em></td>
+</tr>
+<tr>
+  <td><code>profileImage</code></td>
+  <td><em>Link of user avatar</em></td>
+</tr>
+<tr>
+  <td><code>profileLink</code></td>
+  <td><em>Link of user account</em></td>
+</tr>
+<tr>
+  <td><code>img</code></td>
+  <td><em>General links for image assets</em></td>
+</tr>
+</tbody></table>
+
+
+
+
+<h2 id="get-list-of-genres-instrument-list-license-list-1">Get list of genres, instrument list, license list</h2>
+
+<p>Allow the user (artists) to choose all available options for Upload form</p>
+
+<pre><code>POST /imusify/upload_details
+</code></pre>
+
+
+
+<h3 id="parameters-4">Parameters</h3>
+
+<table>
+<thead>
+<tr>
+  <th><em>Field</em></th>
+  <th><em>Description</em></th>
+</tr>
+</thead>
+</table>
+
+
+
+
+<h3 id="response-4">Response</h3>
+
+<table>
+<thead>
+<tr>
+  <th><em>Field</em></th>
+  <th><em>Description</em></th>
+</tr>
+</thead>
+<tbody><tr>
+  <td><code>status</code></td>
+  <td><em>ok (200) or error (500)</em></td>
+</tr>
+<tr>
+  <td><code>genre</code></td>
+  <td><em>JSON object includes below fields</em></td>
+</tr>
+<tr>
+  <td><code>el_type_list</code></td>
+  <td><em>List of exclusive licenses with details (name, mp3 price, wav price, id) , e.g. Advertising, Corporate / Commercial film</em></td>
+</tr>
+<tr>
+  <td><code>genre</code></td>
+  <td><em>List of genres with details (genre, id, parentId if applicable) , e.g. Electronic, hip hop</em></td>
+</tr>
+<tr>
+  <td><code>instuments_list</code></td>
+  <td><em>List of instruments with details (id, name) , e.g. Accordion, Flute</em></td>
+</tr>
+<tr>
+  <td><code>licence_type_list</code></td>
+  <td><em>List of normal licenses with details (name, mp3 price, wav price, id, description) , e.g. Advertising, Corporate / Commercial film</em></td>
+</tr>
+<tr>
+  <td><code>mood_list</code></td>
+  <td><em>List of mood with details (id, mood) , e.g. Accepted</em></td>
+</tr>
+<tr>
+  <td><code>sec_genre</code></td>
+  <td><em>List of second genres with details (genre, id, parentId if applicable) , e.g. Ambient</em></td>
+</tr>
+<tr>
+  <td><code>sound_like_list</code></td>
+  <td><em>List of sound like (name, id) , e.g. A B C &amp; D of Boogie Woogi</em></td>
+</tr>
+<tr>
+  <td><code>track_upload_type_list</code></td>
+  <td><em>List of track type (name, id) , e.g. Song w. Vocals</em></td>
+</tr>
+</tbody></table>
+
+
+
+
+<h2 id="upload-partialfull-track-to-the-server">Upload partial/full track to the server</h2>
+
+<p>Allow the user (artists) to upload chunks of track to the server (The client-side script should split the track into multiple chunks to upload)</p>
+
+<pre><code>POST /imusify/api/uploadfiles/
+</code></pre>
+
+
+
+<h3 id="parameters-5">Parameters</h3>
+
+<table>
+<thead>
+<tr>
+  <th><em>Field</em></th>
+  <th><em>Description</em></th>
+</tr>
+</thead>
+<tbody><tr>
+  <td><code>name="i"</code></td>
+  <td><em>default value, 1</em></td>
+</tr>
+<tr>
+  <td><code>name="r</code></td>
+  <td><em>random string value (generated by 3rd party Javascript plugin), e.g. oHidiGhE</em></td>
+</tr>
+<tr>
+  <td><code>name="files[]"</code></td>
+  <td><em>name of track (extracted by Javascript script) and content type, e.g. 7 - Bio Book.mp3 and Content-Type: audio/mp3</em></td>
+</tr>
+</tbody></table>
+
+
+
+
+<h3 id="response-5">Response</h3>
+
+<table>
+<thead>
+<tr>
+  <th><em>Field</em></th>
+  <th><em>Description</em></th>
+</tr>
+</thead>
+<tbody><tr>
+  <td><code>status</code></td>
+  <td><em>ok or not found</em></td>
+</tr>
+<tr>
+  <td><code>deleteType</code></td>
+  <td><em>Default value: DELETE</em></td>
+</tr>
+<tr>
+  <td><code>deleteUrl</code></td>
+  <td><em>URL link to delete chunk(s) or track, e.g. <a href="http://beta.imusify.com/imusify/api/uploadfiles/?file=7%20-%20Plymouth%20Suite%20III%20Chanty.mp3">http://beta.imusify.com/imusify/api/uploadfiles/?file=7%20-%20Plymouth%20Suite%20III%20Chanty.mp3</a></em></td>
+</tr>
+<tr>
+  <td><code>name</code></td>
+  <td><em>Name of track, STRING</em></td>
+</tr>
+<tr>
+  <td><code>size</code></td>
+  <td><em>Size of all uploaded chunks of track, INTEGER</em></td>
+</tr>
+<tr>
+  <td><code>type</code></td>
+  <td><em>Type of audio,e.g. audio/mp3</em></td>
+</tr>
+<tr>
+  <td><code>url</code></td>
+  <td><em>Only returned after full track is uploaded, e.g. <a href="http://beta.imusify.com/imusify/api/uploadfiles/?file=7%20-%20Plymouth%20Suite%20III%20Chanty.mp3">http://beta.imusify.com/imusify/api/uploadfiles/?file=7%20-%20Plymouth%20Suite%20III%20Chanty.mp3</a></em></td>
+</tr>
+</tbody></table>
+
+
+
+
+<h2 id="upload-thumbnail-or-artwork-of-track-to-the-server">Upload thumbnail or artwork of track to the server</h2>
+
+<p>Allow the user (artists) to upload thumbnail or artwork of track to the server (The client-side script should extract thumbnail to upload)</p>
+
+<pre><code>POST /imusify/crop/index/trackImg
+</code></pre>
+
+
+
+<h3 id="parameters-6">Parameters</h3>
+
+<table>
+<thead>
+<tr>
+  <th><em>Field</em></th>
+  <th><em>Description</em></th>
+</tr>
+</thead>
+<tbody><tr>
+  <td><code>name="img"</code></td>
+  <td><em>Content of image which is in base64 format</em></td>
+</tr>
+<tr>
+  <td><code>name="imgType"</code></td>
+  <td><em>Type of image, e.g. image/jpeg</em></td>
+</tr>
+</tbody></table>
+
+
+
+
+<h3 id="response-6">Response</h3>
+
+<table>
+<thead>
+<tr>
+  <th><em>Field</em></th>
+  <th><em>Description</em></th>
+</tr>
+</thead>
+<tbody><tr>
+  <td><code>status_code</code></td>
+  <td><em>ok (200) or error (500)</em></td>
+</tr>
+<tr>
+  <td><code>status</code></td>
+  <td><em>Text of status, e.g. success</em></td>
+</tr>
+<tr>
+  <td><code>url</code></td>
+  <td><em>URL link of image/thumbnail, e.g. <a href="http://beta.imusify.com/imusify/assets/upload/track/439743deaea69263669f7b18ef3945111373139063.jpeg">http://beta.imusify.com/imusify/assets/upload/track/439743deaea69263669f7b18ef3945111373139063.jpeg</a></em></td>
+</tr>
+</tbody></table>
+
+
+
+
+<h2 id="complete-uploading-action-to-create-a-new-track-or-song">Complete uploading action to create a new track or song</h2>
+
+<p>Allow the user (artists) to upload a new track or song. If successful, the new song is added under Upload page</p>
+
+<pre><code>POST /imusify/save_track
+</code></pre>
+
+
+
+<h3 id="parameters-7">Parameters</h3>
+
+<table>
+<thead>
+<tr>
+  <th><em>Field</em></th>
+  <th><em>Description</em></th>
+</tr>
+</thead>
+<tbody><tr>
+  <td><code>name="tracktype"</code></td>
+  <td><em>Music type, e.g. mp3</em></td>
+</tr>
+<tr>
+  <td><code>name="r</code></td>
+  <td><em>random string value (generated by 3rd party Javascript plugin), e.g. oHidiGhE</em></td>
+</tr>
+<tr>
+  <td><code>name="cover_base64_uploaded"</code></td>
+  <td><em>URL of uploaded thumbnail, e.g. <a href="http://beta.imusify.com/imusify/assets/upload/track/439743deaea69263669f7b18ef3945111373139063.jpeg">http://beta.imusify.com/imusify/assets/upload/track/439743deaea69263669f7b18ef3945111373139063.jpeg</a></em></td>
+</tr>
+<tr>
+  <td><code>name="title"</code></td>
+  <td><em>Title of track</em></td>
+</tr>
+<tr>
+  <td><code>name="desc"</code></td>
+  <td><em>Description of track</em></td>
+</tr>
+<tr>
+  <td><code>name="mm"</code></td>
+  <td><em>Release month, e.g. 03</em></td>
+</tr>
+<tr>
+  <td><code>name="dd"</code></td>
+  <td><em>Release date, e.g. 02</em></td>
+</tr>
+<tr>
+  <td><code>name="yy"</code></td>
+  <td><em>Release year, e.g. 2017</em></td>
+</tr>
+<tr>
+  <td><code>name="trackuploadtype"</code></td>
+  <td><em>Integer value, e.g. 1</em></td>
+</tr>
+<tr>
+  <td><code>name="genre"</code></td>
+  <td><em>Integer value, genre ID, e.g. 1</em></td>
+</tr>
+<tr>
+  <td><code>name="trackuploadbpm"</code></td>
+  <td><em>Integer value, BPM value of track e.g. 50</em></td>
+</tr>
+<tr>
+  <td><code>name="ispublic"</code></td>
+  <td><em>y or n, track is public or private e.g. y</em></td>
+</tr>
+<tr>
+  <td><code>name="sale_available"</code></td>
+  <td><em>Integer value, can sell or not, e.g. 1</em></td>
+</tr>
+<tr>
+  <td><code>name="sale_available_ar[]"</code></td>
+  <td><em>Integer value, Sell in album or individual track, e.g. 2 (individual track) or 1 (album sale) </em></td>
+</tr>
+<tr>
+  <td><code>name="sell_1"</code></td>
+  <td><em>Float value, price for album sale ONLy available if sale_available_ar[] = 1, e.g. 9.99</em></td>
+</tr>
+<tr>
+  <td><code>name="sell_2"</code></td>
+  <td><em>Float value, price for single track ONLy available if sale_available_ar[] = 1, e.g. 9.99</em></td>
+</tr>
+<tr>
+  <td><code>name="licence_available"</code></td>
+  <td><em>Integer value, the track has license or not, e.g. 1</em></td>
+</tr>
+<tr>
+  <td><code>name="licence_available_ar[]"</code></td>
+  <td><em>Integer value, license ID, e.g. 13</em></td>
+</tr>
+<tr>
+  <td><code>name="lic_13"</code></td>
+  <td><em>Float value, ONLY available if it has license, Price for license with ID 13, e.g. 35.12</em></td>
+</tr>
+</tbody></table>
+
+
+
+
+<h3 id="response-7">Response</h3>
+
+<table>
+<thead>
+<tr>
+  <th><em>Field</em></th>
+  <th><em>Description</em></th>
+</tr>
+</thead>
+<tbody><tr>
+  <td><code>status</code></td>
+  <td><em>ok or not found</em></td>
+</tr>
+<tr>
+  <td><code>msg</code></td>
+  <td><em>Message of uploaded track, e.g. 7 - Chanty Uploaded successfully.</em></td>
+</tr>
+<tr>
+  <td><code>r</code></td>
+  <td><em>Random string, STRING</em></td>
+</tr>
+<tr>
+  <td><code>success</code></td>
+  <td><em>Status of upload, e.g. success</em></td>
+</tr>
+<tr>
+  <td><code>data</code></td>
+  <td><em>Data object of uploaded track (timelength, main_title, title, description, album_song, perLink(unique name of track on server), track_image(full link of thumbnail), track_link (URL of track))</em></td>
+</tr>
+</tbody></table>
+
+
+
+
+<h2 id="delete-uploaded-track-invidual">Delete uploaded track (invidual)</h2>
+
+<p>Allow the user (artists) to delete the uploaded track or song</p>
+
+<pre><code>POST /imusify/track_delete
+</code></pre>
+
+
+
+<h3 id="parameters-8">Parameters</h3>
+
+<table>
+<thead>
+<tr>
+  <th><em>Field</em></th>
+  <th><em>Description</em></th>
+</tr>
+</thead>
+<tbody><tr>
+  <td><code>userId</code></td>
+  <td><em>The user ID of uploaded track, e.g. 27</em></td>
+</tr>
+<tr>
+  <td><code>ajax</code></td>
+  <td><em>true, boolean value, Call Ajax request</em></td>
+</tr>
+<tr>
+  <td><code>deltype</code></td>
+  <td><em>The type of delete, e.g. au</em></td>
+</tr>
+<tr>
+  <td><code>trackId</code></td>
+  <td><em>The track ID of uploaded track, e.g. 41</em></td>
+</tr>
+</tbody></table>
+
+
+
+
+<h3 id="response-8">Response</h3>
+
+<table>
+<thead>
+<tr>
+  <th><em>Field</em></th>
+  <th><em>Description</em></th>
+</tr>
+</thead>
+<tbody><tr>
+  <td><code>status</code></td>
+  <td><em>status of action, e.g.success</em></td>
+</tr>
+<tr>
+  <td><code>msg</code></td>
+  <td><em>Message of deleted track, e.g. 7 - Chanty deleted successfully.</em></td>
+</tr>
+<tr>
+  <td><code>track_space</code></td>
+  <td><em>Space of track was updated</em></td>
+</tr>
+</tbody></table>
+
+
+<h1 id="tracks">Tracks</h1>
+
+
+
+<h2 id="get-list-of-tracks-on-home-page-overview">Get list of tracks on home page (Overview)</h2>
+
+<p>Allow the guest to view tracks on home page (Overview tab)</p>
+
+<pre><code>POST /imusify
+</code></pre>
+
+
+
+<h3 id="parameters-14">Parameters</h3>
+
+<table>
+<thead>
+<tr>
+  <th><em>Field</em></th>
+  <th><em>Description</em></th>
+</tr>
+</thead>
+<tbody><tr>
+  <td><code>ajax</code></td>
+  <td><em>true, boolean value, Call Ajax request</em></td>
+</tr>
+</tbody></table>
+
+
+
+
+<h3 id="response-14">Response</h3>
+
+<table>
+<thead>
+<tr>
+  <th><em>Field</em></th>
+  <th><em>Description</em></th>
+</tr>
+</thead>
+<tbody><tr>
+  <td><code>status</code></td>
+  <td><em>ok (200) or error (500)</em></td>
+</tr>
+<tr>
+  <td><code>records</code></td>
+  <td><em>List of uploaded tracks, JSON object, it includes multiple fields: artist_name, bpm, main_title, title, trackLink, timelength, track_image, id, waveform, plays, profileLink, createdDate…</em></td>
+</tr>
+<tr>
+  <td><code>pg_title</code></td>
+  <td><em>Title of home page</em></td>
+</tr>
+<tr>
+  <td><code>loggedin</code></td>
+  <td><em>User logged in or not, boolean value</em></td>
+</tr>
+</tbody></table>
+
+
+
+
+<h2 id="get-list-of-tracks-on-home-page-tracks">Get list of tracks on home page (Tracks)</h2>
+
+<p>Allow the guest to view tracks on home page (Tracks tab)</p>
+
+<pre><code>POST /imusify/music
+</code></pre>
+
+
+
+<h3 id="parameters-15">Parameters</h3>
+
+<table>
+<thead>
+<tr>
+  <th><em>Field</em></th>
+  <th><em>Description</em></th>
+</tr>
+</thead>
+<tbody><tr>
+  <td><code>ajax</code></td>
+  <td><em>true, boolean value, Call Ajax request</em></td>
+</tr>
+</tbody></table>
+
+
+
+
+<h3 id="response-15">Response</h3>
+
+<table>
+<thead>
+<tr>
+  <th><em>Field</em></th>
+  <th><em>Description</em></th>
+</tr>
+</thead>
+<tbody><tr>
+  <td><code>status</code></td>
+  <td><em>ok (200) or error (500)</em></td>
+</tr>
+<tr>
+  <td><code>records</code></td>
+  <td><em>List of uploaded tracks, JSON object, it includes multiple fields: artist_name, bpm, main_title, title, trackLink, timelength, track_image, id, waveform, plays, profileLink, createdDate…</em></td>
+</tr>
+<tr>
+  <td><code>pg_title</code></td>
+  <td><em>Title of home page</em></td>
+</tr>
+<tr>
+  <td><code>loggedin</code></td>
+  <td><em>User logged in or not, boolean value</em></td>
+</tr>
+<tr>
+  <td><code>profileImage</code></td>
+  <td><em>Link of user avatar</em></td>
+</tr>
+</tbody></table>
+
+
+
+
+<h2 id="get-list-of-tracks-on-home-page-instrumental">Get list of tracks on home page (Instrumental)</h2>
+
+<p>Allow the guest to view tracks on home page (Instrumental tab)</p>
+
+<pre><code>POST /imusify/instrumental
+</code></pre>
+
+
+
+<h3 id="parameters-16">Parameters</h3>
+
+<table>
+<thead>
+<tr>
+  <th><em>Field</em></th>
+  <th><em>Description</em></th>
+</tr>
+</thead>
+<tbody><tr>
+  <td><code>ajax</code></td>
+  <td><em>true, boolean value, Call Ajax request</em></td>
+</tr>
+</tbody></table>
+
+
+
+
+<h3 id="response-16">Response</h3>
+
+<table>
+<thead>
+<tr>
+  <th><em>Field</em></th>
+  <th><em>Description</em></th>
+</tr>
+</thead>
+<tbody><tr>
+  <td><code>status</code></td>
+  <td><em>ok (200) or error (500)</em></td>
+</tr>
+<tr>
+  <td><code>records</code></td>
+  <td><em>List of uploaded tracks, JSON object, it includes multiple fields: artist_name, bpm, main_title, title, trackLink, timelength, track_image, id, waveform, plays, profileLink, createdDate…</em></td>
+</tr>
+<tr>
+  <td><code>pg_title</code></td>
+  <td><em>Title of home page</em></td>
+</tr>
+<tr>
+  <td><code>loggedin</code></td>
+  <td><em>User logged in or not, boolean value</em></td>
+</tr>
+<tr>
+  <td><code>profileImage</code></td>
+  <td><em>Link of user avatar</em></td>
+</tr>
+<tr>
+  <td><code>instrument_active</code></td>
+  <td><em>Active instrumental page or not, Boolean value, true or false</em></td>
+</tr>
+</tbody></table>
+
+
+
+
+<h2 id="get-list-of-tracks-on-home-page-license">Get list of tracks on home page (License)</h2>
+
+<p>Allow the guest to view tracks on home page (License tab)</p>
+
+<pre><code>POST /imusify/license
+</code></pre>
+
+
+
+<h3 id="parameters-17">Parameters</h3>
+
+<table>
+<thead>
+<tr>
+  <th><em>Field</em></th>
+  <th><em>Description</em></th>
+</tr>
+</thead>
+<tbody><tr>
+  <td><code>ajax</code></td>
+  <td><em>true, boolean value, Call Ajax request</em></td>
+</tr>
+</tbody></table>
+
+
+
+
+<h3 id="response-17">Response</h3>
+
+<table>
+<thead>
+<tr>
+  <th><em>Field</em></th>
+  <th><em>Description</em></th>
+</tr>
+</thead>
+<tbody><tr>
+  <td><code>status</code></td>
+  <td><em>ok (200) or error (500)</em></td>
+</tr>
+<tr>
+  <td><code>records</code></td>
+  <td><em>List of uploaded tracks, JSON object, it includes multiple fields: artist_name, bpm, main_title, title, trackLink, timelength, track_image, id, waveform, plays, profileLink, createdDate…</em></td>
+</tr>
+<tr>
+  <td><code>pg_title</code></td>
+  <td><em>Title of home page</em></td>
+</tr>
+<tr>
+  <td><code>loggedin</code></td>
+  <td><em>User logged in or not, boolean value</em></td>
+</tr>
+<tr>
+  <td><code>profileImage</code></td>
+  <td><em>Link of user avatar</em></td>
+</tr>
+<tr>
+  <td><code>license_active</code></td>
+  <td><em>Active license page or not, Boolean value, true or false</em></td>
+</tr>
+</tbody></table>
+
+
+
+
+<h2 id="get-list-of-tracks-on-browse-page">Get list of tracks on Browse page</h2>
+
+<p>Allow the guest to view tracks on Browse page</p>
+
+<pre><code>POST /imusify/browse
+</code></pre>
+
+
+
+<h3 id="parameters-18">Parameters</h3>
+
+<table>
+<thead>
+<tr>
+  <th><em>Field</em></th>
+  <th><em>Description</em></th>
+</tr>
+</thead>
+<tbody><tr>
+  <td><code>ajax</code></td>
+  <td><em>true, boolean value, Call Ajax request</em></td>
+</tr>
+</tbody></table>
+
+
+
+
+<h3 id="response-18">Response</h3>
+
+<table>
+<thead>
+<tr>
+  <th><em>Field</em></th>
+  <th><em>Description</em></th>
+</tr>
+</thead>
+<tbody><tr>
+  <td><code>status</code></td>
+  <td><em>ok (200) or error (500)</em></td>
+</tr>
+<tr>
+  <td><code>data_array</code></td>
+  <td><em>List of uploaded tracks, JSON object, it includes multiple fields: artist_name, bpm, main_title, title, trackLink, timelength, track_image, id, waveform, plays, profileLink, createdDate…</em></td>
+</tr>
+<tr>
+  <td><code>pg_title</code></td>
+  <td><em>Title of home page</em></td>
+</tr>
+<tr>
+  <td><code>loggedin</code></td>
+  <td><em>User logged in or not, boolean value</em></td>
+</tr>
+<tr>
+  <td><code>profileImage</code></td>
+  <td><em>Link of user avatar</em></td>
+</tr>
+<tr>
+  <td><code>popular_users</code></td>
+  <td><em>List of popular artists, JSON object, it include multiple fields: artist_name, id, firstname, lastname, link, user_img, tot_songs, …</em></td>
+</tr>
+</tbody></table>
+
+
+
+
+<h2 id="get-list-of-tracks-on-liked-page-favorites">Get list of tracks on Liked page (Favorites)</h2>
+
+<p>Allow the guest to view tracks on Liked page (Favorites)</p>
+
+<pre><code>POST /imusify/liked
+</code></pre>
+
+
+
+<h3 id="parameters-19">Parameters</h3>
+
+<table>
+<thead>
+<tr>
+  <th><em>Field</em></th>
+  <th><em>Description</em></th>
+</tr>
+</thead>
+<tbody><tr>
+  <td><code>ajax</code></td>
+  <td><em>true, boolean value, Call Ajax request</em></td>
+</tr>
+</tbody></table>
+
+
+
+
+<h3 id="response-19">Response</h3>
+
+<table>
+<thead>
+<tr>
+  <th><em>Field</em></th>
+  <th><em>Description</em></th>
+</tr>
+</thead>
+<tbody><tr>
+  <td><code>status</code></td>
+  <td><em>ok (200) or error (500)</em></td>
+</tr>
+<tr>
+  <td><code>my_liked_musics</code></td>
+  <td><em>List of liked tracks, JSON object, it includes multiple fields: main_title, trackLink, timelength, track_image, profileLink, createdDate…</em></td>
+</tr>
+<tr>
+  <td><code>pg_title</code></td>
+  <td><em>Title of home page</em></td>
+</tr>
+<tr>
+  <td><code>loggedin</code></td>
+  <td><em>User logged in or not, boolean value</em></td>
+</tr>
+<tr>
+  <td><code>profileImage</code></td>
+  <td><em>Link of user avatar</em></td>
+</tr>
+</tbody></table>
+
+
+
+<h1 id="following">Following</h1>
+
+
+
+<h2 id="get-list-of-feeds-following-page">Get list of Feeds (Following page)</h2>
+
+<p>Allow the guest or users to view list of feeds (Following page)</p>
+
+<pre><code>POST /imusify/following
+</code></pre>
+
+
+
+<h3 id="parameters-20">Parameters</h3>
+
+<table>
+<thead>
+<tr>
+  <th><em>Field</em></th>
+  <th><em>Description</em></th>
+</tr>
+</thead>
+<tbody><tr>
+  <td><code>ajax</code></td>
+  <td><em>true, boolean value, Call Ajax request</em></td>
+</tr>
+</tbody></table>
+
+
+
+
+<h3 id="response-20">Response</h3>
+
+<table>
+<thead>
+<tr>
+  <th><em>Field</em></th>
+  <th><em>Description</em></th>
+</tr>
+</thead>
+<tbody><tr>
+  <td><code>status</code></td>
+  <td><em>ok (200) or error (500)</em></td>
+</tr>
+<tr>
+  <td><code>feeds</code></td>
+  <td><em>List of feeds, JSON object, it includes multiple fields: detailpage_url, feedtitle, title, username, feedid, videofeed, feed_ago, createdDate…</em></td>
+</tr>
+<tr>
+  <td><code>pg_title</code></td>
+  <td><em>Title of home page</em></td>
+</tr>
+<tr>
+  <td><code>loggedin</code></td>
+  <td><em>User logged in or not, boolean value</em></td>
+</tr>
+<tr>
+  <td><code>follow</code></td>
+  <td><em>List of available followers, JSON object, it includes multiple fields: username, id, follw_user_image, cityId, stateId, countryId…</em></td>
+</tr>
+</tbody></table>
+
+
+
+
+<h2 id="follow-other-user">Follow other user</h2>
+
+<p>Allow the users to follow other artist or user </p>
+
+<pre><code>POST /imusify/follow
+</code></pre>
+
+
+
+<h3 id="parameters-21">Parameters</h3>
+
+<table>
+<thead>
+<tr>
+  <th><em>Field</em></th>
+  <th><em>Description</em></th>
+</tr>
+</thead>
+<tbody><tr>
+  <td><code>ajax</code></td>
+  <td><em>true, boolean value, Call Ajax request</em></td>
+</tr>
+<tr>
+  <td><code>toid</code></td>
+  <td><em>Integer, Id of the user to follow</em></td>
+</tr>
+<tr>
+  <td><code>refreshpanel</code></td>
+  <td><em>default value, yes</em></td>
+</tr>
+</tbody></table>
+
+
+
+
+<h3 id="response-21">Response</h3>
+
+<table>
+<thead>
+<tr>
+  <th><em>Field</em></th>
+  <th><em>Description</em></th>
+</tr>
+</thead>
+<tbody><tr>
+  <td><code>status</code></td>
+  <td><em>ok (200) or error (500)</em></td>
+</tr>
+<tr>
+  <td><code>data</code></td>
+  <td><em>List of remaining users, JSON object, it includes multiple fields: username, id, cityId, countryId, stateId, follw_user_image, …</em></td>
+</tr>
+<tr>
+  <td><code>msg</code></td>
+  <td><em>Message after successful follow</em></td>
+</tr>
+<tr>
+  <td><code>success</code></td>
+  <td><em>Status of action, e.g. success</em></td>
+</tr>
+</tbody></table>
+
+
+
+
+<h2 id="delete-feeds">Delete feeds</h2>
+
+<p>Allow the users to delete feed</p>
+
+<pre><code>POST /imusify/api/feed_delete
+</code></pre>
+
+
+
+<h3 id="parameters-22">Parameters</h3>
+
+<table>
+<thead>
+<tr>
+  <th><em>Field</em></th>
+  <th><em>Description</em></th>
+</tr>
+</thead>
+<tbody><tr>
+  <td><code>ajax</code></td>
+  <td><em>true, boolean value, Call Ajax request</em></td>
+</tr>
+<tr>
+  <td><code>id</code></td>
+  <td><em>Integer, Id of the feed to be deleted</em></td>
+</tr>
+</tbody></table>
+
+
+
+
+<h3 id="response-22">Response</h3>
+
+<table>
+<thead>
+<tr>
+  <th><em>Field</em></th>
+  <th><em>Description</em></th>
+</tr>
+</thead>
+<tbody><tr>
+  <td><code>status</code></td>
+  <td><em>ok (200) or error (500)</em></td>
+</tr>
+<tr>
+  <td><code>msg</code></td>
+  <td><em>Message after deleting</em></td>
+</tr>
+<tr>
+  <td><code>success</code></td>
+  <td><em>Status of action, e.g. success</em></td>
+</tr>
+</tbody></table>

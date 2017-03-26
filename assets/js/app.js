@@ -3245,8 +3245,8 @@ initTrackBuy:function(){
                 
                 my.ShowNotification("success","Success",response.msg);    
                 //andy refresh the page to update the cart
-                setTimeout(function(){
-                          location.reload(); },1900);                                                               
+//                setTimeout(function(){
+//                          location.reload(); },1900);                                                               
            }
             
            else {
@@ -3259,15 +3259,15 @@ initTrackBuy:function(){
         $cur_class = $(this).hasClass("active");
         $(this).toggleClass("active");
         $cart_total = $("#cart_total").html();
-        $cart_total = parseInt($cart_total);
+        $cart_total = parseFloat($cart_total);
         if($cur_class)
         {
             $("#subitem"+id).remove();
-            new_price = $cart_total - parseInt(price);
+            new_price = $cart_total - parseFloat(price);
         }else{
             html = '<li id="subitem'+id+'"><p>'+name+'<span>$'+price+'</span></p></li>';
             $("#licence_cart_cont").append(html);
-            new_price = $cart_total + parseInt(price);
+            new_price = $cart_total + parseFloat(price);
         }
         $("#cart_total").html(new_price);
     });
@@ -3371,6 +3371,73 @@ initTrackBuy:function(){
             }
         },false,false,"",true);
 });
+
+//Setup Paypal Express checkout In-contect Ajax
+
+
+//    paypal.checkout.setup('8VZFVH6MTK2HJ', {
+//      environment: 'sandbox',
+//      container: 'checkout_paypal',
+//      click: function (e) {
+//        e.preventDefault();
+//        paypal.checkout.initXO();
+//        var url = config.siteUrl+"api/paypal/buy";
+//        var action = $.post(url);
+//
+//        action.done(function (data) {
+//          paypal.checkout.startFlow(data.token);
+//        });
+//
+//        action.fail(function () {
+//          paypal.checkout.closeFlow();
+//        });
+//      }
+//    });
+
+
+  $('body').on('click','#paypal_checkout',function(e){ 
+        e.preventDefault();
+        var url = config.siteUrl+"api/paypal/buy";
+        values = "";;
+        $(".licence_type_sel_js.active").each(function() { 
+         values += $(this).attr('data-id') + ",";
+     });
+        trackid = $("#trackid").val();
+        
+        var url_current  = window.location.href;
+        if(/\?/g.test(url_current)){
+            var temp = url_current.split('?');
+            url_current = temp[0];
+        }
+        my.routingAjax(url,{values:values,trackid:trackid, url: url_current},'',function(response){               
+            if(typeof(response)!='undefined'){
+                if(response.status == "success"){    
+                    var environment = 'sandbox';
+                    if (window.location.host != 'local.imusify.com' 
+                            && window.location.host != 'local.imusify.com') environment = 'production'
+                    paypal.checkout.setup(response.merchant_account_id, {
+                    environment: environment,
+                    container: 'checkout_paypal',
+                    });
+                    
+                    paypal.checkout.initXO();  
+                 
+                  //get token Start Paypal Window/Lightbox
+                 var token = decodeURI(response.token);
+                 console.log('Token: ', token);
+                 paypal.checkout.startFlow(token);                                  
+                 //Failed token                  
+                  return false;
+                }else{
+                    //error
+                    my.ShowNotification(response.status,response.status,response.msg);
+                   // paypal.checkout.closeFlow();
+                }
+            }
+        },false,false,"",true);
+});
+
+
 },
 initTrackDetail:function(){
     //when load track detail page directly
@@ -6627,8 +6694,22 @@ $(document).ready(function(){
     });
     //console.log(queries);
     if (queries){
+        console.log('Queries: ',queries)
         if (queries.payment == 'success') App.ShowNotification("success","Success","Payment was successful")
+
         if (queries.cancel == 'success') App.ShowNotification("success","Success","Membership was canceled successful")
+        if  (queries.payment && queries.payment != 'success') {
+            App.ShowNotification("success","Success","You have purchased successfully")
+            //update shopping cart with token ID            
+        }
+        if(queries.cancel && queries.cancel != 'success') {
+            //cancel Purchase Order with Token ID
+            App.ShowNotification("info","Info","Your transaction was cancelled")
+        }
+         if(queries.failed) {
+            //Failed Purchase Order with Token ID Payment pedning
+            App.ShowNotification("info","Info","The transaction was failed. Please try again")
+        }
     }
     //Redirect guest to About page
     if (config.userIdJs == 0 ||config.userIdJs == 0){//not log in

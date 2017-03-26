@@ -225,7 +225,8 @@ class cart_Api extends REST_Controller
 				/*printr($value);*/
 				if($value["preselected"] == "yes")
 				{
-					$cart_final_price += $value["licenceTotalPrice"];
+					//$cart_final_price += $value["licenceTotalPrice"];
+                                        $cart_final_price += $value["licencePrice"];                                        
 					$cart_html .= '<li id="subitem'.$value["id"].'"><p>'.$value["name"].'<span>$'.$value["licencePrice"].'</span></p></li>';
 				}	
 			}

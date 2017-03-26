@@ -87,14 +87,26 @@ define('detail_internal_audio', ' has uploaded this audio.');
 define('detail_text', ' posted this text.');
 define('detail_url', '  posted this url.');
 
-
+//Stripe account
 define('STRIPE_API_KEY', 'sk_test_E6bSvTsqvSYhCU1hHPhrs3wj');
 define('CLIENT_ID', 'ca_7TWyW8D6Ccd3hmC8VebDrBqZ5XaC5Ahg');
 define('TOKEN_URI', 'https://connect.stripe.com/oauth/token');
 define('AUTHORIZE_URI', 'https://connect.stripe.com/oauth/authorize');
 
-
 define('STRIPE_PUBLIC_API_KEY', 'pk_test_ar32yaPnAs5OZjkS4Q0TwXvO');
+
+
+//Paypal express check out Sandbox
+define('PAYPAL_SANDBOX_USERNAME', 'tran0041-facilitator_api1.e.ntu.edu.sg');
+define('PAYPAL_SANDBOX_PWD', 'L3MQZXLY7P4PTPNU');
+define('PAYPAL_SANDBOX_SIGNATURE', 'An5ns1Kso7MWUdW4ErQKJJJ4qi4-A5rr4gRbZAmSnwE7U3-MfGc-D8C-');
+define('PAYPAL_SANDBOX_URL', 'https://www.sandbox.paypal.com/checkoutnow?token=');
+
+//Paypal express check out Live
+define('PAYPAL_LIVE_USERNAME', '');
+define('PAYPAL_LIVE_PWD', '');
+define('PAYPAL_LIVE_SIGNATURE', '');
+define('PAYPAL_LIVE_URL', 'https://www.paypal.com/checkoutnow?token=');
 
 
 define('MAX_UPLOAD_FILE_SIZE_ALLOWED', 5368709120);
@@ -103,7 +115,7 @@ define('ADMIN_SESSION_NAME', 'adminuser');
 define('USER_SESSION_NAME', 'user');
 
 
-define('LINK_LOGIN_URL', 'http://dev.imusify.com/');
+define('LINK_LOGIN_URL', 'http://beta.imusify.com/');
 
 
 

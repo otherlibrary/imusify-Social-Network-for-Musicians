@@ -97,6 +97,10 @@ $route['api/check_user_connect'] = "api/stripe_api/user_connect_check/format/jso
 $route['api/buy'] = "api/stripe_api/buytrack/format/json";
 $route['api/albumbuy'] = "api/stripe_api/buyalbum/format/json";
 
+$route['api/paypal/buy'] = "api/paypal_api/buytrack/format/json";
+$route['api/paypal/process'] = "api/paypal_api/process/format/json";
+$route['api/paypal/cancel'] = "api/paypal_api/cancel/format/json";
+
 $route['api/cartitem'] = "api/cart_api/cart_item/$1/format/json";
 $route['api/cart/(:any)'] = "api/cart_api/cart_content/$1/format/json";
 $route['api/cart'] = "api/cart_api/cart_content/format/json";

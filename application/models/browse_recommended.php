@@ -98,8 +98,9 @@ Class browse_recommended extends CI_Model
 			$cond = " tt.status = 'y' AND tt.isPublic='y'";
 
 		if($condition != NULL)
-			$cond .= " AND".$condition;
-
+			$cond .= " AND ".$condition;
+                
+                $cond .= " AND tt.is_sellable = 'y' ";
 
 		if($limit != NULL)
 			$limit = " LIMIT ".$limit." ";
@@ -108,7 +109,7 @@ Class browse_recommended extends CI_Model
 			$orderby ="ORDER BY tt.id DESC,".$orderby;	
 		else
 			$orderby ="ORDER BY tt.id DESC";	
-
+                
 		$this->db->select('tt.id,tt.featured,tt.title,tt.release_mm,tt.release_dd,tt.release_yy,tt.createdDate,tt.timelength,tt.plays,tt.comments,tt.shares,tt.perLink,tt.isPublic,tt.userId as trackuserid,g.genre,u.firstname as artist_name,u.lastname,u.id as uid,u.profileLink,a.name as album');
 		$this->db->from('tracks as tt');
 		$this->db->join('genre as g', 'tt.genreId = g.id','left');
@@ -117,6 +118,9 @@ Class browse_recommended extends CI_Model
 		$this->db->where($cond);
 		$this->db->order_by("tt.id","desc");			
 		$query = $this->db->get();			
+//                echo $this->db->last_query();
+//	        var_dump($query);exit;	
+                
 		if($counter != NULL)
 			return $query->num_rows();
 		$i = 1;
@@ -152,6 +156,7 @@ Class browse_recommended extends CI_Model
 			$output[] = $row;                        
 			$i++;				
 		}
+                //var_dump($output);exit;
 		return $output;
 	}
 

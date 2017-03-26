@@ -40,7 +40,7 @@ if(isset($this->session->userdata('user')->avail_space) && ($this->session->user
         <meta http-equiv="expires" content="-1" />
         <meta http-equiv="cache-control" content="no-cache"/>
 
-	<link href='http://fonts.googleapis.com/css?family=Roboto:400,300,500,700,100' rel='stylesheet' type='text/css'>
+	<link href='//fonts.googleapis.com/css?family=Roboto:400,300,500,700,100' rel='stylesheet' type='text/css'>
 	<link rel="shortcut icon" href="<?php echo asset_url(); ?>images/favicon.ico" type="image/x-icon">
 	<script type="text/javascript">
 		var config={
@@ -68,6 +68,7 @@ if(isset($this->session->userdata('user')->avail_space) && ($this->session->user
 		}
 
 	</script>
+        <script src="https://www.paypalobjects.com/api/checkout.js" async></script>
 	<?php print put_headers();?>
 
 	<?php if(isset($this->session->userdata('user')->avail_space) && ($this->session->userdata('user')->avail_space > 0 || $this->session->userdata('user')->avail_space  == "-1"))
