@@ -3348,19 +3348,23 @@ initTrackBuy:function(){
         {               
             if(typeof(response)!='undefined'){
                 if(response.status == "success"){
-                    $('.modal').modal('hide').removeClass("show");
-                    order_random_id = response.order_random_id;
-                    StripeCheckout.open({
-                        key         :   config.stripe_public_key, 
-                        address     :   false,
-                        amount      :   response.total,
-                        temp : "test",
-                        currency    :   'usd',
-                        name        :   my.config.siteName,
-                        description :   response.title,
-                        panelLabel  :   'Buy',
-                        token       :   my.stripeAlbumToken
-                    });
+                    if ( response.total <= 0){
+                         my.ShowNotification(response.status,response.status,'There is something wrong to compute total price. Please try again later.');
+                    } else{
+                        $('.modal').modal('hide').removeClass("show");
+                        order_random_id = response.order_random_id;
+                        StripeCheckout.open({
+                            key         :   config.stripe_public_key, 
+                            address     :   false,
+                            amount      :   response.total,
+                            temp : "test",
+                            currency    :   'usd',
+                            name        :   my.config.siteName,
+                            description :   response.title,
+                            panelLabel  :   'Buy',
+                            token       :   my.stripeAlbumToken
+                        });
+                    }                    
                     return false;
                 }else{
                     my.ShowNotification(response.status,response.status,response.msg);                    

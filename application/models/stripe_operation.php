@@ -278,8 +278,11 @@ Class stripe_operation extends CI_Model
 					}
 					$response["composer_price"] = $order_composer_price;
 					$response["imusify_price"] = $order_imusify_price;
-					$response["order_id"] = $order_id;
+					$response["order_id"] = $order_id;                                        
 					$response["total"] = $order_total*100;
+                                        if($order_total == 0){
+                                            $response["total"] = ($order_composer_price + $order_imusify_price)*100;
+                                        }
 					$response["title"] = $track_data["title"];
 					$response["order_random_id"] = $order["order_random_id"];
 				}

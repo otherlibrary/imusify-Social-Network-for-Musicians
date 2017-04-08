@@ -71,12 +71,11 @@ if(isset($this->session->userdata('user')->avail_space) && ($this->session->user
         <script src="https://www.paypalobjects.com/api/checkout.js" async></script>
 	<?php print put_headers();?>
 
-	<?php if(isset($this->session->userdata('user')->avail_space) && ($this->session->userdata('user')->avail_space > 0 || $this->session->userdata('user')->avail_space  == "-1"))
-{ ?>
+	<?php //if(isset($this->session->userdata('user')->avail_space) && ($this->session->userdata('user')->avail_space > 0 || $this->session->userdata('user')->avail_space  == "-1")){ ?>
 
 	<script src="https://checkout.stripe.com/checkout.js"></script>
 
-	<?php } ?>
+	<?php //} ?>
 
 	<svg version="1.1" xmlns="http://www.w3.org/2000/svg" style="display:none;height:0;">
 		<filter id="blur">
