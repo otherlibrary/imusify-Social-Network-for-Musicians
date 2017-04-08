@@ -93,8 +93,15 @@ define('CLIENT_ID', 'ca_7TWyW8D6Ccd3hmC8VebDrBqZ5XaC5Ahg');
 define('TOKEN_URI', 'https://connect.stripe.com/oauth/token');
 define('AUTHORIZE_URI', 'https://connect.stripe.com/oauth/authorize');
 
-define('STRIPE_PUBLIC_API_KEY', 'pk_test_ar32yaPnAs5OZjkS4Q0TwXvO');
+$host = $_SERVER['HTTP_HOST'];
 
+if ($host == 'local.imusify.com' || $host == 'beta.imusify.com' || $host == 'dev.imusify.com') define('envi', 'sandbox');
+else define('envi', 'production');
+
+//Sandbox Stripe public API key
+if(envi == 'sandbox') define('STRIPE_PUBLIC_API_KEY', 'pk_test_ar32yaPnAs5OZjkS4Q0TwXvO');
+//production Stripe public API key
+else define('STRIPE_PUBLIC_API_KEY', '');
 
 //Paypal express check out Sandbox
 define('PAYPAL_SANDBOX_USERNAME', 'tran0041-facilitator_api1.e.ntu.edu.sg');

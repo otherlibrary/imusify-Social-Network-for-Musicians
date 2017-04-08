@@ -1,3 +1,12 @@
+#Header set Access-Control-Allow-Origin "*"
+Header always set Access-Control-Allow-Origin "http://127.0.0.1:4200"     
+Header always set Access-Control-Allow-Methods "POST, GET, OPTIONS"
+Header always set Access-Control-Allow-Credentials true
+
+RewriteEngine On
+RewriteCond %{REQUEST_METHOD} OPTIONS
+RewriteRule ^(.*)$ $1 [R=200,L]
+
 <IfModule mod_rewrite.c>
 
 # For security reasons, Option followsymlinks cannot be overridden.
@@ -8,6 +17,10 @@ Options Indexes FollowSymLinks
 RewriteEngine on
 
 RewriteBase /imusify
+
+# force ssl
+RewriteCond     %{SERVER_PORT} ^80$
+RewriteRule     ^(.*)$ https://%{SERVER_NAME}%{REQUEST_URI} [L,R]
 
 
 <IfModule mod_deflate.c>

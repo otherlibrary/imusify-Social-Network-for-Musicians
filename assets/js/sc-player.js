@@ -64,12 +64,15 @@ var _force_to_play = false;
     }
   },    
   scApiUrl = function(url, apiKey) {
-    var resolver = 'http://'+domain + '/data_api?url=',
+//    var resolver = 'http://'+domain + '/data_api?url=',
+//    params = 'format=json&consumer_key=' + apiKey +'&callback=?';
+    var resolver = window.location.protocol+'//'+domain + '/data_api?url=',
     params = 'format=json&consumer_key=' + apiKey +'&callback=?';
+    
     // force the secure url in the secure environment
-    if( secureDocument ) {
-      url = url.replace(/^http:/, 'https:');
-    }
+//    if( secureDocument ) {
+//      url = url.replace(/^http:/, 'https:');
+//    }
 
     // check if it's already a resolved api url
     if ( (/api\./).test(url) ) {

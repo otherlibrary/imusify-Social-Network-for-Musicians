@@ -3382,11 +3382,14 @@ initTrackBuy:function(){
                 if(response.status == "success"){
                     $('.modal').modal('hide').removeClass("show");
                     order_random_id = response.order_random_id;
+                    my.config.siteName = 'Imusify - Test';
+                    if (window.location.host != 'local.imusify.com' 
+                            && window.location.host != 'beta.imusify.com' && window.location.host != 'dev.imusify.com')  my.config.siteName = 'Imusify';
                     StripeCheckout.open({
                         key         :   config.stripe_public_key, 
                         address     :   false,
                         amount      :   response.total,
-                        temp : "test",
+                        //temp : "test",
                         currency    :   'usd',
                         name        :   my.config.siteName,
                         description :   response.title,

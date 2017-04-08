@@ -50,7 +50,11 @@ class Trackdetail extends MY_Controller {
 			/*echo " ID ".$track_common_detail["userId"];*/
 
 			/*dump($track_common_detail);*/
-			$buyer_stripe_connected = getvalfromtbl("stripe_connect","users","id='".$track_common_detail["userId"]."'","single");
+                        
+			//$buyer_stripe_connected = getvalfromtbl("stripe_connect","users","id='".$track_common_detail["userId"]."'","single");                        
+                        //enable buy for all tracks Payment is sent to David account
+                        $buyer_stripe_connected = 'y';
+                        
 //			echo "<pre>";
 //			var_dump($buyer_stripe_connected);
 //			var_dump($track_common_detail);
