@@ -123,7 +123,7 @@ $route['api/feed_edit'] = "api/following_api/edit_feed/format/json";
 $route['api/notification/read'] = "api/unread_msgs_api/read_notifications/format/json";
 $route['api/notification/list'] = "api/unread_msgs_api/notifications_list/format/json";
 
-
+$route['api/new_artists'] = 'api/commonfn_api/new_artists/format/json';
 
 
 

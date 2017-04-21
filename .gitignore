@@ -41,6 +41,8 @@ testem.log
 #System Files
 .DS_Store
 Thumbs.db
+/phpstorm.php
+/phpstorm_db.php
 
 #angular build
 /assets/angular
