@@ -1,0 +1,35 @@
+<div class="modal news-modal fade article" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+	<div class="col-md-12 news-box">
+
+		<figure class="artis-img">
+			<img src="${article_details.article_main_photo}" alt=""><span class="shadow"></span>
+		</figure>
+		<h3 class="date">${article_details.createdDate}</h3>
+		<button type="button" class="close close_popup" data-dismiss="modal" aria-label="Close"><span aria-hidden="true"></span></button>
+		<div class="row">
+			<div class="col-xs-12 title-name">				
+				<h2>${article_details.article_title}</h2>
+			</div>
+		</div>
+		
+		<div class="row">
+			<div class="col-lg-8 col-md-6 col-sm-12 details">
+				<div class="social-media">
+					<a href="#" class="fb"></a>
+					<a href="#" class="tw"></a>
+					<a href="#" class="gp"></a>
+					<a href="#" class="in"></a>
+				</div>
+				<article class="inner-info">
+					{{html article_details.description}}
+				</article>
+			</div>
+			<div class="col-lg-4 col-md-6 col-sm-12 other-articles">
+				<h3 class="title">OTHER ARTICLES</h3>
+				{{each(i,v)  article_details.similar_articles}}
+				{{tmpl(v) "#articleRow"}}
+				{{/each}}	
+			</div>
+		</div>
+	</div>
+</div>

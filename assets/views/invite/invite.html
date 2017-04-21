@@ -1,0 +1,49 @@
+<div id="form-bg" class="invite modal" data-keyboard="true" data-backdrop="false">
+	<div class="col-md-12 close-icon">
+		<a class="close_popup close"><span></span></a>
+	</div>
+	<div class="col-md-12">
+		<h1>Invite friends to join Imusify</h1>						
+	</div>
+	<div class="col-md-12">
+		<div class="form-box clearfix">
+			<span class="mail-icon"></span>
+			<form  method="post" class="form-field" id="invite_form" data-role="submitenter">
+
+				<fieldset>
+					<div class="col-md-12 form-group">
+						<label for="email">Signup Code</label>
+						<label class="whitecolor">${invite_code}</label>
+					</div>
+				</fieldset>
+
+				<fieldset>
+					<div class="col-md-12 form-group nobackgroundcolor">
+						<label for="email">Email (Use comma or Enter to separate emails)</label>
+						<input type="text" class="form-control validate[required] text-input invite_email_tagmanage" id="email" name="email" data-prompt-position="topLeft">
+					</div>
+				</fieldset>
+				
+				<fieldset>
+					<div class="col-md-12 form-group nobackgroundcolor displaynone" id="display_invited_cont">
+						<label for="email">Invited Email</label>
+						<div id="testcontainer"></div>					
+					</div>
+				</fieldset>	
+				
+				<!-- <fieldset>
+					<div class="col-md-12 form-group">
+						<label for="passwprd">Message</label>
+						<textarea name="message" id="message" class="form-control textareadclass" rows="7" cols="76"></textarea>
+					</div>
+				</fieldset> -->
+				
+				<fieldset>
+					<div class="col-md-12">
+						<a href="javascript:void(0)" id="submitinvite" class="creat-btn pull-right progress-button"  data-loading="Working.." data-finished="Finished!" data-type="background-horizontal">Invite Friends</a>										
+					</div>
+				</fieldset>
+			</form>
+		</div>
+	</div>
+</div>

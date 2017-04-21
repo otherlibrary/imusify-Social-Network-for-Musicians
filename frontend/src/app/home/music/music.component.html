@@ -1,0 +1,17 @@
+<div class="feed-boxes-flex">
+  <home-record class="feed-box" *ngFor="let record of records"
+               [record]="record"
+               (onfollow)="addFollow($event)"
+               (onsahred)="sharedRecord($event)"></home-record>
+</div>
+<div [hidden]="!sharedUrl" class="shared_popup">
+  <div class="popup-close" (click)="sharedUrl = null"></div>
+  <div class="share_container">
+    <!--https://murhafsousli.github.io/ng2-sharebuttons/-->
+    <share-buttons [pinterest]="false"
+                   [tumblr]="false"
+                   [reddit]="false"
+                   [stumbleUpOn]="false"
+                   [url]="sharedUrl"></share-buttons>
+  </div>
+</div>

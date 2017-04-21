@@ -1,0 +1,26 @@
+{{if not_detail_link}}
+<a href="${not_detail_link}" data-role="${not_detail_role}">
+{{/if}}
+<div class="member-box notification_row_click cursor_pointer" id="notification_${notification_id}">
+		<figure>
+			<!-- <a href="${user_profile_link}" data-role="profile"> -->
+				<img src="${user_img}" alt="" height="41px" width="41px">
+			<!-- </a> -->
+		</figure>
+		<article>
+			<p>
+				{{if from}}
+					<a href="">
+						${from}
+					</a>
+				{{/if}}
+				${notification}
+			</p>
+			<span>${timeago}</span>
+		</article>
+
+	</div>
+
+{{if not_detail_link}}
+</a>
+{{/if}}

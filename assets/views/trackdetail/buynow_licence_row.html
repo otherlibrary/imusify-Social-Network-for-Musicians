@@ -1,0 +1,16 @@
+ {{each(i,v)  licence_type_list}}
+
+ <span class="button-checkbox">
+ 	<div class="col-md-3 col-sm-3">
+ 		<a href="Javascript:void(0)" class="licences-type ${v.row_class}" data-price="${licencePrice}" data-type="${v.type}" data-name="${v.name}" data-id="${v.id}">
+ 			<div>
+ 				<span>${v.name}</span>
+ 				<span>{{if licencePrice}} $ {{/if}} ${v.licencePrice}</span>
+ 			</div>
+ 		</a>
+ 	</div>
+ </span>
+
+
+ {{/each}}
+<!-- licence_type_sel_js -->

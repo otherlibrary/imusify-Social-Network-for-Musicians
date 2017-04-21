@@ -1,0 +1,63 @@
+<div class="inner-scroll upload-inner">
+  <div class="upload-top">
+    <div class="one-block">
+      <a class="tabs-item active" href="#">Upload</a>
+      <form class="search-form" action="/" method="post">
+        <input id="searchInput" type="text" placeholder="What are you looking for?" value="" />
+        <span></span>
+        <a id="searchLink" href="#searchPopup" data-type="popup">Search</a>
+        <!--<button type="submit">Search</button>-->
+      </form>
+    </div>
+    <div class="uploads">
+      <div class="upload-item music">
+        <span class="item-head">Music</span>
+        <div class="item-content music">
+          <input id="music-upload" type="file" name="music-upload">
+          <label class="item-info" for="music-upload">Browse or Drag&Drop your songs</label>
+          <button class="import-btn music"><span>Import from Soundcloud</span></button>
+        </div>
+      </div>
+
+      <!--Will be implemented Later, Do Not Delete-->
+
+      <!--<div class="upload-item video">
+        <span class="item-head">Video</span>
+        <div class="item-content video">
+          <input id="video-upload" type="file" name="video-upload">
+          <label class="item-info" for="video-upload">Browse or Drag&Drop your videos</label>
+          <button class="import-btn video"><span>Import from Youtube</span></button>
+        </div>
+      </div>
+
+      <div class="upload-item">
+        <span class="item-head">Playlist</span>
+        <div class="item-content playlist"></div>
+      </div>
+
+      <div class="upload-item">
+        <span class="item-head">Album</span>
+        <div class="item-content album"></div>
+      </div>
+
+      <div class="upload-item">
+        <span class="item-head">Photos</span>
+        <div class="item-content photos"></div>
+      </div>-->
+      <p class="upload-terms">By uploading any content to Imusify, you hereby certify that you own the copyright in or have all necessary rights related to such content to upload it.</p>
+
+    </div>
+    <div class="tab-panel">
+      <button class="tab-pnl-btn" routerLink="/upload" routerLinkActive="active" [routerLinkActiveOptions]="{exact:true}">Audio</button>
+
+      <!--Will be implemented Later, Do Not Delete-->
+
+      <!--<button class="tab-pnl-btn" routerLink="video" routerLinkActive="active">Video</button>
+      <button class="tab-pnl-btn" routerLink="albums" routerLinkActive="active">Albums</button>
+      <button class="tab-pnl-btn" routerLink="playlist" routerLinkActive="active">Playlist</button>
+      <button class="tab-pnl-btn" routerLink="pictures" routerLinkActive="active">Pictures</button>-->
+    </div>
+  </div>
+  <router-outlet name="popup"></router-outlet>
+  <router-outlet></router-outlet>
+</div>

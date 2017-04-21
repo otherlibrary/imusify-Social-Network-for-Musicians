@@ -1,0 +1,20 @@
+<section id="chat-msg-container">
+	{{tmpl "#memberList"}}
+	<div class="col-sm-9 chat-box">
+		<div class="conversation-box">
+			<div class="msg">
+				<div class="msg-box" id="conversation_cont">
+					{{tmpl "#setTemplate"}}					
+				</div>
+				<div class="my-type-box" id="my-type-box">
+							<form id="form-msg" name="form-msg">
+								<input type="hidden" name="msg_to" id="msg_to" value="${msg_to_id}">
+								<input type="hidden" name="msg_from" id="msg_from" value="${user_id}">
+								<textarea class="form-control" name="msg_content" id="msg_content" rows="3"></textarea>
+								<button type="submit" class="send-btn">Send</button>
+							</form>
+						</div>
+				</div>
+		</div>
+	</div>	
+</section>

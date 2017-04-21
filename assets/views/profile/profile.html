@@ -1,0 +1,137 @@
+<section id="player-box" class="artist-profile ${extra_class}">
+	<!-- <figure class="cover-photo"> -->
+	<div class="black_overlay"></div>
+	<div id="cover_image_cont" class="transparent_img_blur" style="background-image:url(${cover_image});">
+
+	</div>
+	<!-- <img src="${cover_image}" alt="" class="img-responsive img_load" id="p_cover_img"> </figure>-->
+	<div class="right-part">
+		<figure class="profile-img">
+			<a href="Javascript:void(0)">
+				<img src="${profile_image}" alt="" class="img-responsive img_load"></a>
+			</figure>
+			<div class="profile-details">
+				<h2>${firstname} ${lastname} <span>${city} ${country}</span></h2>
+				<ul>
+					<li><a href="${url}${profile_link}/followers" data-rel="ajax" data-role="p-followers" role="tab" data-toggle="tab"><span>${no_of_followers}</span> ${follower_text}</a></li>
+					<li><a href="${url}${profile_link}/uploaded-songs" data-rel="ajax" data-role="p-uploaded-songs" role="tab" data-toggle="tab"><span>${no_of_songs}</span> ${song_text}</a></a></li>
+					<li><a href="${url}${profile_link}/albums" data-rel="ajax" data-role="p-albums" role="tab" data-toggle="tab"><span>${no_of_albums}</span> ${album_text}</a></a></li>
+				</ul>								
+				<div id="prof_follow_btn">
+					{{if other_profile}}									
+					{{if follow}}									
+					{{tmpl "#followRow"}}
+					{{/if}}												
+					{{if following}}								
+					{{tmpl "#folowingRow"}}						
+					{{/if}}										
+					{{/if}}
+				</div>								
+				<a href="javascript:void(0)" data-sharemodal="sharepopup" class="share-icon link-icon noclickplay  js-open-modal" data-shareurl="${url}${profile_link}/">SHARE</a>
+				{{if my_profile}}									
+				<a href="${url}${profile_link}/edit" id="edit_profile" data-t="edit_profile" class="edit-icon edit_user_profile popup">Edit</a>
+				<a href="${url}setup" id="setup" data-t="setup" class="edit-icon edit_user_role popup">Roles</a>
+				<a href="Javascript:void(0)" id="edit_cover_img"  class="edit-icon edit_cover_img">Change cover</a>									
+				<div id="edit_cover_img_modal" style="height:400px;width:960px" class="displaynone"></div>	
+				{{/if}}								
+			</div>
+		</div>	
+		<div id="slider-box2">
+                        {{if playsets}}
+			<h2>${firstname}’s Top Playlists <a href="${url}sets" class="playlist_popup" data-rel="ajax">SEE ALL</a></h2>
+			<div id="slider-container_prof" class="slider-container">
+				<div class="dg-wrapper">
+					{{each(i,v)  playsets}}
+					{{tmpl(v) "#playsetRow"}}
+					{{/each}}	
+				</div>
+				<nav>	
+					<span class="dg-prev">&lt;</span>
+					<span class="dg-next">&gt;</span>
+				</nav>
+			</div>
+                        {{/if}}
+		</div>
+	</section>
+
+	<section id="all-details" class="artist-songs">
+		<div class="row" id="profile_list_detail">
+			<div class="col-md-8 col-sm-12 col-xs-12 width100 marging-b35">
+				<!-- FOR TABS MENUS -->
+				<ul class="nav nav-tabs user-tabs margin-b ul_li_active" role="tablist" id="profile_ul">
+					<li class="{{if listen_active_class}} active {{/if}}"><a href="${url}${profile_link}" data-role="profile" data-rel="ajax" role="tab" data-toggle="tab">RECENT</a></li>
+					<li class="{{if upload_active_class}} active {{/if}}"><a href="${url}${profile_link}/uploaded-songs" data-rel="ajax" data-role="p-uploaded-songs" role="tab" data-toggle="tab">UPLOADS</a></li>
+                                        <li class="{{if upload_active_class}} active {{/if}}"><a href="${url}${profile_link}/feed" data-rel="ajax" data-role="p-feed" role="tab" data-toggle="tab">FEEDS</a></li>
+					<li class="{{if album_active_class}} active {{/if}}"><a href="${url}${profile_link}/albums" data-rel="ajax" data-role="p-albums" role="tab" data-toggle="tab">ALBUMS</a></li>
+					<li class="{{if followers_active_class}} active {{/if}}"><a  href="${url}${profile_link}/followers" data-rel="ajax" data-role="p-followers" role="tab" data-toggle="tab">FOLLOWERS (Nr.)</a></li>
+					<li class="{{if followings_active_class}} active {{/if}}"><a href="${url}${profile_link}/following" data-rel="ajax" data-role="p-followings" role="tab" data-toggle="tab">FOLLOWING (Nr.)</a></li>
+				</ul>
+				<div class="tab-content" id="tab_p_content">
+					<!-- Tab1 -->
+					<!-- col-md-8 col-sm-12 col-xs-12 width100 -->
+					<div class="tab-pane fade in active ${class_nm}" id="${tabid}">			
+						{{tmpl "#tabRender"}}
+					</div>
+				</div>
+			</div>							
+			<div class="col-md-4 col-sm-12 width100 col-xs-12">
+				<!-- FOR TABS MENUS -->
+				<ul class="nav nav-tabs user-tabs" role="tablist" id="uprofile_biotabs">
+                                    
+					<li class="active"><a href="Javascript:void(0)" role="tab" data-toggle="tab" data-tab="info">INFO</a></li>
+<!--					<li class=""><a href="Javascript:void(0)" role="tab" data-toggle="tab" data-tab="discography">DISCOGRAPHY</a></li>
+					<li class=""><a href="Javascript:void(0)" role="tab" data-toggle="tab" data-tab="biography">Biography</a></li>-->
+					<li><a href="Javascript:void(0)" role="tab" data-toggle="tab" data-tab="photos">PHOTOS</a></li>
+
+				</ul>
+				<div class="tab-content" id="profile_right_panel">
+
+					<!-- tab 1 -->
+					<div class="tab-pane fade in active" id="info">
+                                                <span>Firstname</span> ${firstname}
+                                                <br />  
+                                                <span>Lastname</span> ${lastname}
+                                                <br />  
+                                                <span>Gender</span> ${gender_nm}
+                                                 <br />       
+						<label>Roles</label>
+						<ul>
+							{{each(i,k) user_roles_ar}}
+							<li>${k}</li>
+							{{/each}}	
+						</ul>	
+						<br />	
+                                                {{html description}}
+                                                <br />          
+                                          
+					</div>
+
+					<!-- tab 1 -->
+
+
+					<!-- Tab1 -->
+<!--					<div class="tab-pane fade " id="discography">
+						<label>Roles</label>
+						<ul>
+							{{each(i,k) user_roles_ar}}
+							<li>${k}</li>
+							{{/each}}	
+						</ul>	
+						<br />							
+					</div>
+					 Tab2 
+					<div class="tab-pane fade " id="biography">
+						<article>
+							<p><span>Firstname</span> ${firstname}</p>
+							<p><span>Lastname</span> ${lastname} </p>
+							<p><span>Gender</span> ${gender_nm}</p>
+							 <p><span>Release</span> Oct 28, 2014</p> 
+						</article>
+					</div>								  	-->
+					<!-- Tab3 -->
+					<div class="tab-pane fade" id="photos-tab">								  									  		
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>

@@ -1,0 +1,15 @@
+<div class="col-sm-3 members-list">
+	<div class="positionfixed" id="member_list_c">
+		<h3 id="header_cont" class="">
+			<span>Inbox</span>
+			<a href="${url}message/new" id="compose_new" data-role="compose_halfview">Compose</a>
+		</h3>
+		<div class="other mCustomScrollbar" id="member_list_cont">
+			<ul id="conversation_members">
+				{{each(i,v)  member_list}}
+				{{tmpl(v) "#memberRow"}}
+				{{/each}}
+			</ul>
+		</div>
+	</div>
+</div>

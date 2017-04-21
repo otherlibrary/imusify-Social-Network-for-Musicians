@@ -1,0 +1,700 @@
+<!-- Tags-slider -->
+<section class="tags-wrap">
+    <h2 class="tags-title">Search with tags</h2>
+
+    <div class="swiper-container">
+        <div class="swiper-wrapper">
+            <div class="swiper-slide" style="text-align: center;">
+                <button class="tag">Indie</button>
+                <button class="tag">Instrumental</button>
+                <button class="tag">Study</button>
+                <button class="tag">Chill</button>
+                <button class="tag">Dance</button>
+                <button class="tag">Rock</button>
+                <button class="tag">Summer</button>
+                <button class="tag">Sleep</button>
+                <button class="tag">Relax</button>
+                <button class="tag">Soundtrack</button>
+                <button class="tag">Acoustic</button>
+            </div>
+
+            <div class="swiper-slide" style="text-align: center;">
+                <button class="tag">Study</button>
+                <button class="tag">Chill</button>
+                <button class="tag">Dance</button>
+                <button class="tag">Rock</button>
+                <button class="tag">Summer</button>
+                <button class="tag">Sleep</button>
+                <button class="tag">Relax</button>
+                <button class="tag">Soundtrack</button>
+                <button class="tag">Acoustic</button>
+            </div>
+        </div>
+
+    </div>
+    <div class="swiper-button-prev"></div>
+    <div class="swiper-button-next"></div>
+</section>
+
+<!-- Filters -->
+<section class="filters-wrap">
+
+    <h2 class="filters-title">Or specify with filters </h2>
+
+    <div class="dropdowns">
+        <select data-placeholder="Genre" class="filter-selection">
+            <option></option>
+            <option value="1">Some genre looooong option here</option>
+            <option value="2">Genre 2</option>
+            <option value="3">Genre 3</option>
+            <option value="4">Genre 4</option>
+            <option value="5">Genre 5</option>
+            <option value="2">Genre 6</option>
+            <option value="3">Genre 7</option>
+            <option value="4">Genre 8</option>
+            <option value="5">Genre 9</option>
+            <option value="5">Genre 10</option>
+        </select>
+
+        <select data-placeholder="Mood" class="filter-selection">
+            <option></option>
+            <option value="1">Some mood looooong option here</option>
+            <option value="2">Mood 2</option>
+            <option value="3">Mood 3</option>
+            <option value="4">Mood 4</option>
+            <option value="5">Mood 5</option>
+            <option value="2">Mood 6</option>
+            <option value="3">Mood 7</option>
+            <option value="4">Mood 8</option>
+            <option value="5">Mood 9</option>
+            <option value="5">Mood 10</option>
+        </select>
+
+        <select data-placeholder="Instruments" class="filter-selection">
+            <option></option>
+            <option value="1">Some instruments looooong option here</option>
+            <option value="2">Instruments 2</option>
+            <option value="3">Instruments 3</option>
+            <option value="4">Instruments 4</option>
+            <option value="5">Instruments 5</option>
+            <option value="2">Instruments 6</option>
+            <option value="3">Instruments 7</option>
+            <option value="4">Instruments 8</option>
+            <option value="5">Instruments 9</option>
+            <option value="5">Instruments 10</option>
+        </select>
+    </div>
+
+    <div class="filter-btns">
+        <div class="vocals active">
+            <p class="vocals-title">Vocals</p>
+            <div class="inp-block">
+                <label class="toggleLabel" for="toggleVocals">
+                    <input type="checkbox" name="vocals" id="toggleVocals">
+                    <span class="toggleElement">
+                                    <i></i>
+                                    <b class="toggle-on">ON</b>
+                                    <b class="toggle-off">OFF</b>
+                                </span>
+                </label>
+            </div>
+        </div>
+
+        <div class="loop">
+            <p class="loop-title">Loop</p>
+            <div class="inp-block">
+                <label class="toggleLabel" for="toggleLoop">
+                    <input type="checkbox" name="vocals" id="toggleLoop">
+                    <span class="toggleElement">
+                                    <i></i>
+                                    <b class="toggle-on">ON</b>
+                                    <b class="toggle-off">OFF</b>
+                                </span>
+                </label>
+            </div>
+        </div>
+    </div>
+
+    <div class="range">
+        <div class="price">
+            <p class="price-title">Price</p>
+            <div class="price-range">
+                <span id="rangeval">$20 - $85</span>
+                <div id="rangeslider"></div>
+                <span class="price-start">$0</span>
+                <span class="price-end">$100</span>
+            </div>
+        </div>
+
+        <div class="duration">
+            <p class="duration-title">Duration</p>
+            <div class="duration-range">
+                <span id="amount">4.20</span>
+                <div id="slider-range-min"></div>
+                <span class="duration-start">0:01</span>
+                <span class="duration-end">5:00+</span>
+            </div>
+        </div>
+    </div>
+
+</section>
+
+<div class="song-flex-table">
+    <div class="thead">
+        <div class="th">#</div>
+        <div class="th">Track</div>
+        <div class="th">Artist</div>
+        <div class="th">Album</div>
+        <div class="th">Genre</div>
+        <div class="th ico-time"></div>
+        <div class="th ico-like"></div>
+    </div>
+    <div class="tbody">
+        <div class="tr">
+            <div class="td">
+                <div class="wrap-btn-hide">
+                    <div class="action-btns">
+                        <button class="action-btn close" title="close">x</button>
+
+                        <button class="action-btn like" title="like">4.289</button>
+                        |
+                        <button class="action-btn share" title="share">share</button>
+                        |
+                        <button class="action-btn add" title="add">add</button>
+                    </div>
+                </div>
+                <button class="action-btn ellipses" title="show"></button>
+                <button class="action-btn basket" title="add"></button>
+                <div class="td-id">
+                    <span>1</span>
+                    <button class="box-btn play" title="play"></button>
+                </div>
+            </div>
+            <div class="td">Not a Bad Thing</div>
+            <div class="td">Justin Timberlake</div>
+            <div class="td">Not a Bad Thing</div>
+            <div class="td">Pop</div>
+            <div class="td">4:42</div>
+            <div class="td">
+                <div class="ico-wave-min w100"></div>
+                <i class="likes-total">2.678</i>
+            </div>
+        </div>
+        <div class="tr">
+            <div class="td">
+                <button class="action-btn ellipses" title="show"></button>
+                <button class="action-btn basket" title="add"></button>
+                <div class="td-id">
+                    <span>2</span>
+                    <button class="box-btn play" title="play"></button>
+                </div>
+            </div>
+            <div class="td">A Sky Full Of Stars</div>
+            <div class="td">Coldplay</div>
+            <div class="td">A Sky Full Of Stars</div>
+            <div class="td">Rock</div>
+            <div class="td">3:34</div>
+            <div class="td">
+                <div class="ico-wave-min w90"></div>
+                <i class="likes-total">2.532</i>
+            </div>
+        </div>
+        <div class="tr">
+            <div class="td">
+                <button class="action-btn ellipses" title="show"></button>
+                <button class="action-btn basket" title="add"></button>
+                <div class="td-id">
+                    <span>3</span>
+                    <button class="box-btn play" title="play"></button>
+                </div>
+            </div>
+            <div class="td">Problem</div>
+            <div class="td">Arianna Grande - Iggy Azalea</div>
+            <div class="td">Problem</div>
+            <div class="td">Electronic</div>
+            <div class="td">5:12</div>
+            <div class="td">
+                <div class="ico-wave-min w80"></div>
+                <i class="likes-total">2.426</i>
+            </div>
+        </div>
+        <div class="tr">
+            <div class="td">
+                <button class="action-btn ellipses" title="show"></button>
+                <button class="action-btn basket" title="add"></button>
+                <div class="td-id">
+                    <span>4</span>
+                    <button class="box-btn play" title="play"></button>
+                </div>
+            </div>
+            <div class="td">Summer</div>
+            <div class="td">Calvin Harris</div>
+            <div class="td">Summer</div>
+            <div class="td">Country & Folk</div>
+            <div class="td">4:53</div>
+            <div class="td">
+                <div class="ico-wave-min w70"></div>
+                <i class="likes-total">2.317</i>
+            </div>
+        </div>
+        <div class="tr">
+            <div class="td">
+                <button class="action-btn ellipses" title="show"></button>
+                <button class="action-btn basket" title="add"></button>
+                <div class="td-id">
+                    <span>5</span>
+                    <button class="box-btn play" title="play"></button>
+                </div>
+            </div>
+            <div class="td">Falling For You</div>
+            <div class="td">The 1975</div>
+            <div class="td">The 1975</div>
+            <div class="td">Classical</div>
+            <div class="td">3:58</div>
+            <div class="td">
+                <div class="ico-wave-min w60"></div>
+                <i class="likes-total">2.282</i>
+            </div>
+        </div>
+        <div class="tr">
+            <div class="td">
+                <button class="action-btn ellipses" title="show"></button>
+                <button class="action-btn basket" title="add"></button>
+                <div class="td-id">
+                    <span>6</span>
+                    <button class="box-btn play" title="play"></button>
+                </div>
+            </div>
+            <div class="td">Sing</div>
+            <div class="td">The 1975</div>
+            <div class="td">The 1975</div>
+            <div class="td">Electronic</div>
+            <div class="td">12:27</div>
+            <div class="td">
+                <div class="ico-wave-min w50"></div>
+                <i class="likes-total">2.105</i>
+            </div>
+        </div>
+        <div class="tr">
+            <div class="td">
+                <button class="action-btn ellipses" title="show"></button>
+                <button class="action-btn basket" title="add"></button>
+                <div class="td-id">
+                    <span>7</span>
+                    <button class="box-btn play" title="play"></button>
+                </div>
+            </div>
+            <div class="td">Fancy</div>
+            <div class="td">Ed Sheeran</div>
+            <div class="td">New Classic</div>
+            <div class="td">DubStep</div>
+            <div class="td">2:31</div>
+            <div class="td">
+                <div class="ico-wave-min w40"></div>
+                <i class="likes-total">1.930</i>
+            </div>
+        </div>
+        <div class="tr">
+            <div class="td">
+                <button class="action-btn ellipses" title="show"></button>
+                <button class="action-btn basket" title="add"></button>
+                <div class="td-id">
+                    <span>8</span>
+                    <button class="box-btn play" title="play"></button>
+                </div>
+            </div>
+            <div class="td">She Looks So Perfect</div>
+            <div class="td">Iggy Azalea - Carli - XCX</div>
+            <div class="td">he Looks So Perfect</div>
+            <div class="td">Pop</div>
+            <div class="td">3:34</div>
+            <div class="td">
+                <div class="ico-wave-min w30"></div>
+                <i class="likes-total">1.857</i>
+            </div>
+        </div>
+        <div class="tr">
+            <div class="td">
+                <button class="action-btn ellipses" title="show"></button>
+                <button class="action-btn basket" title="add"></button>
+                <div class="td-id">
+                    <span>9</span>
+                    <button class="box-btn play" title="play"></button>
+                </div>
+            </div>
+            <div class="td">I Won</div>
+            <div class="td">5 Seconds Of Summer</div>
+            <div class="td">Honest</div>
+            <div class="td">Classical</div>
+            <div class="td">1:58</div>
+            <div class="td">
+                <div class="ico-wave-min w20"></div>
+                <i class="likes-total">1.312</i>
+            </div>
+        </div>
+        <div class="tr">
+            <div class="td">
+                <div class="wrap-btn-hide">
+                    <div class="action-btns">
+                        <button class="action-btn close" title="close">x</button>
+                        |
+                        <button class="action-btn like" title="like">4.289</button>
+                        |
+                        <button class="action-btn share" title="share">share</button>
+                        |
+                        <button class="action-btn add" title="add">add</button>
+                    </div>
+                </div>
+                <button class="action-btn ellipses" title="show"></button>
+                <button class="action-btn basket" title="add"></button>
+                <div class="td-id">
+                    <span>1</span>
+                    <button class="box-btn play" title="play"></button>
+                </div>
+            </div>
+            <div class="td">Not a Bad Thing</div>
+            <div class="td">Justin Timberlake</div>
+            <div class="td">Not a Bad Thing</div>
+            <div class="td">Pop</div>
+            <div class="td">4:42</div>
+            <div class="td">
+                <div class="ico-wave-min w100"></div>
+                <i class="likes-total">2.678</i>
+            </div>
+        </div>
+        <div class="tr">
+            <div class="td">
+                <button class="action-btn ellipses" title="show"></button>
+                <button class="action-btn basket" title="add"></button>
+                <div class="td-id">
+                    <span>2</span>
+                    <button class="box-btn play" title="play"></button>
+                </div>
+            </div>
+            <div class="td">A Sky Full Of Stars</div>
+            <div class="td">Coldplay</div>
+            <div class="td">A Sky Full Of Stars</div>
+            <div class="td">Rock</div>
+            <div class="td">3:34</div>
+            <div class="td">
+                <div class="ico-wave-min w90"></div>
+                <i class="likes-total">2.532</i>
+            </div>
+        </div>
+        <div class="tr">
+            <div class="td">
+                <button class="action-btn ellipses" title="show"></button>
+                <button class="action-btn basket" title="add"></button>
+                <div class="td-id">
+                    <span>3</span>
+                    <button class="box-btn play" title="play"></button>
+                </div>
+            </div>
+            <div class="td">Problem</div>
+            <div class="td">Arianna Grande - Iggy Azalea</div>
+            <div class="td">Problem</div>
+            <div class="td">Electronic</div>
+            <div class="td">5:12</div>
+            <div class="td">
+                <div class="ico-wave-min w80"></div>
+                <i class="likes-total">2.426</i>
+            </div>
+        </div>
+        <div class="tr">
+            <div class="td">
+                <button class="action-btn ellipses" title="show"></button>
+                <button class="action-btn basket" title="add"></button>
+                <div class="td-id">
+                    <span>4</span>
+                    <button class="box-btn play" title="play"></button>
+                </div>
+            </div>
+            <div class="td">Summer</div>
+            <div class="td">Calvin Harris</div>
+            <div class="td">Summer</div>
+            <div class="td">Country & Folk</div>
+            <div class="td">4:53</div>
+            <div class="td">
+                <div class="ico-wave-min w70"></div>
+                <i class="likes-total">2.317</i>
+            </div>
+        </div>
+        <div class="tr">
+            <div class="td">
+                <button class="action-btn ellipses" title="show"></button>
+                <button class="action-btn basket" title="add"></button>
+                <div class="td-id">
+                    <span>5</span>
+                    <button class="box-btn play" title="play"></button>
+                </div>
+            </div>
+            <div class="td">Falling For You</div>
+            <div class="td">The 1975</div>
+            <div class="td">The 1975</div>
+            <div class="td">Classical</div>
+            <div class="td">3:58</div>
+            <div class="td">
+                <div class="ico-wave-min w60"></div>
+                <i class="likes-total">2.282</i>
+            </div>
+        </div>
+        <div class="tr">
+            <div class="td">
+                <button class="action-btn ellipses" title="show"></button>
+                <button class="action-btn basket" title="add"></button>
+                <div class="td-id">
+                    <span>6</span>
+                    <button class="box-btn play" title="play"></button>
+                </div>
+            </div>
+            <div class="td">Sing</div>
+            <div class="td">The 1975</div>
+            <div class="td">The 1975</div>
+            <div class="td">Electronic</div>
+            <div class="td">12:27</div>
+            <div class="td">
+                <div class="ico-wave-min w50"></div>
+                <i class="likes-total">2.105</i>
+            </div>
+        </div>
+        <div class="tr">
+            <div class="td">
+                <button class="action-btn ellipses" title="show"></button>
+                <button class="action-btn basket" title="add"></button>
+                <div class="td-id">
+                    <span>7</span>
+                    <button class="box-btn play" title="play"></button>
+                </div>
+            </div>
+            <div class="td">Fancy</div>
+            <div class="td">Ed Sheeran</div>
+            <div class="td">New Classic</div>
+            <div class="td">DubStep</div>
+            <div class="td">2:31</div>
+            <div class="td">
+                <div class="ico-wave-min w40"></div>
+                <i class="likes-total">1.930</i>
+            </div>
+        </div>
+        <div class="tr">
+            <div class="td">
+                <button class="action-btn ellipses" title="show"></button>
+                <button class="action-btn basket" title="add"></button>
+                <div class="td-id">
+                    <span>8</span>
+                    <button class="box-btn play" title="play"></button>
+                </div>
+            </div>
+            <div class="td">She Looks So Perfect</div>
+            <div class="td">Iggy Azalea - Carli - XCX</div>
+            <div class="td">he Looks So Perfect</div>
+            <div class="td">Pop</div>
+            <div class="td">3:34</div>
+            <div class="td">
+                <div class="ico-wave-min w30"></div>
+                <i class="likes-total">1.857</i>
+            </div>
+        </div>
+        <div class="tr">
+            <div class="td">
+                <button class="action-btn ellipses" title="show"></button>
+                <button class="action-btn basket" title="add"></button>
+                <div class="td-id">
+                    <span>9</span>
+                    <button class="box-btn play" title="play"></button>
+                </div>
+            </div>
+            <div class="td">I Won</div>
+            <div class="td">5 Seconds Of Summer</div>
+            <div class="td">Honest</div>
+            <div class="td">Classical</div>
+            <div class="td">1:58</div>
+            <div class="td">
+                <div class="ico-wave-min w20"></div>
+                <i class="likes-total">1.312</i>
+            </div>
+        </div>
+        <div class="tr">
+            <div class="td">
+                <div class="wrap-btn-hide">
+                    <div class="action-btns">
+                        <button class="action-btn close" title="close">x</button>
+                        |
+                        <button class="action-btn like" title="like">4.289</button>
+                        |
+                        <button class="action-btn share" title="share">share</button>
+                        |
+                        <button class="action-btn add" title="add">add</button>
+                    </div>
+                </div>
+                <button class="action-btn ellipses" title="show"></button>
+                <button class="action-btn basket" title="add"></button>
+                <div class="td-id">
+                    <span>1</span>
+                    <button class="box-btn play" title="play"></button>
+                </div>
+            </div>
+            <div class="td">Not a Bad Thing</div>
+            <div class="td">Justin Timberlake</div>
+            <div class="td">Not a Bad Thing</div>
+            <div class="td">Pop</div>
+            <div class="td">4:42</div>
+            <div class="td">
+                <div class="ico-wave-min w100"></div>
+                <i class="likes-total">2.678</i>
+            </div>
+        </div>
+        <div class="tr">
+            <div class="td">
+                <button class="action-btn ellipses" title="show"></button>
+                <button class="action-btn basket" title="add"></button>
+                <div class="td-id">
+                    <span>2</span>
+                    <button class="box-btn play" title="play"></button>
+                </div>
+            </div>
+            <div class="td">A Sky Full Of Stars</div>
+            <div class="td">Coldplay</div>
+            <div class="td">A Sky Full Of Stars</div>
+            <div class="td">Rock</div>
+            <div class="td">3:34</div>
+            <div class="td">
+                <div class="ico-wave-min w90"></div>
+                <i class="likes-total">2.532</i>
+            </div>
+        </div>
+        <div class="tr">
+            <div class="td">
+                <button class="action-btn ellipses" title="show"></button>
+                <button class="action-btn basket" title="add"></button>
+                <div class="td-id">
+                    <span>3</span>
+                    <button class="box-btn play" title="play"></button>
+                </div>
+            </div>
+            <div class="td">Problem</div>
+            <div class="td">Arianna Grande - Iggy Azalea</div>
+            <div class="td">Problem</div>
+            <div class="td">Electronic</div>
+            <div class="td">5:12</div>
+            <div class="td">
+                <div class="ico-wave-min w80"></div>
+                <i class="likes-total">2.426</i>
+            </div>
+        </div>
+        <div class="tr">
+            <div class="td">
+                <button class="action-btn ellipses" title="show"></button>
+                <button class="action-btn basket" title="add"></button>
+                <div class="td-id">
+                    <span>4</span>
+                    <button class="box-btn play" title="play"></button>
+                </div>
+            </div>
+            <div class="td">Summer</div>
+            <div class="td">Calvin Harris</div>
+            <div class="td">Summer</div>
+            <div class="td">Country & Folk</div>
+            <div class="td">4:53</div>
+            <div class="td">
+                <div class="ico-wave-min w70"></div>
+                <i class="likes-total">2.317</i>
+            </div>
+        </div>
+        <div class="tr">
+            <div class="td">
+                <button class="action-btn ellipses" title="show"></button>
+                <button class="action-btn basket" title="add"></button>
+                <div class="td-id">
+                    <span>5</span>
+                    <button class="box-btn play" title="play"></button>
+                </div>
+            </div>
+            <div class="td">Falling For You</div>
+            <div class="td">The 1975</div>
+            <div class="td">The 1975</div>
+            <div class="td">Classical</div>
+            <div class="td">3:58</div>
+            <div class="td">
+                <div class="ico-wave-min w60"></div>
+                <i class="likes-total">2.282</i>
+            </div>
+        </div>
+        <div class="tr">
+            <div class="td">
+                <button class="action-btn ellipses" title="show"></button>
+                <button class="action-btn basket" title="add"></button>
+                <div class="td-id">
+                    <span>6</span>
+                    <button class="box-btn play" title="play"></button>
+                </div>
+            </div>
+            <div class="td">Sing</div>
+            <div class="td">The 1975</div>
+            <div class="td">The 1975</div>
+            <div class="td">Electronic</div>
+            <div class="td">12:27</div>
+            <div class="td">
+                <div class="ico-wave-min w50"></div>
+                <i class="likes-total">2.105</i>
+            </div>
+        </div>
+        <div class="tr">
+            <div class="td">
+                <button class="action-btn ellipses" title="show"></button>
+                <button class="action-btn basket" title="add"></button>
+                <div class="td-id">
+                    <span>7</span>
+                    <button class="box-btn play" title="play"></button>
+                </div>
+            </div>
+            <div class="td">Fancy</div>
+            <div class="td">Ed Sheeran</div>
+            <div class="td">New Classic</div>
+            <div class="td">DubStep</div>
+            <div class="td">2:31</div>
+            <div class="td">
+                <div class="ico-wave-min w40"></div>
+                <i class="likes-total">1.930</i>
+            </div>
+        </div>
+        <div class="tr">
+            <div class="td">
+                <button class="action-btn ellipses" title="show"></button>
+                <button class="action-btn basket" title="add"></button>
+                <div class="td-id">
+                    <span>8</span>
+                    <button class="box-btn play" title="play"></button>
+                </div>
+            </div>
+            <div class="td">She Looks So Perfect</div>
+            <div class="td">Iggy Azalea - Carli - XCX</div>
+            <div class="td">he Looks So Perfect</div>
+            <div class="td">Pop</div>
+            <div class="td">3:34</div>
+            <div class="td">
+                <div class="ico-wave-min w30"></div>
+                <i class="likes-total">1.857</i>
+            </div>
+        </div>
+        <div class="tr">
+            <div class="td">
+                <button class="action-btn ellipses" title="show"></button>
+                <button class="action-btn basket" title="add"></button>
+                <div class="td-id">
+                    <span>9</span>
+                    <button class="box-btn play" title="play"></button>
+                </div>
+            </div>
+            <div class="td">I Won</div>
+            <div class="td">5 Seconds Of Summer</div>
+            <div class="td">Honest</div>
+            <div class="td">Classical</div>
+            <div class="td">1:58</div>
+            <div class="td">
+                <div class="ico-wave-min w20"></div>
+                <i class="likes-total">1.312</i>
+            </div>
+        </div>
+    </div>
+</div>

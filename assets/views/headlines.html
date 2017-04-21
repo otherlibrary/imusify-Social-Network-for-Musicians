@@ -1,0 +1,56 @@
+<section id="top-header">
+	<div class="top-header-part ">
+		<div class="row">
+			<div class="col-md-12 top-heading">
+				<div class="col-md-7 col-sm-12">
+					<ul class="heading">
+						<li><a href="${url}" class="active" data-role="home">Headlines</a></li>
+						<li class="borderR"></li>
+						<li><a href="${url}following" data-role="following">Following</a></li>
+						<li class="borderR"></li>
+						<li>
+							<a href="${url}about" data-role="about">About</a>
+						</li>
+					</ul>
+				</div>
+				<div class="col-md-5 col-sm-12 search-box">
+					<!-- <div class="scroll-btns">
+						<a href="" class="vs-btn">
+							<span class="v-arrow1"></span>
+							<span class="v-arrow2"></span>
+						</a>
+						<a href="" class="hz-btn">
+							<span class="h-arrow1"></span>
+							<span class="h-arrow2"></span>
+						</a>
+					</div> -->
+					<form method="post">
+						<span class="search-icon search-c search_input_head"></span>
+					</form>
+				</div>
+			</div>
+		</div>
+		<div id="all-categs">
+			<ul class="ul_li_active_a">
+				<li><a href="${url}" data-role="home_overview" class="{{if overview_active}} active {{/if}}">OVERVIEW</a></li>
+				<li><a href="${url}music" data-role="home_music" class="{{if music_active}} active {{/if}}">TRACKS</a></li>
+			<!-- <li><a href="${url}articles" data-role="home_articles" class="{{if article_active}} active {{/if}}">ARTICLES</a></li>
+			<li><a href="" class="{{if news_active}} active {{/if}}">NEWS</a></li> -->
+			<li><a href="${url}instrumental" data-role="home_instrumental" class="{{if instrumentation_active}} active {{/if}}">INSTRUMENTALS</a></li>
+			<li><a href="${url}license" data-role="home_license" class="{{if license_active}} active {{/if}}">LICENSE</a></li>
+		</ul>
+	</div>
+</div>
+</section>
+<section id="all-items">
+	<div class="all-items" id="all-items-masonary">
+		{{each(i,v)  records}}
+			{{tmpl(v) "#tabRender"}}
+		{{/each}}
+	</div>
+</section>
+
+
+{{if loadmore}}												
+	{{tmpl "#loadMore"}}
+{{/if}}	

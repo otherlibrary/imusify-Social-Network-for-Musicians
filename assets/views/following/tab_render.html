@@ -1,0 +1,12 @@
+
+	{{if audiofeed}} 
+		{{tmpl "#external_link"}}
+	{{else textfeed}}
+		{{tmpl "#textfeed"}}
+	{{else videofeed}}
+		{{tmpl "#external_link"}}	
+	{{else linkfeed}}
+		{{tmpl "#external_link"}}	
+	{{else imagefeed}}
+		{{tmpl "#external_link"}}	
+	{{/if}}	

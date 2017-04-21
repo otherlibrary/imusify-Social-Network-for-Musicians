@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset
+      xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+      xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9
+            http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd">
+
+<url>
+  <loc>http://imusify.com/imusify</loc>
+  <priority>1.00</priority>
+</url>
+<url>
+  <loc>http://imusify.com/imusify/legal</loc>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>http://imusify.com/imusify/about</loc>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>http://imusify.com/imusify/following</loc>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>http://imusify.com/imusify/faq</loc>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>http://imusify.com/imusify/browse</loc>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>http://imusify.com/imusify/upload</loc>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>http://imusify.com/imusify/liked</loc>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>http://imusify.com/imusify/sets</loc>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>http://imusify.com/imusify/david-walters</loc>
+  <priority>0.80</priority>
+</url>
+
+</urlset>

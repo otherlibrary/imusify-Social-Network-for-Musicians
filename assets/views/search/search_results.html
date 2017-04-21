@@ -1,0 +1,20 @@
+<div class="col-lg-3 col-md-3 col-xs-12">
+	<h3>ARTISTS</h3>
+	{{each(i,v)  artists}}
+		{{tmpl(v) "#artistsRow"}}
+	{{/each}}			    		
+</div>
+
+<div class="col-lg-5 col-md-5 col-xs-12 songs-list">
+	<h3>SONGS</h3>
+	{{each(i,v)  tracks}}
+		{{tmpl(v) "#songsRow"}}
+	{{/each}}			    		
+</div>
+
+<div class="col-lg-4 col-md-4 col-xs-12 playlists">
+	<h3>PLAYLISTS</h3>
+	{{each(i,v)  playlists}}
+		{{tmpl(v) "#playlistsRow"}}
+	{{/each}}
+</div>

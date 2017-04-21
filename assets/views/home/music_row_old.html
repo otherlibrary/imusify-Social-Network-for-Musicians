@@ -1,0 +1,35 @@
+<div class="box track_item tr_item" data-url="${trackLink}" data-track="${trackLink}" data-href="${trackLink}">
+	<div class="item margin4">
+		<img src="${track_image}" class="img_load" alt="track image" >
+		{{if featured}} <div class="featured"><p>FEATURED TRACK</p></div> {{/if}}
+
+		<div class="black-bg"><a href="javascript:void(0)" class="play-icon" data-track="${trackLink}"></a></div>
+
+
+		<div class="tag-texts">
+			<article>
+				<a href="${profileLink}" data-role="profile" class="noclickplay">
+					<img src="${user_image}" class="noclickplay img_load">
+				</a>
+				<div class="track-info noclickplay">
+					<!-- <h4>COME AGAIN shared a new song</h4> -->
+					<h2 class="noclickplay">
+						<a href="${trackLink}" data-role="trackdetail" class="noarticleprop noclickplay"> 
+							${main_title}
+						</a> 
+					</h2>
+				</div>
+			</article>
+			<ul class="links">
+				<li><a href="#" class="heart-icon">${plays}</a></li>
+				<li><a href="Javascript:0" data-sharemodal="sharepopup" class="link-icon noclickplay  js-open-modal" data-shareurl="${trackLink}">SHARE</a></li>
+				<li class="border-r"><a href="#" class="plus-icon">ADD</a></li>
+			</ul>
+			<div class="wave-img">
+				<!-- <span class="sc-position text_shadow" data-track="${trackLink}">0.00</span> -->
+				<figure class="waveform_img_div sc-waveform-container" data-waveurl="${waveform}" id="" data-trackurl="${trackLink}" data-track="${trackLink}" data-height="30" data-width="320"></figure>
+				<!-- <span class="text_shadow">${timelength}</span> -->
+			</div>
+		</div>
+	</div>
+</div>

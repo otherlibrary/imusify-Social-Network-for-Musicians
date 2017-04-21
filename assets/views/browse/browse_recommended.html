@@ -1,0 +1,72 @@
+<section id="top-header">
+	<!-- <div class="top-header-part"> -->
+	<div class="row">
+		<div class="col-md-12 top-heading">
+			<div class="col-md-7 col-sm-12">
+				<ul class="heading">
+					<li><a href="${url}browse" data-rel="ajax" data-role="recommended" class="active">Recommended</a></li>
+					<li class="borderR"></li>
+					<li><a href="${url}explore" data-rel="ajax" data-role="explore">Explore</a></li>
+				</ul>
+			</div>
+			<div class="col-md-5 col-sm-12 search-box">
+										<!-- <div class="scroll-btns">
+											<a href="" class="vs-btn active"></a>
+											<a href="" class="hz-btn"></a>
+										</div> -->
+										<form method="post">
+											<span class="search-icon search-c search_input_head"></span>
+										</form>
+									</div>
+								</div>
+							</div>
+							<!-- </div> -->
+						</section>
+
+						<section id="slider-box">
+							<div id="carousel-example-generic" class="carousel slide" data-ride="carousel" id="browse_recom">
+								<!-- Wrapper for slides -->
+								<div class="carousel-inner" role="listbox" id="popular_users">
+									<div class="item active">
+										{{each(i,v)  popular_users}}
+										{{tmpl(v) "#popUsers"}}
+										{{/each}} 	
+									</div>								
+								</div>
+
+								<!-- Controls -->
+								<a class="left carousel-control browse_profimg" href="Javascript:void(0)" role="button" data-slide="prev" style="z-index:999; width:10%; background-color:rgba(26,26,27,1);">
+									<span class="left-arrow"></span>
+									<span class="sr-only">Previous</span>
+								</a>
+								<a class="right carousel-control browse_profimg" href="Javascript:void(0)" role="button" data-slide="next" style="z-index:999; width:10%; background-color:rgba(26,26,27,1);">
+									<span class="right-arrow"></span>
+									<span class="sr-only">Next</span>
+								</a>
+							</div>
+						</section>
+						<section id="all-details" class="tabs-contents">
+							<div class="row">
+								<div class="col-md-12 col-sm-12 col-xs-12 width100 ">
+									<!-- FOR TABS MENUS -->
+									<ul class="nav nav-tabs user-tabs ul_li_active" role="tablist" id="browse_recom_ul">									
+										<li class="{{if popular_songs_active}} active {{/if}}"><a href="${url}browse" data-role="popular-songs" data-rel="ajax" role="tab" data-toggle="tab">POPULAR SONGS</a></li>
+										<li class="{{if new_songs_active}} active {{/if}}"><a href="${url}browse/new-songs" data-role="new-songs" data-rel="ajax" data-toggle="tab">NEW SONGS</a></li>
+										<li class="{{if popular_artist_active}} active {{/if}}"><a href="${url}browse/popular-artist" data-role="pop-artists" data-rel="ajax" role="tab" data-toggle="tab">POPULAR ARTISTS</a></li>
+										<li class="{{if new_artist_active}} active {{/if}}"><a href="${url}browse/new-artists" data-role="new-artists" data-rel="ajax" role="tab" data-toggle="tab">NEW ARTISTS</a></li>
+										
+										<li class="{{if popular_playlist_active}} active {{/if}}"><a href="${url}browse/popular-playlist" data-role="pop-playlist" data-rel="ajax" role="tab" data-toggle="tab">POPULAR PLAYLISTS</a></li>
+										
+										<li class="{{if new_playlist_active}} active {{/if}}"><a href="${url}browse/new-playlist" data-role="new-playlist" data-rel="ajax" role="tab" data-toggle="tab">NEW PLAYLISTS</a></li>
+
+										<!-- <li><a href="#" id="my-tooltip">View Demo</a></li> -->
+										
+									</ul>
+									<div class="tab-content" id="tab_content">									
+										<div class="tab-pane fade in active table ${class_nm}" id="${tabid}">									
+											{{tmpl "#tabRender"}}
+										</div>
+									</div>
+								</div>
+							</div>
+						</section>						

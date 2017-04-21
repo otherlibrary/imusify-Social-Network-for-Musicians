@@ -1,0 +1,56 @@
+<div class="tab-content album-box album_form" id="albumform${r}">
+	<h3>Edit ${name} album</h3>
+	<form role="form" class="album-form" method="post" name="album_create_form" id="album_create_form" enctype= "multipart/form-data">
+		<div class="col-lg-3 col-md-4 col-sm-12 col-xs-12 cover-img">
+			<figure><img src="${album_img}" class="img-responsive img_load" alt="" id="album_image_preview"></figure>
+			<p>Album image</p>
+			<a href="Javascript:void(0)" class="pink-btn album_image">Upload Images</a> 
+			<input type="file" name="album_image" class="pink-btn album_image_upd" style="display:none" />
+
+		</div>
+		<div class="col-lg-9 col-md-8 col-sm-12 col-xs-12">											
+			<div class="form-group">
+				<label for="title">Album Titles</label>
+				<input type="text" name="album_title" class="form-control validate[required]" id="title" value="${name}">
+			</div>
+			<div class="form-group">
+				<label for="des">Description</label>
+				<textarea id="des" name="album_desc" rows="4" class="form-control validate[required]">${description}</textarea>
+			</div>
+			<div class="form-group">
+				<label>Release Date (MM/DD/YYYY)</label>
+				<input type="type" name="rdate_mm" class="form-control width85 blackc validate[required]" placeholder="MM" value="${release_mm}">
+				<input type="type" name="rdate_dd" class="form-control width85 blackc validate[required]" placeholder="DD" value="${release_dd}">
+				<input type="type" name="rdate_yy" class="form-control width85 blackc validate[required]" placeholder="YYYY" value="${release_yy}">
+			</div>
+			<div class="form-group">
+				<label for="des">Primary Genre</label>
+				<select class="form-control" name="genre">														
+					{{each(i,v)  genre_list}}		
+					<option value="${v.id}">${v.genre}</option>
+					{{/each}}
+
+				</select>
+			</div>
+			<div class="form-group">
+				<label for="lab">Label</label>
+				<input type="text" name="album_label" class="form-control validate[required]" id="lab" value="${label}">
+			</div>
+			<div class="form-group">
+				<label for="genner">Secondary Genres (Pick two)</label>
+
+				<select class="form-control  validate[required] select2 " multiple  id="album_sec_genre" name="sec_tags[]">
+					{{each(i,v)  sec_genre_list}}		
+						<option value="${v.id}">${v.genre}</option>
+					{{/each}}
+				</select>
+
+			</div>
+			<div class="text-right">
+				<button type="button" class="btn creat-btn create_album_submit">Save</button>
+				<button type="button" class="btn creat-btn cancel_album_btn" data-r="${r}">Cancel</button>
+			</div>											
+		</div>								  	
+	</form>
+	<div class="clearfix"></div>
+</div>

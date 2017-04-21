@@ -1,0 +1,50 @@
+<div class="col-xs-12 song-info" id="album_track_edit_${ttrackId}">
+	<div class="song-play tr_item" data-href="${track_link}" data-url="${track_link}" data-track="${track_link}">
+		<figure><img src="${track_image}" alt=""></figure>
+		<a href="Javascript:void(0)" class="play-btn tr_item" data-href="${track_link}" data-url="${track_link}" data-track="${track_link}"></a>
+	</div>
+	<div class="song-details">
+		<div class="col-xs-12 title">
+			<p>SONG INFO <span>Added on 12.08.2015M</span></p>
+			<ul class="pull-right">
+				<li>
+					<a class="edit-icon album_edit popup"  data-id="${ttrackId}" data-type="t" href="  ${trackediturl}" data-t="trackedit">EDIT</a>
+				</li>
+				<li>
+					<a class="delete" data-id="${ttrackId}" data-type="t" data-deltype="au" data-r="${editid}" data-delId="${ttrackId}" data-userId="${userId}">REMOVE</a>
+				</li>
+			</ul>
+		</div>
+		<div class="col-xs-12 arctic">
+			<ul class="heading">
+				<li class="col1"><p class="color">Arctic Monkeys</p></li>
+				<li class="col2"><span class="time"></span></li>
+				<li class="col3"><p>PLAYS</p></li>
+				<li class="col3"><p>LIKES</p></li>
+				<li class="col3"><p>COMMENTS</p></li>
+				<li class="col3"><p>SHARES</p></li>
+			</ul>
+			<ul class="information">
+				<li class="col1"><p>${title}</p></li>
+				<li class="col2"><p>${timelength}</p></li>
+				<li class="col3"><p>${plays}</p></li>
+				<li class="col3"><p>82</p></li>
+				<li class="col3"><p>${comments}</p></li>
+				<li class="col3"><p>${shares}</p></li>
+			</ul>
+		</div>
+
+
+		{{if tags}}
+		<div class="col-xs-12 tags">
+			<p>TAGS</p>
+			<ul>
+				{{each(i,v) tags}}		
+				<li>#${v}</li>
+				{{/each}}
+			</ul>
+		</div>
+		{{/if}}
+		
+	</div>
+</div>

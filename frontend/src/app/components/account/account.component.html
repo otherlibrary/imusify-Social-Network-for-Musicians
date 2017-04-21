@@ -1,0 +1,19 @@
+<div class="main">
+    <div class="main-top">
+        <div class="tab-panel">
+            <a class="tab-pnl-btn"
+               href="#"
+               routerLink="/account"
+               routerLinkActive="active"
+               [routerLinkActiveOptions]="{exact: true}">Change password</a>
+            <a class="tab-pnl-btn"
+               href="#"
+               routerLink="stripe"
+               routerLinkActive="active"
+               [routerLinkActiveOptions]="{exact: true}">Stripe connect</a>
+        </div>
+    </div>
+    <div class="inner-scroll account-inner">
+        <router-outlet></router-outlet>
+    </div>
+</div>

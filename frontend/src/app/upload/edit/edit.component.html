@@ -1,0 +1,338 @@
+<div class="popup popup_animate">
+  <button class="popup-close" (click)="closePopup()" type="button">Close</button>
+  <div class="popup-bg"></div>
+  <div class="popup-scroll popup_animate_inner">
+    <div class="popup-inner">
+      <div class="edit-track-block">
+        <div class="title">Edit track</div>
+        <div class="song title">Losing my religion</div>
+      </div>
+      <div class="tab-panel">
+        <button class="tab-pnl-btn active" type="button" data-tab="basic">Basic</button>
+        <button class="tab-pnl-btn" type="button" data-tab="sell">Sell your music</button>
+      </div>
+      <div class="edit-track-content">
+        <div class="tab-content active" data-tab="basic">
+          <form class="edit-track-form pad-left" action="#">
+            <div class="edit-photo">
+              <img src="http://netstorage.metrolyrics.com/albums/1395429jpg.jpg" alt="">
+              <input id="trackImg"
+                     type="file"
+                     name="trackImage"
+                     (change)="uploadTrackImage($event)"/>
+              <label class="img-upload"
+                     for="trackImg">Upload image</label>
+            </div>
+            <div class="inp-block">
+              <input id="trackTitle" type="text" name="title">
+              <label for="trackTitle">Title</label>
+            </div>
+            <div class="inp-block">
+              <textarea id="trackDesc" name="desc" cols="30" rows="10"></textarea>
+              <label for="trackDesc">Description</label>
+            </div>
+            <div class="inp-block">
+              <input id="trackDate" type="text" value="" name="date" data-type="datepicker">
+              <label for="trackDate">Release date</label>
+            </div>
+            <div class="inp-block">
+              <select id="trackType" data-placeholder="Please select track type" name="type">
+                <option></option>
+                <option value="1">Type 1</option>
+                <option value="2">Song w. Vocals</option>
+                <option value="3">Type 2</option>
+                <option value="4">Type 3</option>
+                <option value="5">Type 4</option>
+                <option value="3">Type 5</option>
+                <option value="4">Type 6</option>
+                <option value="5">Type 7</option>
+              </select>
+              <label class="select2-label" for="trackType">Track type</label>
+            </div>
+            <div class="inp-block">
+              <select id="trackGenre" data-placeholder="Please select track genre" name="genre">
+                <option></option>
+                <option value="0">Select track type</option>
+                <option value="1">Rock</option>
+                <option value="2">Dance</option>
+                <option value="3">Hip Hop</option>
+                <option value="4">Trap</option>
+                <option value="5">Classic</option>
+              </select>
+              <label class="select2-label" for="trackGenre">Primary genre</label>
+            </div>
+            <div class="inp-block">
+              <input id="secondGenre" type="text" name="second-genre">
+              <label for="secondGenre">Secondary genre(pick two)</label>
+            </div>
+            <div class="inp-block">
+              <input id="trackMoods" type="text" name="moods">
+              <label for="trackMoods">Pick moods</label>
+            </div>
+            <div class="inp-block">
+              <label>Select track type</label>
+              <label class="radio-lbl" for="typesPublic">
+                <input id="typesPublic" type="radio" name="types[]" checked value="public" />
+                <i></i><span>Public</span>
+              </label>
+              <label class="radio-lbl" for="typesPrivate">
+                <input id="typesPrivate" type="radio" name="types[]" value="private" />
+                <i></i><span>Private</span>
+              </label>
+            </div>
+            <div class="inp-block">
+              <label>Select type of artist</label>
+              <label class="radio-lbl" for="typeArtistMale">
+                <input id="typeArtistMale" type="radio" name="type-artist[]" value="male" />
+                <i></i><span>Male</span>
+              </label>
+              <label class="radio-lbl" for="typeArtistFemale">
+                <input id="typeArtistFemale" type="radio" name="type-artist[]" value="female" />
+                <i></i><span>Female</span>
+              </label>
+              <label class="radio-lbl" for="typeArtistBoth">
+                <input id="typeArtistBoth" type="radio" name="type-artist[]" value="both" />
+                <i></i><span>Both</span>
+              </label>
+            </div>
+          </form>
+        </div>
+        <div class="tab-content" data-tab="sell">
+          <form class="edit-track-form" action="#">
+
+            <div class="inp-block">
+              <label>Wanna make your music available for sale</label>
+              <label class="toggleLabel" for="toggleSaleMusic">
+                <input  id="toggleSaleMusic" type="checkbox" name="music-sale">
+                <span class="toggleElement">
+                                            <i></i>
+                                            <b class="toggle-on">On</b>
+                                            <b class="toggle-off">Off</b>
+                                        </span>
+              </label>
+            </div>
+            <div class="hidden-inp-block">
+              <div class="inp-block price-opt">
+                <input type="checkbox" name="optAlbum" id="optAlbum">
+                <label class="opt-name" for="optAlbum">
+                  <span>Album</span>
+                  <i></i>
+                  <button class="price-btn">$ 9.99</button>
+                  <input class="hidden-price" type="text" name="price[]album">
+                  <span class="price-ready-btn"></span>
+                </label>
+              </div>
+
+              <div class="inp-block price-opt">
+                <input id="optSingle" type="checkbox" name="optSingle">
+                <label class="opt-name" for="optSingle">
+                  <span>Single</span>
+                  <i></i>
+                  <button class="price-btn">$ 0.99</button>
+                  <input class="hidden-price" type="text" name="price[]single">
+                  <span class="price-ready-btn"></span>
+                </label>
+              </div>
+            </div>
+            <div class="inp-block">
+              <label>Wanna make your music available for licensing</label>
+              <label class="toggleLabel" for="toggleLicenseMusic">
+                <input id="toggleLicenseMusic" type="checkbox" name="music-license">
+                <span class="toggleElement">
+                                            <i></i>
+                                            <b class="toggle-on">On</b>
+                                            <b class="toggle-off">Off</b>
+                                        </span>
+              </label>
+            </div>
+            <div class="hidden-inp-block">
+
+              <div class="inp-block price-opt">
+                <input id="optAdvertising" type="checkbox" name="optAdvertising">
+                <label class="opt-name" for="optAdvertising">
+                  <span>Advertising</span>
+                  <i></i>
+                  <button class="price-btn">$ 225.00</button>
+                  <input class="hidden-price" type="text" name="price[]advertising">
+                  <span class="price-ready-btn"></span>
+                </label>
+              </div>
+
+              <div class="inp-block price-opt">
+                <input id="optCorporate" type="checkbox" name="optCorporate">
+                <label class="opt-name" for="optCorporate">
+                  <span>Corporate/Commercial film</span>
+                  <i></i>
+                  <button class="price-btn">$ 375.00</button>
+                  <input class="hidden-price" type="text" name="price[]corporate">
+                  <span class="price-ready-btn"></span>
+                </label>
+              </div>
+
+              <div class="inp-block price-opt">
+                <input id="optDocumentary" type="checkbox" name="optDocumentary">
+                <label class="opt-name" for="optDocumentary">
+                  <span>Documentary/Indie/Student film</span>
+                  <i></i>
+                  <button class="price-btn">$ 60.00</button>
+                  <input class="hidden-price" type="text" name="price[]documentary">
+                  <span class="price-ready-btn"></span>
+                </label>
+              </div>
+
+              <div class="inp-block price-opt">
+                <input id="optFilm" type="checkbox" name="optFilm">
+                <label class="opt-name" for="optFilm">
+                  <span>Film/TV Show</span>
+                  <i></i>
+                  <button class="price-btn">$ 120.00</button>
+                  <input class="hidden-price" type="text" name="price[]film">
+                  <span class="price-ready-btn"></span>
+                </label>
+              </div>
+
+              <div class="inp-block price-opt">
+                <input id="optGames" type="checkbox" name="optGames">
+                <label class="opt-name" for="optGames"> Games <small>&</small>
+                  <span>Software</span>
+                  <i></i>
+                  <button class="price-btn">$ 300.00</button>
+                  <input class="hidden-price" type="text" name="price[]games">
+                  <span class="price-ready-btn"></span>
+                </label>
+              </div>
+
+              <div class="inp-block price-opt">
+                <input id="optInternet" type="checkbox" name="optInternet">
+                <label class="opt-name" for="optInternet">
+                  <span>Internet Video</span>
+                  <i></i>
+                  <button class="price-btn">$ 3.00</button>
+                  <input class="hidden-price" type="text" name="price[]internet">
+                  <span class="price-ready-btn"></span>
+                </label>
+              </div>
+
+              <div class="inp-block price-opt">
+                <input id="optEvent" type="checkbox" name="optEvent">
+                <label class="opt-name" for="optEvent">
+                  <span>Live Event</span>
+                  <i></i>
+                  <button class="price-btn">$ 15.00</button>
+                  <input class="hidden-price" type="text" name="price[]event">
+                  <span class="price-ready-btn"></span>
+                </label>
+              </div>
+
+              <div class="inp-block price-opt">
+                <input id="optOnHold" type="checkbox" name="optOnHold">
+                <label class="opt-name" for="optOnHold">
+                  <span>Music on Hold</span>
+                  <i></i>
+                  <button class="price-btn">$ 30.00</button>
+                  <input class="hidden-price" type="text" name="price[]onHold">
+                  <span class="price-ready-btn"></span>
+                </label>
+              </div>
+              <div class="inp-block price-opt">
+                <input id="optTo50th" type="checkbox" name="optTo50th">
+                <label class="opt-name" for="optTo50th">
+                  <span>Music Production and Audio Project/Lease (10001 to 50000 copies)</span>
+                  <i></i>
+                  <button class="price-btn">$ 175.00</button>
+                  <input class="hidden-price" type="text" name="price[]to50th">
+                  <span class="price-ready-btn"></span>
+                </label>
+              </div>
+
+              <div class="inp-block price-opt">
+                <input id="optTo10th" type="checkbox" name="optTo10th">
+                <label class="opt-name" for="optTo10th">
+                  <span>Music Production and Audio Project/Lease (1001 to 10000 copies)</span>
+                  <i></i>
+                  <button class="price-btn">$ 105.00</button>
+                  <input class="hidden-price" type="text" name="price[]to10th">
+                  <span class="price-ready-btn"></span>
+                </label>
+              </div>
+              <div class="inp-block price-opt">
+                <input id="optOver50th" type="checkbox" name="optOver50th">
+                <label class="opt-name" for="optOver50th">
+                  <span>Music Production and Audio Project/Lease (over 50000 copies)</span>
+                  <i></i>
+                  <button class="price-btn">$ 245.00</button>
+                  <input class="hidden-price" type="text" name="price[]over50th">
+                  <span class="price-ready-btn"></span>
+                </label>
+              </div>
+              <div class="inp-block price-opt">
+                <input id="optTo1th" type="checkbox" name="optTo1th">
+                <label class="opt-name" for="optTo1th">
+                  <span>Music Production and Audio Project/Lease (up to 10000 copies)</span>
+                  <i></i>
+                  <button class="price-btn">$ 35.00</button>
+                  <input class="hidden-price" type="text" name="price[]to1th">
+                  <span class="price-ready-btn"></span>
+                </label>
+              </div>
+              <div class="inp-block price-opt">
+                <input id="optPodcast" type="checkbox" name="optPodcast">
+                <label class="opt-name" for="optPodcast">
+                  <span>Podcast</span>
+                  <i></i>
+                  <button class="price-btn">$ 5.00</button>
+                  <input class="hidden-price" type="text" name="price[]podcast">
+                  <span class="price-ready-btn"></span>
+                </label>
+              </div>
+
+              <div class="inp-block price-opt">
+                <input id="optWebsite" type="checkbox" name="optWebsite">
+                <label class="opt-name" for="optWebsite">
+                  <span>Website</span>
+                  <i></i>
+                  <button class="price-btn">$ 5.00</button>
+                  <input class="hidden-price" type="text" name="price[]website">
+                  <span class="price-ready-btn"></span>
+                </label>
+              </div>
+
+            </div>
+            <div class="inp-block">
+              <label>Wanna make your music available for non-profit use</label>
+              <label class="toggleLabel" for="toggleUseMusic">
+                <input id="toggleUseMusic" type="checkbox" name="music-use">
+                <span class="toggleElement">
+                                            <i></i>
+                                            <b class="toggle-on">On</b>
+                                            <b class="toggle-off">Off</b>
+                                        </span>
+              </label>
+            </div>
+            <div class="hidden-inp-block">
+              <div class="inp-block price-opt">
+                <input id="optNonProfit" type="checkbox" name="optNonProfit">
+                <label class="opt-name" for="optNonProfit">
+                  <span>Non profit</span>
+                  <i></i>
+                  <button class="price-btn disabled">$ 0.00</button>
+                  <input class="hidden-price" type="text" name="price[]nonProfit">
+                  <span class="price-ready-btn"></span>
+                </label>
+              </div>
+            </div>
+            <div class="inp-block copyright">
+              <label class="copyright-label" for="copyright">
+                <input id="copyright" type="checkbox" name="copyright" value="0">
+                <i></i>
+                <span class="privacy-info">I certify that I own the copyright in or have all the necessary rights related to such content to upload it.</span>
+              </label>
+            </div>
+          </form>
+        </div>
+      </div>
+
+      <button class="tab-pnl-btn" (click)="saveUploadTrack()">Save</button>
+    </div>
+  </div>
+</div>

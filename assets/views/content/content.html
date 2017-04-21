@@ -1,0 +1,20 @@
+<section id="all-items-menus">
+	<div id="all-categs">
+		<ul class="ul_li_active"> 
+			{{each(i,v)  allpages}}
+			<li>
+				<a href="${pageurl}"  class="${v.active}" data-role="content">${v.title}</a>
+			</li>
+			{{/each}}			
+		</ul>
+	</div>
+</section>
+
+<section id="items-box">						
+	<!-- user uploaded songs -->
+	<div id="my_songs" class="upload_item_box album-box ">
+		<h3>${ptitle}</h3>
+		<div id="my_songs_row">{{html pdescription}}</div>			
+	</div>
+	<!-- user uploaded songs  ends-->							
+</section>

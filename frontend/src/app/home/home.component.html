@@ -1,0 +1,44 @@
+<div class="main">
+  <div class="main-top">
+    <div class="one-block">
+      <div class="tabs">
+        <a class="tabs-item" href="#" routerLink="/home" [routerLinkActiveOptions]="{ exact: true }" [routerLinkActive]="['active']">Headlines</a>
+
+        <i class="sep"></i>
+
+        <a class="tabs-item" href="#" routerLink="following" [routerLinkActive]="['active']" #rlaFollowing="routerLinkActive">Following</a>
+
+        <i class="sep"></i>
+
+        <a class="tabs-item" href="#" routerLink="static" [routerLinkActive]="['active']" #rlaStatic="routerLinkActive">Static Pages</a>
+      </div>
+      <form class="search-form" method="post" action="/">
+        <input id="searchInput" type="text" placeholder="What are you looking for?" value="" />
+        <span></span>
+        <a id="searchLink" href="#" (click)="goToSearch()">Search</a>
+      </form>
+    </div>
+    <div class="tab-panel" *ngIf="!rlaFollowing.isActive && !rlaStatic.isActive">
+      <button class="tab-pnl-btn" routerLink="/home" [routerLinkActiveOptions]="{ exact: true }" [routerLinkActive]="['active']">All news1
+      </button>
+      <button class="tab-pnl-btn" routerLink="music" [routerLinkActiveOptions]="{ exact: true }" [routerLinkActive]="['active']">Music
+      </button>
+      <button class="tab-pnl-btn" routerLink="articles" [routerLinkActiveOptions]="{ exact: true }" [routerLinkActive]="['active']">Articles
+      </button>
+      <a href="#" (click)="goToNews()" class="tab-pnl-btn">News</a>
+      <button class="tab-pnl-btn" routerLink="instrumental" [routerLinkActiveOptions]="{ exact: true }" [routerLinkActive]="['active']">Instrumental
+      </button>
+      <button class="tab-pnl-btn" routerLink="licence" [routerLinkActiveOptions]="{ exact: true }" [routerLinkActive]="['active']">Licence
+      </button>
+    </div>
+  </div>
+
+  <div class="inner-scroll home-inner" [class.reset_top_gutter]="rlaFollowing.isActive || rlaStatic.isActive">
+
+    <router-outlet></router-outlet>
+
+  </div>
+
+  <app-audio-player></app-audio-player>
+
+</div>

@@ -1,0 +1,45 @@
+ <ul class="songs-list list-item ${gray_bg} tr_item cursorpointer" data-url="${trackLink}" data-track="${trackLink}">
+
+ 		<!-- <li class="left">
+ 			<div class="left">
+					<button class="play song tr_item" data-href="${track_link}" data-url="${track_link}" data-track="${track_link}"></button>
+			</div>
+ 		</li>
+ 	-->
+ 	<li class="col1 toggle-menu noclickplay" id="">
+ 		<span class="menu">	
+ 			<div class="options">
+ 				<ul class="option-list left">
+ 					<li class="noclickplay"><a href="Javascript:void(0)" class="noclickplay open-chat add_pl_popup" data-tid="${id}">Add to playlist</a></li>
+ 					<li class="noclickplay"><a href="" class="noclickplay">Add to queue</a></li>	
+ 				</ul>
+ 			</div>
+ 		</span> 
+ 		<!-- <span class="three-dot"></span> -->
+ 		<!-- <span class="cart-icon"></span> -->
+ 		<span class="${like_class}">       
+ 			<a href="Javascript:void(0)" class="${like_js_class}" data-tid="${id}" data-tname="${main_title}" data-url="${trackLink}"></a>     
+ 		</span>
+ 	</li>
+
+ 	<li class="col2 flex">
+ 		<button class="play song " data-href="${trackLink}" data-url="${trackLink}" data-track="${trackLink}"></button>
+ 		<span class="track_num">${i}</span>
+ 		<!-- <div class="flex"> --><!-- </div> -->
+ 	</li>
+ 	<li class="col3">
+ 		<a href="${trackLink}" class="noclickplay" data-url="${trackLink}" data-track="${trackLink}" data-role="trackdetail" data-href="${trackLink}" title="${title}">${main_title}</a>
+ 	</li>
+ 	<li class="col4">
+ 		<a href="${profileLink}" class="noclickplay" data-role="profile" title="${artist_name}">${artist_mini_name}</a>
+ 	</li>
+        
+ 	<li class="col5 has_album" class="noclickplay">&nbsp;	&nbsp;${album}</li>
+        
+ 	<li class="col6" class="noclickplay">${genre}</li>
+ 	<li class="col7">${timelength}</li>
+ 	<li class="col8">
+ 		<div class="waveform_img_div" data-waveurl="${waveform}" id="" data-trackurl="${trackLink}" data-track="${trackLink}" data-height="22">
+ 		</div>
+ 	</li>
+ </ul>

@@ -1,0 +1,24 @@
+/**
+ *
+ * Apply Here your Custom CSS
+ *
+*/
+
+body
+{
+		
+}
+.redlabel{
+	color: red;
+}
+.displaynone{
+	display: none;
+}
+.display{
+	display: block !important;
+}
+
+.formError {
+   
+     display: block !important; 
+}

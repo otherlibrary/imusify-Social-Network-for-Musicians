@@ -1,0 +1,59 @@
+<section id="top-header">
+	<div class="top-header-part ">
+		<div class="row">
+			<div class="col-md-12 top-heading">
+				<div class="col-md-7 col-sm-12">
+					<ul class="heading">
+						<li><a href="#">Headlines</a></li>
+						<li class="borderR"></li>
+						<li><a href="${url}following" class="active" data-role="following">Following</a></li>
+					</ul>
+				</div>
+				<div class="col-md-5 col-sm-12 search-box">
+					<form method="post">
+						<input type="text" class="form-control search-icon search-c" placeholder="WHAT ARE YOU LOOKING FOR?">
+					</form>
+				</div>
+			</div>
+		</div>
+		
+	</div>
+</section>
+
+<div id="margin-right320">
+	<section id="following-contents" class="marginT50">
+		<div class="col-md-12" id="users_feed">
+			{{each(i,v)  feeds}}
+				{{if v.iframe}} 
+					{{tmpl(v) "#extenal_link"}}
+				{{else}}
+					{{tmpl(v) "#member-list"}}
+				{{/if}}	
+			{{/each}}			
+		</div>
+	</section>
+	<aside id="following-aside">
+		<div class="slide-btn"></div>
+		<div id="conts-box" class="mCustomScrollbar">
+			<div class="people-follow">
+				<h5>PEOPLE TO FOLLOW <a href="">SEE MORE</a></h5>
+				<div id="following_cont">
+					{{each(i,v)  follow}}
+						{{tmpl(v) "#follow-member"}}
+					{{/each}}
+				</div>
+			</div>
+			<div class="articles">
+				<h5>ARTICLES YOU MIGHT BE INTERESTED IN</h5>
+				{{each(i,v)  articles}}
+					{{tmpl(v) "#article"}}
+				{{/each}}
+			</div>
+		</div>
+	</aside>
+</div>
+
+
+{{if loadmore}}												
+	{{tmpl "#loadMore"}}
+{{/if}}	

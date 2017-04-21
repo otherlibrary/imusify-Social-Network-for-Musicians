@@ -1,0 +1,64 @@
+<div class="member-list" id="following_feed_${id}">
+	<div class="profile">
+		<figure>
+			<a href="${profile_url}" data-role="profile">
+				<img src="${profile_img_url}" alt="">
+			</a>
+		</figure>
+		<article>
+			<h5><a href="${profile_url}" data-role="profile">${username}</a></h5><br/>
+			<span>${feed_detail}</span>
+		</article>
+	</div>
+	<div class="col-md-8 song-info">
+		<div class="row1">
+			<article class="title">
+				<h3 data-id="${id}" data-type="video">{{html feedtitle}}</h3>
+                                <input hidden class="feed_content" data-id="${id}" data-type="video" value="{{html feedtitle}}" />
+				{{if videoIframe}}
+				<div class="iframe_cont">
+					<span class="videoPostPlay" id="videoPostPlay_${id}"></span>
+					{{html videoIframe}}
+				</div>
+
+				{{/if}}			
+				<span>${feed_ago}</span>
+				{{if own_feed}}
+				<a href="Javascript:void(0)" class="delete-icon delete_feed_js" data-id="${id}" class="" title="delete"></a>
+                                <a href="Javascript:void(0)" class="edit-icon edit_feed_js" data-id="${id}" data-type="video" class="" title="edit"></a>
+				{{/if}}
+			</article>			
+			<div class="msg">
+                                {{if feedimage}}
+				<figure data-id="${id}">
+					<img src="${feedimage}" alt="" class="feedimage">
+				</figure>
+                                {{/if}}
+				<article data-id="${id}">
+					<!-- <h5>${fm_commentator_name}<span>${fm_comment_ago}</span></h5> -->
+					<p>{{html description}}</p>
+				</article>
+
+				<div class="options-box">
+					<ul>
+						<li><a href="" class="share" data_fm_share="${fm_feed_id}">SHARE</a></li>
+						<li class="last-part">
+							<a href="Javascript:void(0)" class="repost repost_js" data-feedpostid="${id}">REPOST</a>
+						</li>
+						<li>
+							<h4 class="comments">&nbsp; ${total_comments} Comments <a href="">SEE ALL</a></h4>
+						</li>
+					</ul>
+				</div>
+				<div id="feed_com_maincont_${id}">
+					<div id="feed_com_cont_${id}">
+						{{each(i,v)  feed_comments}}
+						{{tmpl(v) "#comment-list"}}
+						{{/each}}
+					</div>
+					<a href="Javascript:void(0)" class="leave-reply" data-id="${id}" data-feedlogId="${id}" data-profileimg="${profile_img_url}" data-username="${username}">LEAVE A REPLY</a>					
+				</div>
+			</div>			
+		</div>
+	</div>
+</div>

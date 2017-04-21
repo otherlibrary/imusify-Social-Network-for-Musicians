@@ -1,0 +1,253 @@
+/* You can add global styles to this file, and also import other style files */
+#menu {
+  z-index: 10;
+}
+
+.upload-inner {
+  .popup-inner {
+    display: block;
+    padding-left: 190px;
+  }
+}
+
+.prof-notes .prof-note:hover {
+  .popover {
+    transform: scale(1);
+    opacity: 1;
+    top: 100%;
+  }
+  
+  .note-link {
+    opacity: .8;
+  }
+}
+
+//colors
+$color_mine_shaft_approx: #2e2e2e;
+$color_log_cabin_approx: #252321;
+$white: #fff;
+
+//urls
+$url_0: url(/assets/css/img/player/backward.svg);
+$url_1: url(/assets/css/img/feed-boxes/play.svg);
+$url_2: url(/assets/css/img/feed-boxes/pause-button.svg);
+$url_3: url(/assets/css/img/player/forward.svg);
+$url_4: url(/assets/css/img/player/shuffle.svg);
+$url_5: url(/assets/css/img/player/repeat.svg);
+$url_6: url(/assets/css/img/player/queue.svg);
+
+//@extend-elements
+//original selectors
+//#player .ctrl-btn:before, #player .ctrl-btn:after
+%extend_1 {
+  content: "";
+  position: absolute;
+  display: block;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  margin: auto;
+  transition: opacity .15s ease-in-out;
+}
+
+//original selectors
+//#player .btn-play, #player .btn-pause
+%extend_2 {
+  width: 34px;
+  height: 34px;
+  overflow: hidden;
+}
+
+#player {
+  position: absolute;
+  display: block;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 44px;
+  padding: 0 20px;
+  z-index: 9;
+  border-top: 1px solid $color_mine_shaft_approx;
+  background-color: $color_log_cabin_approx;
+  transition: all 0.35s cubic-bezier(0.39, 0.575, 0.565, 1);
+  &.big {
+    padding-top: 300px;
+    .player-inner {
+      opacity: 1;
+      .controls {
+        opacity: 0;
+        transition: opacity 0.2s cubic-bezier(0.39, 0.575, 0.565, 1);
+      }
+      .track-info {
+        opacity: 0;
+        transition: opacity 0.2s cubic-bezier(0.39, 0.575, 0.565, 1);
+      }
+      .btn-plus:before {
+        //Instead of the line below you could use @include transform($scale, $rotate, $transx, $transy, $skewx, $skewy, $originx, $originy)
+        transform: rotate(-135deg);
+      }
+    }
+    .big-bot {
+      .controls {
+        opacity: 1;
+        transition: opacity 0.25s cubic-bezier(0.39, 0.575, 0.565, 1);
+      }
+      .track-info {
+        opacity: 1;
+        transition: opacity 0.25s cubic-bezier(0.39, 0.575, 0.565, 1);
+      }
+    }
+    .big-block {
+      opacity: 1;
+      transform: scale(1);
+      bottom: 44px;
+      transition: transform 0s linear, opacity 0.4s cubic-bezier(0.39, 0.575, 0.565, 1) 0.1s, bottom 0.25s cubic-bezier(0.39, 0.575, 0.565, 1) 0.1s;
+    }
+  }
+  .big-block {
+    .btn-backwards {
+      width: 28px;
+      height: 20px;
+      margin-right: 15px;
+    }
+    .btn-forward {
+      width: 28px;
+      height: 20px;
+      margin-left: 15px;
+    }
+    .btn-play {
+      width: 56px;
+      height: 56px;
+      &:after {
+        width: 24px;
+        height: 24px;
+      }
+    }
+  }
+  .ctrl-btn {
+    position: relative;
+    display: inline-block;
+    vertical-align: middle;
+    &:before {
+      @extend %extend_1;
+      opacity: .4;
+    }
+    &:after {
+      @extend %extend_1;
+      opacity: .4;
+      background-repeat: no-repeat;
+      background-position: 50% 50%;
+      background-size: contain;
+    }
+    &:hover {
+      &:before {
+        opacity: .8;
+      }
+      &:after {
+        opacity: .8;
+      }
+    }
+    &:active {
+      &:before {
+        opacity: 1;
+      }
+      &:after {
+        opacity: 1;
+      }
+    }
+    &.active {
+      &:before {
+        opacity: 1;
+      }
+      &:after {
+        opacity: 1;
+      }
+    }
+  }
+  .btn-backwards {
+    width: 18px;
+    height: 13px;
+    margin-right: 5px;
+    &:after {
+      background-image: $url_0;
+    }
+  }
+  .btn-play {
+    @extend %extend_2;
+    &:before {
+      border: 2px solid $white;
+      border-radius: 50%;
+    }
+    &:after {
+      width: 18px;
+      height: 18px;
+      left: 4px;
+      background-image: $url_1;
+    }
+  }
+  .btn-pause {
+    @extend %extend_2;
+    &:before {
+      border: 2px solid $white;
+      border-radius: 50%;
+    }
+    &:after {
+      width: 18px;
+      height: 18px;
+      background-image: $url_2;
+    }
+  }
+  .btn-forward {
+    width: 18px;
+    height: 13px;
+    margin-left: 5px;
+    &:after {
+      background-image: $url_3;
+    }
+  }
+  .btn-shuffle {
+    width: 16px;
+    height: 40px;
+    margin: 2px 6px;
+    &:after {
+      background-image: $url_4;
+    }
+  }
+  .btn-repeat {
+    width: 16px;
+    height: 40px;
+    margin: 2px 6px;
+    &:after {
+      background-image: $url_5;
+    }
+  }
+  .btn-queue {
+    width: 32px;
+    height: 32px;
+    margin: 8px 5px;
+    &:after {
+      width: 22px;
+      height: 18px;
+      background-image: $url_6;
+    }
+    &.active .btn-queue:after {
+      opacity: 1;
+    }
+  }
+  .btn-plus {
+    width: 32px;
+    height: 32px;
+    margin: 8px 5px;
+    &:before {
+      content: ' +';
+      font-size: 30px;
+      line-height: 32px;
+      font-weight: 100;
+      transition: opacity 0.15s ease-in-out, transform 0.3s cubic-bezier(0.18, 0.89, 0.62, 1.4);
+    }
+  }
+  &:not(.big) {
+    padding-top: 0;
+  }
+}

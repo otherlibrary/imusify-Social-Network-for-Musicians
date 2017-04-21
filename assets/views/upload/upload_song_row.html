@@ -1,0 +1,374 @@
+<div class="u_container all-details"  id="u_container_${r}">
+	<div class="upload-prog pointer song_det ">
+		<p>${name}</p>
+		<div class="upload-process ${display}">
+			<div class="prog-bg">
+				<div class="prog-bar"></div>
+			</div> 
+			<span><span class="current_file_upd">0 Kb </span><span> &nbsp;of ${size}</span>
+		</div>
+		<div class="close-icon delete" data-deltype="${deltype}" data-r="${r}" data-delId="${delid}" data-userId="${userId}"><a href="Javascript:void(0)" id="cancel_${r}" class="delete_song" data-r="${r}"></a></div>
+	</div>
+
+	<div class="u_song_detail album-box ${displaynone}">
+		<form class="album-form" method="post" name="" id="track_form${r}" enctype="multipart/form-data" data-role="submitenter">
+			<ul class="nav nav-tabs user-tabs" data-tab role="tablist">
+				<li class="active"><a  data-toggle="tab" role="tab"  data-target="#basic${r}" >Basic</a></li>
+				<li ><a data-toggle="tab" role="tab" data-target="#sell-your-music${r}">Sell your music</a></li>
+			</ul>			
+			<div class="tab-content tabcontents">
+				<!-- Tab1 -->
+				<div class="tab-pane fade in active" id="basic${r}">
+					<div class="displaynone">	
+						<input name="r" type="hidden" value="${r}"/>
+						<input name="waveform" id="waveform_url" type="hidden" value=""/>
+						<input name="tracktype" id="tracktype" type="hidden" value="${upd_file_ext}"/>
+
+					</div>	
+					<div class="col-lg-3 col-md-4 col-sm-12 col-xs-12 cover-img">
+						<figure>
+							<img src="${track_image}" class="img-responsive" alt="" id="track_d_image_${r}">
+							<input type="hidden" value="" name="cover_base64" class="" id="cover_base64">
+                                                        <input name="cover_base64_uploaded" type="hidden" value="" class="cover_base64_uploaded">
+							<div id="croppic_${r}" style="height:300px;width:300px" class="displaynone"></div>	
+						</figure>
+						<p>Track image</p>
+						<a href="Javascript:void(0)" class="pink-btn image_upd" id="track_image_${r}">Upload Images</a>
+					</div>
+					<div class="col-lg-9 col-md-8 col-sm-12 col-xs-12">									
+						<div class="form-group">
+							<label for="title">Title</label>
+							<input type="text" class="form-control validate[required]" id="title" name="title" value="${title}" />
+						</div>
+						<div class="form-group">
+							<label for="des">Description</label>
+							<textarea id="des" rows="4" class="form-control validate[required]" name="desc">${description}</textarea>
+						</div>
+						<div class="form-group">
+							<label>Release Date (MM/DD/YYYY)</label>
+							<input type="text" class="form-control width85 blackc validate[required,custom[integer],min[1],max[12]]" value="${release_mm}" placeholder="MM" name="mm" />
+							<input type="text" class="form-control width85 blackc validate[required,custom[integer],min[1],max[31]]" value="${release_dd}" placeholder="DD" name="dd"/>
+							<input type="text" class="form-control width85 blackc validate[required,custom[integer],min[${release_min_year}],max[${release_max_year}]]" placeholder="YYYY" value="${release_yy}" name="yy"/>
+						</div>
+
+						<div class="form-group">
+							<label for="des">Track type</label>
+							<select class="common fullwidth genre_select" name="trackuploadtype" id="trackuploadtype${r}" data-r="${r}">
+								{{each(i,v)  track_upload_type_list}}		
+								<option value="${v.id}" {{if trackuploadType == v.id}} selected {{/if}}>${v.name}</option>
+								{{/each}}
+							</select>										
+						</div>
+
+						<div class="form-group">
+							<label for="des">Primary Genre</label>
+							<select class="common fullwidth genre_select" name="genre" id="genre${r}" data-r="${r}">
+								{{each(i,v)  genre_list}}		
+								<option value="${v.id}" {{if genreId == v.id}} selected {{/if}}>${v.genre}</option>
+								{{/each}}
+							</select>										
+						</div>
+
+						<div class="form-group">
+							<label for="genner">Secondary Genres (Pick two)</label>
+							<select class="form-control select2 " multiple  id="sec_genner${r}" name="sec_genner[]">
+								{{each(i,v) sec_genre_list}}		
+								<option value="${v.id}">${v.genre}</option>
+								{{/each}}
+							</select>
+						</div>
+                                            	
+                                                <div class="form-group">
+							<label for="sound">Sounds Like</label>
+							<select class="form-control select2" multiple  id="sound_like${r}" name="sound_like[]">
+								{{each(i,v)  sound_like_list}}		
+								<option value="${v.id}">${v.name}</option>
+								{{/each}}
+							</select>
+						</div>
+                                            
+                                                <div class="form-group">
+							<label for="genner">BPM (Beats Per Minute)</label>
+                                                        <input type="text" class="form-control" id="trackuploadbpm${r}" name="trackuploadbpm" data-r="${r}"/>
+<!--							<select class="common fullwidth genre_select" name="trackuploadbpm" id="trackuploadbpm${r}" data-r="${r}">								
+                                                                <option value="40">40</option>
+                                                                <option value="50">50</option>
+                                                                <option value="60">60</option>
+								<option value="70">70</option>
+                                                                <option value="80">80</option>
+                                                                <option value="90">90</option>
+                                                                <option value="100">100</option>
+                                                                <option value="110">110</option>
+                                                                <option value="120">120</option>
+                                                                <option value="130">130</option>
+                                                                <option value="140">140</option>
+                                                                <option value="150">150</option>
+                                                                <option value="160">160</option>
+                                                                <option value="170">170</option>
+                                                                <option value="180">180</option>
+							</select>-->
+						</div>
+                                            
+						<div class="form-group">
+							<label for="genner">pick moods</label>
+							<select class="form-control select2" multiple  id="mood${r}" name="moods_list[]">
+								{{each(i,v)  moods_list}}		
+								<option value="${v.id}">${v.mood}</option>
+								{{/each}}
+							</select>
+						</div>
+
+						<div class="form-group">
+							<label>Please select track type</label>
+							<div class="radio radio-pink radio-inline">
+								<input type="radio" name="ispublic" value="y" class="radion_input_vocal" checked="">
+								<label for="inlineRadio1"> Public</label>
+							</div>
+
+							<div class="radio radio-pink radio-inline">
+								<input type="radio" name="ispublic" value="n" class="radion_input_vocal">
+								<label for="inlineRadio1"> private</label>
+							</div>
+						</div>
+						<div class="form-group">
+							<div id="vocals_switch" data-on-text="True" class="make-switch" data-on="primary" data-off="info">
+								<label for="genneaaa">Vocal</label>
+								<input type="checkbox" class="vocal_switch" name="vocalsel">
+							</div>
+						</div>
+
+
+						
+						<div class="form-group displaynone vocal_disp">
+							<label>Please select type</label>
+							<div class="radio radio-pink radio-inline">
+								<input type="radio" name="music_vocals_y" value="y" class="radion_input_vocal">
+								<label for="inlineRadio1"> Rap</label>
+							</div>
+
+							<div class="radio radio-pink radio-inline">
+								<input type="radio" name="music_vocals_y" value="si" class="radion_input_vocal">
+								<label for="inlineRadio1"> Singing</label>
+							</div>
+
+							<div class="radio radio-pink radio-inline">
+								<input type="radio" name="music_vocals_y" value="sp" class="radion_input_vocal">
+								<label for="inlineRadio1"> Speech</label>
+							</div>							
+						</div>
+						<div class="form-group displaynone vocal_disp">
+							<label>Please select type of artist</label>
+							<div class="radio radio-pink radio-inline">
+								<input type="radio" name="music_vocals_gender" value="m" class="radion_input_gender">
+								<label for="inlineRadio1"> Male</label>
+							</div>
+
+							<div class="radio radio-pink radio-inline">
+								<input type="radio" name="music_vocals_gender" value="f" class="radion_input_gender">
+								<label for="inlineRadio1"> Female</label>
+							</div>
+
+							<div class="radio radio-pink radio-inline">
+								<input type="radio" name="music_vocals_gender" value="b" class="radion_input_gender">
+								<label for="inlineRadio1"> Both</label>
+							</div>
+						</div>
+
+						<div class="form-group">
+							<label for="genner">Instruments</label>
+							<select class="form-control select2" multiple  id="instruments${r}" name="instruments[]" >
+								{{each(i,v)  instuments_list}}		
+								<option value="${v.id}">${v.name}</option>
+								{{/each}}
+							</select>
+						</div>
+						<div class="form-group">
+							<label for="genner">Add to album </label>
+							<select class="form-control" id="album${r}" name="add_album">
+								<option selected="selected">Add to album</option>
+								{{each(i,v)  album_list}}		
+								<option value="${v.id}">${v.name}</option>
+								{{/each}}
+							</select>
+						</div>												
+
+						<div class="text-right">
+							<button type="button" class="btn creat-btn next-upload-btn" data-toggle="tab" role="tab" data-r="${r}">Next</button>
+						</div>	
+
+					</div>
+				</div>
+				
+				<div class="tab-pane fade" id="sell-your-music${r}">
+
+					<div class="form-group">
+						<label>
+							Please <a href="${url}account/stripe/connect" target="_blank">connect</a> to stripe to sell your music. If you already connected ignore this message.
+						</label>  
+					</div>
+
+					<div class="form-group">
+						<div class="make-switch" data-on-text="True" data-on="primary" data-off="info">
+							<label for="genner">Wanna make your music available for sale?</label>
+							<input type="checkbox" value="1" class="sale_avail_switch" name="sale_available">
+						</div>
+					</div>	
+
+					<!-- if select yes then display this two checkboxes -->
+					<div class="form-group displaynone music_available_sale_disp" >
+						<div class="checkbox_container">
+							{{each(i,v) sell_type_list}}
+							<span class="button-checkbox">
+								<button type="button" class="btn btn-xs check_btn" data-color="primary" data-val="{{if higher_type}} ${v.wave} {{else}} ${v.mp3} {{/if}}" data-id="${v.id}"><span class="music_avail_sale_disp_name">${v.name}</span> 
+									<span class="music_avail_sale_edit_span"> $
+										<a href="Javascript:void(0)" data-val="${v.id}" class="sell_type_edit_val" data-type="text" data-title="${v.name}">		
+											{{if higher_type}}
+											${v.wave}
+											{{else}}
+											${v.mp3}
+											{{/if}}	
+											
+											<i class="fa fa-pencil-square-o" data-val="${v.id}" class="sell_type_edit_val" data-type="text" data-title="${v.name}"></i>
+										</a>
+									</span>
+								</button>				
+								<input type="checkbox" class="hidden" name="sale_available_ar[]" value="${v.id}" />
+								<input type="hidden" value="" name="sell_${v.id}" class="" id="music_vals_${v.id}">
+							</span>
+							{{/each}}
+							
+						</div>
+					</div>
+					<!-- if select yes then display this two checkboxes ends -->
+                                       
+
+					<div class="form-group">
+						<div class="make-switch" data-on-text="True" data-on="primary" data-off="info">
+							<label for="genner">Wanna make your music available for licensing?</label>
+							<input type="checkbox" value="1" class="licence_avail_switch" name="licence_available">
+						</div>
+					</div>
+
+					<!-- music available for licence then display this -->
+					<div class="form-group displaynone lic_avail_disp" class="">
+						<div class="checkbox_container">
+							{{each(i,v) licence_type_list}}
+							<span class="button-checkbox">				
+								<button type="button" class="btn btn-xs check_btn" data-color="primary" data-val="{{if higher_type}} ${v.wave} {{else}} ${v.mp3} {{/if}}" data-id="${v.id}">
+                                                                        <span class="lic_avail_disp_name">
+                                                                            {{if v.id == 4}}
+                                                                            <a style="color: white !important;" href="Javascript:void(0)" data-val="${v.id}" class="edit_license_number" data-type="select2" data-title="Select number of copies">${v.name}<i class="fa fa-pencil-square-o"></i></a>
+                                                                            {{else}}
+                                                                            	${v.name}
+									    {{/if}}	
+                                                                            
+                                                                        </span>
+									<span class="lic_avail_disp_edit_span edit_price_operation">
+										$ <a href="Javascript:void(0)" data-val="${v.id}" class="edit_price_operation licence_type_edit_val" data-type="text" data-title="${v.name}" class="licence_type_edit_val">{{if higher_type}} ${v.wave} {{else}} ${v.mp3} {{/if}}<i class="fa fa-pencil-square-o"></i></a>
+									</span>
+								</button>				
+								<input type="checkbox" class="hidden edit_price_operation" name="licence_available_ar[]" value="${v.id}" />				
+								<input type="hidden" value="" name="lic_${v.id}" class="edit_price_operation" id="music_vals_${v.id}">
+                                                                <input type="hidden" value="" name="license_number_${v.id}" class="edit_license_number_hidden" id="license_number_${v.id}">
+							</span>
+							{{/each}}
+						</div>
+					</div>
+					<!-- music available for licence then display this ends -->
+                                         <!-- Available for exclusive -->                                                                              
+                                        <div class="form-group">
+						<div class="make-switch" data-on-text="True" data-on="primary" data-off="info">
+                                                    <label for="genner">Exclusive Licence?</label>
+                                                    <input type="checkbox" value="1" class="exclusive_license_switch" name="exclusive_available">                                                        							
+						</div>
+					</div>
+                                       					
+					<div class="form-group displaynone el_avail_disp" class="">
+						<div class="checkbox_container">
+							{{each(i,v) el_type_list}}
+							<span class="button-checkbox">
+                                                              <button type="button" class="btn btn-xs check_btn" data-color="primary" data-val="{{if higher_type}} ${v.wave} {{else}} ${v.mp3} {{/if}}" data-id="${v.id}">
+                                                                        <span class="el_avail_disp_name">                                                                           
+                                                                            	${v.name}									    
+                                                                        </span>
+									<span class="el_avail_disp_edit_span edit_price_operation">
+										$ <a href="Javascript:void(0)" data-val="${v.id}" class="edit_price_operation licence_type_edit_val" data-type="text" data-title="${v.name}" class="licence_type_edit_val">{{if higher_type}} ${v.wave} {{else}} ${v.mp3} {{/if}}<i class="fa fa-pencil-square-o"></i></a>
+									</span>
+								</button>
+                                                                        <input type="checkbox" class="hidden" name="exclusive_licence_ar[]" value="${v.id}" />
+									<input type="hidden" value="" name="el_${v.id}" class="" id="el_price_${v.id}" />
+                                                                        <input type="hidden" value="" name="exclusive_number_${v.id}" class="edit_exclusive_number_hidden" id="exclusive_number_${v.id}">
+                                                            
+<!--								<button type="button" class="btn btn-xs" data-color="primary">
+									<span class="el_avail_disp_name">${v.name}</span>
+									<span class="el_avail_disp_edit_span"> $ {{if higher_type}} ${v.wave} {{else}} ${v.mp3} {{/if}}	</span>
+									
+									<input type="checkbox" class="hidden" name="exclusive_licence_ar[]" value="${v.id}" />
+									<input type="hidden" value="" name="el_${v.id}" class="" id="el_price_${v.id}" />
+                                                                        <input type="hidden" value="" name="exclusive_number_${v.id}" class="edit_exclusive_number_hidden" id="exclusive_number_${v.id}">
+                                                                </button>-->
+                                                            
+								</span>
+								{{/each}}
+							</div>
+						</div>						
+                                                
+                                        <!-- Available for exclusive -->
+
+					<div class="form-group">
+						<div class="make-switch" data-on-text="True" data-on="primary" data-off="info">
+							<label for="genner">Wanna make your music available for Non-Profit use?</label>
+							<input type="checkbox" value="1" class="nonprofit_avail_switch" name="nonprofit_available">
+						</div>
+					</div>
+                                       
+					<!-- music available for non profit then display this -->
+					<div class="form-group displaynone np_avail_disp" class="">
+						<div class="checkbox_container">
+							{{each(i,v) np_type_list}}
+							<span class="button-checkbox">
+								<button type="button" class="btn btn-xs" data-color="primary">
+									<span class="np_avail_disp_name">${v.name}</span>
+									<span class="np_avail_disp_edit_span"> $ {{if higher_type}} ${v.wave} {{else}} ${v.mp3} {{/if}}	</span>
+									
+									<input type="checkbox" class="hidden" name="np_licence_ar[]" value="${v.id}" />
+									<input type="hidden" value="" name="np_${v.id}" class="" id="np_price">
+								</span>
+								{{/each}}
+							</div>
+						</div>
+						<!-- music available for non profit then display this ends -->
+               
+                                                
+                                                 <!-- Never sell my music -->
+                                                <div class="form-group">
+                                                        <div class="make-switch" data-on-text="True" data-on="primary" data-off="info">
+                                                                <label for="genner">Never sell my music?</label>
+                                                                <input type="checkbox" value="2" class="never_sell" name="never_sell">
+                                                        </div>
+                                                </div>
+                                                <!-- end of Never sell my music -->
+                                        
+                                        
+						<div class="form-group ${display_checkbox_class} checkbox checkbox-pink checkbox-success checkbox-inline" id="certify_checkbox">
+							<input type="checkbox" name="agree" id="agree" {{if checkboxselected}} checked {{/if}} class="">	
+							<label for="agree">I certify that I own the copyright in or have all the necessary rights related to such content to upload it.</label>
+							
+						</div>
+
+						<div class="text-right">
+
+							<a href="javascript:void(0)" id="" class="prev-upload-btn pink-btn creat-btn progress-button" data-loading="Working.." data-type="background-horizontal" data-r="${r}">Prev</a>
+
+							<a href="javascript:void(0)" id="" class="pink-btn creat-btn ${save_class} progress-button" data-loading="Working.." data-finished="Saved" data-type="background-horizontal" data-r="${r}">Save</a>
+							
+							<a href="javascript:void(0)" id="" class="cancel-btn ${action_class} pink-btn creat-btn progress-button" data-loading="Working.." data-finished="Cancelled" data-type="background-horizontal" data-r="${r}" data-deltype="${deltype}" data-r="${r}" data-delId="${delid}" data-userId="${userId}">Cancel</a>
+
+						</div>
+					</div>
+					<div class="clearfix"></div>
+				</div>	
+			</form>		
+		</div>		
+		<div class="clearfix"></div>
+	</div>								

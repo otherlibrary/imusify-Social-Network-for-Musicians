@@ -1,0 +1,65 @@
+<div id="form-bg" class="sign_in modal fade">
+	<div class="col-md-12 close-icon">
+		<a class="close_popup close"><span></span></a>
+	</div>
+	<div class="col-md-12">
+		<h1>Sign in to ${title}</h1>
+		<p>Use Facebook or your email to sign in. Don't have a ${title} account yet? No worries, <a href="${url}sign_up" class="popup" data-t="sign_up">joining</a> is easy.</p>
+	</div>
+	<div class="col-md-12 media-icons">
+		<a href="javascript:void(0)" id="fb_login" class="fb sociallogin" onclick="fbsignin_func()"><span></span></a>
+<!--		<a href="javascript:void(0)" class="in sociallogin" data-type="in"><span></span></a>
+		<a href="javascript:void(0)" class="sc sociallogin" data-type="sc"><span></span></a>-->
+	</div>
+	<div class="col-md-12"><p class="or">Or</p></div>
+	<div class="col-md-12">
+		<div class="form-box form-box2 clearfix">
+			<input type="hidden" id="type" class="type" value="sign_in">
+			<form  method="post" action="${url}api/login_api" class="form-field" id="login_form" data-role="submitenter">
+				<input type="hidden" id="type" class="type" value="user">
+				<input type="hidden" id="parenturl" class="type" value="${parenturl}">
+
+				<fieldset>
+					<div class="col-md-12 form-group">
+						<label for="uname" class="flabel" id="flabel">Email or Username</label>
+						<input type="type" name="username" class="form-control validate[required] text-input"  id="uname">
+					</div>
+				</fieldset>
+				<fieldset class="forgot_hide">
+					<div class="col-md-12 form-group">
+						<label for="password">Password</label>
+						<input type="password" name="password" class="form-control validate[required] text-input" id="password">
+					</div>
+				</fieldset>
+				<fieldset class="check-box forgot_hide" style="margin-top:0px;">
+				<div class="col-md-12 checkbox checkbox-pink ">
+						<input type="checkbox" name="rememberme" value='1' {{if remem}} checked {{/if}}>
+						<label>Keep me signed in</label>
+					</div>
+				</fieldset>
+				<fieldset>
+					<div class="col-md-12">
+						<a href="javascript:void(0)" id="submitloginform" class="creat-btn pull-left progress-button progress-button"  data-loading="Working.." data-finished="Finished!" data-type="background-horizontal">Sign In</a>
+						<a href="Javascript:void(0)" id="forgot_pass" class="for-pass">Forgot password?</a>
+					</div>
+				</fieldset>
+			</form>
+
+			<!-- Forgot password popup -->
+			<form  method="post" action="${url}api/login_api" class="form-field displaynone" id="forgot_pwd_form" data-role="submitenter">
+				<input type="hidden" value="user" name="user">
+				<fieldset>
+					<div class="col-md-12 form-group">
+						<label for="uname" class="flabel" id="flabel">Email</label>
+						<input type="type" name="email" class="form-control  validate[required,custom[email]] text-input"  id="email">
+					</div>
+				</fieldset>								
+				<fieldset>
+					<div class="col-md-12">
+						<a href="javascript:void(0)" id="submitresetform" class="creat-btn pull-left progress-button progress-button"  data-loading="Working.." data-finished="Finished!" data-type="background-horizontal">Send</a><a href="Javascript:void(0)" id="forgot_pass" class="for-pass">Forgot password?</a>			
+					</div>
+				</fieldset>
+			</form>							
+		</div>
+	</div>
+</div>

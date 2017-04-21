@@ -1,0 +1,22 @@
+<li id="album_track_edit_${ttrackId}">
+	<div class="left">
+		<button class="play song tr_item" data-href="${track_link}" data-url="${track_link}" data-track="${track_link}"></button>
+	</div>
+
+	<div class="flex">
+		<div class="title"> 
+			<a itemprop="name" href="${track_link}" data-role="trackdetail">${title}</a>
+		</div>
+		<div class="video"></div>
+		<div class="duration">${timelength}</div>
+		<div class="plays">${plays}</div>
+		<div class="connects">0</div>
+		<div class="comments">${comments}</div>
+		<div class="shares">${shares}</div>																
+		{{if isalbum}}																
+		<div class="addlInfoAndActions">
+			<i class="edit-icon album_edit" data-id="${ttrackId}" data-type="t"></i>
+		</div>
+		{{/if}}
+	</div>	
+</li>

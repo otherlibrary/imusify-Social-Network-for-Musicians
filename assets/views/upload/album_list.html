@@ -1,0 +1,28 @@
+<div class="col-xs-12 albums-list">
+	<div class="album-details">
+		<div class="cover-bg" style="background-image: url(${track_image});"></div>
+		<div class="song-play">
+			<figure><img src="${track_image}" alt=""></figure>
+			<a href="#" class="play-btn"></a>
+		</div>
+		<div class="album-info">
+			<p>${main_title} <span>Added on 12.08.2015M</span></p>
+			<ul class="pull-right">
+				<li><a href="${editalbumurl}" id="albumedit"  data-t="albumedit" class="popup">EDIT</a></li>
+				<li><a href="Javascript:void(0)"  class="delete" data-id="${editid}" data-type="a" data-deltype="au" data-r="${editid}" data-delid="${editid}" data-userid="${userId}">REMOVE</a></li>
+				<li><a href="javascript:void(0)"  class="album-tracks">TRACKS<span class="arrow"></span></a></li>
+			</ul>
+		</div>
+		
+	</div>
+
+	{{if song_list}}
+		{{each(i,v)  song_list}}
+			{{tmpl(v) "#albumListrow"}}
+		{{/each}}
+	{{else}}
+		<div class="song-info">
+			There are no songs added yet.
+		</div>	
+	{{/if}}
+</div>

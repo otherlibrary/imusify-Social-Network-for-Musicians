@@ -1,0 +1,96 @@
+<div id="form-bg" class="membership modal fade">
+	<div class="col-md-12 close-icon">
+		<a class="close_popup close"><span></span></a>
+	</div>
+	<div class="col-md-12">
+		<h1>Choose Membership - ${title}</h1>
+		<!-- <p>Use Facebook, Linked in, Soundcloud or your email to sign in. Don't have a ${title} account yet? No worries, <a href="${url}sign_up" class="popup" data-t="sign_up">joining</a> is easy.</p> -->
+	</div>
+	<div class="col-md-1"></div>
+	<div class="col-md-10">
+		<div class="clearfix">			
+			<section id="pricing" class="pricing">
+				<div class="container_1">
+					<!-- <div class="heading">
+						<h1>“I quadrupled my email opt-in rate by installing PopUp Domination.”</h1>
+					</div> -->
+					<div class="table-responsive">
+						<table class="table">
+							<thead>
+								<tr>
+									<th>&nbsp;</th>
+									{{each(i,v)  plans}}
+									<th class="text-center">
+										${v.name} <br>
+										<h2>€ ${v.amount}</h2>
+										{{if v.current_plan_active}} 
+											<a href="${url}membership/cancelsubscription" data-plan="${v.plan_id}" class="btn btn-primary membership_cancel_plan">Cancel</a>
+										{{else}}
+                                                                                   {{if v.amount}}
+											<a href="${url}membership/${v.plan_id}" class="btn btn-primary membership_buy_btn">Buy Now</a>                                                                                           
+                                                                                   {{else}}
+                                                                                   	<a href="#" class="btn btn-primary">FREE</a>                                                                                           
+                                                                                   {{/if}}     
+										{{/if}}
+									</th>
+									{{/each}}									
+								</tr>
+							</thead>
+							<tbody>
+								{{each(i,v)  columns_arr}}
+								<tr class="text-center">
+									<td class="text-left">
+										<i class="fa fa-globe"></i>
+										<a class="pdpopover" data-toggle="popover" title="" data-content="This tells you how many websites you can install PopUp Domination on." data-original-title="Licenses">${v.text}</a>
+									</td>
+
+									{{each(i,k)  v.values}}
+									<td>{{html k}}</td>
+									{{/each}}
+
+								</tr>
+								{{/each}}
+
+								<tr class="text-center">
+									<td>&nbsp;</td>
+
+									{{each(i,v)  plans}}
+									
+									<td>
+									{{if v.current_plan_active}} 
+											<a href="${url}membership/cancelsubscription" data-plan="${v.plan_id}" class="btn btn-primary membership_cancel_plan">Cancel</a>
+										{{else}}
+                                                                                    {{if v.amount}}
+											<a href="${url}membership/${v.plan_id}" class="btn btn-primary membership_buy_btn">Buy Now</a>
+                                                                                    {{else}}
+                                                                                        <a href="#" class="btn btn-primary">FREE</a>
+                                                                                    {{/if}}
+										{{/if}}
+									</td>
+
+									
+									{{/each}}
+								</tr>
+							</tbody>
+						</table>
+					</div>
+					<!-- <div class="guarantee">
+						<div class="row">
+							<div class="col-xs-2">
+								<img src="" class="img-responsive center-block">
+							</div>
+							<div class="col-xs-10">
+								<h3>60 Day Money-Back Guarantee</h3>
+								<p>We personally guarantee that if you don’t at least double your subscriber rate we will happily refund you 100% of your money.</p>
+								<p>Even 60 days after purchase.</p>
+								<p>There is absolutely no way you can lose, except by not giving PopUp Domination a try.</p>
+							</div>
+						</div>
+					</div> -->
+				</div>
+			</section>	
+
+
+		</div>
+	</div>
+</div>

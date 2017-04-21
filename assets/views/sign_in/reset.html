@@ -1,0 +1,34 @@
+<div id="form-bg" class="reset modal fade">
+					<div class="col-md-12 close-icon">
+						<a class="close_popup close"><span></span></a>
+					</div>
+					<div class="col-md-12">
+						<h1>Reset your password</h1>						
+					</div>				
+					<div class="col-md-12">
+						<div class="form-box form-box2 clearfix">
+							<form  method="post"  class="form-field" id="reset_pwd_form">
+								<input type="hidden" name="fp_code" value="${fp_code}">
+								<input type="hidden" name="type" value="user">
+								<fieldset class="forgot_hide">
+									<div class="col-md-12 form-group">
+    									<label for="password">Password</label>
+    									<input type="password" name="rst_password" class="form-control validate[required] text-input" id="password">
+									</div>
+								</fieldset>
+								<fieldset class="forgot_hide">
+									<div class="col-md-12 form-group">
+    									<label for="password">Confirm Password</label>
+    									<input type="password" name="cm_rst_password" class="form-control validate[required] text-input" id="password">
+									</div>
+								</fieldset>
+								<fieldset>
+									<div class="col-md-12">
+										
+										<a href="javascript:void(0)" id="submitresetpwdform" class="creat-btn pull-left progress-button progress-button"  data-loading="Working.." data-finished="Finished!" data-type="background-horizontal">Reset</a>										
+									</div>
+								</fieldset>
+							</form>
+						</div>
+					</div>
+				</div>

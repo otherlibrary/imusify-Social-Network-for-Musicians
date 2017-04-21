@@ -1,0 +1,198 @@
+<section id="top-header" class="explore_page">
+	<!-- <div class="top-header-part"> -->
+	<div class="row">
+		<div class="col-md-12 top-heading">
+			<div class="col-md-7 col-sm-12">
+				<ul class="heading">
+					<li><a href="${url}browse" data-rel="ajax" data-role="recommended">Recommended</a></li>
+					<li class="borderR"></li>
+					<li><a href="${url}explore" data-rel="ajax" data-role="explore" class="active">Explore</a></li>
+				</ul>
+			</div>
+			<div class="col-md-5 col-sm-12 search-box">
+				<form method="post">
+					<span class="search-icon search-c search_input_head"></span>
+				</form>
+			</div>
+		</div>
+	</div>
+	<!-- </div> -->
+</section>
+<section id="explore-conts">
+	<h2 id="tags_header" class="tags_header">SEARCH WITH TAGS</h2>
+	<div id="carousel-example-generic" class="carousel slide" data-ride="carousel">
+		<!-- Wrapper for slides -->
+		<div class="carousel-inner" role="listbox" id="exp_s_tag_container">
+			<input type="hidden" id="select_tags_cont" value="">
+			<input type="hidden" id="select_subtags_cont" value="">	
+			<div class="item active">						
+				<ul id="tags_ul">
+					{{tmpl "#tagsManage"}}				
+				</ul>
+			</div>								
+		</div>
+
+		<!-- Controls -->
+		<a class="left carousel-control exploretags" href="#carousel-example-generic" role="button" data-slide="prev" style="z-index:999; width:10%; background-color:rgba(26,26,27,1);" data-page="1">
+			<span class="left-arrow"></span>
+			<span class="sr-only">Previous</span>
+		</a>
+		<a class="right carousel-control exploretags" href="#carousel-example-generic" role="button" data-slide="next" style="z-index:999; width:10%; background-color:rgba(26,26,27,1);" data-page="2">
+			<span class="right-arrow"></span>
+			<span class="sr-only">Next</span>
+		</a>
+	</div>
+	<div class="filter clearfix">
+		<h2>OR SPECIFY WITH FILTERS</h2>
+		<div id="combo1" class="combo2">
+			<select class="styled drop_search" id="genre_explore" name="">
+				<option value="" selected="selected">Genre</option>
+				{{each(i,v)  genres}}
+				<option value="${v.id}">${v.genre}</option>
+				{{/each}}	
+			</select>
+		</div>
+		<div id="combo2" class="combo2 combo1">
+			<select class="styled drop_search" id="mood_explore">
+				<option value="" selected="selected">Mood</option>
+				{{each(i,v)  moods_list}}
+				<option value="${v.id}">${v.mood}</option>
+				{{/each}}	
+			</select>
+		</div>
+		<div id="combo3" class="combo2 combo1">
+			<select class="styled drop_search" id="instrument_explore">
+				<option value="" selected="selected">Instrument</option>
+				{{each(i,v)  instruments_list}}
+				<option value="${v.id}">${v.name}</option>
+				{{/each}}	
+			</select>
+		</div>
+		<div class="switch-btns">
+			<div class="make-switch" data-on-text="True" data-on="primary" data-off="info">
+				<h4>VOCALS</h4>
+				<input type="checkbox" class="explore_vocal_switch" name="explore_vocal">
+			</div>
+			<!-- <h4>VOCALS</h4>
+			<div class="switch Off">
+				<div class="Toggle"></div>
+				<span class="On">ON</span>
+				<span class="Off">OFF</span>
+			</div> -->
+		</div>
+		<div class="switch-btns margin-r">
+			<!-- <h4>LOOP</h4>
+			<div class="switch On">
+				<div class="Toggle"></div>
+				<span class="On">ON</span>
+				<span class="Off">OFF</span>
+			</div> -->
+
+			<div class="make-switch" data-on-text="True" data-on="primary" data-off="info">
+				<h4>LOOP</h4>
+				<input type="checkbox" class="explore_loop_switch" name="explore_loop">
+			</div>
+
+
+
+		</div>
+	</div>
+
+
+	<div class="range-sliders">
+
+		<div class="slider-bar">
+			<p>PRICE</p>
+			<input id="explore_price_range" class="irs-hidden-input displaynone" readonly="">
+		</div>
+
+		<div class="slider-bar">
+			<p>DURATION</p>
+			<input id="explore_duration" class="irs-hidden-input displaynone" readonly="">
+
+		</div>
+
+	</div>
+
+
+
+						<!--<div class="range-sliders">
+
+							<div class="slider-bar">
+								<p>PRICE</p>
+								<div class="slider-inner">
+									<div class="slider-bg">
+										
+											<input type="hidden" class="slider-input range-slider" value="15,50" id="price_jslider"/>
+										
+									</div>
+									<article>
+										<p class="pull-left">$0</p>
+										<p class="pull-right">$100</p>
+									</article>
+								</div>
+							</div>	
+
+							<div class="slider-bar">
+								<p>DURATION</p>
+								<div class="slider-inner">
+									<div class="slider-bg">
+										<input type="hidden" class="slider-input single-slider" value="4.20" id="duration_jslider" />
+									</div>
+									<article>
+										<p class="pull-left">0.01</p>
+										<p class="pull-right">5.00+</p>
+									</article>
+								</div>
+							</div>
+						</div>
+						 <div class="range-sliders">
+							<div class="slider-bar">
+								<p>PRICE</p>
+								<div class="slider-inner">
+									<div class="slider-bg">
+										<div class="slide" style="margin-left:35px;">
+											<div class="value left-circle">$15<span></span></div>
+											<div class="value right-circle">$50<span></span></div>
+										</div>
+									</div>
+									<article>
+										<p class="pull-left">$0</p>
+										<p class="pull-right">$100</p>
+									</article>
+								</div>
+							</div>
+							<div class="slider-bar">
+								<p>DURATION</p>
+								<div class="slider-inner">
+									<div class="slider-bg">
+										<div class="slide" style="width:80%;">
+											<div class="value right-circle">4.20<span></span></div>
+										</div>
+									</div>
+									<article>
+										<p class="pull-left">0.01</p>
+										<p class="pull-right">5.00+</p>
+									</article>
+								</div>
+							</div>
+						</div> -->
+					</section>
+					<section id="all-details" class="tabs-contents">
+						<div class="row">
+							<div class="col-md-12 col-sm-12 col-xs-12 width100 marging-b35">
+								<!-- <ul class="nav nav-tabs user-tabs" role="tablist">
+									<li class="active"><a href="#popular-songs" role="tab" data-toggle="tab">POPULAR SONGS</a></li>
+									<li><a href="#new-songs" role="tab" data-toggle="tab">NEW SONGS</a></li>
+									<li><a href="#pop-artists" role="tab" data-toggle="tab">POPULAR ARTISTS</a></li>
+									<li><a href="#new-artists" role="tab" data-toggle="tab">NEW ARTISTS</a></li>
+									<li><a href="#pop-playlist" role="tab" data-toggle="tab">POPULAR PLAYLISTS</a></li>
+									<li><a href="#new-playlist" role="tab" data-toggle="tab">NEW PLAYLISTS</a></li>
+								</ul> -->
+								<div class="tab-content" id="tab_e_content">
+									<div class="tab-pane fade in active ${class_nm}" id="explore_songs">		{{tmpl "#tabRender"}}
+									</div>
+								</div>
+							</div>
+						</div>
+					</section>

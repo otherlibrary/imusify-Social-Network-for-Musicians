@@ -1,0 +1,21 @@
+<div class="msg" id="comment_new_row">
+<figure><img src="${profileImage}" alt=""></figure>
+	<article>
+<!-- 	<div id="form-bg"> -->
+	<div class="form-box form-box2 clearfix">
+		<form action="${url}api/feed_new_comment" method="post" name="" id="feed_new_comment_form" class="form-field" data-role="submitenter">
+			<input type="hidden" name="feedlogId" id="feedlogId" value="${feedlogId}">
+			<input type="hidden" name="parentId" id="parentId" value="${parentId}">
+			<h5>${username}</h5>
+			<p>
+				<!-- <input class="form-control validate[required] text-input" type="text" name="comment" id="comment" required />
+ 				-->
+				<textarea name="comment" id="comment" class="form-control validate[required] text-input"></textarea>
+			</p>
+			<a href="javascript:void(0)" id="submitfeedcomment" class="creat-btn pull-left progress-button progress-button" data-loading="Working.." data-finished="Finished!" data-type="background-horizontal">Comment</a>
+                        <a href="javascript:void(0)" id="cancelreply" class="creat-btn pull-right progress-button progress-button" data-loading="Working.." data-finished="Cancelled" data-type="background-horizontal">Cancel</a>
+		</form>
+		</div>
+<!-- 	</div> -->
+	</article>	
+</div>

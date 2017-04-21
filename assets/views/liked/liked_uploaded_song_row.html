@@ -1,0 +1,51 @@
+<div class="${row_id}_${editid}">
+	<div class="row" id="${row_id}_${editid}">
+		<div class="col-md-12 album-box">								
+			<div class="col-lg-3 col-md-4 col-sm-12 col-xs-12 cover-img">
+				<figure class="sqr"><img src="${track_image}" class="img-responsive img_load" alt=""></figure>
+			</div>
+			<div class="col-lg-9 col-md-8 col-sm-12 col-xs-12">
+				<div class="upload-details">
+					<div class="user-info">
+						<article>
+							<h4>${main_title}</h4>
+							<p>${genre} song ${release_dd}/${release_mm}/${release_yy}</p>
+						</article>
+						
+						{{if my_song}}
+
+							<a href="Javascript:void(0)" class="edit-icon" data-id="${editid}" data-type="${edittype}" title="Edit">
+								<span></span>
+							</a>
+
+							<a href="Javascript:void(0)" class="delete-icon delete" data-id="${editid}" data-type="${edittype}" data-deltype="au" data-r="${editid}" data-delId="${editid}" data-userId="${userId}" title="Delete">
+								<span></span>
+							</a>
+
+						{{/if}}
+					</div>
+					<div class="details-list">
+						<ol class="table own mediaItems ">
+							<!-- heading logic -->
+							<li class="heading">
+								<div class="flex">
+									<div class="title">NAME</div>
+									<div class="video"></div>
+									<div class="duration">TIME</div>
+									<div class="plays">PLAYS</div>
+									<div class="connects">CONNECTS</div>
+									<div class="comments">COMMENTS</div>
+									<div class="shares">SHARES</div>
+									<div class="addlInfoAndActions"></div>
+								</div>
+							</li>		
+							{{each(i,k) song_list}}		
+								{{tmpl(k) "#songslistRow"}}		
+							{{/each}}
+						</ol>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>

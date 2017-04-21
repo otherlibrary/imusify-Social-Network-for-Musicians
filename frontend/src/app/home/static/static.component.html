@@ -1,0 +1,28 @@
+<div class="main">
+    <div class="main-top">
+        <div class="tab-panel">
+            <a class="tab-pnl-btn" href="#"
+               routerLink="privacy"
+               routerLinkActive="active">Privacy Policy</a>
+            <a class="tab-pnl-btn" href="#"
+               routerLink="legal"
+               routerLinkActive="active">Legal</a>
+            <a class="tab-pnl-btn" href="#"
+               routerLink="video-privacy"
+               routerLinkActive="active">Video Privacy Policy</a>
+            <a class="tab-pnl-btn" href="#"
+               routerLink="terms"
+               routerLinkActive="active">Terms Of Use Agreement</a>
+        </div>
+    </div>
+    <div class="inner-scroll static-inner">
+
+        <div class="static-info-block">
+            <!--<h1 class="static-tit">Privacy Policy</h1>-->
+            <div class="static-txt">
+                <router-outlet></router-outlet>
+            </div>
+        </div>
+
+    </div>
+</div>

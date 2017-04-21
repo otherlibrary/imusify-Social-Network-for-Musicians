@@ -1,0 +1,145 @@
+<div class="upload_item_box album-box" id="items-box">
+	<div id="form-bg" class="albumedit modal fade" data-backdrop="static" data-keyboard="false">
+		<div class="col-md-12 close-icon">
+			<a class="close_popup close"><span></span></a>
+		</div>
+		<div class="col-md-12">
+			<h1>Edit album ${name}</h1>							
+		</div>
+		<div class="col-md-12">
+			<div class="form-box clearfix">
+				<div class="u_container all-details" id="u_container_${r}">
+					<div class="u_song_detail album-box ${displaynone}">
+						<form class="album-form" method="post" enctype="multipart/form-data" data-role="submitenter" name="album_create_form" id="album_create_form">
+							<ul class="nav nav-tabs user-tabs" data-tab role="tablist">
+								<li class="active"><a data-toggle="tab" role="tab"  data-target="#album_basics_modal_tab">Basic</a></li>
+								<li ><a data-toggle="tab" role="tab" data-target="#sell_your_album_modal_tab">Sell your album</a></li>
+							</ul>	
+
+							<div class="tab-content tabcontents">
+
+								<div class="tab-pane fade in active" id="album_basics_modal_tab">
+									<div class="displaynone">	
+										<input type="hidden" name="id" value="${id}">
+										<input name="waveform" id="waveform_url" type="hidden" value=""/>	
+									</div>	
+									<div class="col-lg-3 col-md-4 col-sm-12 col-xs-12 cover-img">
+										<figure>
+											<img src="${album_img}" class="img-responsive" alt="" id="album_image_modal_preview">
+											<div id="album_img_modal" style="height:300px;width:300px" class="displaynone"></div>	
+
+										</figure>
+										<p>Album image</p>
+										<a href="Javascript:void(0)" class="pink-btn" id="album_image_modal_upd">Upload Images</a>
+										<!-- <input id="album_image_modal_upd" class="displaynone" name="album_image" style="display:none;" type="file"> -->
+
+									</div>
+
+									<div class="col-lg-9 col-md-8 col-sm-12 col-xs-12">						
+										<div class="form-group">
+											<label for="title">Title</label>
+											<input type="text" name="album_title" class="form-control validate[required]" id="title" value="${name}">
+										</div>
+
+
+										<div class="form-group">
+											<label for="email">Label</label>
+											<input type="text" name="album_label" class="form-control validate[required]" id="lab" value="${label}">							
+										</div>
+
+
+										<div class="form-group">
+											<label for="des">Description</label>
+											<textarea id="des" name="album_desc" rows="4" class="form-control validate[required]">${description}</textarea>
+										</div>
+
+										<div class="form-group">
+											<label for="passwprd">Primary Genre</label>
+											<select class="form-control" name="genre">						{{each(i,v)  genre_list}}		
+												<option {{if v.selected}} selected="selected" {{/if}} value="${v.id}">${v.genre}</option>
+												{{/each}}
+											</select>
+										</div>
+
+
+										<div class="form-group">
+											<label>Release Date (MM/DD/YYYY)</label>
+
+											<input type="text" class="form-control width85 blackc validate[required,custom[integer],min[1],max[12]]" value="${release_mm}" placeholder="MM" name="rdate_mm" />
+
+
+											<input type="text" class="form-control width85 blackc validate[required,custom[integer],min[1],max[31]]" value="${release_dd}" placeholder="DD" name="rdate_dd"/>
+
+											<input type="text" class="form-control width85 blackc validate[required,custom[integer],min[${release_min_year}],max[${release_max_year}]]" placeholder="YYYY" value="${release_yy}" name="rdate_yy"/>
+
+										</div>
+
+										<div class="form-group">
+											<label>Secondary Genres (Pick two)</label>
+											<select class="form-control validate[required] select2" multiple id="modal_sec_tags" name="sec_tags[]">
+												{{each(i,v)  sec_genre_list}}		
+												<option {{if v.selected}} selected="selected" {{/if}} value="${v.id}">${v.genre}</option>
+												{{/each}}
+											</select>
+
+										</div>
+										<div class="text-right">
+											<button type="button" class="btn creat-btn next-album-modal-btn" data-toggle="tab" role="tab">Next</button>
+										</div>	
+
+									</div>
+								</div>
+
+								<div class="tab-pane fade" id="sell_your_album_modal_tab">
+
+									<div class="form-group">
+										<div class="make-switch" data-on-text="True" data-on="primary" data-off="info">
+											<label for="genner">Wanna make your album available for sale?</label>
+											<input type="checkbox" class="sale_avail_modal_switch" name="album_avail_for_sale" value="y">
+										</div>
+									</div>	
+
+
+									<div class="form-group">
+										<div class="make-switch" data-on-text="True" data-on="primary" data-off="info">
+											<label for="genner">Wanna make your album fully for sale?</label>
+											<input type="checkbox" class="album_partial_modal_switch" value="y" name="album_fully_avail">
+										</div>
+									</div>		
+
+									<div class="form-group album_sale_def_modal_msg" >
+										<div class="form-group">
+											<label for="des">YOu need to fill track selling price while upload.</label>
+										</div>
+									</div>
+
+
+									<div class="form-group displaynone sale_avail_switch_modal_disp" >
+										<div class="form-group">
+											<label for="des">Album Price</label>
+											<input type="text" name="album_price" class="form-control" id="lab" value="${album_price}">
+										</div>
+									</div>
+
+
+									<div class="text-right">
+
+										<a href="javascript:void(0)" id="" class="prev-album-modal-btn pink-btn creat-btn progress-button" data-loading="Working.." data-type="background-horizontal" data-r="${r}">Prev</a>
+
+										<a href="javascript:void(0)" id="" class="pink-btn creat-btn ${save_class} progress-button " data-loading="Working.." data-finished="Saved" data-type="background-horizontal" data-modal="true" data-r="${r}">Save</a>
+
+									</div>
+
+								</div>	
+							</div>
+						</form>		
+					</div>		
+					<div class="clearfix">
+
+					</div>
+				</div>								
+
+			</div>
+		</div>
+	</div>
+</div>

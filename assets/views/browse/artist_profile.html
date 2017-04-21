@@ -1,0 +1,96 @@
+<section id="player-box" class="artist-profile">
+						<figure class="cover-photo">
+						<img src="${cover_image}" alt="${artist_name}" class="img-responsive img_load"></figure>
+						<div class="right-part">
+							<figure class="profile-img"><a href="">
+							<img src="${profile_image}" alt="${artist_name}" class="img-responsive img_load">
+							</a></figure>
+							<div class="profile-details">
+								<h2>${firstname} ${lastname} <span>${city} ${country}</span><a href="" class="premium-icon" title="Premium Member"></a></h2>
+								<ul>
+									<li><a href=""><span>${no_of_followers}</span> FOLLOWERS</a></li>
+									<li><a href=""><span>${no_of_songs}</span> SONGS</a></a></li>
+									<li><a href=""><span>${no_of_albums}</span> ALBUMS</a></a></li>
+								</ul>
+								<a href="" class="follow-btn active">FOLLOWING</a>
+								<a href="" class="share-icon">SHARE</a>
+							</div>
+						</div>	
+					</section>
+					<section id="all-details" class="artist-songs">
+						<div class="row">
+							<div class="col-md-8 col-sm-12 col-xs-12 width100 marging-b35">
+							<!-- FOR TABS MENUS -->
+								<ul class="nav nav-tabs user-tabs" role="tablist">
+									<li class="active"><a href="#popular-songs" role="tab" data-toggle="tab">POPULAR SONGS</a></li>
+									<li><a href="#new-songs" role="tab" data-toggle="tab">NEW SONGS</a></li>
+									<li><a href="#albums" role="tab" data-toggle="tab">ALBUMS</a></li>
+								</ul>
+								<div class="tab-content">
+								  	<!-- Tab1 -->
+								  	<div class="tab-pane fade in active" id="popular-songs">
+								  		<ul class="title">
+								  			<li class="col1">&nbsp;</li>
+								  			<li class="col2">#</li>
+								  			<li class="col3">SONG</li>
+								  			<li class="col4">ALBUM</li>
+								  			<li class="col5"><span class="time"></span></li>
+								  		</ul>							  		
+										 {{each(i,v)  popular_songs}}
+											{{tmpl(v) "#popSongs"}}
+										{{/each}}										
+								  	</div>
+								  	<!-- Tab2 -->
+								  	<div class="tab-pane fade" id="new-songs">
+								  		Coming Soon..!!
+								  	</div>
+								  	<!-- Tab3 -->
+								  	<div class="tab-pane fade" id="albums">
+								  		Coming Soon..!!
+								  	</div>
+								</div>
+							</div>
+							<div class="col-md-4 col-sm-12 width100 col-xs-12">
+								<!-- FOR TABS MENUS -->
+								<ul class="nav nav-tabs user-tabs" role="tablist">
+									<li class="active"><a href="#biography" role="tab" data-toggle="tab">Biography</a></li>
+									<li><a href="#discography" role="tab" data-toggle="tab">DISCOGRAPHY</a></li>
+									<li><a href="#photos-tab" role="tab" data-toggle="tab">PHOTOS</a></li>
+								</ul>
+								<div class="tab-content">
+								  	<!-- Tab1 -->
+								  	<div class="tab-pane fade in active" id="biography">
+								  		<article>
+								  			<p><span>Founded</span> ${artist_founded}</p>
+								  			<p><span>Genre</span> ${artist_genre}</p>
+								  			<p><span>Vocals</span> ${firstname} ${lastname}</p>
+								  			<p><span>Guitars</span> ${artist_guitar}</p>
+											<p><span>Sex</span> ${artist_sex}</p>
+											<p><span>Keyboard</span> ${artist_keyboard}</p>
+											
+								  		</article>
+								  	</div>
+								  	<!-- Tab2 -->
+								  	<div class="tab-pane fade" id="discography">
+								  		Coming Soon..!!
+								  		<!-- <article>
+								  			<p><span>Length</span> 4:27</p>
+								  			<p><span>Genre</span> Rap & Hip-Hop</p>
+								  			<p><span>Label</span> Come here</p>
+								  			<p><span>Release</span> Oct 28, 2014</p>
+								  		</article> -->
+								  	</div>
+								  	<!-- Tab3 -->
+								  	<div class="tab-pane fade" id="photos-tab">
+								  		Coming Soon..!!
+								  		<!-- <article>
+								  			<p><span>Length</span> 4:27</p>
+								  			<p><span>Genre</span> Rap & Hip-Hop</p>
+								  			<p><span>Label</span> Come here</p>
+								  			<p><span>Release</span> Oct 28, 2014</p>
+								  		</article> -->
+								  	</div>
+								  </div>
+							</div>
+						</div>
+					</section>

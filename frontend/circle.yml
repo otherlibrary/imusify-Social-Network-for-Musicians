@@ -1,0 +1,14 @@
+machine:
+  timezone:
+    America/Los_Angeles
+  node:
+    version: 6.9.1
+
+dependencies:
+  override:
+    - npm cache clean
+    - npm install
+
+test:
+  override:
+    - npm run test

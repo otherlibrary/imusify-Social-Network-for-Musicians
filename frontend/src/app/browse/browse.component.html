@@ -1,0 +1,27 @@
+<div class="main">
+    <div class="main-top">
+        <div class="one-block">
+            <div class="tabs">
+                <a class="tabs-item"
+                   href="#"
+                   routerLink="recommended"
+                   routerLinkActive="active">Recommended</a>
+                <i class="sep"></i>
+                <a class="tabs-item"
+                   href="#"
+                   routerLink="browse-explore"
+                   routerLinkActive="active">Explore</a>
+            </div>
+            <form method="post" action="/" class="search-form">
+                <input type="text" id="searchInput" placeholder="What are you looking for?" value=""/>
+                <span></span>
+                <a href="#" (click)="goToSearch()" id="searchLink">Search</a>
+                <!--<button type="submit">Search</button>-->
+            </form>
+        </div>
+    </div>
+
+    <div class="inner-scroll browse-inner">
+        <router-outlet></router-outlet>
+    </div>
+</div>

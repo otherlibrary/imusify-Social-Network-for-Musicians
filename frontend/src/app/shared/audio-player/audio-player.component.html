@@ -1,0 +1,150 @@
+<div id="player">
+  <div class="queue-table-wrap">
+    <table class="song-table ar`tists">
+      <thead>
+      <tr>
+        <th>Song</th>
+        <th>Artists</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr class="active">
+        <td>Border</td>
+        <td>Come Again</td>
+      </tr>
+      <tr>
+        <td>A Sky Full Of Stars</td>
+        <td>Coldplay</td>
+      </tr>
+      <tr>
+        <td>Problem</td>
+        <td>Arianna Grade</td>
+      </tr>
+      <tr>
+        <td>Summer</td>
+        <td>Calvin Harris</td>
+      </tr>
+      <tr>
+        <td>Falling for You</td>
+        <td>The 1975</td>
+      </tr>
+      <tr>
+        <td>Sing</td>
+        <td>The 1975</td>
+      </tr>
+      <tr>
+        <td>Fancy</td>
+        <td>Ed Sheeran</td>
+      </tr>
+      <tr>
+        <td>Falling for You</td>
+        <td>The 1975</td>
+      </tr>
+      <tr>
+        <td>Sing</td>
+        <td>The 1975</td>
+      </tr>
+      <tr>
+        <td>Fancy</td>
+        <td>Ed Sheeran</td>
+      </tr>
+      <tbody>
+    </table>
+  </div>
+  <!--Normal & Hover-->
+  <div class="big-block">
+    <div class="big-top">
+      <div class="prev-block">
+        <a href="#" class="top-one">
+          <img src="assets/images/feed-boxes/thumbs/2.jpg" alt=""/>
+        </a>
+        <a href="#" class="top-one">
+          <img src="assets/images/feed-boxes/thumbs/3.jpg" alt=""/>
+        </a>
+        <a href="#" class="top-one">
+          <img src="assets/images/feed-boxes/thumbs/4.jpg" alt=""/>
+        </a>
+      </div>
+      <div class="curr-block">
+        <a href="#" class="top-one">
+          <img src="assets/images/feed-boxes/thumbs/1.jpg" alt=""/>
+        </a>
+      </div>
+      <div class="next-block">
+        <a href="#" class="top-one">
+          <img src="assets/images/feed-boxes/thumbs/5.jpg" alt=""/>
+        </a>
+        <a href="#" class="top-one">
+          <img src="assets/images/feed-boxes/thumbs/6.jpg" alt=""/>
+        </a>
+        <a href="#" class="top-one">
+          <img src="assets/images/feed-boxes/thumbs/7.jpg" alt=""/>
+        </a>
+      </div>
+    </div>
+    <div class="big-bot">
+      <div class="track-info">
+        <div class="info-left">
+          <img *ngIf="currentPlayedTrack" [src]="currentPlayedTrack.track_image" alt=""/>
+        </div>
+        <div class="info-right">
+          <a class="title" href="#"><span>Border</span></a>
+          <a class="subtitle" href="#"><span>Come Again</span></a>
+        </div>
+      </div>
+      <div class="controls">
+        <button type="button" class="ctrl-btn btn-backwards"
+                title="Fast backwards"></button>
+        <button type="button" class="ctrl-btn btn-play"></button>
+        <button type="button" class="ctrl-btn btn-forward"
+                title="Fast Forward"></button>
+      </div>
+    </div>
+  </div>
+  <div *ngIf="currentPlayedTrack" class="player-bg"
+       [ngStyle]="{'background-image': 'url(' + currentPlayedTrack.track_image + ')'}">
+  </div>
+  <div class="player-inner" *ngIf="currentPlayedTrack">
+    <div class="track-info">
+      <div class="info-left">
+        <img [src]="currentPlayedTrack.track_image" alt=""/>
+      </div>
+      <div class="info-right">
+        <a class="title"
+           href="#"><span>{{currentPlayedTrack.artist_name}}</span></a>
+        <a class="subtitle"
+           href="#"><span>{{currentPlayedTrack.title}}</span></a>
+      </div>
+    </div>
+    <div class="player-center">
+      <div class="controls">
+        <button type="button" class="ctrl-btn btn-backwards" title="Fast backwards"></button>
+        <button type="button" class="ctrl-btn btn-play" *ngIf="!isRecordPlayed"
+                (click)="playTrack()"></button>
+        <button type="button" class="ctrl-btn btn-pause" *ngIf="isRecordPlayed"
+                (click)="pauseTrack()"></button>
+        <button type="button" class="ctrl-btn btn-forward" title="Fast Forward"></button>
+      </div>
+
+      <div class="play-time">
+          <div>currentTime:  {{currentTime}}</div>
+        <!--<span class="time-passed">{{record.currentTime}}</span>-->
+        <div id="waveform" class="timeline">
+          <progress id="progress" class="progress progress-striped" value="0" max="100"></progress>
+        </div>
+        <!--<span class="duration">{{currentPlayedTrack.timelength}}</span>-->
+      </div>
+
+      <div class="play-type">
+        <button type="button" class="ctrl-btn btn-shuffle" title="Shuffle"></button>
+        <button type="button" class="ctrl-btn btn-repeat"
+                title="Repeat indefinitely"></button>
+      </div>
+    </div>
+
+    <div class="player-queue">
+      <button type="button" class="ctrl-btn btn-queue" title="Show Queue"></button>
+      <button type="button" class="ctrl-btn btn-plus" title="Open big"></button>
+    </div>
+  </div>
+</div>

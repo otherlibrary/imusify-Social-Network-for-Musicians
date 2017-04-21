@@ -1,0 +1,38 @@
+<div class="member-list">
+	<div class="profile">
+		<figure><a href=""><img src="${fm_profile_img_url}" alt=""></a></figure>
+		<article>
+			<h5><a href="">${fm_member_name}</a></h5><br/>
+			<span>${fm_feed_detail}</span>
+		</article>
+	</div>
+	<div class="col-md-8 song-info">
+		<div class="row1">
+			<article class="title"><h3>${feedtitle}</h3><span>${fm_feed_ago}</span></article>
+			<div class="player-box">
+				<a href="" class="play-icon"></a>
+				<div class="wave">
+					<p>${fm_track_title} <span>${fm_track_title2}</span></p>
+					<figure><img src="${fm_wave_img}" alt=""><span>${fm_track_duration}</span></figure>
+				</div>
+			</div>
+			<div class="options-box">
+				<ul>
+					<li><a href="" class="like" data_fm_like="${fm_feed_id}">4.289</a></li>
+					<li><a href="" class="share" data_fm_share="${fm_feed_id}">SHARE</a></li>
+					<li><a href="" class="add" data_fm_add="${fm_feed_id}">ADD</a></li>
+					<li class="last-part"><a href="" class="repost" data_fm_repost="${fm_feed_id}">REPOST</a></li>
+				</ul>
+			</div>
+			<div class="msg">
+				<figure><img src="${fm_comment_img}" alt=""></figure>
+				<article>
+					<h5>${fm_commentator_name}<span>${fm_comment_ago}</span></h5>
+					<p>${fm_comment_text}</p>
+				</article>
+				<a href="" class="leave-reply">LEAVE A REPLY</a>
+				<h4 class="comments">${fm_tot_comment} Comments <a href="">SEE ALL</a></h4>
+			</div>
+		</div>
+	</div>
+</div>

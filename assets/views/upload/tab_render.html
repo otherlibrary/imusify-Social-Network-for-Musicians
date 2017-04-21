@@ -1,0 +1,7 @@
+{{each(i,v)  data_array}}
+	{{tmpl(v) "#arrayData"}}
+{{/each}}
+
+{{if loadmore}}												
+	{{tmpl "#loadMore"}}
+{{/if}}	
