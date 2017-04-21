@@ -60,9 +60,9 @@ if(SITE_ENV=='live'){
 }
 else{
 	$db['default']['hostname'] = 'mysql:host=localhost;dbname=imusify_zip';
-	$db['default']['username'] = 'imusify';
-	$db['default']['password'] = 'imusify123';
-	$db['default']['database'] = 'imusify_zip';
+	$db['default']['username'] = 'root';
+	$db['default']['password'] = '1';
+	$db['default']['database'] = 'imusify';
 	$db['default']['dbdriver'] = 'pdo';
 	$db['default']['dbprefix'] = '';
 	$db['default']['pconnect'] = TRUE;
