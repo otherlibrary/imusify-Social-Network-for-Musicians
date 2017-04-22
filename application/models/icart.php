@@ -280,9 +280,10 @@ Class icart extends CI_Model
 			}
 
 
-			if($order["exclusive_id"] && $order["exclusive_id"] > 0)
+			if($order["exclusive_id"] && $order["exclusive_id"] == 1)//exclusive license Id = 1  
 			{
 				$exclusive_percent = getvalfromtbl("pricing","buy_exclusive_types","id='".$order["exclusive_id"]."' and type='e'","single");
+                                //var_dump($exclusive_percent);exit;
 				if($exclusive_percent > 0)
 				{
 					$exclusive_price_flag = true;
@@ -292,17 +293,22 @@ Class icart extends CI_Model
 		
 		
 		/*Wave file and selected for download as mp3 ends*/
-		$where = " (ttd.trackId='".$track["id"]."' AND tlt.lic_type = '".$order["licenceusagetype"]."') ";
+		//$where = " (ttd.trackId='".$track["id"]."' AND tlt.lic_type = '".$order["licenceusagetype"]."') ";
+                $where = " (ttd.trackId='".$track["id"];
+                if ($exclusive_price_flag) $where = $where."' AND tlt.lic_type = 'el') ";
+                else $where = $where."' AND tlt.lic_type = '".$order["licenceusagetype"]."') ";
 		if($cond != NULL)
 			$where .= " AND ".$cond;
 		$this->db->select('ttd.licencePrice,tlt.*');
 		$this->db->from('track_licence_price_details as ttd');
 		$this->db->join('track_licence_types as tlt', 'tlt.id = ttd.licenceId','left');
-		$this->db->where($where);
+		$this->db->where($where);                                
 		if($limit != NULL)
 			$this ->db-> limit($limit);
 		$query = $this->db->get();
-		/*echo $this->db->last_query();*/
+		
+                //echo $this->db->last_query();exit;
+                
 		$records_count = $query->num_rows();
 		if($counter != NULL)
 			return $records_count;		
@@ -323,7 +329,10 @@ Class icart extends CI_Model
 				}
 				if($exclusive_price_flag == true)
 				{
-					$new_price = ($row["licencePrice"] *  $exclusive_percent) / 100;
+                                        //exclusive price 1000 => 1000/100=10 1/10 licensePrice is wrong
+					//$new_price = ($row["licencePrice"] *  $exclusive_percent) / 100;                                    
+                                        $new_price = $row["licencePrice"];
+                                        //if ($new_price < 1000) $new_price = 1000;
 					$row["licencePrice"] = $new_price;
 				}
                                 if(!empty ($licence_selected_ar_id)){
@@ -380,6 +389,7 @@ Class icart extends CI_Model
 				$this->db->where_in('licenceId', $values);
 				$query_res = $this->db->get();
 				$licence_price_rows = $query_res->result_array();
+                                
 				if(!empty($licence_price_rows))
 				{
 					$insert_order_det_ar = array();

@@ -166,7 +166,7 @@ Class stripe_operation extends CI_Model
 							}
 						}
 					}
-					if($order["exclusive_id"] && $order["exclusive_id"] > 0)
+					if($order["exclusive_id"] && $order["exclusive_id"] == 1)
 					{
 						$exclusive_percent = getvalfromtbl("pricing","buy_exclusive_types","id='".$order["exclusive_id"]."' and type='e'","single");
 						if($exclusive_percent > 0)
@@ -233,11 +233,14 @@ Class stripe_operation extends CI_Model
 								$new_price = ($value1["licencePrice"] * $cur_user_percent) / $cur_track_percent;
 								$value1["licencePrice"] = $new_price;
 							}
+                                                        //??? why need to change total price for Exclusive license
+                                                        /*
 							if($exclusive_price_flag == true)
 							{
 								$new_price = ($value1["licencePrice"] *  $exclusive_percent) / 100;
 								$value1["licencePrice"] = $new_price;
 							}
+                                                        */
 							$order_total += $value1["licencePrice"];
                                                         if($value1["licencePrice"] == 0) $value1["licencePrice"] = $value1["licenceMainPrice"];
 							$order_imusify_price += ($value1["licencePrice"] * $split_ar["imusify"]) / 100;

@@ -260,8 +260,7 @@
                                                                             <a style="color: white !important;" href="Javascript:void(0)" data-val="${v.id}" class="edit_license_number" data-type="select2" data-title="Select number of copies">${v.name}<i class="fa fa-pencil-square-o"></i></a>
                                                                             {{else}}
                                                                             	${v.name}
-									    {{/if}}	
-                                                                            
+									    {{/if}}	                                                                            
                                                                         </span>
 									<span class="lic_avail_disp_edit_span edit_price_operation">
 										$ <a href="Javascript:void(0)" data-val="${v.id}" class="edit_price_operation licence_type_edit_val" data-type="text" data-title="${v.name}" class="licence_type_edit_val">{{if higher_type}} ${v.wave} {{else}} ${v.mp3} {{/if}}<i class="fa fa-pencil-square-o"></i></a>
@@ -292,11 +291,11 @@
                                                                             	${v.name}									    
                                                                         </span>
 									<span class="el_avail_disp_edit_span edit_price_operation">
-										$ <a href="Javascript:void(0)" data-val="${v.id}" class="edit_price_operation licence_type_edit_val" data-type="text" data-title="${v.name}" class="licence_type_edit_val">{{if higher_type}} ${v.wave} {{else}} ${v.mp3} {{/if}}<i class="fa fa-pencil-square-o"></i></a>
+										$ <a href="Javascript:void(0)" data-val="${v.id}" class="edit_price_operation exclusive_license_type_edit_val" data-type="text" data-title="${v.name}">{{if higher_type}} ${v.wave} {{else}} ${v.mp3} {{/if}}<i class="fa fa-pencil-square-o"></i></a>
 									</span>
 								</button>
-                                                                        <input type="checkbox" class="hidden" name="exclusive_licence_ar[]" value="${v.id}" />
-									<input type="hidden" value="" name="el_${v.id}" class="" id="el_price_${v.id}" />
+                                                                        <input type="checkbox" class="hidden edit_price_operation" name="exclusive_licence_ar[]" value="${v.id}" />
+									<input type="hidden" value="" name="el_${v.id}" class="edit_price_operation" id="el_price_${v.id}" />
                                                                         <input type="hidden" value="" name="exclusive_number_${v.id}" class="edit_exclusive_number_hidden" id="exclusive_number_${v.id}">
                                                             
 <!--								<button type="button" class="btn btn-xs" data-color="primary">

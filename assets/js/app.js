@@ -1436,10 +1436,18 @@ initCheckboxUpdateDisplay:function($button,$checkbox,settings,color){
     //.addClass('state-icon fa fa-check');
     
     if (isChecked) {
+        
         $button
         .removeClass('btn-default')
         .addClass('btn-' + color + ' active');
         var temp2 = $button.data('id');
+        //update value for Exclusive license, ID > 19 (from 20)
+        if (temp2 > 19){
+            var newValue = $button.data('val');
+            console.log('Exclusive price Checked button');    
+            $("#el_price_"+temp2).val(newValue);
+        }
+                
         if (temp2 > 2 && temp2 < 8) {
            $button.find('a').editable({
                 source: [
@@ -1506,9 +1514,23 @@ initEditableCheckbox:function(){
         success: function(response, newValue) {
             //set new value ID for license option             
             hid_id = $(this).attr('data-val');  
-            $("#music_vals_"+hid_id).val(newValue);
+            var exclusive_price = true;
+            if ($("#music_vals_"+hid_id).length) exclusive_price = false;
+            if ($("#music_vals_"+hid_id).length) $("#music_vals_"+hid_id).val(newValue);
+            else $("#el_price_"+hid_id).val(newValue);
+            console.log('New price n Exclusive? :' , newValue, exclusive_price);
         }
-    }); 
+    });
+    /*
+    $('.exclusive_license_type_edit_val').editable({
+        success: function(response, newValue) {
+            //set new value ID for license option             
+            hid_id = $(this).attr('data-val');  
+            $("#el_price_"+hid_id).val(newValue);
+            console.log('Exclusive price:' , newValue);
+        }
+    });
+    */
    $('.edit_license_number').editable({
        source: [
               {id: '1000', text: 'Music Production and Audio Project / Lease (Up to 1000 copies)', selected: 'selected'},
@@ -2451,10 +2473,10 @@ initAccount:function(){
     //add new VAT
     $("body").on("click","a[data-role=vat]",function(e){
         e.preventDefault();     
-        if(config.eu != true && config.eu != '1') {
-            my.ShowNotification("info","Info","You are not required to fill in VAT ID because you are not from European Union");
-            return false;
-        }
+//        if(config.eu != true && config.eu != '1') {
+//            my.ShowNotification("info","Info","You are not required to fill in VAT ID because you are not from European Union");
+//            return false;
+//        }
         
         my.routingAjax($(this).attr("href"),{},'',function(response){               
             if(typeof(response)!='undefined'){
@@ -3151,7 +3173,7 @@ initContent:function()
 setBuyitems:function(){
     buy_items = [];
     $(".buy_row_li").each(function(){
-     value = $(this).attr('data-id');
+     value = $(this).attr('data-id');     
      if($(this).hasClass("active"))
      {
         buy_items.push(value);
@@ -3171,6 +3193,15 @@ api_cart:function(trackid,values,is_prev_flag,url){
     {
         is_prev_flag = false;
     }
+    //andy add flag for exclusive price/flag
+    /*
+    var exclusive = false;
+    if (/trackfiletype/.test(url)) {
+        //after selecting exclusive or non-exclusive
+        if ($(".licences-type.active").attr('data-id') == 1) exclusive = true;
+    }
+    */
+    
     my.routingAjax(url,{values:values,trackid:trackid,is_prev_flag:is_prev_flag},'',function(response){   
         if(response.album_fully_buyable == true)
         {
@@ -3182,15 +3213,18 @@ api_cart:function(trackid,values,is_prev_flag,url){
             $("#cart_total").html(response.album_price);
             $("#albumid").val(response.albumid);
             $("#cart_cont").removeClass('displaynone');
-            $("#list_cont").html("This track can be buy as full album buy.");
+            $("#list_cont").html("This track can be bought as full album buy.");
         }
         else{
             my.setBuyitems();
             $("#list_cont").html("");   
+            
+            
             $.template("#trackDetail",my.config.loaded_template['buy_list_row']);
             $.tmpl("#trackDetail",response).appendTo("#list_cont");
             $("#next_btn").attr("data-url",response.nexturl);
             $("#prev_btn").attr("data-url",response.prevurl);
+            console.log('Update list of purchase options Next url', response.nexturl);
             $("#head_title").html(response.head_title);
             if(typeof response.orderid != "undefined" && response.orderid)
             {
@@ -3380,7 +3414,7 @@ initTrackBuy:function(){
     {
         my.api_cart(trackid);    
     }
-    
+    //Update Next or Previous button for cart
     $('body').on('click','#next_btn,#prev_btn',function(e){ 
         e.preventDefault(); 
         var flag = true;
@@ -3406,6 +3440,7 @@ initTrackBuy:function(){
             $(".buy_row_li.active").each(function() { 
              values += $(this).attr('data-id') + ",";
          });
+            console.log('Params passed to api_cart: ', trackid,values,is_prev_flag,url);
             my.api_cart(trackid,values,is_prev_flag,url);
         }   
         else{

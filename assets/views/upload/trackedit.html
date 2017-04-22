@@ -253,7 +253,9 @@
                                                                                                             <a style="color: white !important;" href="Javascript:void(0)" data-val="${v.id}" data-type="select2" data-title="Select number of copies">${v.name}</a>                                                                                                            
                                                                                                         </span>
 													<span class="lic_avail_disp_edit_span edit_price_operation">
-														$ <a href="Javascript:void(0)" data-val="${v.id}" class="edit_price_operation licence_type_edit_val" data-type="text" data-title="${v.name}" class="licence_type_edit_val">${v.mp3}<i class="fa fa-pencil-square-o"></i></a>
+<!--														$ <a href="Javascript:void(0)" data-val="${v.id}" class="edit_price_operation licence_type_edit_val" data-type="text" data-title="${v.name}" class="licence_type_edit_val">${v.mp3}<i class="fa fa-pencil-square-o"></i></a>-->
+                                                                                                                $ <a href="Javascript:void(0)" data-val="${v.id}" class="edit_price_operation licence_type_edit_val" data-type="text" data-title="${v.name}" class="licence_type_edit_val">{{if higher_type}} ${v.wave} {{else}} ${v.mp3} {{/if}} {{if v.mp3}} {{else}}${v.wave}  {{/if}}<i class="fa fa-pencil-square-o"></i></a>
+                                                                                                                
 													</span>
 												</button>				
 												<input type="checkbox" class="hidden edit_price_operation" name="licence_available_ar[]" value="${v.id}" ${v.selected} />				
@@ -280,7 +282,9 @@
                                                                                                             <a style="color: white !important;" href="Javascript:void(0)" data-val="${v.id}" data-type="select2" data-title="Select number of copies">${v.name}</a>                                                                                                            
                                                                                                         </span>
 													<span class="el_avail_disp_edit_span edit_price_operation">
-														$ <a href="Javascript:void(0)" data-val="${v.id}" class="edit_price_operation el_type_edit_val" data-type="text" data-title="${v.name}" class="licence_type_edit_val">${v.mp3}<i class="fa fa-pencil-square-o"></i></a>
+<!--														$ <a href="Javascript:void(0)" data-val="${v.id}" class="edit_price_operation el_type_edit_val" data-type="text" data-title="${v.name}" class="licence_type_edit_val">${v.mp3}<i class="fa fa-pencil-square-o"></i></a>-->
+                                                                                                                $ <a href="Javascript:void(0)" data-val="${v.id}" class="edit_price_operation el_type_edit_val" data-type="text" data-title="${v.name}" class="licence_type_edit_val">{{if v.mp3}} ${v.wave} {{else}}${v.wave}  {{/if}}<i class="fa fa-pencil-square-o"></i></a>
+                                                                                                                
 													</span>
 												</button>	
                                                                                         
