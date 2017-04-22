@@ -1,0 +1,30 @@
+<div class="col-md-12">
+	<div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+		<form role="form" class="album-form  form-field" method="post" action="${url}api/change_password_api" id="vat_form" data-role="submitenter">
+			<div class="form-group">
+				<label for="title">VAT ID</label>
+				<input value="{{if vat_id }}${vat_id}{{/if}}" type="text" class="form-control validate[required]" id="new_vat" name="new_vat">
+                                <label id="vat_result" for="vat_result"></label>
+			</div>
+			<div class="text-right">
+				<button type="submit" class="creat-btn" id="submitvat">Update</button>
+			</div>
+		</form>
+	</div>
+	<div class="col-lg-6 col-md-6 col-sm-12 col-xs-12 margintop15">
+		<ul class="">
+                        <li class="change_password_help" id="country_code">
+				
+			</li>
+			<li class="change_password_help">
+				Please ensure that VAT ID is valid
+			</li>
+			<li class="change_password_help">
+				VAT ID is required if you are from EU. If you are not from EU, please ignore VAT ID
+			</li>
+                        <li class="change_password_help">
+				If you are not from EU, please ignore VAT ID
+			</li>
+		</ul>
+	</div>	
+</div>

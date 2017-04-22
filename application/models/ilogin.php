@@ -45,7 +45,7 @@ Class ilogin extends CI_Model
 //                        $where = "userId='".$user_id."'";                         
 //                        $this->db->where($where);
                         $this->db->join('user_roles as ur', 'ur.id = ud.roleId AND ud.userId = "'.$user_id.'"','inner');                        
-                        $this->db->limit(100);
+                        $this->db->limit(100);                        
                         
                         $query = $this -> db -> get();
                         //var_dump($this->db->last_query());exit;
@@ -60,7 +60,28 @@ Class ilogin extends CI_Model
                                         }
                                 }                                                                
                         } 
-                        
+                        //add country code and european union
+                        $ip_address = $this->input->ip_address();                
+                        //default value
+                        $country = 'DE';    
+                        $country_name = 'Germany';    
+                        $euro = true;
+                        $city = '';
+                        $state = '';                  
+                        try {
+                            $country = get_ip_country_code($ip_address); 
+                            $country_name = get_ip_country($ip_address); 
+                            $city = get_ip_city($ip_address);
+                            $state = get_ip_state($ip_address);
+                            $euro = get_ip_eu($country);
+                        } catch (Exception $e) {
+                            //address is not found in database                     
+                        }                
+
+                        $user->country = $country;                        
+                        $user->country_name = $country_name;                        
+                        $user->eu = $euro;
+                                    
                         
 	   		if($user->usertype == "a" || $user->usertype == "s")
 	   		{
@@ -72,6 +93,7 @@ Class ilogin extends CI_Model
 	   			$this->session->set_userdata(USER_SESSION_NAME,$user);
 	   		} 
 			
+
                                                 
 			//print_r($this->session->all_userdata());
 			if(isset($rememberme) && $rememberme == '1')
@@ -179,7 +201,39 @@ Class ilogin extends CI_Model
 		}
     
 	}
-	
+	//update VAT ID
+        public function update_vat($id, $name, $address) 
+	{							
+                $data = array(
+                  'vat_id' => $id,
+                  'vat_name' => $name,  
+                  'vat_address'  => $address,                    
+                );
+                $user_id = $this->session->userdata('user')->id;
+                $this->db->where('id', $user_id);
+                if ($this->db->update('users', $data))
+                {				
+                        return true;
+                } else return false;	
+	}
+   	//get VAT ID
+        public function get_vat() 
+	{                                                                           
+                $this -> db -> select('vat_id, vat_name, vat_address');
+                $this -> db -> from('users');
+                $user_id = $this->session->userdata('user')->id;
+                $this->db->where('id', $user_id);
+                $this -> db -> limit(1);
+
+	   $query = $this -> db -> get();	   
+	   if($query -> num_rows() == 1)
+	   {
+               $result = $query->row();
+               return $result;
+           }
+                
+	}     
+        
 	/*check existance of username */
 	function user_exist_check($email = null,$sc_username = null,$username = null,$flag = false,$field = null){
 		

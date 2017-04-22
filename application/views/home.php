@@ -4,7 +4,11 @@
         //var_dump($this->session->userdata('user'));exit;
 	$userIdJs = $this->session->userdata('user')->id;
         $never_sell = $this->session->userdata('user')->never_sell;        
-        $usertype = $this->session->userdata('user')->artist;        
+        $usertype = $this->session->userdata('user')->artist;  
+        $country = $this->session->userdata('user')->country;        
+        $country_name = $this->session->userdata('user')->country_name;        
+        $eu = $this->session->userdata('user')->eu;       
+        //var_dump($this->session->userdata('user'));exit;
 }
 else
 {
@@ -59,6 +63,9 @@ if(isset($this->session->userdata('user')->avail_space) && ($this->session->user
 			max_upload_file_size:'<?php  echo MAX_UPLOAD_FILE_SIZE_ALLOWED; ?>',                        
                         never_sell:'<?php echo $never_sell; ?>',
                         usertype:'<?php echo $usertype; ?>',
+                        country:'<?php echo $country; ?>',
+                        country_name:'<?php echo $country_name; ?>',
+                        eu:'<?php echo $eu; ?>',
 
 		};
 

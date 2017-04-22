@@ -387,31 +387,54 @@ Class uploadm extends CI_Model
 
 			$final_new_name = mt_rand(1,1000000)."_".md5(time());
 			$new_song_name = $final_new_name.".".$ext; 	
-
-			if($ext == "wav"){
-
+                        //var_dump($ext);exit;
+			if($ext == "wav" || $ext == "WAV"){
 				$output = '';
 				$new_physical_mp3_path = asset_path()."upload/media/".$session_user_id."/".$final_new_name.".mp3";
-				exec("lame $old_physical_path $new_physical_mp3_path",$output);	
+                                //rename the track (remove all white space or special character)
+                                $new_name_path = asset_path()."temp/".$session_user_id."/".$final_new_name.".wav";                                
+                                $rename_result = rename($old_physical_path,$new_name_path);                                
+                                //var_dump($new_name_path, $new_physical_mp3_path);exit;
+				exec("lame $new_name_path $new_physical_mp3_path",$output);
+                                $old_physical_path = $new_name_path;
 			}
-			else if($ext == "ogg"){
+			else if($ext == "ogg" || $ext == "OGG"){
 				$output = '';
 				$new_physical_path = asset_path()."upload/media/".$session_user_id."/".$final_new_name.".mp3";
 				exec("sox $old_physical_path $new_physical_path",$output);
 			}
-			else if($ext == "AIF"){
+			else if($ext == "AIF" || $ext == "aif" || $ext == "aiff"){
 				/*lame -b 40 -m m --resample 22.05 -S - 'outfile.mp3'*/
 				$output = '';
 				$new_physical_path = asset_path()."upload/media/".$session_user_id."/".$final_new_name.".mp3";
-				exec("lame -b 40 -m m --resample $old_physical_path $new_physical_path",$output);	
-
+                                //rename the track (remove all white space or special character)
+                                $new_name_path = asset_path()."temp/".$session_user_id."/".$final_new_name.".aiff";                                
+                                $rename_result = rename($old_physical_path,$new_name_path); 
+                                //var_dump($new_name_path, $new_physical_path);exit;
+				//exec("lame -b 40 -m m --resample $old_physical_path $new_physical_path",$output);	
+                                exec("lame -b 40 $new_name_path $new_physical_path",$output);
+                                $old_physical_path = $new_name_path;
 			}
-			else if($ext == "FLAC"){
+			else if($ext == "FLAC" || $ext == "flac"){
 				/*sudo apt-get install flac*/
 				/*flac -c -d "1 - Let It In.flac" | lame -V 6 --ta "$ARTIST" - "1 - Let It In.mp3"*/
 				$output = '';
 				$new_physical_path = asset_path()."upload/media/".$session_user_id."/".$final_new_name.".mp3";
-				exec("flac -c -d $old_physical_path | lame -V 6 --ta $new_physical_path",$output);
+                                //rename the track (remove all white space or special character)
+                                $new_name_path = asset_path()."temp/".$session_user_id."/".$final_new_name.".flac";                                
+                                $rename_result = rename($old_physical_path,$new_name_path);                                
+                                
+				//exec("flac -c -d $old_physical_path | lame -V 6 --ta $new_physical_path",$output);
+                                //exec("flac -c -d $new_name_path | lame -V 6 --ta $new_physical_path",$output);
+                                $command  = "flac -cd $new_name_path | lame -b 320 - $new_physical_path";                                
+                                //convert flac to wav
+                                //$command = "flac -d $new_name_path";
+                                exec($command,$output);
+                                //var_dump($new_name_path, $new_physical_path, $command, $output);exit;
+                                //convert wav to mp3 
+                                //$new_name_path = asset_path()."temp/".$session_user_id."/".$final_new_name.".wav";                                
+                                //exec("lame $new_name_path $new_physical_mp3_path",$output);                                                                
+                                $old_physical_path = $new_name_path;                                
 			}
 			else if($ext == "AAC"){
 				/*ffmpeg -i audio.aac -acodec libmp3lame -ac 2 -ab 160 audio.mp3*/

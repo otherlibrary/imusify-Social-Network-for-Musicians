@@ -1793,6 +1793,56 @@ Now there is no support for PUT or DELETE methods</p>
 </tr>
 </tbody></table>
 
+<h2 id="get-list-of-similar-tracks-checkout-or-track-detail-page">Get list of similar tracks (checkout or track detail page)</h2>
+
+<p>Allow the guest to view similar tracks</p>
+
+<pre><code>GET /imusify/initial_playlist
+</code></pre>
+
+
+
+<h3 id="parameters-20">Parameters</h3>
+
+<table>
+<thead>
+<tr>
+  <th><em>Field</em></th>
+  <th><em>Description</em></th>
+</tr>
+</thead>
+<tbody><tr>
+  <td><code>type</code></td>
+  <td><em>trackdetail, e.g. trackdetail</em></td>
+</tr>
+<tr>
+  <td><code>current_link</code></td>
+  <td><em>Current link/URL, e.g. /imusify/a/7_plymouth_suite_iii_chanty_purchase_587e05e6c2947</em></td>
+</tr>
+</tbody></table>
+
+
+
+
+<h3 id="response-20">Response</h3>
+
+<table>
+<thead>
+<tr>
+  <th><em>Field</em></th>
+  <th><em>Description</em></th>
+</tr>
+</thead>
+<tbody><tr>
+  <td><code>success</code></td>
+  <td><em>success</em></td>
+</tr>
+<tr>
+  <td><code>data</code></td>
+  <td><em>List of similar tracks, JSON object, it includes multiple fields: firstname, lastname, trackLink, track_pic, minititle, user_name…</em></td>
+</tr>
+</tbody></table>
+
 
 
 <h1 id="following">Following</h1>
@@ -1808,7 +1858,7 @@ Now there is no support for PUT or DELETE methods</p>
 
 
 
-<h3 id="parameters-20">Parameters</h3>
+<h3 id="parameters-21">Parameters</h3>
 
 <table>
 <thead>
@@ -1826,7 +1876,7 @@ Now there is no support for PUT or DELETE methods</p>
 
 
 
-<h3 id="response-20">Response</h3>
+<h3 id="response-21">Response</h3>
 
 <table>
 <thead>
@@ -1869,7 +1919,7 @@ Now there is no support for PUT or DELETE methods</p>
 
 
 
-<h3 id="parameters-21">Parameters</h3>
+<h3 id="parameters-22">Parameters</h3>
 
 <table>
 <thead>
@@ -1895,7 +1945,7 @@ Now there is no support for PUT or DELETE methods</p>
 
 
 
-<h3 id="response-21">Response</h3>
+<h3 id="response-22">Response</h3>
 
 <table>
 <thead>
@@ -1934,7 +1984,7 @@ Now there is no support for PUT or DELETE methods</p>
 
 
 
-<h3 id="parameters-22">Parameters</h3>
+<h3 id="parameters-23">Parameters</h3>
 
 <table>
 <thead>
@@ -1956,7 +2006,7 @@ Now there is no support for PUT or DELETE methods</p>
 
 
 
-<h3 id="response-22">Response</h3>
+<h3 id="response-23">Response</h3>
 
 <table>
 <thead>
@@ -1976,5 +2026,561 @@ Now there is no support for PUT or DELETE methods</p>
 <tr>
   <td><code>success</code></td>
   <td><em>Status of action, e.g. success</em></td>
+</tr>
+</tbody></table>
+
+
+
+
+<h2 id="add-text-feed-uploading-feed">Add text feed (uploading feed)</h2>
+
+<p>Allow the users to add feed</p>
+
+<pre><code>POST /imusify/api/feed_save
+</code></pre>
+
+
+
+<h3 id="parameters-24">Parameters</h3>
+
+<table>
+<thead>
+<tr>
+  <th><em>Field</em></th>
+  <th><em>Description</em></th>
+</tr>
+</thead>
+<tbody><tr>
+  <td><code>text</code></td>
+  <td><em>String, text for feed</em></td>
+</tr>
+<tr>
+  <td><code>feedType</code></td>
+  <td><em>Type of feed, e.g. text</em></td>
+</tr>
+</tbody></table>
+
+
+
+
+<h3 id="response-24">Response</h3>
+
+<table>
+<thead>
+<tr>
+  <th><em>Field</em></th>
+  <th><em>Description</em></th>
+</tr>
+</thead>
+<tbody><tr>
+  <td><code>id</code></td>
+  <td><em>Feed ID</em></td>
+</tr>
+<tr>
+  <td><code>msg</code></td>
+  <td><em>Successful Message</em></td>
+</tr>
+<tr>
+  <td><code>status</code></td>
+  <td><em>Status of action, e.g. success</em></td>
+</tr>
+<tr>
+  <td><code>feed_detail</code></td>
+  <td><em>Detail of feed, JSON object, it includes multiple fields: createdDate, feedId, feedtitle, feedtypeId, feedtype, profile_img_url, title, userId …</em></td>
+</tr>
+</tbody></table>
+
+
+
+
+<h2 id="add-videoaudiotext-feed-youtube-text-on-following-page">Add video/audio/text feed (Youtube, Text … on Following page)</h2>
+
+<p>Allow the users to add feed</p>
+
+<pre><code>POST /imusify/api/feed_save
+</code></pre>
+
+
+
+<h3 id="parameters-25">Parameters</h3>
+
+<table>
+<thead>
+<tr>
+  <th><em>Field</em></th>
+  <th><em>Description</em></th>
+</tr>
+</thead>
+<tbody><tr>
+  <td><code>data[text]</code></td>
+  <td><em>String or Short URL, text for feed, e.g. <a href="https://www.youtube.com/watch?v=DnlKQGnfVUI">https://www.youtube.com/watch?v=DnlKQGnfVUI</a></em></td>
+</tr>
+<tr>
+  <td><code>data[feedType]</code></td>
+  <td><em>Type of feed, e.g. text, url, external_video, external_audio …</em></td>
+</tr>
+<tr>
+  <td><code>data[title]</code></td>
+  <td>*Title/HTML of external URL (video/audio), e.g. <span id="previewSpanTitle_feed_post" class="previewSpanTitle">I Took A Pill In Ibiza - Mike Posner</span></td>
+</tr>
+<tr>
+  <td><code>data[image]</code></td>
+  <td><em>Image for video/audio, e.g. <a href="http://i2.ytimg.com/vi/DnlKQGnfVUI/hqdefault.jpg">http://i2.ytimg.com/vi/DnlKQGnfVUI/hqdefault.jpg</a></em></td>
+</tr>
+<tr>
+  <td><code>data[imgUrl]</code></td>
+  <td><em>URL of image for video/audio</em></td>
+</tr>
+<tr>
+  <td><code>data[imgType]</code></td>
+  <td><em>Type of image</em></td>
+</tr>
+<tr>
+  <td><code>data[description]</code></td>
+  <td><em>Description/HTML, e.g. &lt;span id="previewSpanDescription_feed_post" class="previewSpanDescription">AVAILABLE EVERYWHERE NOW! iTunes: <a href="http://apple.co/2aK8Lgl">http://apple.co/2aK8Lgl</a> Google Play: <a href="http://bit.ly/2aXFHOI">http://bit.ly/2aXFHOI</a> Spotify: <a href="http://bit.ly/2aGY8tV">http://bit.ly/2aGY8tV</a> BILLbilly01 cover of I Took A Pil…</span>AVAILABLE EVERYWHERE NOW! iTunes: <a href="http://apple.co/2aK8Lgl">http://apple.co/2aK8Lgl</a> Google Play: <a href="http://bit.ly/2aXFHOI">http://bit.ly/2aXFHOI</a> Spotify: <a href="http://bit.ly/2aGY8tV">http://bit.ly/2aGY8tV</a> BILLbilly01 cover of I Took A Pil…</em></td>
+</tr>
+<tr>
+  <td><code>data[url]</code></td>
+  <td><em>Reference URL, e.g. &lt;a href="http://www.youtube.com">http://www.youtube.com&lt;/a&gt;’ target=’_blank’&gt;www.youtube.com</em></td>
+</tr>
+<tr>
+  <td><code>data[hrefUrl]</code></td>
+  <td><em>Original URL of video, e.g. &lt;a href="https://www.youtube.com/watch?v=DnlKQGnfVUI">https://www.youtube.com/watch?v=DnlKQGnfVUI&lt;/a&gt;</em></td>
+</tr>
+<tr>
+  <td><code>data[video]</code></td>
+  <td><em>yes or no, e.g. yes</em></td>
+</tr>
+<tr>
+  <td><code>data[videoIframe]</code></td>
+  <td>*HTML frame for video, e.g. <pre> &lt;iframe id="20170416072517DnlKQGnfVUI" src="http://www.youtube.com/embed/DnlKQGnfVUI" allowfullscreen="" width="499" height="368">&lt;/iframe&gt; </pre></td>
+</tr>
+</tbody></table>
+
+
+
+
+<h3 id="response-25">Response</h3>
+
+<table>
+<thead>
+<tr>
+  <th><em>Field</em></th>
+  <th><em>Description</em></th>
+</tr>
+</thead>
+<tbody><tr>
+  <td><code>id</code></td>
+  <td><em>Feed ID</em></td>
+</tr>
+<tr>
+  <td><code>msg</code></td>
+  <td><em>Successful Message</em></td>
+</tr>
+<tr>
+  <td><code>status</code></td>
+  <td><em>Status of action, e.g. success</em></td>
+</tr>
+<tr>
+  <td><code>feed_detail</code></td>
+  <td><em>Detail of feed, JSON object, it includes multiple fields: createdDate, feedId, feedtitle, feedtypeId, feedtype, profile_img_url, title, userId …</em></td>
+</tr>
+</tbody></table>
+
+
+
+
+<h1 id="playlist">Playlist</h1>
+
+
+
+<h2 id="create-a-new-playlist">Create a new playlist</h2>
+
+<p>Allow the users to create a new playlist</p>
+
+<pre><code>POST /imusify/create_playlist
+</code></pre>
+
+
+
+<h3 id="parameters-26">Parameters</h3>
+
+<table>
+<thead>
+<tr>
+  <th><em>Field</em></th>
+  <th><em>Description</em></th>
+</tr>
+</thead>
+<tbody><tr>
+  <td><code>name</code></td>
+  <td><em>Name of playlist</em></td>
+</tr>
+<tr>
+  <td><code>randomnumber</code></td>
+  <td><em>Random ID or no, e.g. tr57nOS0</em></td>
+</tr>
+<tr>
+  <td><code>ajax</code></td>
+  <td><em>Boolean, e.g. true</em></td>
+</tr>
+</tbody></table>
+
+
+
+
+<h3 id="response-26">Response</h3>
+
+<table>
+<thead>
+<tr>
+  <th><em>Field</em></th>
+  <th><em>Description</em></th>
+</tr>
+</thead>
+<tbody><tr>
+  <td><code>msg</code></td>
+  <td><em>Successful Message</em></td>
+</tr>
+<tr>
+  <td><code>status</code></td>
+  <td><em>Status of action, e.g. success</em></td>
+</tr>
+</tbody></table>
+
+
+
+
+<h1 id="invite-friend">Invite friend</h1>
+
+
+
+<h2 id="invite-friend-1">Invite friend</h2>
+
+<p>Allow the users to invite friends (email)</p>
+
+<pre><code>POST /imusify/api/invitefriends
+</code></pre>
+
+
+
+<h3 id="parameters-27">Parameters</h3>
+
+<table>
+<thead>
+<tr>
+  <th><em>Field</em></th>
+  <th><em>Description</em></th>
+</tr>
+</thead>
+<tbody><tr>
+  <td><code>email</code></td>
+  <td><em>Email</em></td>
+</tr>
+<tr>
+  <td><code>hidden-email</code></td>
+  <td><em>List of email</em></td>
+</tr>
+</tbody></table>
+
+
+
+
+<h3 id="response-27">Response</h3>
+
+<table>
+<thead>
+<tr>
+  <th><em>Field</em></th>
+  <th><em>Description</em></th>
+</tr>
+</thead>
+<tbody><tr>
+  <td><code>msg</code></td>
+  <td><em>Successful Message</em></td>
+</tr>
+<tr>
+  <td><code>status</code></td>
+  <td><em>Status of action, e.g. success</em></td>
+</tr>
+<tr>
+  <td><code>error</code></td>
+  <td><em>Error if there is an error</em></td>
+</tr>
+</tbody></table>
+
+
+
+
+<h1 id="checkout">Checkout</h1>
+
+
+
+<h2 id="get-list-of-available-licenses-level-1">Get list of available licenses (level 1)</h2>
+
+<p>Allow the users to view list of available licenses (level 1) </p>
+
+<pre><code>POST /imusify/api/cart
+</code></pre>
+
+
+
+<h3 id="parameters-28">Parameters</h3>
+
+<table>
+<thead>
+<tr>
+  <th><em>Field</em></th>
+  <th><em>Description</em></th>
+</tr>
+</thead>
+<tbody><tr>
+  <td><code>trackid</code></td>
+  <td><em>Integer, Id of track</em></td>
+</tr>
+<tr>
+  <td><code>is_prev_flag</code></td>
+  <td><em>Boolean, e.g. false</em></td>
+</tr>
+<tr>
+  <td><code>ajax</code></td>
+  <td><em>Boolean, true</em></td>
+</tr>
+</tbody></table>
+
+
+
+
+<h3 id="response-28">Response</h3>
+
+<table>
+<thead>
+<tr>
+  <th><em>Field</em></th>
+  <th><em>Description</em></th>
+</tr>
+</thead>
+<tbody><tr>
+  <td><code>nexturl</code></td>
+  <td><em>Next URL, e.g. <a href="https://local.imusify.com/imusify/api/cart/exclusive">https://local.imusify.com/imusify/api/cart/exclusive</a></em></td>
+</tr>
+<tr>
+  <td><code>prevurl</code></td>
+  <td><em>Boolean, e.g. false</em></td>
+</tr>
+<tr>
+  <td><code>head_title</code></td>
+  <td><em>Title of checkout part.e.g. Choose usage types</em></td>
+</tr>
+<tr>
+  <td><code>licence_type_list</code></td>
+  <td><em>List of available licenses, JSON object, it includes multiple fields: name, id, type, createdDate…</em></td>
+</tr>
+</tbody></table>
+
+
+
+
+<h2 id="get-list-of-available-licenses-level-2">Get list of available licenses (level 2)</h2>
+
+<p>Allow the users to view list of available licenses (level 2) License detail if it is for personal use</p>
+
+<pre><code>POST /imusify/api/cart/exclusive
+</code></pre>
+
+
+
+<h3 id="parameters-29">Parameters</h3>
+
+<table>
+<thead>
+<tr>
+  <th><em>Field</em></th>
+  <th><em>Description</em></th>
+</tr>
+</thead>
+<tbody><tr>
+  <td><code>trackid</code></td>
+  <td><em>Integer, Id of track</em></td>
+</tr>
+<tr>
+  <td><code>is_prev_flag</code></td>
+  <td><em>Boolean, e.g. false</em></td>
+</tr>
+<tr>
+  <td><code>ajax</code></td>
+  <td><em>Boolean, true</em></td>
+</tr>
+<tr>
+  <td><code>values</code></td>
+  <td><em>Integer, e.g. 1 (personal), 2 (Commercial usage), 3 (non-profit) …</em></td>
+</tr>
+</tbody></table>
+
+
+
+
+<h3 id="response-29">Response</h3>
+
+<table>
+<thead>
+<tr>
+  <th><em>Field</em></th>
+  <th><em>Description</em></th>
+</tr>
+</thead>
+<tbody><tr>
+  <td><code>nexturl</code></td>
+  <td><em>Next URL, e.g. <a href="https://local.imusify.com/imusify/api/cart/exclusive">https://local.imusify.com/imusify/api/cart/exclusive</a></em></td>
+</tr>
+<tr>
+  <td><code>prevurl</code></td>
+  <td><em>Boolean, e.g. false</em></td>
+</tr>
+<tr>
+  <td><code>head_title</code></td>
+  <td><em>Title of checkout part.e.g. Choose usage types</em></td>
+</tr>
+<tr>
+  <td><code>licence_type_list</code></td>
+  <td><em>List of available licenses, JSON object, it includes multiple fields: name, id, type, licencePrice, mp3…</em></td>
+</tr>
+<tr>
+  <td><code>orderid</code></td>
+  <td><em>Order ID.e.g. Choose usage types</em></td>
+</tr>
+</tbody></table>
+
+
+
+
+<h2 id="get-list-of-available-licenses-level-3detail">Get list of available licenses (level 3/Detail)</h2>
+
+<p>Allow the users to view list of available licenses (level 3) For commercial usage  </p>
+
+<pre><code>POST /imusify/api/cart/trackfiletype
+</code></pre>
+
+
+
+<h3 id="parameters-30">Parameters</h3>
+
+<table>
+<thead>
+<tr>
+  <th><em>Field</em></th>
+  <th><em>Description</em></th>
+</tr>
+</thead>
+<tbody><tr>
+  <td><code>trackid</code></td>
+  <td><em>Integer, Id of track</em></td>
+</tr>
+<tr>
+  <td><code>is_prev_flag</code></td>
+  <td><em>Boolean, e.g. false</em></td>
+</tr>
+<tr>
+  <td><code>ajax</code></td>
+  <td><em>Boolean, true</em></td>
+</tr>
+<tr>
+  <td><code>values</code></td>
+  <td><em>Integer, e.g. 1 (personal), 2 (Commercial usage), 3 (non-profit) …</em></td>
+</tr>
+</tbody></table>
+
+
+
+
+<h3 id="response-30">Response</h3>
+
+<table>
+<thead>
+<tr>
+  <th><em>Field</em></th>
+  <th><em>Description</em></th>
+</tr>
+</thead>
+<tbody><tr>
+  <td><code>nexturl</code></td>
+  <td><em>Next URL, e.g. <a href="https://local.imusify.com/imusify/api/cart/exclusive">https://local.imusify.com/imusify/api/cart/exclusive</a></em></td>
+</tr>
+<tr>
+  <td><code>prevurl</code></td>
+  <td><em>Boolean, e.g. false</em></td>
+</tr>
+<tr>
+  <td><code>head_title</code></td>
+  <td><em>Title of checkout part.e.g. Choose usage types</em></td>
+</tr>
+<tr>
+  <td><code>licence_type_list</code></td>
+  <td><em>List of available licenses, JSON object, it includes multiple fields: name, id, type, licencePrice, mp3, description…</em></td>
+</tr>
+<tr>
+  <td><code>orderid</code></td>
+  <td><em>Order ID.e.g. Choose usage types</em></td>
+</tr>
+</tbody></table>
+
+
+
+
+<h2 id="addremove-license-to-shopping-cart">Add/Remove license to shopping cart</h2>
+
+<p>Allow the users to Add/Remove license to shopping cart</p>
+
+<pre><code>POST /imusify/api/cartitem
+</code></pre>
+
+
+
+<h3 id="parameters-31">Parameters</h3>
+
+<table>
+<thead>
+<tr>
+  <th><em>Field</em></th>
+  <th><em>Description</em></th>
+</tr>
+</thead>
+<tbody><tr>
+  <td><code>trackid</code></td>
+  <td><em>Integer, Id of track</em></td>
+</tr>
+<tr>
+  <td><code>orderid</code></td>
+  <td><em>Order ID</em></td>
+</tr>
+<tr>
+  <td><code>price</code></td>
+  <td><em>Boolean, true</em></td>
+</tr>
+<tr>
+  <td><code>id</code></td>
+  <td><em>Integer, Lincese ID</em></td>
+</tr>
+</tbody></table>
+
+
+
+
+<h3 id="response-31">Response</h3>
+
+<table>
+<thead>
+<tr>
+  <th><em>Field</em></th>
+  <th><em>Description</em></th>
+</tr>
+</thead>
+<tbody><tr>
+  <td><code>msg</code></td>
+  <td><em>Message, e.g. Licence added to cart successfully</em></td>
+</tr>
+<tr>
+  <td><code>status</code></td>
+  <td><em>Success</em></td>
 </tr>
 </tbody></table>

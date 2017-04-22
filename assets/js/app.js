@@ -973,10 +973,12 @@ var App={
             "about":"about/about",
             "team_row":"about/team_row",
             "industry_professional_row":"about/industry_professional_row",            
-            "account_main":"account/main",                
+            "account_main":"account/main",
+            "account_main_vat":"account/main_vat",
             "account_stripe_connect":"account/stripe_connect",
             "stripe_connected":"account/stripe_connected",
             "account_change_password":"account/change_password",
+            "account_change_vat":"account/vat",
             "buynow":"trackdetail/buynow",
             "buynow_licence_row":"trackdetail/buynow_licence_row",
             "buy_list_row" : "trackdetail/buynow_licence_row",
@@ -2229,6 +2231,11 @@ initSignUp:function(){
                             $("#signup_form").removeClass("disabled");
                             my.refreshLeftPanel(response);
                             my.redirectLoginAfter("Registered Successfully.");  
+                            config.userIdJs = response.id;   
+                            config.never_sell = response.never_sell;   
+                            config.country = response.country;         
+                            config.country_name = response.country_name;    
+                            config.eu = response.eu;         
                             if(response.role_added == "n")
                             {
                                 $('<a href="'+my.config.siteUrl+'setup" id="setup" data-t="setup" class="popup"></a>').appendTo("body").click();                                    
@@ -2441,6 +2448,69 @@ initAccount:function(){
         },true,false,"",true);
     });
 
+    //add new VAT
+    $("body").on("click","a[data-role=vat]",function(e){
+        e.preventDefault();     
+        if(config.eu != true && config.eu != '1') {
+            my.ShowNotification("info","Info","You are not required to fill in VAT ID because you are not from European Union");
+            return false;
+        }
+        
+        my.routingAjax($(this).attr("href"),{},'',function(response){               
+            if(typeof(response)!='undefined'){
+                $('.modal').modal('hide').removeClass("show");  
+                $(".right_box").html("");
+                $.template("#templaterow",my.config.loaded_template['account_change_vat']);                                    
+                $.template("#contentPanel",my.config.loaded_template['account_main_vat']);                   
+                $.tmpl('#contentPanel',response).appendTo(".right_box");
+                my.initPlugin();       
+                if(config.country){
+                        var text = 'Your current country: '+config.country_name
+                        if (config.eu == '1' || config.eu === true) text = text+' (EU)' 
+                        else text = text +  ' (non-EU)'
+                        $("#country_code").html(text)
+                }
+            }
+        },true,false,"",true);
+    });
+
+    if ($("#country_code").length && config.country) {
+        if(config.eu != true && config.eu != '1') {
+            document.location.href="/imusify";
+        } else {
+            var text = 'Your current country: '+config.country_name
+            if (config.eu == '1' || config.eu === true) text = text+' (EU)' 
+            else text = text +  ' (non-EU)'
+            $("#country_code").html(text)
+        }        
+    }
+
+    $("body").on("click","#submitvat",function(e){
+        e.preventDefault();
+        //validate the VAT ID
+        var vat_id = $("#new_vat").val();
+        var arr = {};
+        arr["id"] = vat_id;
+        if (vat_id){
+            my.routingAjax(my.config.siteUrl+"api/vat/update",arr,"",function(response){
+                if(response.status == "success")
+                {
+                    //$("#change_password_form")[0].reset();
+                    //$("a[data-role='home']").click();
+                    // GB727255821
+                    var text = '<br /> The name of VAT ID: '+response.denomination+'/'+response.name;
+                    text = text+'<br /> The address of VAT ID: '+response.address;                     
+                    $("#vat_result").html(text)
+                    my.ShowNotification("success","Success","VAT ID is updated successfully.");                    
+                } else {                    
+                    if (response.msg) my.ShowNotification("info","Info",response.msg);
+                    else my.ShowNotification("info","Info",'Something is wrong');
+                }
+            },false,false);
+        }                
+    });
+    
+    
     $("body").on("click","a[data-role=account_change_password]",function(e){
         e.preventDefault();     
         my.routingAjax($(this).attr("href"),{},'',function(response){               
@@ -2609,6 +2679,9 @@ initLogin:function(){
                     config.loggedIn = true;
                     config.never_sell = response.never_sell;
                     config.userIdJs = response.id;         
+                    config.country = response.country;         
+                    config.country_name = response.country_name;    
+                    config.eu = response.eu;         
                     
                     if (!response.artist) {
                         //console.log('hide upload');
@@ -3220,7 +3293,8 @@ stripeToken:function(res){
 },
 initTrackBuy:function(){
     trackid = $("#trackid").val();
-    $( ".licence_type_sel_js").off( "click" );
+    //$( ".licence_type_sel_js").off( "click" );
+    $( "body" ).off( "click", ".licence_type_sel_js")
     $("body").off("click",".buy_row_li");
     $("body").on('click','.buy_row_li',function(){
         $(".buy_row_li").not(this).removeClass("active");
@@ -3964,7 +4038,7 @@ initUpload:function(){
         maxFileSize:config.max_upload_file_size,
         //andy reduce audio format
         //acceptFileTypes: /(\.|\/)(mp3|mpeg|mpeg3|mpg|x-mpeg|ogg|wav|aiff|flac|alac|mp2|aac|amr|wma)$/i,  
-        acceptFileTypes: /(\.|\/)(mp3|mpeg|mpeg3|mpg|wav|flac|alac|mp2)$/i,  
+        acceptFileTypes: /(\.|\/)(mp3|mpeg3|wav|flac|aiff)$/i,  
         add: function (e, data) {
                         
             console.log("Add => Type of uploaded file ", data.originalFiles[0]['type']);             
@@ -3976,7 +4050,7 @@ initUpload:function(){
             var acceptFileTypes = /\/(mp3|mpeg|mpeg3|mpg|x-mpeg|ogg|wav|aiff|flac|alac|mp2|aac|amr|wma)$/i;
             if(data.originalFiles[0]['type'].length && !acceptFileTypes.test(data.originalFiles[0]['type'])) {
                 //uploadErrors.push('Please upload valid track.Accepted file types are .mp3,.wav,.ogg,.flac,.aac,.amr,.wma,.aiff');
-                uploadErrors.push('Please upload valid track.Accepted file types are .mp3,.wav,.flac,.alac');
+                uploadErrors.push('Please upload valid track.Accepted file types are .mp3,.wav,.flac,.aiff');
             }
             if(data.originalFiles[0]['size'].length && data.originalFiles[0]['size'] > config.max_upload_file_size) {
                 uploadErrors.push('Filesize is too big');
@@ -7042,7 +7116,7 @@ function intializeFB(){
  if(typeof(FB) !== "undefined"){
   delete FB;
  }
- $.getScript("http://connect.facebook.net/en_US/all.js#xfbml=1",      function () {
+ $.getScript("https://connect.facebook.net/en_US/all.js#xfbml=1",      function () {
    FB.init({
      appId      : '356111844733367',
      cookie     : true,  // enable cookies to allow the server to access 
