@@ -12,7 +12,7 @@
   <link rel="stylesheet" href="assets/angular/assets/css/app.css">
   <script src="https://use.fontawesome.com/f48fd98fd2.js"></script>
 
-<link href="assets/angular/assets/angular/styles.bundle.css" rel="stylesheet"/></head>
+<link href="assets/angular/styles.bundle.css" rel="stylesheet"/></head>
 <body>Loading...
 <script type="text/javascript" src="/assets/angular/inline.bundle.js"></script>
 <script type="text/javascript" src="/assets/angular/polyfills.bundle.js">

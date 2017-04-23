@@ -2,7 +2,6 @@ import {Component, OnInit, NgZone} from '@angular/core';
 import {AudioRecord} from '../../interfases/audio-record';
 import {SharedService} from '../shared.service';
 import * as _ from 'lodash';
-import {Observable} from 'rxjs/Observable';
 declare const WaveSurfer: any;
 
 @Component({
@@ -10,9 +9,12 @@ declare const WaveSurfer: any;
   templateUrl: './audio-player.component.html',
   styleUrls: ['./audio-player.component.scss']
 })
+
+
 export class AudioPlayerComponent implements OnInit {
   public isShuffleOn: boolean;
   public isTrackRepeated: boolean;
+  public isReady: boolean = false;
   public isRecordPlayed: boolean;
   public records: Array<AudioRecord>;
   public currentPlayedTrackData: any = null;
@@ -20,6 +22,7 @@ export class AudioPlayerComponent implements OnInit {
   public wavesurfer: any = null;
   public streamTrack: string = null;
   public currentTime: number;
+  public durationTime: number;
 
   constructor(
     private _sharedService: SharedService,
@@ -36,27 +39,38 @@ export class AudioPlayerComponent implements OnInit {
         barWidth: 1.2
       });
       this.wavesurfer.load(this.streamTrack);
+
+      this.wavesurfer.on('audioprocess', () => {
+        this.zone.run(() => {
+          this.currentTime = this.isReady ? this.wavesurfer.getCurrentTime() : 0;
+        });
+      });
+
+      this.wavesurfer.on('ready', () => {
+        this.zone.run(() => {
+          this.durationTime = this.wavesurfer.getDuration();
+        });
+      });
+
+      this.wavesurfer.on('finish', () => {
+        this.zone.run(() => {
+          this.stopTrack();
+        });
+      });
+
     } else {
       this.wavesurfer.load(this.streamTrack);
     }
   }
 
   ngOnInit() {
-    this.currentTime = 0;
     const initialize = _.once(() => {
       this.wavesurfer.on('ready', () => {
+        this.isReady = true;
         this.playTrack();
       });
-
-      this.wavesurfer.on('play', () => {
-        //TODO(AlexSol): function single
-        Observable.interval(1000).subscribe(i => {
-          this.zone.run(() => {
-            this.currentTime += 1;
-          });
-        });
-      });
     });
+
     this.getCurrentPlayList();
     this._sharedService.playTrackSubject.subscribe((track: any) => {
       this.setCurrentPlayedTrack(track);
@@ -72,6 +86,8 @@ export class AudioPlayerComponent implements OnInit {
   }
 
   setCurrentPlayedTrack(track) {
+    this.stopTrack();
+    this.durationTime = 0;
     this.currentPlayedTrack = track;
     this._sharedService.getTrackLink(track.trackLink).subscribe(record => {
       this.streamTrack = record.stream_url + '?nor=1';
@@ -80,6 +96,7 @@ export class AudioPlayerComponent implements OnInit {
   }
 
   playTrack() {
+    this.isReady = true;
     this.isRecordPlayed = true;
     this.wavesurfer.play();
   }
@@ -87,6 +104,12 @@ export class AudioPlayerComponent implements OnInit {
   pauseTrack() {
     this.isRecordPlayed = false;
     this.wavesurfer.pause();
+  }
+
+  stopTrack() {
+    this.isReady = false;
+    this.currentTime = 0;
+    this.isRecordPlayed = false;
   }
 
 
