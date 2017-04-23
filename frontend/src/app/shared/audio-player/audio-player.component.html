@@ -118,12 +118,22 @@
     </div>
     <div class="player-center">
       <div class="controls">
-        <button type="button" class="ctrl-btn btn-backwards" title="Fast backwards"></button>
-        <button type="button" class="ctrl-btn btn-play" *ngIf="!isRecordPlayed"
+        <button class="ctrl-btn btn-backwards"
+                type="button"
+                title="Fast backwards"
+                (click)="playPreviousTrack()"></button>
+        <button class="ctrl-btn btn-play"
+                type="button"
+                *ngIf="!isRecordPlayed"
                 (click)="playTrack()"></button>
-        <button type="button" class="ctrl-btn btn-pause" *ngIf="isRecordPlayed"
+        <button class="ctrl-btn btn-pause"
+                type="button"
+                *ngIf="isRecordPlayed"
                 (click)="pauseTrack()"></button>
-        <button type="button" class="ctrl-btn btn-forward" title="Fast Forward"></button>
+        <button class="ctrl-btn btn-forward"
+                type="button"
+                title="Fast Forward"
+                (click)="playNextTrack()"></button>
       </div>
 
       <div class="play-time">
