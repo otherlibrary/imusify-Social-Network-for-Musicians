@@ -4,6 +4,7 @@ import {SharedService} from '../shared.service';
 import * as _ from 'lodash';
 declare const WaveSurfer: any;
 
+
 @Component({
   selector: 'app-audio-player',
   templateUrl: './audio-player.component.html',
@@ -33,22 +34,17 @@ export class AudioPlayerComponent implements OnInit {
     if (!this.wavesurfer) {
       this.wavesurfer = WaveSurfer.create({
         container: '#waveform',
-        height: 55,
+        backend: 'MediaElement',
+        height: 70,
         progressColor: '#c23a48',
         cursorColor: '#fff',
-        barWidth: 1.2
+        barWidth: 1.5
       });
       this.wavesurfer.load(this.streamTrack);
 
       this.wavesurfer.on('audioprocess', () => {
         this.zone.run(() => {
           this.currentTime = this.isReady ? this.wavesurfer.getCurrentTime() : 0;
-        });
-      });
-
-      this.wavesurfer.on('ready', () => {
-        this.zone.run(() => {
-          this.durationTime = this.wavesurfer.getDuration();
         });
       });
 
@@ -66,7 +62,6 @@ export class AudioPlayerComponent implements OnInit {
   ngOnInit() {
     const initialize = _.once(() => {
       this.wavesurfer.on('ready', () => {
-        this.isReady = true;
         this.playTrack();
       });
     });
@@ -86,11 +81,10 @@ export class AudioPlayerComponent implements OnInit {
   }
 
   setCurrentPlayedTrack(track) {
-    this.stopTrack();
-    this.durationTime = 0;
     this.currentPlayedTrack = track;
     this._sharedService.getTrackLink(track.trackLink).subscribe(record => {
       this.streamTrack = record.stream_url + '?nor=1';
+      this.durationTime = record.duration;
       this.initWavesurfer();
     });
   }
@@ -107,9 +101,6 @@ export class AudioPlayerComponent implements OnInit {
   }
 
   stopTrack() {
-    this.isReady = false;
-    this.currentTime = 0;
-    this.isRecordPlayed = false;
   }
 
 

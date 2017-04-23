@@ -1032,20 +1032,20 @@ Class commonfn extends CI_Model
 			$row1["id"] = $row["id"];
 			$row1["created_at"] = $row["createdDate"];
 			$row1["user_id"] = $row["userId"];
-			$timelength=$row["timelength"];
-			$timelength_arr=explode(":", $timelength);
-			$timelength=(count($timelength_arr)>2)?$timelength:'00:'.$timelength;
-			$parsed = date_parse($timelength);
-					//print_r($parsed);
-			if($parsed['hour'] > 0)
-				$seconds = $parsed['hour'] * 3600 + $parsed['minute'] * 60 + $parsed['second'];	
-			else if($parsed['minute'] > 0)
-				$seconds = $parsed['minute'] * 60 + $parsed['second'];	
-			else
-				$seconds = $parsed['second'];
-
-			$mili_seconds = $seconds * 1000;
-			$row1["duration"] = $mili_seconds;
+//			$timelength=$row["timelength"];
+//			$timelength_arr=explode(":", $timelength);
+//			$timelength=(count($timelength_arr)>2)?$timelength:'00:'.$timelength;
+//			$parsed = date_parse($timelength);
+//					//print_r($parsed);
+//			if($parsed['hour'] > 0)
+//				$seconds = $parsed['hour'] * 3600 + $parsed['minute'] * 60 + $parsed['second'];
+//			else if($parsed['minute'] > 0)
+//				$seconds = $parsed['minute'] * 60 + $parsed['second'];
+//			else
+//				$seconds = $parsed['second'];
+//
+//			$mili_seconds = $seconds * 1000;
+			$row1["duration"] = $row["timelength"];
 			$row1["position"] = 0;
 			$row1["buffer"] = 0;
 
