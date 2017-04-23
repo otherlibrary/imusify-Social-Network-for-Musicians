@@ -145,7 +145,11 @@
       </div>
 
       <div class="play-type">
-        <button type="button" class="ctrl-btn btn-shuffle" title="Shuffle"></button>
+        <button class="ctrl-btn btn-shuffle"
+                type="button"
+                title="Shuffle"
+                [class.active]="isTrackRepeated"
+                (click)="toggleRepeat()"></button>
         <button type="button" class="ctrl-btn btn-repeat"
                 title="Repeat indefinitely"></button>
       </div>

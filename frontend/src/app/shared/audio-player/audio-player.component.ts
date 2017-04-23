@@ -52,7 +52,7 @@ export class AudioPlayerComponent implements OnInit {
       });
 
       this.wavesurfer.on('finish', () => {
-        this.playNextTrack();
+        this.isTrackRepeated ? this.repeatTrack() : this.playNextTrack();
       });
 
     } else {
@@ -107,6 +107,14 @@ export class AudioPlayerComponent implements OnInit {
     this.wavesurfer.stop();
   }
 
+  toggleRepeat() {
+    this.isTrackRepeated = !this.isTrackRepeated
+  }
+
+  repeatTrack() {
+    let index = this.getCurrentAudioTrackIndex();
+    this.setCurrentPlayedTrack(this.records[index]);
+  }
 
   getAudioTrackById(id: number) {
     return this.records.find((elem) => <number>elem.id === id);
@@ -120,7 +128,7 @@ export class AudioPlayerComponent implements OnInit {
     this.setCurrentPlayedTrack(this.getPreviousTrack());
   }
 
-  getNextTrack() {
+  getNextTrack(): AudioRecord {
     const currentTrackIndex = this.getCurrentAudioTrackIndex();
     if (currentTrackIndex == this.records.length - 1) {
       return this.records[0];
