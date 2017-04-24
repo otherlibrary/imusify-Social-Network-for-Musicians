@@ -148,10 +148,13 @@
         <button class="ctrl-btn btn-shuffle"
                 type="button"
                 title="Shuffle"
+                [class.active]="isShuffleOn"
+                (click)="toggleShuffle()"></button>
+        <button type="button" 
+                class="ctrl-btn btn-repeat"
+                title="Repeat indefinitely"
                 [class.active]="isTrackRepeated"
                 (click)="toggleRepeat()"></button>
-        <button type="button" class="ctrl-btn btn-repeat"
-                title="Repeat indefinitely"></button>
       </div>
     </div>
 

@@ -52,7 +52,13 @@ export class AudioPlayerComponent implements OnInit {
       });
 
       this.wavesurfer.on('finish', () => {
-        this.isTrackRepeated ? this.repeatTrack() : this.playNextTrack();
+        if(this.isTrackRepeated) {
+            this.repeatTrack();
+        } else if(this.isShuffleOn) {
+            this.shuffleTracks();
+        } else {
+          this.playNextTrack();
+        }
       });
 
     } else {
@@ -78,7 +84,7 @@ export class AudioPlayerComponent implements OnInit {
   getCurrentPlayList(): void {
     this._sharedService.getMusic().subscribe(data => {
       this.records = data.records;
-      this.setCurrentPlayedTrack(this.records[6]);
+      this.setCurrentPlayedTrack(this.records[0]);
     }, err => console.error(err));
   }
 
@@ -116,12 +122,25 @@ export class AudioPlayerComponent implements OnInit {
     this.setCurrentPlayedTrack(this.records[index]);
   }
 
+  shuffleTracks() {
+    let randomTrack = this.records[Math.floor(Math.random()*this.records.length)];
+    this.setCurrentPlayedTrack(randomTrack);
+  }
+
+  toggleShuffle() {
+    this.isShuffleOn = !this.isShuffleOn;
+  }
+
   getAudioTrackById(id: number) {
     return this.records.find((elem) => <number>elem.id === id);
   }
 
   playNextTrack() {
-    this.setCurrentPlayedTrack(this.getNextTrack());
+    if(this.isShuffleOn) {
+      this.shuffleTracks();
+    } else {
+      this.setCurrentPlayedTrack(this.getNextTrack());
+    }
   }
 
   playPreviousTrack() {
