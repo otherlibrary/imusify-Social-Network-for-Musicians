@@ -48,3 +48,4 @@ Thumbs.db
 /assets/angular
 /assets/upload
 /index.php
+/application/config/database.php
