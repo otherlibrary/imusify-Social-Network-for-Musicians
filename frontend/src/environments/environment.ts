@@ -5,7 +5,7 @@
 
 export const environment = {
     production: false,
-    host: 'http://muzify.elantixtech.com',
+    host: 'http://beta.muzify.elantixtech.com',
     uploadTrackList: '/upload',
     uploadFilesUrl: '/api/uploadfiles/',
     musicList: '/music',
