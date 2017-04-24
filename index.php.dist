@@ -3,6 +3,7 @@
 date_default_timezone_set('UTC');
 session_set_cookie_params(60*60*24*30);
 
+// This lines for Angular local environment usage. If you want to deploy website on the remote machine you should to delete this headers.
 header('Access-Control-Allow-Origin: http://127.0.0.1:4200');
 header('Access-Control-Allow-Credentials: true');
 header('Access-Control-Allow-Methods: POST, GET, HEAD, PATCH');
