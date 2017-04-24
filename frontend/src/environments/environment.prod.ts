@@ -1,6 +1,7 @@
 export const environment = {
   production: true,
-  host: 'http://beta.muzify.elantixtech.com',
+  host: 'http://imusify.loc',
+  assets: '/assets/angular/',
   uploadTrackList: '/upload',
   uploadFilesUrl: '/api/uploadfiles/',
   musicList: '/music',

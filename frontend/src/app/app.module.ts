@@ -12,7 +12,7 @@ import {SharedModule} from "./shared/shared.module";
 
 import {routing} from './app-routing.module';
 import {AppComponent} from './app.component';
-import {components, componentsExported} from "./components/index";
+import {components} from "./components/index";
 
 @NgModule({
   declarations: [

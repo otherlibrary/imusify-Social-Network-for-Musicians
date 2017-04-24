@@ -43,3 +43,7 @@ testem.log
 Thumbs.db
 /phpstorm.php
 /phpstorm_db.php
+
+#angular build
+/assets/angular
+/assets/upload

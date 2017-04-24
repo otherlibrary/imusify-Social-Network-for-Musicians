@@ -2,6 +2,11 @@
 //date_default_timezone_set('Asia/Kolkata');
 date_default_timezone_set('UTC');
 session_set_cookie_params(60*60*24*30);
+
+header('Access-Control-Allow-Origin: http://imusify.loc');
+header('Access-Control-Allow-Credentials: true');
+header('Access-Control-Allow-Methods: POST, GET, HEAD, PATCH');
+header('Access-Control-Allow-Headers: accept');
 //echo date('Y-m-d H:i:s');
 /*
  *---------------------------------------------------------------

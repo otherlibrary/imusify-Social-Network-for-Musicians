@@ -6,6 +6,7 @@
 export const environment = {
     production: false,
     host: 'http://beta.muzify.elantixtech.com',
+    assets: '/',
     uploadTrackList: '/upload',
     uploadFilesUrl: '/api/uploadfiles/',
     musicList: '/music',
