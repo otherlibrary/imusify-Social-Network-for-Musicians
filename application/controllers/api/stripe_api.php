@@ -57,11 +57,14 @@ public function buytrack_post(){
   {
    $this->load->model('stripe_operation');
    $data = $this->stripe_operation->buy_song_check($values,$trackid);
+   //var_dump($data);exit;
           /* $this->session->set_userdata("trackId",$trackid);    
            $this->session->set_userdata("total",$data["total"]);    
            $this->session->set_userdata("imusify_price",$data["imusify_price"]);    
            $this->session->set_userdata("composer_price",$data["composer_price"]); */ 
            $this->session->set_userdata("order_".$data["order_id"],$data["order_id"]);  
+           
+           
            if(!empty($data))
            {   
             $this->response($data, 200); 

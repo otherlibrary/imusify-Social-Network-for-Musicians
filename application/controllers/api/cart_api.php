@@ -132,6 +132,7 @@ class cart_Api extends REST_Controller
 		$this->response_ar["licence_type_list"] = $this->icart->get_file_type($this->track,$this->order);
 
 		$db_exclusive_id =  getvalfromtbl("id","buy_exclusive_types","type='e'","single");
+                //var_dump($this->order, $db_exclusive_id);exit;
 		if($this->order["is_exclusive"] && $this->order["is_exclusive"] == 'y' && $db_exclusive_id == $this->order["exclusive_id"])
 		{
 
@@ -169,7 +170,10 @@ class cart_Api extends REST_Controller
 			$this->render_filetypes();
 		}
 	}
+        //license
 	function next_file_types(){
+                //get license price 
+                
 		$this->set_exclusive_types();
 		$this->refresh_order();
 		if(count($this->track["trackFileTypes"]) == 1)
@@ -199,6 +203,7 @@ class cart_Api extends REST_Controller
 	function next_licences(){
 		$this->set_file_types();
 		$this->refresh_order();
+                //var_dump($this->order);exit;
 		if($this->order["is_usage_type"] == "y" && $this->order["usage_id"] > 0 && $this->order["is_exclusive"]=="y" && $this->order['is_filetype']=='y')
 		{
 			$this->render_licences();
@@ -216,7 +221,16 @@ class cart_Api extends REST_Controller
 			$this->response_ar["orderid"] = $this->order["id"];
 		}
 		$this->response_ar["licence_type_list"] = $this->icart->get_licences($this->track,$this->order);
-
+                //Exclusive license Price must be equal or greater than 1000 
+                /*
+                for($i=0; $i < count($this->response_ar["licence_type_list"]); $i++){
+                    if ($this->response_ar["licence_type_list"][$i]['licencePrice'] < 1000){
+                        $this->response_ar["licence_type_list"][$i]['licencePrice'] = 1000;
+                    }                        
+                } 
+                 */
+                              
+                //var_dump($this->response_ar["licence_type_list"][0]);exit;
 		if(!empty($this->response_ar["licence_type_list"]))
 		{
 			$cart_html = "";
@@ -261,6 +275,8 @@ class cart_Api extends REST_Controller
 		$this->values = $this->input->post("values");
 		$this->values = rtrim($this->values,",");
 		$this->trackid = $this->input->post("trackid");
+                //$this->exclusive_license = filter_var($this->input->post("exclusive"), FILTER_VALIDATE_BOOLEAN);
+                
 		$this->is_prev_flag = filter_var($this->input->post("is_prev_flag"), FILTER_VALIDATE_BOOLEAN);
 		$this->refresh_order();
 		$is_usage_type_render_flag = false;
@@ -295,10 +311,12 @@ class cart_Api extends REST_Controller
 			}
 			else if($type == "exclusive")
 			{
+                                //list of exclusive/non-exclusive licenses
 				$is_exclusive_render_flag = true;
 			}
 			else if($type == "trackfiletype")
 			{
+                                //licenses
 				$is_filetype_render_flag = true;	
 			}
 			else if($type == "licence_types")
@@ -316,7 +334,9 @@ class cart_Api extends REST_Controller
 					$this->values=$this->order['filetype_id'];
 				}
 				else if($is_filetype_render_flag==true){
+                                    //license flag
 					$this->values=$this->order['exclusive_id'];
+                                        
 				}else if($is_exclusive_render_flag==true){
 					$this->values=$this->order['usage_id'];
 				}
@@ -333,7 +353,7 @@ class cart_Api extends REST_Controller
 
 			}*/
 			
-			/*var_dump($is_exclusive_render_flag);*/
+			//var_dump($is_licence_render_flag,$is_filetype_render_flag,$is_exclusive_render_flag);exit;
 			if($is_licence_render_flag === true){
 				$this->licences();
 				$this->response($this->response_ar, 200);	

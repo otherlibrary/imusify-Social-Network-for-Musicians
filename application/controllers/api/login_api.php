@@ -88,10 +88,11 @@ class Login_Api extends REST_Controller
 				}
 				else
 				{
+                                                   
 					$user = $this->Ilogin->login($this->post('username'),$this->post('password'),$this->post('rememberme'),null,$this->post('type'), $this->post());
 					
 					if($user)
-					{	
+					{	                                                
 						$this->response($user, 200); // 200 being the HTTP response code
 					}
 					else

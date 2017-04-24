@@ -67,7 +67,8 @@ $route['assets/images/(:any)/(:any)/(:any)'] = "api/images_api/all_photos/$1/$2/
 $route['api/login'] = "api/login_api/login/format/json";
 
 $route['api/change_password_api'] = "api/account_api/change_password/format/json";
-
+//VAT Country code
+$route['api/country'] = "api/vat_api/check_current_country/format/json";
 
 
 
@@ -124,6 +125,7 @@ $route['api/notification/read'] = "api/unread_msgs_api/read_notifications/format
 $route['api/notification/list'] = "api/unread_msgs_api/notifications_list/format/json";
 
 $route['api/new_artists'] = 'api/commonfn_api/new_artists/format/json';
+
 
 
 
@@ -277,6 +279,11 @@ $route['upload/(:any)/(:num)'] = "upload/upload/index/$1/$2";
 $route['account'] = "account/index";
 $route['account/stripe/connect'] = "account/index/connect";
 $route['account/(:any)'] = "account/index/$1";
+
+$route['vat'] = "vat/index";
+//$route['vat/stripe/connect'] = "vat/index/connect";
+//$route['vat/update'] = "vat_api/update";
+$route['api/vat/update'] = "api/vat_api/vat_update/format/json";
 
 $route['stripeoperations/(:any)'] = "stripeoperations/$1";
 
