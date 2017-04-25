@@ -1,7 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {Router} from "@angular/router";
 import {AuthService} from "../shared/services/auth.service";
-import {EmitterService} from "../shared/services/emitter.service";
 import {HomeService} from "./home.service";
 
 @Component({

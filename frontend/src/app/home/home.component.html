@@ -1,5 +1,4 @@
-<div class="main">
-  <div class="main-top">
+<div class="main-top">
     <div class="one-block">
       <div class="tabs">
         <a class="tabs-item" href="#" routerLink="/home" [routerLinkActiveOptions]="{ exact: true }" [routerLinkActive]="['active']">Headlines</a>
@@ -32,13 +31,8 @@
       </button>
     </div>
   </div>
-
-  <div class="inner-scroll home-inner" [class.reset_top_gutter]="rlaFollowing.isActive || rlaStatic.isActive">
+<div class="inner-scroll home-inner" [class.reset_top_gutter]="rlaFollowing.isActive || rlaStatic.isActive">
 
     <router-outlet></router-outlet>
 
   </div>
-
-  <app-audio-player></app-audio-player>
-
-</div>

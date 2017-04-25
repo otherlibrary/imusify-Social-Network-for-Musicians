@@ -71,13 +71,13 @@ export class AudioPlayerComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.getCurrentPlayList();
+
     this.initialize = _.once(() => {
       this.wavesurfer.on('ready', () => {
         this.playTrack();
       });
     });
-
-    this.getCurrentPlayList();
     this._sharedService.playTrackSubject.subscribe((track: any) => {
       this.setCurrentPlayedTrack(track);
       this.initialize();
@@ -87,7 +87,7 @@ export class AudioPlayerComponent implements OnInit {
   /**
    * get playlist page music
    */
-  getCurrentPlayList(): void {
+  getCurrentPlayList() {
     this._sharedService.getMusic().subscribe(data => {
       this.records = data.records;
       if(this.records.length > 0) {
