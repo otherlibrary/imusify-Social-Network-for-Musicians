@@ -432,15 +432,5 @@ Class track_detail extends CI_Model
 
         return 0;
     }
-
-    /**
-     * Returns the count of shares for specific track
-     * @param int $trackId
-     * @return int
-     */
-    public function shares_count($trackId)
-    {
-        // TODO Ask Andy for tracks share functionallity aviable
-    }
 }//modal over
 ?>
