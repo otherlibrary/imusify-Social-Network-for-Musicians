@@ -18,6 +18,7 @@ export class AudioPlayerComponent implements OnInit {
   public isShuffleOn: boolean;
   public isTrackRepeated: boolean;
   public isReady: boolean = false;
+  public isBig: boolean = false;
   public isRecordPlayed: boolean;
   public records: Array<AudioRecord>;
   public currentPlayedTrack: any = null;
@@ -182,6 +183,10 @@ export class AudioPlayerComponent implements OnInit {
 
   getCurrentAudioTrackIndex() {
     return this.records.indexOf(this.getAudioTrackById(this.currentPlayedTrack.id));
+  }
+
+  togglePlayer() {
+    this.isBig = !this.isBig;
   }
 
 }

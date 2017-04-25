@@ -8,6 +8,7 @@
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e",
+    "config": "npm config set scripts-prepend-node-path true",
     "build": "ng build -prod -aot --output-hashing=none --deploy-url=/assets/angular/"
   },
   "private": true,
