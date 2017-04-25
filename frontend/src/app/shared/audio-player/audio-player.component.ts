@@ -32,7 +32,10 @@ export class AudioPlayerComponent implements OnInit {
     public zone: NgZone
   ) {}
 
-  initWavesurfer() {
+  /**
+   * init wave plugin and add listeners
+   */
+  private initWavesurfer() {
     if (!this.wavesurfer) {
       this.wavesurfer = WaveSurfer.create({
         container: '#waveform',
@@ -60,7 +63,6 @@ export class AudioPlayerComponent implements OnInit {
           this.playNextTrack();
         }
       });
-
     } else {
       this.initialize();
       this.wavesurfer.load(this.streamTrack, peaks);
@@ -81,14 +83,29 @@ export class AudioPlayerComponent implements OnInit {
     });
   }
 
+  /**
+   * get playlist page music
+   */
   getCurrentPlayList(): void {
     this._sharedService.getMusic().subscribe(data => {
       this.records = data.records;
-      this.setCurrentPlayedTrack(this.records[0]);
+      if(this.records.length > 0) {
+        this.setCurrentPlayedTrack(this.records[0]);
+      } else {
+        console.warn('empty records');
+      }
     }, err => console.error(err));
   }
 
+  /**
+   * set track in player and ready to play
+   * @param track
+   */
   setCurrentPlayedTrack(track) {
+    if(!track) {
+      console.warn('empty track');
+      return;
+    }
     this.currentPlayedTrack = track;
     this._sharedService.getTrackLink(track.trackLink).subscribe(record => {
       this.streamTrack = record.stream_url + '?nor=1';

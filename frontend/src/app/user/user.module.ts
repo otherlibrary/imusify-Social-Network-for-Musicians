@@ -1,7 +1,7 @@
 import {NgModule} from '@angular/core';
 import {CommonModule} from '@angular/common';
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
-import {SelectModule} from 'angular2-select';
+import {SelectModule} from 'ng-select';
 import {MyDatePickerModule} from 'mydatepicker';
 
 import {userComponents, exportsUserComponents} from './index';
