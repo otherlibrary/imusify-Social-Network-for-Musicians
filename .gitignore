@@ -44,6 +44,8 @@ Thumbs.db
 /phpstorm.php
 /phpstorm_db.php
 
+#angular build
+/assets/angular
 /assets/upload
 /index.php
 /application/config/database.php
