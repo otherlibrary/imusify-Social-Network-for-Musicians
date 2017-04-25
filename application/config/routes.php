@@ -109,7 +109,7 @@ $route['api/cart'] = "api/cart_api/cart_content/format/json";
 $route['api/delete_conversation/(:num)'] = "api/message_api/delete_conversations/$1/format/json";
 
 
-
+$route['api/track-details/likes_count/(:num)'] = 'api/trackdetails_api/likes_count/$1/format/json';
 $route['api/(:any)/(:any)'] = "api/track/user/id/$1/id2/$2/format/json"; 
 $route['api/(:any)'] = "api/user_api/user/id/$1/format/json";
 $route['api/linkcrawler'] = "api/feed_api/crawl_data/format/json";
