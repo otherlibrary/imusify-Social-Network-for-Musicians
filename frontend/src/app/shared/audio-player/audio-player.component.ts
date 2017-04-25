@@ -1,4 +1,4 @@
-import {Component, OnInit, NgZone} from '@angular/core';
+import {Component, OnInit, NgZone, OnDestroy} from '@angular/core';
 import {AudioRecord} from '../../interfases/audio-record';
 import {SharedService} from '../shared.service';
 import * as _ from 'lodash';
@@ -14,7 +14,7 @@ const peaks = [0.013611255213618279,-0.00634765625,0.01745658740401268,-0.031005
 })
 
 
-export class AudioPlayerComponent implements OnInit {
+export class AudioPlayerComponent implements OnInit, OnDestroy {
   public isShuffleOn: boolean;
   public isTrackRepeated: boolean;
   public isReady: boolean = false;
@@ -27,11 +27,30 @@ export class AudioPlayerComponent implements OnInit {
   public currentTime: number;
   public durationTime: number;
   private initialize: any;
+  private subscriberTrackSubject: any;
 
   constructor(
     private _sharedService: SharedService,
     public zone: NgZone
   ) {}
+
+  ngOnInit() {
+    this.getCurrentPlayList();
+
+    this.initialize = _.once(() => {
+      this.wavesurfer.on('ready', () => {
+        this.playTrack();
+      });
+    });
+    this.subscriberTrackSubject = this._sharedService.playTrackSubject.subscribe((track: any) => {
+      this.setCurrentPlayedTrack(track);
+      this.initialize();
+    });
+  }
+
+  ngOnDestroy() {
+    this.subscriberTrackSubject.unsubscribe();
+  }
 
   /**
    * init wave plugin and add listeners
@@ -68,20 +87,6 @@ export class AudioPlayerComponent implements OnInit {
       this.initialize();
       this.wavesurfer.load(this.streamTrack, peaks);
     }
-  }
-
-  ngOnInit() {
-    this.getCurrentPlayList();
-
-    this.initialize = _.once(() => {
-      this.wavesurfer.on('ready', () => {
-        this.playTrack();
-      });
-    });
-    this._sharedService.playTrackSubject.subscribe((track: any) => {
-      this.setCurrentPlayedTrack(track);
-      this.initialize();
-    });
   }
 
   /**
