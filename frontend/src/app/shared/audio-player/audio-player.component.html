@@ -1,4 +1,4 @@
-<div id="player">
+<div id="player" [class.big]="isBig">
   <div class="queue-table-wrap">
     <table class="song-table ar`tists">
       <thead>
@@ -52,7 +52,7 @@
     </table>
   </div>
   <!--Normal & Hover-->
-  <div class="big-block">
+  <div class="big-block" *ngIf="currentPlayedTrack">
     <div class="big-top">
       <div class="prev-block">
         <a href="#" class="top-one">
@@ -93,11 +93,24 @@
         </div>
       </div>
       <div class="controls">
-        <button type="button" class="ctrl-btn btn-backwards"
-                title="Fast backwards"></button>
-        <button type="button" class="ctrl-btn btn-play"></button>
-        <button type="button" class="ctrl-btn btn-forward"
-                title="Fast Forward"></button>
+        <button class="ctrl-btn btn-backwards"
+                type="button"
+                title="Fast backwards"
+                (click)="playPreviousTrack()"></button>
+
+        <button type="button"
+                class="ctrl-btn btn-play"
+                *ngIf="!isRecordPlayed"
+                (click)="playTrack()"></button>
+        <button type="button"
+                class="ctrl-btn btn-pause"
+                *ngIf="isRecordPlayed"
+                (click)="pauseTrack()"></button>
+
+        <button class="ctrl-btn btn-forward"
+                type="button"
+                title="Fast Forward"
+                (click)="playNextTrack()"></button>
       </div>
     </div>
   </div>
@@ -148,16 +161,22 @@
         <button class="ctrl-btn btn-shuffle"
                 type="button"
                 title="Shuffle"
+                [class.active]="isShuffleOn"
+                (click)="toggleShuffle()"></button>
+        <button type="button" 
+                class="ctrl-btn btn-repeat"
+                title="Repeat indefinitely"
                 [class.active]="isTrackRepeated"
                 (click)="toggleRepeat()"></button>
-        <button type="button" class="ctrl-btn btn-repeat"
-                title="Repeat indefinitely"></button>
       </div>
     </div>
 
     <div class="player-queue">
       <button type="button" class="ctrl-btn btn-queue" title="Show Queue"></button>
-      <button type="button" class="ctrl-btn btn-plus" title="Open big"></button>
+      <button class="ctrl-btn btn-plus"
+              title="Open big"
+              type="button"
+              (click)="togglePlayer()"></button>
     </div>
   </div>
 </div>

@@ -18,6 +18,7 @@ export class AudioPlayerComponent implements OnInit {
   public isShuffleOn: boolean;
   public isTrackRepeated: boolean;
   public isReady: boolean = false;
+  public isBig: boolean = false;
   public isRecordPlayed: boolean;
   public records: Array<AudioRecord>;
   public currentPlayedTrack: any = null;
@@ -32,7 +33,10 @@ export class AudioPlayerComponent implements OnInit {
     public zone: NgZone
   ) {}
 
-  initWavesurfer() {
+  /**
+   * init wave plugin and add listeners
+   */
+  private initWavesurfer() {
     if (!this.wavesurfer) {
       this.wavesurfer = WaveSurfer.create({
         container: '#waveform',
@@ -52,9 +56,14 @@ export class AudioPlayerComponent implements OnInit {
       });
 
       this.wavesurfer.on('finish', () => {
-        this.isTrackRepeated ? this.repeatTrack() : this.playNextTrack();
+        if(this.isTrackRepeated) {
+            this.repeatTrack();
+        } else if(this.isShuffleOn) {
+            this.shuffleTracks();
+        } else {
+          this.playNextTrack();
+        }
       });
-
     } else {
       this.initialize();
       this.wavesurfer.load(this.streamTrack, peaks);
@@ -75,14 +84,29 @@ export class AudioPlayerComponent implements OnInit {
     });
   }
 
+  /**
+   * get playlist page music
+   */
   getCurrentPlayList(): void {
     this._sharedService.getMusic().subscribe(data => {
       this.records = data.records;
-      this.setCurrentPlayedTrack(this.records[6]);
+      if(this.records.length > 0) {
+        this.setCurrentPlayedTrack(this.records[0]);
+      } else {
+        console.warn('empty records');
+      }
     }, err => console.error(err));
   }
 
+  /**
+   * set track in player and ready to play
+   * @param track
+   */
   setCurrentPlayedTrack(track) {
+    if(!track) {
+      console.warn('empty track');
+      return;
+    }
     this.currentPlayedTrack = track;
     this._sharedService.getTrackLink(track.trackLink).subscribe(record => {
       this.streamTrack = record.stream_url + '?nor=1';
@@ -116,12 +140,25 @@ export class AudioPlayerComponent implements OnInit {
     this.setCurrentPlayedTrack(this.records[index]);
   }
 
+  shuffleTracks() {
+    let randomTrack = this.records[Math.floor(Math.random()*this.records.length)];
+    this.setCurrentPlayedTrack(randomTrack);
+  }
+
+  toggleShuffle() {
+    this.isShuffleOn = !this.isShuffleOn;
+  }
+
   getAudioTrackById(id: number) {
     return this.records.find((elem) => <number>elem.id === id);
   }
 
   playNextTrack() {
-    this.setCurrentPlayedTrack(this.getNextTrack());
+    if(this.isShuffleOn) {
+      this.shuffleTracks();
+    } else {
+      this.setCurrentPlayedTrack(this.getNextTrack());
+    }
   }
 
   playPreviousTrack() {
@@ -146,6 +183,10 @@ export class AudioPlayerComponent implements OnInit {
 
   getCurrentAudioTrackIndex() {
     return this.records.indexOf(this.getAudioTrackById(this.currentPlayedTrack.id));
+  }
+
+  togglePlayer() {
+    this.isBig = !this.isBig;
   }
 
 }

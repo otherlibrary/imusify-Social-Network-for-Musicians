@@ -128,7 +128,6 @@ export class EmailComponent implements OnInit {
 
         for (let key in this.signupEmailForm.value) {
             if (this.signupEmailForm.value.hasOwnProperty(key)) {
-                console.log(this.signupEmailForm.value[key]);
                 if (key == 'myDate') {
                     data['dd'] = this.signupEmailForm.value[key].date.day;
                     data['mm'] = this.signupEmailForm.value[key].date.month;
