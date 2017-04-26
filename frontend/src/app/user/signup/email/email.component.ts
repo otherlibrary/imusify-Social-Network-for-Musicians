@@ -154,7 +154,7 @@ export class EmailComponent implements OnInit {
     /**
      * НАстройки DatePicker
      */
-    private myDatePickerOptions: IMyOptions = {
+    public myDatePickerOptions: IMyOptions = {
         dateFormat: 'dd.mm.yyyy',
         editableDateField: false,
         openSelectorOnInputClick: true

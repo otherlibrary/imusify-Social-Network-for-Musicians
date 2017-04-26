@@ -11,11 +11,11 @@ import {Router} from "@angular/router";
 export class AppComponent {
     @HostBinding('class') public cssClass = '';
     //popup
-    private isVisible: boolean = false;
+    public isVisible: boolean = false;
 
     //profile
-    private loggedin: boolean;
-    private profileData: any;
+    public loggedin: boolean;
+    public profileData: any;
 
 
     constructor(private _authService: AuthService, private _router: Router) {
