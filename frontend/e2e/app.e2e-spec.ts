@@ -1,10 +1,10 @@
-import { ImusifyNewPage } from './app.po';
+import { Imusify4Page } from './app.po';
 
-describe('imusify-new App', () => {
-  let page: ImusifyNewPage;
+describe('imusify4 App', () => {
+  let page: Imusify4Page;
 
   beforeEach(() => {
-    page = new ImusifyNewPage();
+    page = new Imusify4Page();
   });
 
   it('should display message saying app works', () => {
