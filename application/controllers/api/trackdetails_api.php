@@ -6,11 +6,13 @@ class trackdetails_api extends REST_Controller
     /**
      * Returns JSON with count of likes for specified track
      * @param int $trackId
-     * [GET /api/track-details/likes_count/{track id}]
+     * [GET /api/track-details/likes-count/{track id}]
      */
     function likes_count_get($trackId)
     {
         $this->load->model('track_detail');
+
+        $this->track_detail->tracks_by_tag($trackId, 'instrumental');
 
         $likes = $this->track_detail->likes_count($trackId);
 
@@ -24,7 +26,7 @@ class trackdetails_api extends REST_Controller
     /**
      * Returns JSON with count of shares for specified track
      * @param int $trackId
-     * [GET /api/track-details/shares_count/{track id}]
+     * [GET /api/track-details/shares-count/{track id}]
      */
     function shares_count_get($trackId)
     {
@@ -42,7 +44,7 @@ class trackdetails_api extends REST_Controller
     /**
      * Returns JSON with count of plays for specified track
      * @param int $trackId
-     * [GET /api/track-details/plays_count/{track id}]
+     * [GET /api/track-details/plays-count/{track id}]
      */
     function plays_count_get($trackId)
     {
@@ -60,7 +62,7 @@ class trackdetails_api extends REST_Controller
     /**
      * Returns JSON with count of comments for specified track
      * @param int $trackId
-     * [GET /api/track-details/comments_count/{track id}]
+     * [GET /api/track-details/comments-count/{track id}]
      */
     function comments_count_get($trackId)
     {
@@ -78,7 +80,7 @@ class trackdetails_api extends REST_Controller
     /**
      * Returns JSON with count of comments for specified track
      * @param int $trackId
-     * [GET /api/track-details/playlists_count/{track id}]
+     * [GET /api/track-details/playlists-count/{track id}]
      */
     function playlists_count_get($trackId)
     {
@@ -96,7 +98,7 @@ class trackdetails_api extends REST_Controller
     /**
      * Returns JSON with count of downloads for specified track
      * @param int $trackId
-     * [GET /api/track-details/downloads_count/{track id}]
+     * [GET /api/track-details/downloads-count/{track id}]
      */
     function downloads_count_get($trackId)
     {
@@ -114,7 +116,7 @@ class trackdetails_api extends REST_Controller
     /**
      * Returns the JSON with common details for specified track
      * @param int $trackId
-     * [GET /api/track-details/common_details/{track id}
+     * [GET /api/track-details/common-details/{track id}
      */
     function common_details_get($trackId)
     {
@@ -125,6 +127,25 @@ class trackdetails_api extends REST_Controller
         $result = array_map(function ($value) {
             return (int)$value;
         }, $data);
+
+        echo json_encode($result);
+    }
+
+    /**
+     * Returns the JSON with ids of tracks related to specific tag
+     * @param int $id
+     * @param string $type
+     * [GET /api/track-details/show-tracks-by-tag/{tag id}/{tag type (genre, instrumental, mood)}]
+     */
+    function show_tracks_by_tag_get($id, $type)
+    {
+        $this->load->model('track_detail');
+
+        $tracks = $this->track_detail->tracks_by_tag($id, $type);
+
+        $result = [
+            'tracks' => $tracks,
+        ];
 
         echo json_encode($result);
     }
