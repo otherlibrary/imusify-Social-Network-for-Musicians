@@ -1,12 +1,12 @@
 {
   "$schema": "./node_modules/@angular/cli/lib/config/schema.json",
   "project": {
-    "name": "imusify-new"
+    "name": "imusify4"
   },
   "apps": [
     {
       "root": "src",
-      "outDir": "../assets/angular",
+      "outDir": "dist",
       "assets": [
         "assets",
         "favicon.ico"
