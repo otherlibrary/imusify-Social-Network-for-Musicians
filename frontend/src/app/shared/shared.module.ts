@@ -5,13 +5,17 @@ import {PreloaderComponent} from './index';
 import {SharedService} from "./shared.service";
 import {AudioPlayerComponent} from "./audio-player/audio-player.component";
 import {pipes} from "../pipes/index";
+import {directives} from "../directives/index";
+import {SwiperModule} from "angular2-useful-swiper";
 
 @NgModule({
   imports: [
-    CommonModule
+    CommonModule,
+    SwiperModule
   ],
   declarations: [
     ...pipes,
+    ...directives,
     PreloaderComponent,
     AudioPlayerComponent,
   ],

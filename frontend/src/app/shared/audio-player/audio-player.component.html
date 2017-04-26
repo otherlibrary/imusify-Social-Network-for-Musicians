@@ -54,31 +54,11 @@
   <!--Normal & Hover-->
   <div class="big-block" *ngIf="currentPlayedTrack">
     <div class="big-top">
-      <div class="prev-block">
+      <div class="big-block__img"
+           *ngFor="let record of records; let i = index"
+           [class.active]="record.id == currentPlayedTrack.id" [appAudioSlider]="record.id == currentPlayedTrack.id">
         <a href="#" class="top-one">
-          <img src="assets/images/feed-boxes/thumbs/2.jpg" alt=""/>
-        </a>
-        <a href="#" class="top-one">
-          <img src="assets/images/feed-boxes/thumbs/3.jpg" alt=""/>
-        </a>
-        <a href="#" class="top-one">
-          <img src="assets/images/feed-boxes/thumbs/4.jpg" alt=""/>
-        </a>
-      </div>
-      <div class="curr-block">
-        <a href="#" class="top-one">
-          <img src="assets/images/feed-boxes/thumbs/1.jpg" alt=""/>
-        </a>
-      </div>
-      <div class="next-block">
-        <a href="#" class="top-one">
-          <img src="assets/images/feed-boxes/thumbs/5.jpg" alt=""/>
-        </a>
-        <a href="#" class="top-one">
-          <img src="assets/images/feed-boxes/thumbs/6.jpg" alt=""/>
-        </a>
-        <a href="#" class="top-one">
-          <img src="assets/images/feed-boxes/thumbs/7.jpg" alt=""/>
+          <span class="bg_img" [ngStyle]="{'background-image': 'url(' + record.track_image + ')'}"></span>
         </a>
       </div>
     </div>

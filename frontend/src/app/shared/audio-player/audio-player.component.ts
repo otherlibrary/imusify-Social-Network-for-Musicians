@@ -96,7 +96,7 @@ export class AudioPlayerComponent implements OnInit, OnDestroy {
     this._sharedService.getMusic().subscribe(data => {
       this.records = data.records;
       if(this.records.length > 0) {
-        this.setCurrentPlayedTrack(this.records[0]);
+        this.setCurrentPlayedTrack(this.records[6]);
       } else {
         console.warn('empty records');
       }
