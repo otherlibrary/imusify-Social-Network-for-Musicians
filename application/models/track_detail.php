@@ -127,7 +127,6 @@ class track_detail extends CI_Model
 
     function fetch_track_licence_type($trackId)
     {
-
         $set_price_flag = false;
         $exclusive_price_flag = false;
 
@@ -559,5 +558,50 @@ class track_detail extends CI_Model
         }
 
         return null;
+    }
+
+    /**
+     * Returns the ids of tracks which related to specific tag
+     * @param int $tagId
+     * @param int $tagType
+     * @return array|null
+     */
+    public function tracks_by_tag($tagId, $tagType)
+    {
+        $sql = null;
+
+        if (is_array($tagId)) {
+            $idCondition = ' IN(' . array_to_str_list($tagId) . ')';
+        } else {
+            $idCondition = ' = ' . $tagId;
+        }
+        switch ($tagType) {
+            case 'genre':
+                $sql = 'SELECT trackId FROM track_genre WHERE genreId' . $idCondition;
+                break;
+            case 'instrumental':
+                $sql = 'SELECT trackId FROM track_instruments WHERE instumentId' . $idCondition;
+                break;
+            case 'mood':
+                $sql = 'SELECT trackId FROM track_moods WHERE moodId' . $idCondition;
+                break;
+        }
+        if (!empty($sql)) {
+            $query = $this->db->query($sql);
+            $result = $query->result();
+
+            if (!empty($result)) {
+                $trackIds = null;
+                foreach ($result as $row) {
+                    $trackIds[] = (int)$row->trackId;
+                }
+
+                sort($trackIds);
+
+                return $trackIds;
+            }
+
+            return null;
+        }
     }
 }

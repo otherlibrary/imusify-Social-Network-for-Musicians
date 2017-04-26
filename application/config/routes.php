@@ -109,13 +109,14 @@ $route['api/cart'] = "api/cart_api/cart_content/format/json";
 $route['api/delete_conversation/(:num)'] = "api/message_api/delete_conversations/$1/format/json";
 
 /* New Track Details API */
-$route['api/track-details/likes_count/(:num)'] = 'api/trackdetails_api/likes_count/$1/format/json';
-$route['api/track-details/shares_count/(:num)'] = 'api/trackdetails_api/shares_count/$1/format/json';
-$route['api/track-details/plays_count/(:num)'] = 'api/trackdetails_api/plays_count/$1/format/json';
-$route['api/track-details/comments_count/(:num)'] = 'api/trackdetails_api/comments_count/$1/format/json';
-$route['api/track-details/playlists_count/(:num)'] = 'api/trackdetails_api/playlists_count/$1/format/json';
-$route['api/track-details/downloads_count/(:num)'] = 'api/trackdetails_api/downloads_count/$1/format/json';
-$route['api/track-details/common_details/(:num)'] = 'api/trackdetails_api/common_details/$1/format/json';
+$route['api/track-details/likes-count/(:num)'] = 'api/trackdetails_api/likes_count/$1/format/json';
+$route['api/track-details/shares-count/(:num)'] = 'api/trackdetails_api/shares_count/$1/format/json';
+$route['api/track-details/plays-count/(:num)'] = 'api/trackdetails_api/plays_count/$1/format/json';
+$route['api/track-details/comments-count/(:num)'] = 'api/trackdetails_api/comments_count/$1/format/json';
+$route['api/track-details/playlists-count/(:num)'] = 'api/trackdetails_api/playlists_count/$1/format/json';
+$route['api/track-details/downloads-count/(:num)'] = 'api/trackdetails_api/downloads_count/$1/format/json';
+$route['api/track-details/common-details/(:num)'] = 'api/trackdetails_api/common_details/$1/format/json';
+$route['api/track-details/show-tracks-by-tag/(:num)/(:any)'] = 'api/trackdetails_api/show_tracks_by_tag/$1/$2/format/json';
 
 $route['api/(:any)/(:any)'] = "api/track/user/id/$1/id2/$2/format/json"; 
 $route['api/(:any)'] = "api/user_api/user/id/$1/format/json";
