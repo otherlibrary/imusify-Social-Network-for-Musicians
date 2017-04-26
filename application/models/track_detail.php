@@ -1,5 +1,6 @@
 <?php
-Class track_detail extends CI_Model
+
+class track_detail extends CI_Model
 {
     function __construct()
     {
@@ -376,7 +377,7 @@ Class track_detail extends CI_Model
 
             $data = [
                 'dir' => $folder_name,
-                'name' => $image
+                'name' => $image,
             ];
             $where = "(id ='" . $row["id"] . "' )";
             $this->db->where($where);
@@ -386,7 +387,7 @@ Class track_detail extends CI_Model
                 'detailId' => $this->sess_uid,
                 'dir' => $folder_name,
                 'name' => $image,
-                'type' => 'pc'
+                'type' => 'pc',
             ];
             $this->db->insert('photos', $data_u_photo);
         }
@@ -404,7 +405,7 @@ Class track_detail extends CI_Model
                 'comment' => $comment,
                 'commentTime' => $commentTime,
                 'createdDate' => date('Y-m-d H:i:s'),
-                'ipAddress' => ''
+                'ipAddress' => '',
             ];
             $this->db->insert('track_comments', $data_t_comment);
 
@@ -415,13 +416,13 @@ Class track_detail extends CI_Model
     }
 
     /**
-     * Returns the count of likes for specific track
+     * Returns the count of likes for specified track
      * @param int $trackId
      * @return int
      */
     public function likes_count($trackId)
     {
-        $sql = 'SELECT COUNT(id) as likes_count FROM likelog WHERE trackId = ' . $trackId;
+        $sql = 'SELECT COUNT(id) AS likes_count FROM likelog WHERE trackId = ' . $trackId;
 
         $query = $this->db->query($sql);
         $result = $query->result();
@@ -434,13 +435,129 @@ Class track_detail extends CI_Model
     }
 
     /**
-     * Returns the count of shares for specific track
+     * Returns the count of shares for specified track
      * @param int $trackId
      * @return int
      */
     public function shares_count($trackId)
     {
-        // TODO Ask Andy for tracks share functionallity aviable
+        $sql = 'SELECT COUNT(id) AS shares_count FROM tracks WHERE id = ' . $trackId;
+
+        $query = $this->db->query($sql);
+        $result = $query->result();
+
+        if (!empty($result[0])) {
+            return (int)$result[0]->likes_count;
+        }
+
+        return 0;
     }
-}//modal over
-?>
+
+    /**
+     * Returns the count of plays for specified track
+     * @param int $trackId
+     * @return int
+     */
+    public function plays_count($trackId)
+    {
+        $sql = 'SELECT COUNT(id) AS plays_count FROM playinglog WHERE trackId = ' . $trackId;
+
+        $query = $this->db->query($sql);
+        $result = $query->result();
+
+        if (!empty($result[0])) {
+            return (int)$result[0]->plays_count;
+        }
+
+        return 0;
+    }
+
+    /**
+     * Returns the count of comments for specified track
+     * @param int $trackId
+     * @return int
+     */
+    public function comments_count($trackId)
+    {
+        $sql = 'SELECT COUNT(id) AS comments_count FROM track_comments WHERE trackId = ' . $trackId;
+
+        $query = $this->db->query($sql);
+        $result = $query->result();
+
+        if (!empty($result[0])) {
+            return (int)$result[0]->comments_count;
+        }
+
+        return 0;
+    }
+
+    /**
+     * Returns the count of playlists where specified track existing
+     * @param int $trackId
+     * @return int
+     */
+    public function playlists_count($trackId)
+    {
+        $sql = 'SELECT COUNT(id) AS playlists_count FROM playlist_detail WHERE trackId = ' . $trackId;
+
+        $query = $this->db->query($sql);
+        $result = $query->result();
+
+        if (!empty($result[0])) {
+            return (int)$result[0]->playlists_count;
+        }
+
+        return 0;
+    }
+
+    /**
+     * Returns the count of downloads for specified track
+     * @param int $trackId
+     * @return int
+     */
+    public function downloads_count($trackId)
+    {
+        $sql = 'SELECT COUNT(id) AS downloads_count FROM tracks_downloads WHERE track_id = ' . $trackId;
+
+        $query = $this->db->query($sql);
+        $result = $query->result();
+
+        if (!empty($result[0])) {
+            return (int)$result[0]->downloads_count;
+        }
+
+        return 0;
+    }
+
+    /**
+     * Returns the common track details
+     * @param int $trackId
+     * @return array|null
+     */
+    public function common_details($trackId)
+    {
+        $sql = 'SELECT
+                    t.shares AS shares_count,
+                    COUNT(ll.id) AS likes_count,
+                    COUNT(pl.id) AS plays_count,
+                    COUNT(tc.id) AS comments_count,
+                    COUNT(pd.id) AS playlists_count,
+                    COUNT(td.id) AS downloads_count
+                FROM tracks t
+                    LEFT JOIN likelog ll ON ll.trackId = t.id
+                    LEFT JOIN playinglog pl ON pl.trackId = t.id
+                    LEFT JOIN track_comments tc ON tc.trackId = t.id
+                    LEFT JOIN playlist_detail pd ON pd.trackId = t.id
+                    LEFT JOIN tracks_downloads td ON td.track_id = t.id
+                WHERE t.id = ' . $trackId;
+
+        $query = $this->db->query($sql);
+        $result = $query->result_array();
+
+        if (!empty($result[0])) {
+            return $result[0];
+        }
+
+        return null;
+    }
+}
