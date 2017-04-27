@@ -1,5 +1,6 @@
 import {Component, OnInit, Output, EventEmitter} from '@angular/core';
 import {DomSanitizer} from "@angular/platform-browser";
+import {SharedService} from "../../shared/shared.service";
 
 @Component({
   selector: 'home-record',
@@ -10,11 +11,12 @@ import {DomSanitizer} from "@angular/platform-browser";
 export class RecordComponent implements OnInit {
   @Output() onfollow: EventEmitter<any> = new EventEmitter();
   @Output() onsahred: EventEmitter<any> = new EventEmitter();
-  @Output() onPlay: EventEmitter<any> = new EventEmitter();
   record: any;
 
-  constructor(private sanitizer: DomSanitizer) {
-  }
+  constructor(
+    private sanitizer: DomSanitizer,
+    private _sharedService: SharedService
+  ) {}
 
   ngOnInit() {
   }
@@ -38,7 +40,7 @@ export class RecordComponent implements OnInit {
     this.onsahred.emit(this.record.trackLink);
   }
 
-  playTrack(record) {
-    this.onPlay.emit(record);
+  playRecord(record) {
+    this._sharedService.playTrackSubject.next(record);
   }
 }

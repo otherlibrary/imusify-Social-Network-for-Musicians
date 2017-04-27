@@ -251,3 +251,17 @@ $url_6: url(/assets/css/img/player/queue.svg);
     padding-top: 0;
   }
 }
+
+.profile {
+  .img-box {
+    width: 64px;
+    height: 64px;
+    margin: 0 auto;
+    margin-bottom: 10px;
+    img {
+      display: block;
+      max-width: 100%;
+      max-height: 100%;
+    }
+  }
+}

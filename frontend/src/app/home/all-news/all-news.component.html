@@ -2,8 +2,7 @@
   <home-record class="feed-box" *ngFor="let record of records"
                [record]="record"
                (onfollow)="addFollow($event)"
-               (onsahred)="sharedRecord($event)"
-               (onPlay)="playRecord($event)"></home-record>
+               (onsahred)="sharedRecord($event)"></home-record>
 </div>
 <div [hidden]="!sharedUrl" class="shared_popup">
   <div class="popup-close" (click)="sharedUrl = null"></div>

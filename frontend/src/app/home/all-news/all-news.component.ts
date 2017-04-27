@@ -14,8 +14,7 @@ export class AllNewsComponent implements OnInit {
   sharedUrl: null;
 
   constructor(
-    private _homeService: HomeService,
-    private _sharedService: SharedService
+    private _homeService: HomeService
   ) {}
 
   ngOnInit() {
@@ -30,9 +29,5 @@ export class AllNewsComponent implements OnInit {
 
       EmitterService.get('TOGGLE_PRELOADER').emit(false);
     });
-  }
-
-  playRecord(record) {
-    this._sharedService.playTrackSubject.next(record);
   }
 }

@@ -15,18 +15,37 @@
 }
 .big-block .big-top {
   display: flex;
+  overflow: hidden;
+  justify-content: center;
 }
 .big-block__img {
+  display: block;
   width: 135px;
   height: 135px;
-  display: none;
+  transform: scale(0);
+  transition: all 0.2s linear;
+  z-index: -1;
+  position: absolute;
   
   &.active {
-    display: block;
+    margin-left: 10px;
+    margin-right: 10px;
+    transform: scale(1);
+    z-index: 1;
+    position: relative;
   }
-  &.next-slide {
-    display: block;
-    background: red !important;
+  &.slide-1, &.slide-2, &.slide-3 {
+    z-index: 1;
+    position: relative;
+  }
+  &.slide-1 {
+    transform: scale(0.9);
+  }
+  &.slide-2 {
+    transform: scale(0.8);
+  }
+  &.slide-3 {
+    transform: scale(0.7);
   }
   > a  {
     display: block;

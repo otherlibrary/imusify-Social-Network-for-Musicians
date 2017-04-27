@@ -22,7 +22,7 @@ import {SwiperModule} from "angular2-useful-swiper";
   exports: [
     PreloaderComponent, AudioPlayerComponent
   ],
-  providers: [SharedService]
+  providers: []
 })
 export class SharedModule {
 }

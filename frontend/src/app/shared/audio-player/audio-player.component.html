@@ -54,13 +54,13 @@
   <!--Normal & Hover-->
   <div class="big-block" *ngIf="currentPlayedTrack">
     <div class="big-top">
-      <div class="big-block__img"
-           *ngFor="let record of records; let i = index"
-           [class.active]="record.id == currentPlayedTrack.id" [appAudioSlider]="record.id == currentPlayedTrack.id">
-        <a href="#" class="top-one">
-          <span class="bg_img" [ngStyle]="{'background-image': 'url(' + record.track_image + ')'}"></span>
-        </a>
-      </div>
+        <div class="big-block__img"
+             *ngFor="let record of records; let i = index"
+             [class.active]="record.id == currentPlayedTrack.id" [appAudioSlider]="record.id == currentPlayedTrack.id">
+          <a href="#" class="top-one">
+            <span class="bg_img" [ngStyle]="{'background-image': 'url(' + record.track_image + ')'}"></span>
+          </a>
+        </div>
     </div>
     <div class="big-bot">
       <div class="track-info">

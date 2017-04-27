@@ -14,6 +14,7 @@ import {SharedModule} from './shared/shared.module';
 import {routing} from './app-routing.module';
 import {AppComponent} from './app.component';
 import {components} from './components/index';
+import {SharedService} from "./shared/shared.service";
 
 @NgModule({
   declarations: [
@@ -29,7 +30,7 @@ import {components} from './components/index';
     routing,
     BrowserAnimationsModule
   ],
-  providers: [HelpersService, AuthGuard, EmitterService],
+  providers: [HelpersService, AuthGuard, EmitterService, SharedService],
   bootstrap: [AppComponent]
 })
 export class AppModule {
