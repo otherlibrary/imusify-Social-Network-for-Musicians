@@ -42,7 +42,7 @@ export class UploadService {
   uploadTrack(chunk: Blob, name: string, randomStr: string) {
     const formData = new FormData();
 
-    formData.append('ajax', true);
+    formData.append('i', '1');
     formData.append('r', randomStr);
     formData.append('files[]', chunk, name);
 
@@ -66,7 +66,13 @@ export class UploadService {
   }
 
   generateRandomString(): string {
-    return (Math.random() * 10000000).toString();
+    let text = "";
+    let possible = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+
+    for( let i=0; i < 5; i++ )
+      text += possible.charAt(Math.floor(Math.random() * possible.length));
+
+    return text;
   }
 
   saveTrack() {

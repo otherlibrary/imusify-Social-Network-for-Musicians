@@ -13572,7 +13572,6 @@ ul li {
 
 .feed-box {
   position: relative;
-  width: 400px;
   overflow: hidden;
   transition: opacity 0.8s cubic-bezier(0.39, 0.575, 0.565, 1) 0.1s;
   will-change: opacity;

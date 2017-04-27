@@ -1,0 +1,31 @@
+
+<div class="tr" [class.slided-right]="isOpen">
+  <div class="td">
+    <div class="wrap-btn-hide">
+      <div class="action-btns">
+        <button class="action-btn close" title="close" (click)="toggle()">x</button>
+
+        <button class="action-btn like" title="like">4.289</button>
+        |
+        <button class="action-btn share" title="share" (click)="toShared()">share</button>
+        |
+        <button class="action-btn add" title="add">add</button>
+      </div>
+    </div>
+    <button class="action-btn ellipses" title="show" (click)="toggle()"></button>
+    <button class="action-btn basket" title="add"></button>
+    <div class="td-id">
+      <span>{{index + 1}}</span>
+      <button class="box-btn play" title="play" (click)="playRecord(record)"></button>
+    </div>
+  </div>
+  <div class="td">{{record.title}}</div>
+  <div class="td">{{record.artist_name}}</div>
+  <div class="td">{{record.album}}</div>
+  <div class="td">{{record.genre}}</div>
+  <div class="td">{{record.timelength}}</div>
+  <div class="td">
+    <div class="ico-wave-min w100"></div>
+    <i class="likes-total">2.678</i>
+  </div>
+</div>

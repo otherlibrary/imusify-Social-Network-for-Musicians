@@ -139,7 +139,6 @@ ng-select.custom_select > div > div.single > div.toggle {
 }
 .feed-boxes-flex .feed-box {
     flex: 1 1 342px;
-    max-width: 342px;
 }
 .share_container {
     font-size: 1rem;

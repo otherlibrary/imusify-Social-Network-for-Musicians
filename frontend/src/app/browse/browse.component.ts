@@ -7,12 +7,9 @@ import {Router} from "@angular/router";
     styleUrls: ['./browse.component.scss']
 })
 export class BrowseComponent implements OnInit {
+    constructor(private _router: Router) {}
 
-    constructor(private _router: Router) {
-    }
-
-    ngOnInit() {
-    }
+    ngOnInit() {}
 
     goToSearch() {
         this._router.navigate([{outlets: {popup: 'search'}}]);
