@@ -1,3 +1,16 @@
-<p>
-  new-tracks works!
-</p>
+<div class="feed-boxes">
+  <div class="song-flex-table">
+    <div class="thead">
+      <div class="th">#</div>
+      <div class="th">Track</div>
+      <div class="th">Artist</div>
+      <div class="th">Album</div>
+      <div class="th">Genre</div>
+      <div class="th ico-time"></div>
+      <div class="th ico-like"></div>
+    </div>
+    <div class="tbody" *ngIf="records">
+      <track-item-line *ngFor="let record of records, let i = index" [record]="record" [index]="i"></track-item-line>
+    </div>
+  </div>
+</div>

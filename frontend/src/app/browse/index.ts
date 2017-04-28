@@ -7,7 +7,8 @@ import {PopularArtistsComponent} from "./popular-artists/popular-artists.compone
 import {NewArtistsComponent} from "./new-artists/new-artists.component";
 import {PopularPlaylistsComponent} from "./popular-playlists/popular-playlists.component";
 import {NewPlaylistsComponent} from "./new-playlists/new-playlists.component";
-import {BrowseTrackComponent} from "./browse-track/browse-track.component";
+import {TrackItemComponent} from "./track-item/track-item.component";
+import {ArtistItemComponent} from "./artist-item/artist-item.component";
 
 export const browseComponents = [
     BrowseComponent,
@@ -19,7 +20,8 @@ export const browseComponents = [
     NewArtistsComponent,
     PopularPlaylistsComponent,
     NewPlaylistsComponent,
-    BrowseTrackComponent
+    TrackItemComponent,
+    ArtistItemComponent
 ];
 
 export const exportsBrowseComponents = [

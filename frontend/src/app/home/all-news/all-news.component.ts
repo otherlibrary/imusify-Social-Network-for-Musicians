@@ -1,7 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {HomeService} from "../home.service";
 import {EmitterService} from "../../shared/services/emitter.service";
-import {SharedService} from "../../shared/shared.service";
+import {IRecord, ITracksData} from "../../interfases";
 
 @Component({
   selector: 'app-all-news',
@@ -9,8 +9,8 @@ import {SharedService} from "../../shared/shared.service";
   styleUrls: ['./all-news.component.css']
 })
 export class AllNewsComponent implements OnInit {
-  homeData: any;
-  records: any;
+  homeData: ITracksData;
+  records: IRecord[];
   sharedUrl: null;
 
   constructor(

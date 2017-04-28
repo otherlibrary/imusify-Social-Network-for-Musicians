@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { BrowseTrackComponent } from './browse-track.component';
+import { ArtistItemComponent } from './artist-item.component';
 
-describe('BrowseTrackComponent', () => {
-  let component: BrowseTrackComponent;
-  let fixture: ComponentFixture<BrowseTrackComponent>;
+describe('ArtistItemComponent', () => {
+  let component: ArtistItemComponent;
+  let fixture: ComponentFixture<ArtistItemComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ BrowseTrackComponent ]
+      declarations: [ ArtistItemComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(BrowseTrackComponent);
+    fixture = TestBed.createComponent(ArtistItemComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

@@ -1,6 +1,7 @@
 import {Component, OnInit, Output, EventEmitter} from '@angular/core';
 import {DomSanitizer} from "@angular/platform-browser";
 import {SharedService} from "../../shared/shared.service";
+import {IRecord} from "../../interfases/IRecord";
 
 @Component({
   selector: 'home-record',
@@ -11,7 +12,7 @@ import {SharedService} from "../../shared/shared.service";
 export class RecordComponent implements OnInit {
   @Output() onfollow: EventEmitter<any> = new EventEmitter();
   @Output() onsahred: EventEmitter<any> = new EventEmitter();
-  record: any;
+  record: IRecord;
 
   constructor(
     private sanitizer: DomSanitizer,
@@ -40,7 +41,7 @@ export class RecordComponent implements OnInit {
     this.onsahred.emit(this.record.trackLink);
   }
 
-  playRecord(record) {
+  playRecord(record): void {
     this._sharedService.playTrackSubject.next(record);
   }
 }

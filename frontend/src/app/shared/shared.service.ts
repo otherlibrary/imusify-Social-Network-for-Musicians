@@ -3,6 +3,7 @@ import {Http, Response} from '@angular/http';
 import {Observable, Subject} from "rxjs";
 import {environment} from "../../environments/environment";
 import {contentHeaders} from "../common/headers";
+import {ITracksData} from "../interfases";
 
 @Injectable()
 export class SharedService {
@@ -13,7 +14,7 @@ export class SharedService {
     this.host = environment.host;
   }
 
-  getMusic() {
+  getMusic(): Observable<ITracksData> {
     return this._http.post(this.host + environment.musicList, environment.creds, {
       headers: contentHeaders,
       withCredentials: true

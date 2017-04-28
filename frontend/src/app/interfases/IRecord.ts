@@ -1,0 +1,31 @@
+export interface IRecord {
+  album: string
+  artist_mini_name: string
+  artist_name: string
+  comments: string
+  createdDate: string
+  featured: boolean
+  genre: string
+  i?: number
+  id: string
+  isPublic: string
+  lastname: string
+  main_title: string
+  perLink: string
+  plays: string
+  profileLink: string
+  release_dd: string
+  release_mm: string
+  release_yy: string
+  shares: string
+  timelength: string
+  title: string
+  total_songs: string
+  trackLink: string
+  track_image: string
+  trackuserid: string
+  uid: string
+  user_image?: string
+  wave?: string
+  waveform?: string
+}

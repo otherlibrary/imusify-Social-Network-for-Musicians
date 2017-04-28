@@ -2,6 +2,8 @@ import {Component, OnInit} from '@angular/core';
 import {HomeService} from "../home.service";
 import {EmitterService} from "../../shared/services/emitter.service";
 import {SharedService} from "../../shared/shared.service";
+import {IRecord, ITracksData} from "../../interfases";
+import {Observable} from "rxjs/Observable";
 
 @Component({
     selector: 'app-music',
@@ -9,9 +11,11 @@ import {SharedService} from "../../shared/shared.service";
     styleUrls: ['./music.component.css']
 })
 export class MusicComponent implements OnInit {
-    sharedUrl: null;
-    isVisible: boolean;
-    records: any;
+    public sharedUrl: null;
+    public isVisible: boolean;
+
+    public musicData: ITracksData;
+    public records: IRecord[];
 
     constructor(private _homeService: HomeService, private _sharedService: SharedService) {
     }
@@ -38,13 +42,13 @@ export class MusicComponent implements OnInit {
     /**
      * get music data
      */
-    getMusic() {
+    getMusic(): void {
         EmitterService.get('TOGGLE_PRELOADER').emit(true);
+        this._sharedService.getMusic().subscribe((data: ITracksData) => {
+            this.musicData = data;
+            this.records = this.musicData.records;
 
-        this._sharedService.getMusic().subscribe(data => {
-            this.records = data.records;
             EmitterService.get('GET_PROFILE').emit(data);
-
             EmitterService.get('TOGGLE_PRELOADER').emit(false);
         });
     }

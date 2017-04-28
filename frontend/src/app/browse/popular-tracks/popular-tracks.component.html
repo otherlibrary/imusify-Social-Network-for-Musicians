@@ -10,7 +10,7 @@
       <div class="th ico-like"></div>
     </div>
     <div class="tbody" *ngIf="records">
-      <app-browse-track *ngFor="let record of records, let i = index" [record]="record" [index]="i"></app-browse-track>
+      <track-item-line *ngFor="let record of records, let i = index" [record]="record" [index]="i"></track-item-line>
     </div>
   </div>
 </div>

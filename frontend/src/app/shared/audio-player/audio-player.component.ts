@@ -1,6 +1,6 @@
 import {Component, OnInit, NgZone, OnDestroy} from '@angular/core';
-import {AudioRecord} from '../../interfases/audio-record';
 import {SharedService} from '../shared.service';
+import {IRecord} from "../../interfases";
 import * as _ from 'lodash';
 declare const WaveSurfer: any;
 
@@ -20,7 +20,7 @@ export class AudioPlayerComponent implements OnInit, OnDestroy {
   public isReady: boolean = false;
   public isBig: boolean = false;
   public isRecordPlayed: boolean;
-  public records: Array<AudioRecord>;
+  public records: IRecord[];
   public currentPlayedTrack: any = null;
   public wavesurfer: any = null;
   public streamTrack: string = null;
@@ -155,7 +155,7 @@ export class AudioPlayerComponent implements OnInit, OnDestroy {
   }
 
   getAudioTrackById(id: number) {
-    return this.records.find((elem) => <number>elem.id === id);
+    return this.records.find((elem) => <string>elem.id === id.toString());
   }
 
   playNextTrack() {
@@ -170,7 +170,7 @@ export class AudioPlayerComponent implements OnInit, OnDestroy {
     this.setCurrentPlayedTrack(this.getPreviousTrack());
   }
 
-  getNextTrack(): AudioRecord {
+  getNextTrack(): IRecord {
     const currentTrackIndex = this.getCurrentAudioTrackIndex();
     if (currentTrackIndex == this.records.length - 1) {
       return this.records[0];
@@ -178,7 +178,7 @@ export class AudioPlayerComponent implements OnInit, OnDestroy {
     return this.records[currentTrackIndex + 1];
   }
 
-  getPreviousTrack(): AudioRecord {
+  getPreviousTrack(): IRecord {
     const currentTrackIndex = this.getCurrentAudioTrackIndex();
     if (+currentTrackIndex === 0) {
       return this.records[this.records.length - 1];
