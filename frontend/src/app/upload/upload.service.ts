@@ -30,8 +30,7 @@ export class UploadService {
   }
 
   getTrackList() {
-    const creds = 'ajax=true';
-    return this._http.post(this.host + environment.uploadTrackList, creds, {
+    return this._http.post(this.host + environment.uploadTrackList, environment.creds, {
       headers: contentHeaders,
       withCredentials: true
     })

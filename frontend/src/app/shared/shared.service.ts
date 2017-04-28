@@ -14,8 +14,7 @@ export class SharedService {
   }
 
   getMusic() {
-    const creds = 'ajax=true';
-    return this._http.post(this.host + environment.musicList, creds, {
+    return this._http.post(this.host + environment.musicList, environment.creds, {
       headers: contentHeaders,
       withCredentials: true
     })

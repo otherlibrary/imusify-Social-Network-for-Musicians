@@ -6,6 +6,7 @@
 export const environment = {
     production: false,
     host: 'http://imusify.loc',
+    creds: 'ajax=true',
     assets: '/',
     uploadTrackList: '/upload',
     uploadFilesUrl: '/api/uploadfiles/',

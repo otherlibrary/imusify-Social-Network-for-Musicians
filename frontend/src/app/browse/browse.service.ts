@@ -15,12 +15,16 @@ export class BrowseService {
 
 
   getPopularRecords() {
-    const creds = 'ajax=true';
-    return this._http.post(this.host + '/browse', creds, {
+    return this._http.post(this.host + '/browse', environment.creds, {
       withCredentials: true,
       headers: contentHeaders
     })
       .map((res) => res.json())
       .catch((error: any) => Observable.throw(error.json().error || 'Server error'));
+  }
+
+  //https://beta.imusify.com/imusify/browse/new-songs
+  getNewSongs() {
+
   }
 }

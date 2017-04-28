@@ -18,8 +18,7 @@ export class HomeService {
      * @returns {Observable<R>}
      */
     getAllNews() {
-        const creds = 'ajax=true';
-        return this._http.post(this.host, creds, {
+        return this._http.post(this.host, environment.creds, {
             headers: contentHeaders,
             withCredentials: true
         })

@@ -55,8 +55,7 @@ export class AuthService {
      * @returns {Observable<R>}
      */
     logOut() {
-        const creds = 'ajax=true';
-        return this._http.post(this.host + '/ulogout', creds, {
+        return this._http.post(this.host + '/ulogout', environment.creds, {
             headers: contentHeaders,
             withCredentials: true
         })
