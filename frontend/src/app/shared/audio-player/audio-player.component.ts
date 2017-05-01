@@ -141,11 +141,13 @@ export class AudioPlayerComponent implements OnInit, OnDestroy {
     this.isReady = true;
     this.isRecordPlayed = true;
     this.wavesurfer.play();
+    this._sharedService.playPlayerTrackSubject.next(this.currentPlayedTrack);
   }
 
   pauseTrack() {
     this.isRecordPlayed = false;
     this.wavesurfer.pause();
+    this._sharedService.pausePlayerTrackSubject.next(this.currentPlayedTrack);
   }
 
   stopTrack() {
@@ -177,12 +179,12 @@ export class AudioPlayerComponent implements OnInit, OnDestroy {
 
   playNextTrack() {
     this.isShuffleOn ? this.shuffleTracks() : this.setCurrentPlayedTrack(this.getNextTrack());
-    this._sharedService.nextTrackSubject.next(this.currentPlayedTrack);
+    this._sharedService.playPlayerTrackSubject.next(this.currentPlayedTrack);
   }
 
   playPreviousTrack() {
     this.setCurrentPlayedTrack(this.getPreviousTrack());
-    this._sharedService.nextTrackSubject.next(this.currentPlayedTrack);
+    this._sharedService.playPlayerTrackSubject.next(this.currentPlayedTrack);
   }
 
   getNextTrack(): IRecord {

@@ -8,9 +8,12 @@ import {ITracksData} from "../interfases";
 @Injectable()
 export class SharedService {
   public host: string;
+  //Subject audio player
+  public playPlayerTrackSubject: Subject<Object> = new Subject<Object>();
+  public pausePlayerTrackSubject: Subject<Object> = new Subject<Object>();
+  //Subject track
   public playTrackSubject: Subject<Object> = new Subject<Object>();
   public pauseTrackSubject: Subject<Object> = new Subject<Object>();
-  public nextTrackSubject: Subject<Object> = new Subject<Object>();
 
   constructor(private _http: Http) {
     this.host = environment.host;

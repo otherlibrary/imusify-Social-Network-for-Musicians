@@ -15,7 +15,8 @@ export class RecordComponent implements OnInit, OnDestroy {
   @Output() onNext: EventEmitter<any> = new EventEmitter();
   @Input() record: IRecord;
   public isPlayed: boolean;
-  private nextTrackSubscription: Subscription;
+  private pausePlayerTrackSubscription: Subscription;
+  private playPlayerTrackSubscription: Subscription;
 
   constructor(
     private sanitizer: DomSanitizer,
@@ -23,13 +24,21 @@ export class RecordComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit() {
-    this.nextTrackSubscription = this._sharedService.nextTrackSubject.subscribe((record: IRecord) => {
+    //pause track
+    this.pausePlayerTrackSubscription = this._sharedService.pausePlayerTrackSubject.subscribe((record: IRecord) => {
+      if(record.id === this.record.id) {
+        this.isPlayed = false;
+      }
+    });
+    //play track
+    this.playPlayerTrackSubscription = this._sharedService.playPlayerTrackSubject.subscribe((record: IRecord) => {
       this.isPlayed = record.id === this.record.id;
     });
   }
 
   ngOnDestroy() {
-    this.nextTrackSubscription.unsubscribe();
+    this.pausePlayerTrackSubscription.unsubscribe();
+    this.playPlayerTrackSubscription.unsubscribe();
   }
 
   getWave() {
@@ -52,7 +61,6 @@ export class RecordComponent implements OnInit, OnDestroy {
   }
 
   playRecord(record): void {
-    this._sharedService.nextTrackSubject.next(record);
     this._sharedService.playTrackSubject.next(record);
     this.isPlayed = true;
     this.onNext.emit(record);
