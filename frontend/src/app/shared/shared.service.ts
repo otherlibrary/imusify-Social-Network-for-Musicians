@@ -9,6 +9,8 @@ import {ITracksData} from "../interfases";
 export class SharedService {
   public host: string;
   public playTrackSubject: Subject<Object> = new Subject<Object>();
+  public pauseTrackSubject: Subject<Object> = new Subject<Object>();
+  public nextTrackSubject: Subject<Object> = new Subject<Object>();
 
   constructor(private _http: Http) {
     this.host = environment.host;

@@ -11,7 +11,14 @@
         <div class="featured-track">Featured track</div>
       </div>
 
-      <button class="box-btn play" title="play" (click)="playRecord(record)"></button>
+      <button class="box-btn play"
+              title="play"
+              *ngIf="!isPlayed"
+              (click)="playRecord(record)"></button>
+      <button class="box-btn pause"
+              title="pause"
+              *ngIf="isPlayed"
+              (click)="pauseRecord(record)"></button>
 
       <div class="feed-bottom">
         <div class="track-info">
