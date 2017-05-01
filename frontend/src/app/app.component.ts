@@ -2,6 +2,7 @@ import {Component, HostBinding} from '@angular/core';
 import {EmitterService} from "./shared/services/emitter.service";
 import {AuthService} from "./shared/services/auth.service";
 import {Router} from "@angular/router";
+import {IUser} from "./interfases/IUser";
 
 @Component({
     selector: 'body',
@@ -19,6 +20,17 @@ export class AppComponent {
 
 
     constructor(private _authService: AuthService, private _router: Router) {
+    }
+
+    ngOnInit() {
+        this.getProfile();
+        EmitterService.get('TOGGLE_PRELOADER').subscribe((data: boolean) => {
+            this.isVisible = data;
+        });
+
+       this._authService.cleanUserSubject.subscribe(() => {
+           this.cleanProfile();
+       });
     }
 
     /**
@@ -50,7 +62,6 @@ export class AppComponent {
     getProfile() {
         // обработчик если заходим первый раз через логин
         EmitterService.get('LOGIN').subscribe(data => {
-            //todo заменить на обьект юзера
             this.profileData = this._authService.profileData = data;
             this.loggedin = this._authService.loggedin = data.loggedin;
         });
@@ -65,10 +76,4 @@ export class AppComponent {
         });
     }
 
-    ngOnInit() {
-        this.getProfile();
-        EmitterService.get('TOGGLE_PRELOADER').subscribe((data: boolean) => {
-            this.isVisible = data;
-        })
-    }
 }

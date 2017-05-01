@@ -4,6 +4,7 @@ import { Observable } from 'rxjs';
 import {QueueService} from '../shared/services/queue.service';
 import {INewTrack} from '../interfases/new-track';
 import {ActivatedRoute, Router} from '@angular/router';
+import {IUser} from "../interfases/IUser";
 
 @Component({
   selector: 'app-upload',
@@ -14,7 +15,7 @@ import {ActivatedRoute, Router} from '@angular/router';
 export class UploadComponent implements OnInit {
   public uploadInput: HTMLInputElement;
   private _maxChunkSize: number = 1048576;
-  public newTrack: INewTrack;
+  private user: IUser;
 
   constructor(
     public _uploadService: UploadService,
@@ -24,6 +25,17 @@ export class UploadComponent implements OnInit {
   ) {}
 
   ngOnInit() {
+    /**
+     * if user not login redirect to home
+     */
+    this._route.data.subscribe((data: { user: IUser }) => {
+      this.user = data.user;
+      if(+this.user === 0) {
+        //this._router.navigate([{outlets: {popup: 'login'}}]);
+        this._router.navigate(['/home']);
+      }
+    });
+    
     const musicUpload = window.document.getElementById('music-upload');
     this.uploadInput = (<HTMLInputElement>musicUpload);
     if (!this.instantiateInputListener(this.uploadInput)) {

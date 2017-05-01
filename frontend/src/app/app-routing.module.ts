@@ -22,6 +22,7 @@ import {NotificationsComponent} from "./components/notifications/notifications.c
 import {MessagesComponent} from "./components/messages/messages.component";
 import {ArtistProfileComponent} from "./components/artist-profile/artist-profile.component";
 import {NewsComponent} from "./components/news/news.component";
+import {AuthResolveService} from "./shared/services/auth-resolve.service";
 
 const APP_ROUTES: Routes = [
   {
@@ -45,7 +46,10 @@ const APP_ROUTES: Routes = [
   {
     path: 'upload',
     loadChildren: 'app/upload/upload.module#UploadModule',
-    canActivate: [AuthGuard]
+    canActivate: [AuthGuard],
+    resolve: {
+      user: AuthResolveService
+    }
   },
   {
     path: 'soung-detail',

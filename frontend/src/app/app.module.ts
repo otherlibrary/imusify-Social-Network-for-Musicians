@@ -6,6 +6,8 @@ import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 
 import {HelpersService} from './shared/services/helpers.service';
 import {EmitterService} from './shared/services/emitter.service';
+import {SharedService} from "./shared/shared.service";
+import {AuthResolveService} from "./shared/services/auth-resolve.service";
 
 import {AuthGuard} from './common/index';
 import {UserModule} from './user/user.module';
@@ -14,7 +16,6 @@ import {SharedModule} from './shared/shared.module';
 import {routing} from './app-routing.module';
 import {AppComponent} from './app.component';
 import {components} from './components/index';
-import {SharedService} from "./shared/shared.service";
 
 @NgModule({
   declarations: [
@@ -30,7 +31,7 @@ import {SharedService} from "./shared/shared.service";
     routing,
     BrowserAnimationsModule
   ],
-  providers: [HelpersService, AuthGuard, EmitterService, SharedService],
+  providers: [HelpersService, AuthGuard, EmitterService, SharedService, AuthResolveService],
   bootstrap: [AppComponent]
 })
 export class AppModule {
