@@ -28,14 +28,14 @@ export class UploadComponent implements OnInit {
     /**
      * if user not login redirect to home
      */
-    this._route.data.subscribe((data: { user: IUser }) => {
-      this.user = data.user;
-      if(+this.user === 0) {
-        //this._router.navigate([{outlets: {popup: 'login'}}]);
-        this._router.navigate(['/home']);
-      }
-    });
-    
+    // this._route.data.subscribe((data: { user: IUser }) => {
+    //   this.user = data.user;
+    //   if(+this.user === 0) {
+    //     //this._router.navigate([{outlets: {popup: 'login'}}]);
+    //     this._router.navigate(['/home']);
+    //   }
+    // });
+
     const musicUpload = window.document.getElementById('music-upload');
     this.uploadInput = (<HTMLInputElement>musicUpload);
     if (!this.instantiateInputListener(this.uploadInput)) {
