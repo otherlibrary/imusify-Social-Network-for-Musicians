@@ -5,6 +5,7 @@ import {Observable} from 'rxjs/Rx';
 import {HelpersService} from './helpers.service';
 import {environment} from '../../../environments/environment';
 import {Subject} from "rxjs/Subject";
+import {IUser} from "../../interfases/IUser";
 
 
 @Injectable()
@@ -17,7 +18,6 @@ export class AuthService {
 
   constructor(private _http: Http, private _helpersService: HelpersService) {
     this.host = environment.host;
-    console.log('auth service');
     // получаэм данные юзера из localStorage
     this.profileData = JSON.parse(localStorage.getItem('auth_data'));
     this.loggedin = this.profileData;
@@ -69,21 +69,13 @@ export class AuthService {
    * return logged in user
    * @returns {boolean}
    */
-  isLoggedIn() {
-    return this.loggedin;
-  }
-
-  /**
-   * get user isLoggedIn
-   * @returns {Observable<R|T>}
-   */
-  // /is-login
-  getUser() {
-    return this._http.post(this.host + '/music', environment.creds, {
+  checkAuth():Observable<IUser> {
+    return this._http.get(this.host + '/api/user/check-auth', {
       headers: contentHeaders,
       withCredentials: true
     })
       .map((res: Response) => res.json())
       .catch((error: any) => Observable.throw(error.json().error || 'Server error'));
   }
+
 }

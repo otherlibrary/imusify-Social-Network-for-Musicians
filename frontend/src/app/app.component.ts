@@ -5,75 +5,77 @@ import {Router} from "@angular/router";
 import {IUser} from "./interfases/IUser";
 
 @Component({
-    selector: 'body',
-    templateUrl: './app.component.html',
-    styleUrls: ['./app.component.scss']
+  selector: 'body',
+  templateUrl: './app.component.html',
+  styleUrls: ['./app.component.scss']
 })
 export class AppComponent {
-    @HostBinding('class') public cssClass = '';
-    //popup
-    public isVisible: boolean = false;
+  @HostBinding('class') public cssClass = '';
+  //popup
+  public isVisible: boolean = false;
 
-    //profile
-    public loggedin: boolean;
-    public profileData: any;
+  //profile
+  public loggedin: boolean;
+  public profileData: any;
 
 
-    constructor(private _authService: AuthService, private _router: Router) {
-    }
+  constructor(private _authService: AuthService, private _router: Router) {
+  }
 
-    ngOnInit() {
-        this.getProfile();
-        EmitterService.get('TOGGLE_PRELOADER').subscribe((data: boolean) => {
-            this.isVisible = data;
-        });
+  ngOnInit() {
+    this.getProfile();
+    EmitterService.get('TOGGLE_PRELOADER').subscribe((data: boolean) => {
+      this.isVisible = data;
+    });
 
-       this._authService.cleanUserSubject.subscribe(() => {
-           this.cleanProfile();
-       });
-    }
+    this._authService.cleanUserSubject.subscribe(() => {
+      this.cleanProfile();
+    });
+  }
 
-    /**
-     *
-     * @returns {boolean}
-     */
-    logOut() {
-        EmitterService.get('TOGGLE_PRELOADER').emit(true);
-        this._authService.logOut().subscribe((data) => {
-            this.cleanProfile();
-            EmitterService.get('TOGGLE_PRELOADER').emit(false);
-            this._router.navigate(['/home']);
-        });
-        return false;
-    }
+  /**
+   *
+   * @returns {boolean}
+   */
+  logOut() {
+    EmitterService.get('TOGGLE_PRELOADER').emit(true);
+    this._authService.logOut().subscribe((data) => {
+      this.cleanProfile();
+      EmitterService.get('TOGGLE_PRELOADER').emit(false);
+      this._router.navigate(['/home']);
+    });
+    return false;
+  }
 
-    /**
-     * Очищает даные пользователя на клиенте
-     */
-    cleanProfile() {
-        this.profileData = this._authService.profileData = null;
-        this.loggedin = this._authService.loggedin = false;
-        localStorage.removeItem('auth_data');
-    }
+  /**
+   * Очищает даные пользователя на клиенте
+   */
+  cleanProfile() {
+    this.profileData = this._authService.profileData = null;
+    this.loggedin = this._authService.loggedin = false;
+    localStorage.removeItem('auth_data');
+  }
 
-    /**
-     * Обработка данных пользователя
-     */
-    getProfile() {
-        // обработчик если заходим первый раз через логин
-        EmitterService.get('LOGIN').subscribe(data => {
-            this.profileData = this._authService.profileData = data;
-            this.loggedin = this._authService.loggedin = data.loggedin;
-        });
+  /**
+   * Обработка данных пользователя
+   */
+  getProfile() {
+    // обработчик если заходим первый раз через логин
+    EmitterService.get('LOGIN').subscribe(data => {
+      this.profileData = this._authService.profileData = data;
+      this.loggedin = this._authService.loggedin = data.loggedin;
+    });
 
-        // если пользователь уже залогинен вытягиваем даные из сервиса
-        this.profileData = this._authService.profileData;
-        this.loggedin = this._authService.loggedin;
+    // если пользователь уже залогинен вытягиваем даные из сервиса
+    this.profileData = this._authService.profileData;
+    this.loggedin = this._authService.loggedin;
+    console.log(this._authService.profileData);
+    console.log(this._authService.profileData);
 
-        //обработчик если пользователь разлогинен каким либо другим образом кроме LOGOUT
-        EmitterService.get('LOGOUT').subscribe(data => {
-            this.cleanProfile();
-        });
-    }
+    //обработчик если пользователь разлогинен каким либо другим образом кроме LOGOUT
+    EmitterService.get('LOGOUT').subscribe(data => {
+      this.cleanProfile();
+    });
+  }
 
 }

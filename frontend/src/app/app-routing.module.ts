@@ -22,21 +22,24 @@ import {NotificationsComponent} from "./components/notifications/notifications.c
 import {MessagesComponent} from "./components/messages/messages.component";
 import {ArtistProfileComponent} from "./components/artist-profile/artist-profile.component";
 import {NewsComponent} from "./components/news/news.component";
-import {AuthResolveService} from "./shared/services/auth-resolve.service";
+import {AuthAllSuccessGuard} from "./common/auth-all-success.guard";
 
 const APP_ROUTES: Routes = [
   {
     path: "",
     redirectTo: "home",
-    pathMatch: "full"
+    pathMatch: "full",
+    canActivateChild: [AuthAllSuccessGuard]
   },
   {
     path: 'home',
-    loadChildren: 'app/home/home.module#HomeModule'
+    loadChildren: 'app/home/home.module#HomeModule',
+    canActivateChild: [AuthAllSuccessGuard]
   },
   {
     path: 'browse',
     loadChildren: 'app/browse/browse.module#BrowseModule',
+    canActivateChild: [AuthAllSuccessGuard]
   },
   {
     path: 'profile',
@@ -46,14 +49,12 @@ const APP_ROUTES: Routes = [
   {
     path: 'upload',
     loadChildren: 'app/upload/upload.module#UploadModule',
-    canActivate: [AuthGuard],
-    resolve: {
-      user: AuthResolveService
-    }
+    canActivate: [AuthGuard]
   },
   {
     path: 'soung-detail',
-    component: SoungDetailComponent
+    component: SoungDetailComponent,
+    canActivate: [AuthGuard]
   },
   {
     path: 'account',
@@ -83,17 +84,20 @@ const APP_ROUTES: Routes = [
   {
     path: 'playlist',
     component: PlaylistComponent,
-    outlet: 'popup'
+    outlet: 'popup',
+    canActivate: [AuthGuard]
   },
   {
     path: 'notifications',
     component: NotificationsComponent,
-    outlet: 'popup'
+    outlet: 'popup',
+    canActivate: [AuthGuard]
   },
   {
     path: 'messages',
     component: MessagesComponent,
-    outlet: 'popup'
+    outlet: 'popup',
+    canActivate: [AuthGuard]
   },
   {
     path: 'favorites',
@@ -150,7 +154,6 @@ const APP_ROUTES: Routes = [
     path: 'news',
     component: NewsComponent,
     outlet: 'popup',
-    canActivate: [AuthGuard]
   },
   {
     path: 'signup/email',

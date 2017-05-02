@@ -2,8 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { UploadService } from './upload.service';
 import { Observable } from 'rxjs';
 import {QueueService} from '../shared/services/queue.service';
-import {INewTrack} from '../interfases/new-track';
-import {ActivatedRoute, Router} from '@angular/router';
+import {ActivatedRoute} from '@angular/router';
 import {IUser} from "../interfases/IUser";
 
 @Component({
@@ -15,27 +14,14 @@ import {IUser} from "../interfases/IUser";
 export class UploadComponent implements OnInit {
   public uploadInput: HTMLInputElement;
   private _maxChunkSize: number = 1048576;
-  private user: IUser;
 
   constructor(
     public _uploadService: UploadService,
     private _queueService: QueueService,
-    private _router: Router,
     private _route: ActivatedRoute
   ) {}
 
   ngOnInit() {
-    /**
-     * if user not login redirect to home
-     */
-    // this._route.data.subscribe((data: { user: IUser }) => {
-    //   this.user = data.user;
-    //   if(+this.user === 0) {
-    //     //this._router.navigate([{outlets: {popup: 'login'}}]);
-    //     this._router.navigate(['/home']);
-    //   }
-    // });
-
     const musicUpload = window.document.getElementById('music-upload');
     this.uploadInput = (<HTMLInputElement>musicUpload);
     if (!this.instantiateInputListener(this.uploadInput)) {
