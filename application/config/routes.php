@@ -118,6 +118,9 @@ $route['api/track-details/downloads-count/(:num)'] = 'api/trackdetails_api/downl
 $route['api/track-details/common-details/(:num)'] = 'api/trackdetails_api/common_details/$1/format/json';
 $route['api/track-details/show-tracks-by-tag/(:num)/(:any)'] = 'api/trackdetails_api/show_tracks_by_tag/$1/$2/format/json';
 
+/* New Users API */
+$route['api/user/check-auth'] = 'api/user_api/check_auth/format/json';
+
 $route['api/(:any)/(:any)'] = "api/track/user/id/$1/id2/$2/format/json"; 
 $route['api/(:any)'] = "api/user_api/user/id/$1/format/json";
 $route['api/linkcrawler'] = "api/feed_api/crawl_data/format/json";
