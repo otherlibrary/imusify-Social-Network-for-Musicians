@@ -109,19 +109,22 @@ $route['api/cart'] = "api/cart_api/cart_content/format/json";
 $route['api/delete_conversation/(:num)'] = "api/message_api/delete_conversations/$1/format/json";
 
 /* New Track Details API */
-$route['api/track-details/likes-count/(:num)'] = 'api/trackdetails_api/likes_count/$1/format/json';
-$route['api/track-details/shares-count/(:num)'] = 'api/trackdetails_api/shares_count/$1/format/json';
-$route['api/track-details/plays-count/(:num)'] = 'api/trackdetails_api/plays_count/$1/format/json';
-$route['api/track-details/comments-count/(:num)'] = 'api/trackdetails_api/comments_count/$1/format/json';
-$route['api/track-details/playlists-count/(:num)'] = 'api/trackdetails_api/playlists_count/$1/format/json';
-$route['api/track-details/downloads-count/(:num)'] = 'api/trackdetails_api/downloads_count/$1/format/json';
-$route['api/track-details/common-details/(:num)'] = 'api/trackdetails_api/common_details/$1/format/json';
-$route['api/track-details/show-tracks-by-tag/(:num)/(:any)'] = 'api/trackdetails_api/show_tracks_by_tag/$1/$2/format/json';
+$route['api/track-details/likes-count/(:num)'] = 'new_api/trackdetails_api/likes_count/$1/format/json';
+$route['api/track-details/shares-count/(:num)'] = 'new_api/trackdetails_api/shares_count/$1/format/json';
+$route['api/track-details/plays-count/(:num)'] = 'new_api/trackdetails_api/plays_count/$1/format/json';
+$route['api/track-details/comments-count/(:num)'] = 'new_api/trackdetails_api/comments_count/$1/format/json';
+$route['api/track-details/playlists-count/(:num)'] = 'new_api/trackdetails_api/playlists_count/$1/format/json';
+$route['api/track-details/downloads-count/(:num)'] = 'new_api/trackdetails_api/downloads_count/$1/format/json';
+$route['api/track-details/common-details/(:num)'] = 'new_api/trackdetails_api/common_details/$1/format/json';
+$route['api/track-details/show-tracks-by-tag/(:num)/(:any)'] = 'new_api/trackdetails_api/show_tracks_by_tag/$1/$2/format/json';
+
+/* New Track Upload API */
+$route['api/track-upload/upload-track-file'] = 'new_api/trackupload_api/upload_track';
 
 /* New Users API */
 $route['api/user/check-auth'] = 'api/user_api/check_auth/format/json';
 
-$route['api/(:any)/(:any)'] = "api/track/user/id/$1/id2/$2/format/json"; 
+$route['api/(:any)/(:any)'] = "api/track/user/id/$1/id2/$2/format/json";
 $route['api/(:any)'] = "api/user_api/user/id/$1/format/json";
 $route['api/linkcrawler'] = "api/feed_api/crawl_data/format/json";
 $route['api/feed_save'] = "api/feed_api/save_feed/format/json";
