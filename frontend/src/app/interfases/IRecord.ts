@@ -10,6 +10,7 @@ export interface IRecord {
   id: string
   isPublic: string
   lastname: string
+  username?: string
   main_title: string
   perLink: string
   plays: string
