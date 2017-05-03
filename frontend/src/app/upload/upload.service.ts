@@ -38,12 +38,9 @@ export class UploadService {
       .catch((error: any) => Observable.throw(error.json().error || 'Server error'));
   }
 
-  uploadTrack(chunk: Blob, name: string, randomStr: string) {
+  uploadTrack(file: File) {
     const formData = new FormData();
-
-    formData.append('i', '1');
-    formData.append('r', randomStr);
-    formData.append('files[]', chunk, name);
+    formData.append('file', file);
 
     return this._http.post(this.host + environment.uploadFilesUrl, formData, {
       withCredentials: true

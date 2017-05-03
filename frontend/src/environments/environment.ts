@@ -9,7 +9,7 @@ export const environment = {
     creds: 'ajax=true',
     assets: '/',
     uploadTrackList: '/upload',
-    uploadFilesUrl: '/api/uploadfiles/',
+    uploadFilesUrl: '/api/track-upload/upload-track-file',
     musicList: '/music',
     uploadTrackImage: '/crop/index/trackImg',
     saveTrack: '/save_track'

@@ -69,8 +69,6 @@ export class AppComponent {
     // если пользователь уже залогинен вытягиваем даные из сервиса
     this.profileData = this._authService.profileData;
     this.loggedin = this._authService.loggedin;
-    console.log(this._authService.profileData);
-    console.log(this._authService.profileData);
 
     //обработчик если пользователь разлогинен каким либо другим образом кроме LOGOUT
     EmitterService.get('LOGOUT').subscribe(data => {

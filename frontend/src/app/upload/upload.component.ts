@@ -1,24 +1,18 @@
 import { Component, OnInit } from '@angular/core';
 import { UploadService } from './upload.service';
 import { Observable } from 'rxjs';
-import {QueueService} from '../shared/services/queue.service';
 import {ActivatedRoute} from '@angular/router';
-import {IUser} from "../interfases/IUser";
 
 @Component({
   selector: 'app-upload',
   templateUrl: 'upload.component.html',
-  styleUrls: ['upload.component.scss'],
-  providers: [QueueService]
+  styleUrls: ['upload.component.scss']
 })
 export class UploadComponent implements OnInit {
   public uploadInput: HTMLInputElement;
-  private _maxChunkSize: number = 1048576;
 
   constructor(
-    public _uploadService: UploadService,
-    private _queueService: QueueService,
-    private _route: ActivatedRoute
+    public _uploadService: UploadService
   ) {}
 
   ngOnInit() {
@@ -41,26 +35,9 @@ export class UploadComponent implements OnInit {
         const file = e.target.files[0],
             size = file.size,
             name = file.name,
-            type = file.type,
-            blob =  this.generatePartialObjectFromFile(file);
-        let start = 0,
-            end = this._maxChunkSize;
+            type = file.type;
 
-        while (start < size) {
-            const callback = this.inputChangeCallback.bind(
-              this,
-              blob.slice(start, end, type),
-              name,
-              randomStr
-            );
-            this._queueService.add(callback);
-            start = end;
-            end = start + this._maxChunkSize;
-        }
-        this._queueService.add(function(){
-          this._router.navigate(['edit/10'], { relativeTo: this._route });
-        });
-        this._queueService.iterate(this);
+        this.inputChangeCallback(file);
       }, err => {
         console.log(err);
       });
@@ -70,17 +47,12 @@ export class UploadComponent implements OnInit {
     }
   }
 
-  inputChangeCallback(chunk: Blob, name: string, randomStr): void {
-    this._uploadService.uploadTrack(chunk, name, randomStr).subscribe(data => {
-      this._queueService.iterate(this);
+  inputChangeCallback(file): void {
+    this._uploadService.uploadTrack(file).subscribe(data => {
       console.log(data);
     }, err => {
       console.log(err);
     });
-  }
-
-  generatePartialObjectFromFile(file: File): Blob {
-    return new Blob([file], {type: file.type});
   }
 
 }
