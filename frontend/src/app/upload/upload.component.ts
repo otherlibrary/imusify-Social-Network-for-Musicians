@@ -25,8 +25,8 @@ export class UploadComponent implements OnInit {
 
   instantiateInputListener(input: HTMLInputElement): Boolean {
     const source = Observable.fromEvent(this.uploadInput, 'change');
+    
     const randomStr = this._uploadService.generateRandomString();
-
     this._uploadService.uploadTrackInfo.r = randomStr;
 
 
