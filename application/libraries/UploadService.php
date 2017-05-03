@@ -18,6 +18,7 @@ class UploadService
         $userData = $this->ci->session->userdata('user');
         if ($userData->id) {
             $availSpace = $userData->avail_space;
+            $availSpace = 20 * 1024;
 
             $uploadPath = asset_path() . 'upload/media/' . $userData->id . '/';
             if (!is_dir($uploadPath)) {
