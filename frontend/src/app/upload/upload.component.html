@@ -12,13 +12,28 @@
     <div class="uploads">
       <div class="upload-item music">
         <span class="item-head">Music</span>
-        <div class="item-content music">
-          <input id="music-upload" type="file" name="music-upload">
+        <div class="item-content music"
+             ngFileDrop
+             (uploadOutput)="onUploadOutput($event)"
+             [uploadInput]="uploadInput"
+             [ngClass]="{ 'is-drop-over': dragOver }">
+          <input id="music-upload"
+                 type="file"
+                 name="music-upload"
+                 ngFileSelect
+                 (uploadOutput)="onUploadOutput($event)"
+                 [uploadInput]="uploadInput">
           <label class="item-info" for="music-upload">Browse or Drag&Drop your songs</label>
           <button class="import-btn music"><span>Import from Soundcloud</span></button>
         </div>
-      </div>
-
+        <div class="item-content loader" *ngIf="files && files.length">
+          <div class="upload-file" *ngFor="let f of files; let i = index;">
+            <span>{{ f.name }}</span> &#8212; <span>{{f.progress.data.percentage}} %</span>
+            <div class="progress" *ngIf="f.progress.data.percentage !== 100">
+              <div class="indeterminate"></div>
+            </div>
+          </div>
+        </div>
       <!--Will be implemented Later, Do Not Delete-->
 
       <!--<div class="upload-item video">

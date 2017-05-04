@@ -4,6 +4,7 @@ import {contentHeaders} from "../common/headers";
 import {Observable} from "rxjs";
 import {environment} from "../../environments/environment";
 import {INewTrack} from "../interfases/new-track";
+import {UploadOutput} from "ngx-uploader";
 
 const trackList = [
   {"id": "10", "name": "test"},
@@ -38,9 +39,9 @@ export class UploadService {
       .catch((error: any) => Observable.throw(error.json().error || 'Server error'));
   }
 
-  uploadTrack(file: File) {
+  uploadTrack(output: UploadOutput) {
     const formData = new FormData();
-    formData.append('file', file);
+    formData.append('file', output.file);
 
     return this._http.post(this.host + environment.uploadFilesUrl, formData, {
       withCredentials: true

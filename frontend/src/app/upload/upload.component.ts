@@ -1,58 +1,92 @@
-import { Component, OnInit } from '@angular/core';
-import { UploadService } from './upload.service';
-import { Observable } from 'rxjs';
-import {ActivatedRoute} from '@angular/router';
+import { Component, OnInit, EventEmitter } from '@angular/core';
+import {UploadFile} from "../interfases/upload/IUploadFile";
+import {UploadInput} from "../interfases/upload/IUploadInput";
+import {UploadOutput} from "../interfases/upload/IUploadOutput";
+import {ActivatedRoute, Router} from "@angular/router";
+import {Observable} from "rxjs/Observable";
+
+interface FormData {
+  concurrency: number;
+  autoUpload: boolean;
+  verbose: boolean;
+}
 
 @Component({
   selector: 'app-upload',
   templateUrl: 'upload.component.html',
   styleUrls: ['upload.component.scss']
 })
-export class UploadComponent implements OnInit {
-  public uploadInput: HTMLInputElement;
+export class UploadComponent {
+  formData: FormData;
+  files: UploadFile[];
+  uploadInput: EventEmitter<UploadInput>;
+  dragOver: boolean;
+
 
   constructor(
-    public _uploadService: UploadService
-  ) {}
+    private _router: Router,
+    private _route: ActivatedRoute
+  ) {
+    this.formData = {
+      concurrency: 0,
+      autoUpload: true,
+      verbose: true
+    };
 
-  ngOnInit() {
-    const musicUpload = window.document.getElementById('music-upload');
-    this.uploadInput = (<HTMLInputElement>musicUpload);
-    if (!this.instantiateInputListener(this.uploadInput)) {
-      console.log('Upload input doesn\'t exist!');
-    }
+    this.files = [];
+    this.uploadInput = new EventEmitter<UploadInput>();
   }
 
-  instantiateInputListener(input: HTMLInputElement): Boolean {
-    const source = Observable.fromEvent(this.uploadInput, 'change');
-    
-    const randomStr = this._uploadService.generateRandomString();
-    this._uploadService.uploadTrackInfo.r = randomStr;
+  onUploadOutput(output: UploadOutput): void {
+    if (output.type === 'allAddedToQueue') {
+      if (this.formData.autoUpload) {
+        const event: UploadInput = {
+          type: 'uploadAll',
+          url: '/api/track-upload/upload-track-file',
+          method: 'POST',
+          data: { foo: 'random' }
+        };
 
-
-    if (input) {
-      source.subscribe((e: any) => {
-        const file = e.target.files[0],
-            size = file.size,
-            name = file.name,
-            type = file.type;
-
-        this.inputChangeCallback(file);
-      }, err => {
-        console.log(err);
+        this.uploadInput.emit(event);
+      }
+    } else if (output.type === 'addedToQueue') {
+      this.files.push(output.file);
+    } else if (output.type === 'uploading') {
+      const index = this.files.findIndex(file => file.id === output.file.id);
+      this.files[index] = output.file;
+    } else if (output.type === 'removed') {
+      this.files = this.files.filter((file: UploadFile) => file !== output.file);
+    } else if (output.type === 'dragOver') {
+      this.dragOver = true;
+    } else if (output.type === 'dragOut') {
+      this.dragOver = false;
+    } else if (output.type === 'drop') {
+      this.dragOver = false;
+    } else if(output.type === 'done') {
+      let t = Observable.timer(500).subscribe(() => {
+        this._router.navigate(['edit/10'], { relativeTo: this._route });
+        t.unsubscribe();
       });
-      return true;
-    } else {
-      return false;
+    } else if(output.type === 'cancelled') {
+      console.log('cancelled');
+    } else if(output.type === 'start') {
+      console.log('start');
     }
   }
 
-  inputChangeCallback(file): void {
-    this._uploadService.uploadTrack(file).subscribe(data => {
-      console.log(data);
-    }, err => {
-      console.log(err);
-    });
+  startUpload(): void {
+    const event: UploadInput = {
+      type: 'uploadAll',
+      url: '/api/track-upload/upload-track-file',
+      method: 'POST',
+      data: { foo: 'random' }
+    };
+
+    this.uploadInput.emit(event);
+  }
+
+  cancelUpload(id: string): void {
+    this.uploadInput.emit({ type: 'cancel', id: id });
   }
 
 }
