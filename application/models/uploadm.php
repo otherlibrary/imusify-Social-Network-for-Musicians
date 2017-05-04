@@ -26,16 +26,16 @@ Class uploadm extends CI_Model
                           $moods_list,
                           $soundlike_list,
                           $instruments_list,
-                          $music_vocals_y = NULL,
-                          $music_vocals_gender = NULL,
-                          $sale_available = NULL,
-                          $sale_available_ar = NULL,
-                          $licence_available = NULL,
-                          $licence_available_ar = NULL,
-                          $nonprofit_available = NULL,
-                          $exclusive_available = NULL,
-                          $post = NULL,
-                          $no_update_never_sell = NULL)
+                          $music_vocals_y = null,
+                          $music_vocals_gender = null,
+                          $sale_available = null,
+                          $sale_available_ar = null,
+                          $licence_available = null,
+                          $licence_available_ar = null,
+                          $nonprofit_available = null,
+                          $exclusive_available = null,
+                          $post = null,
+                          $no_update_never_sell = null)
     {
         $this->load->model('commonfn');
 
@@ -381,44 +381,52 @@ Class uploadm extends CI_Model
                 //var_dump($new_name_path, $new_physical_mp3_path);exit;
                 exec("lame $new_name_path $new_physical_mp3_path", $output);
                 $old_physical_path = $new_name_path;
-            } else if ($ext == "ogg" || $ext == "OGG") {
-                $output = '';
-                $new_physical_path = asset_path() . "upload/media/" . $session_user_id . "/" . $final_new_name . ".mp3";
-                exec("sox $old_physical_path $new_physical_path", $output);
-            } else if ($ext == "AIF" || $ext == "aif" || $ext == "aiff") {
-                /*lame -b 40 -m m --resample 22.05 -S - 'outfile.mp3'*/
-                $output = '';
-                $new_physical_path = asset_path() . "upload/media/" . $session_user_id . "/" . $final_new_name . ".mp3";
-                //rename the track (remove all white space or special character)
-                $new_name_path = asset_path() . "temp/" . $session_user_id . "/" . $final_new_name . ".aiff";
-                $rename_result = rename($old_physical_path, $new_name_path);
-                //var_dump($new_name_path, $new_physical_path);exit;
-                //exec("lame -b 40 -m m --resample $old_physical_path $new_physical_path",$output);
-                exec("lame -b 40 $new_name_path $new_physical_path", $output);
-                $old_physical_path = $new_name_path;
-            } else if ($ext == "FLAC" || $ext == "flac") {
-                /*sudo apt-get install flac*/
-                /*flac -c -d "1 - Let It In.flac" | lame -V 6 --ta "$ARTIST" - "1 - Let It In.mp3"*/
-                $output = '';
-                $new_physical_path = asset_path() . "upload/media/" . $session_user_id . "/" . $final_new_name . ".mp3";
-                //rename the track (remove all white space or special character)
-                $new_name_path = asset_path() . "temp/" . $session_user_id . "/" . $final_new_name . ".flac";
-                $rename_result = rename($old_physical_path, $new_name_path);
+            } else {
+                if ($ext == "ogg" || $ext == "OGG") {
+                    $output = '';
+                    $new_physical_path = asset_path() . "upload/media/" . $session_user_id . "/" . $final_new_name . ".mp3";
+                    exec("sox $old_physical_path $new_physical_path", $output);
+                } else {
+                    if ($ext == "AIF" || $ext == "aif" || $ext == "aiff") {
+                        /*lame -b 40 -m m --resample 22.05 -S - 'outfile.mp3'*/
+                        $output = '';
+                        $new_physical_path = asset_path() . "upload/media/" . $session_user_id . "/" . $final_new_name . ".mp3";
+                        //rename the track (remove all white space or special character)
+                        $new_name_path = asset_path() . "temp/" . $session_user_id . "/" . $final_new_name . ".aiff";
+                        $rename_result = rename($old_physical_path, $new_name_path);
+                        //var_dump($new_name_path, $new_physical_path);exit;
+                        //exec("lame -b 40 -m m --resample $old_physical_path $new_physical_path",$output);
+                        exec("lame -b 40 $new_name_path $new_physical_path", $output);
+                        $old_physical_path = $new_name_path;
+                    } else {
+                        if ($ext == "FLAC" || $ext == "flac") {
+                            /*sudo apt-get install flac*/
+                            /*flac -c -d "1 - Let It In.flac" | lame -V 6 --ta "$ARTIST" - "1 - Let It In.mp3"*/
+                            $output = '';
+                            $new_physical_path = asset_path() . "upload/media/" . $session_user_id . "/" . $final_new_name . ".mp3";
+                            //rename the track (remove all white space or special character)
+                            $new_name_path = asset_path() . "temp/" . $session_user_id . "/" . $final_new_name . ".flac";
+                            $rename_result = rename($old_physical_path, $new_name_path);
 
-                //exec("flac -c -d $old_physical_path | lame -V 6 --ta $new_physical_path",$output);
-                //exec("flac -c -d $new_name_path | lame -V 6 --ta $new_physical_path",$output);
-                $command = "flac -cd $new_name_path | lame -b 320 - $new_physical_path";
-                //convert flac to wav
-                //$command = "flac -d $new_name_path";
-                exec($command, $output);
-                //var_dump($new_name_path, $new_physical_path, $command, $output);exit;
-                //convert wav to mp3
-                //$new_name_path = asset_path()."temp/".$session_user_id."/".$final_new_name.".wav";
-                //exec("lame $new_name_path $new_physical_mp3_path",$output);
-                $old_physical_path = $new_name_path;
-            } else if ($ext == "AAC") {
-                /*ffmpeg -i audio.aac -acodec libmp3lame -ac 2 -ab 160 audio.mp3*/
+                            //exec("flac -c -d $old_physical_path | lame -V 6 --ta $new_physical_path",$output);
+                            //exec("flac -c -d $new_name_path | lame -V 6 --ta $new_physical_path",$output);
+                            $command = "flac -cd $new_name_path | lame -b 320 - $new_physical_path";
+                            //convert flac to wav
+                            //$command = "flac -d $new_name_path";
+                            exec($command, $output);
+                            //var_dump($new_name_path, $new_physical_path, $command, $output);exit;
+                            //convert wav to mp3
+                            //$new_name_path = asset_path()."temp/".$session_user_id."/".$final_new_name.".wav";
+                            //exec("lame $new_name_path $new_physical_mp3_path",$output);
+                            $old_physical_path = $new_name_path;
+                        } else {
+                            if ($ext == "AAC") {
+                                /*ffmpeg -i audio.aac -acodec libmp3lame -ac 2 -ab 160 audio.mp3*/
 
+                            }
+                        }
+                    }
+                }
             }
 
             if (!file_exists(asset_path() . "upload/media/" . $session_user_id)) {
@@ -440,7 +448,7 @@ Class uploadm extends CI_Model
             /*Convert audio in 128 kbps*/
             $this->load->library("soundexchange");
             $converted_file_name = asset_path() . "upload/media/" . $session_user_id . "/high_" . $new_song_name;
-            $temp_status = $this->soundexchange->convert($new_physical_path, $converted_file_name, TRUE, 128);
+            $temp_status = $this->soundexchange->convert($new_physical_path, $converted_file_name, true, 128);
             /*Convert audio in 128 kbps*/
 
             $array["wave_path"] = asset_upload_path() . 'wavejson/';
@@ -523,23 +531,23 @@ Class uploadm extends CI_Model
             exit;*/
 
             //$temp_arr = array();
-            if ($music_vocals_y != NULL) {
+            if ($music_vocals_y != null) {
                 $data["track_type"] = $music_vocals_y;
             }
 
-            if ($music_vocals_gender != NULL) {
+            if ($music_vocals_gender != null) {
                 $data["track_musician_type"] = $music_vocals_gender;
             }
 
-            if ($sale_available != NULL) {
+            if ($sale_available != null) {
                 $data["is_sellable"] = $sale_available;
             }
 
-            if ($licence_available != NULL) {
+            if ($licence_available != null) {
                 $data["license"] = $licence_available;
             }
 
-            if ($nonprofit_available != NULL) {
+            if ($nonprofit_available != null) {
                 $data["track_nonprofit_avail"] = $nonprofit_available;
             }
 
@@ -563,11 +571,13 @@ Class uploadm extends CI_Model
                 $this->session->userdata('user')->never_sell = 'y';
                 $this->db->where('id', $this->sess_userid);
                 $this->db->update('users', $data);
-            } else if (!$no_update_never_sell) {
-                $this->session->userdata('user')->never_sell = 'n';
-                $data = ['never_sell' => 'n'];
-                $this->db->where('id', $this->sess_userid);
-                $this->db->update('users', $data);
+            } else {
+                if (!$no_update_never_sell) {
+                    $this->session->userdata('user')->never_sell = 'n';
+                    $data = ['never_sell' => 'n'];
+                    $this->db->where('id', $this->sess_userid);
+                    $this->db->update('users', $data);
+                }
             }
 
             /*Save tags to db*/
@@ -575,7 +585,9 @@ Class uploadm extends CI_Model
             /*Insert in feed table*/
             $this->load->model("following_model");
             $feedtypeId = getvalfromtbl("id", "feed_type", "shortName='iv'", "single");
-            $param_arr = ['userId' => $session_user_id, 'itemId' => $track_id, 'feedtypeId' => $feedtypeId, 'user_role' => 'p'];
+            $param_arr = [
+                'userId' => $session_user_id, 'itemId' => $track_id, 'feedtypeId' => $feedtypeId, 'user_role' => 'p',
+            ];
             $this->following_model->insert_feed_log($param_arr);
             /*Insert in feed table*/
 
@@ -714,7 +726,9 @@ Class uploadm extends CI_Model
                 $licence_price_arr[$m]["trackId"] = $track_id;
                 if (!empty($post["license_number_4"])) {
                     $licence_price_arr[$m]["licenceId"] = $post["license_number_4"];
-                } else $licence_price_arr[$m]["licenceId"] = $value;
+                } else {
+                    $licence_price_arr[$m]["licenceId"] = $value;
+                }
 
                 $licence_price_arr[$m]["licencePrice"] = $post[$key];
                 $licence_price_arr[$m]["createdDate"] = date('Y-m-d H:i:s');
@@ -744,7 +758,9 @@ Class uploadm extends CI_Model
                 $exclusive_price_arr[$m]["trackId"] = $track_id;
                 if (!empty($post["el_number_4"])) {
                     $exclusive_price_arr[$m]["licenceId"] = $post["el_number_4"];
-                } else $exclusive_price_arr[$m]["licenceId"] = $value;
+                } else {
+                    $exclusive_price_arr[$m]["licenceId"] = $value;
+                }
 
                 $exclusive_price_arr[$m]["licencePrice"] = $post[$key];
                 $exclusive_price_arr[$m]["createdDate"] = date('Y-m-d H:i:s');
@@ -833,27 +849,30 @@ Class uploadm extends CI_Model
     }
 
 
-    function fetch_user_tracks($cond = NULL,
-                               $limit = NULL,
-                               $orderby = NULL,
+    function fetch_user_tracks($cond = null,
+                               $limit = null,
+                               $orderby = null,
                                $width = 100,
                                $height = 150,
-                               $counter = NULL)
+                               $counter = null)
     {
         $this->load->model('commonfn');
         $output = [];
-        if ($cond != NULL)
+        if ($cond != null) {
             $cond = " WHERE tt.status = 'y' AND tt.genreId = g.id AND " . $cond . "";
-        else
+        } else {
             $cond = " WHERE tt.status = 'y' AND tt.genreId = g.id ";
+        }
 
-        if ($limit != NULL)
+        if ($limit != null) {
             $limit = " LIMIT " . $limit . " ";
+        }
 
-        if ($orderby != NULL)
+        if ($orderby != null) {
             $orderby = "ORDER BY " . $orderby;
-        else
+        } else {
             $orderby = "ORDER BY tt.id DESC";
+        }
 
 
         $query = $this->db->query("SELECT tt.description,tt.id,tt.perLink,tt.title,tt.release_mm,tt.release_dd,tt.release_yy,tt.createdDate,tt.timelength,tt.plays,tt.likes,tt.comments,tt.shares,g.genre,(SELECT profileLink from users where id = tt.userId) AS userperlink FROM tracks as tt,genre as g " . $cond . " " . $orderby . " " . $limit . " ");
@@ -883,13 +902,14 @@ Class uploadm extends CI_Model
     }
 
 
-    function fetch_track_genre($track_id, $cond = NULL, $orderby = null, $limit = null)
+    function fetch_track_genre($track_id, $cond = null, $orderby = null, $limit = null)
     {
 
-        if ($cond != NULL)
+        if ($cond != null) {
             $cond = " WHERE tg.trackId = " . $track_id . " AND g.id = tg.genreId AND " . $cond . "";
-        else
+        } else {
             $cond = " WHERE tg.trackId = " . $track_id . " AND g.id = tg.genreId ";
+        }
 
         $query = $this->db->query("SELECT tg.*,g.genre FROM track_genre as tg,genre as g " . $cond . " " . $orderby . " " . $limit . " ");
 
@@ -901,19 +921,21 @@ Class uploadm extends CI_Model
     }
 
 
-    function fetch_user_albums($cond = NULL, $limit = NULL, $width = IMG_222, $height = IMG_222, $counter = NULL)
+    function fetch_user_albums($cond = null, $limit = null, $width = IMG_222, $height = IMG_222, $counter = null)
     {
 
         $this->load->model('commonfn');
         $output = [];
         //echo $cond;
-        if ($cond != NULL)
+        if ($cond != null) {
             $cond = " WHERE a.status = 'y' AND " . $cond . "";
-        else
+        } else {
             $cond = " WHERE a.status = 'y'";
+        }
 
-        if ($limit != NULL)
+        if ($limit != null) {
             $limit = " LIMIT " . $limit . " ";
+        }
 
         /*$query = $this->db->query("SELECT a.id,a.name,a.release_mm as arelease_mm,a.release_dd as arelease_dd,a.release_yy as arelease_yy,t.title,t.id as ttrackId,t.timelength,t.perLink,t.release_dd,t.release_mm,t.release_yy,t.plays,t.likes,t.shares,a.id as aid,(SELECT genre from genre where genre.id = a.genre) AS album_genre_name,(SELECT COUNT(albumId) FROM tracks where tracks.albumId = a.id) AS total_albums_songs,(SELECT profileLink from users where id = t.userId) AS userperlink FROM albums as a LEFT OUTER JOIN tracks as t ON  (a.id = t.albumId LIMIT 50) ".$cond." order by aid DESC,t.id DESC $limit");*/
 
@@ -926,11 +948,11 @@ Class uploadm extends CI_Model
             return $query->num_rows();
         }
 
-        $temps = NULL;
+        $temps = null;
         $i = 0;
         $j = 0;
         foreach ($query->result_array() as $row) {
-            if ($temps == NULL) {
+            if ($temps == null) {
                 $albumrow[$i]["track_image"] = $this->commonfn->get_photo('a', $row["id"], $width, $height);
                 $albumrow[$i]["editid"] = $row["id"];
                 $albumrow[$i]["edittype"] = "a";
@@ -945,7 +967,7 @@ Class uploadm extends CI_Model
                 $albumrow[$i]["userId"] = $this->session->userdata('user')->id;
                 $albumrow[$i]["editalbumurl"] = base_url() . "upload/album/edit/" . $row["id"];
 
-                if ($row["title"] != NULL || $row["title"] != "") {
+                if ($row["title"] != null || $row["title"] != "") {
                     $row["isalbum"] = "yes";
                     $row["track_link"] = base_url() . $row["userperlink"] . "/" . $row["perLink"];
                     $row["track_image"] = $this->commonfn->get_photo('t', $row["ttrackId"]);
@@ -955,38 +977,40 @@ Class uploadm extends CI_Model
                     $albumrow[$i]["song_list"][$j] = $row;
                 }
                 $temps = $row["aid"];
-            } else if ($row["aid"] == $temps) {
-                $j++;
-                $row["isalbum"] = "yes";
-                $row["track_link"] = base_url() . $row["userperlink"] . "/" . $row["perLink"];
-                $row["track_image"] = $this->commonfn->get_photo('t', $row["ttrackId"]);
-                $row["tags"] = $this->fetch_track_genre($row["id"]);
-                $row["trackediturl"] = base_url() . 'upload/track/edit/' . $row["ttrackId"];
-                $albumrow[$i]["song_list"][$j] = $row;
             } else {
-                $i++;
-                $j = 0;
-                $albumrow[$i]["track_image"] = $this->commonfn->get_photo('a', $row["id"], IMG_222, IMG_222);
-                $albumrow[$i]["editid"] = $row["id"];
-                $albumrow[$i]["edittype"] = "a";
-                $albumrow[$i]["main_title"] = $row["name"];
-                $albumrow[$i]["genre"] = $row["album_genre_name"];
-                $albumrow[$i]["aid"] = $row["aid"];
-                $albumrow[$i]["release_mm"] = $row["arelease_mm"];
-                $albumrow[$i]["release_dd"] = $row["arelease_dd"];
-                $albumrow[$i]["release_yy"] = $row["arelease_yy"];
-                $albumrow[$i]["userId"] = $this->session->userdata('user')->id;
-                $albumrow[$i]["row_id"] = "album_row";
-                $albumrow[$i]["total_songs"] = $row["total_albums_songs"] . " Songs - ";
-                if ($row["title"] != NULL || $row["title"] != "") {
+                if ($row["aid"] == $temps) {
+                    $j++;
                     $row["isalbum"] = "yes";
                     $row["track_link"] = base_url() . $row["userperlink"] . "/" . $row["perLink"];
                     $row["track_image"] = $this->commonfn->get_photo('t', $row["ttrackId"]);
                     $row["tags"] = $this->fetch_track_genre($row["id"]);
                     $row["trackediturl"] = base_url() . 'upload/track/edit/' . $row["ttrackId"];
                     $albumrow[$i]["song_list"][$j] = $row;
+                } else {
+                    $i++;
+                    $j = 0;
+                    $albumrow[$i]["track_image"] = $this->commonfn->get_photo('a', $row["id"], IMG_222, IMG_222);
+                    $albumrow[$i]["editid"] = $row["id"];
+                    $albumrow[$i]["edittype"] = "a";
+                    $albumrow[$i]["main_title"] = $row["name"];
+                    $albumrow[$i]["genre"] = $row["album_genre_name"];
+                    $albumrow[$i]["aid"] = $row["aid"];
+                    $albumrow[$i]["release_mm"] = $row["arelease_mm"];
+                    $albumrow[$i]["release_dd"] = $row["arelease_dd"];
+                    $albumrow[$i]["release_yy"] = $row["arelease_yy"];
+                    $albumrow[$i]["userId"] = $this->session->userdata('user')->id;
+                    $albumrow[$i]["row_id"] = "album_row";
+                    $albumrow[$i]["total_songs"] = $row["total_albums_songs"] . " Songs - ";
+                    if ($row["title"] != null || $row["title"] != "") {
+                        $row["isalbum"] = "yes";
+                        $row["track_link"] = base_url() . $row["userperlink"] . "/" . $row["perLink"];
+                        $row["track_image"] = $this->commonfn->get_photo('t', $row["ttrackId"]);
+                        $row["tags"] = $this->fetch_track_genre($row["id"]);
+                        $row["trackediturl"] = base_url() . 'upload/track/edit/' . $row["ttrackId"];
+                        $albumrow[$i]["song_list"][$j] = $row;
+                    }
+                    $temps = $row["aid"];
                 }
-                $temps = $row["aid"];
             }
             $output = $albumrow;
         }
@@ -995,25 +1019,32 @@ Class uploadm extends CI_Model
     }
 
     /*Fetch track or album information*/
-    function fetch_info($id, $type, $cond = NULL, $limit = NULL)
+    function fetch_info($id, $type, $cond = null, $limit = null)
     {
         $this->load->model('commonfn');
         $output = [];
-        if ($cond == NULL)
+        if ($cond == null) {
             $cond = " WHERE status = 'y' AND id = " . $id . "";
-        if ($type == 't') $cond = " WHERE id = " . $id . ""; //change query for track
-        else
+        }
+        if ($type == 't') {
+            $cond = " WHERE id = " . $id . "";
+        } //change query for track
+        else {
             $cond = " WHERE status = 'y' AND id = " . $id . " AND " . $cond . "";
-        if ($limit != NULL)
+        }
+        if ($limit != null) {
             $limit = " LIMIT " . $limit . " ";
+        }
 
         if ($type == 'a') {
             $table = "albums";
             $cancel_class = "album_cancel";
 
-        } else if ($type == 't') {
-            $table = "tracks";
-            $cancel_class = "track_cancel";
+        } else {
+            if ($type == 't') {
+                $table = "tracks";
+                $cancel_class = "track_cancel";
+            }
         }
 
         $query = $this->db->query("SELECT * FROM " . $table . " " . $cond . " " . $limit . " ");
@@ -1041,18 +1072,22 @@ Class uploadm extends CI_Model
 
             if ($row->track_type == 'r') {
                 $row->music_vocals_r = 'checked="checked"';
-            } else if ($row->track_type == 'si') {
-                $row->music_vocals_si = 'checked="checked"';
             } else {
-                $row->music_vocals_sp = 'checked="checked"';
+                if ($row->track_type == 'si') {
+                    $row->music_vocals_si = 'checked="checked"';
+                } else {
+                    $row->music_vocals_sp = 'checked="checked"';
+                }
             }
 
             if ($row->track_musician_type == 'm') {
                 $row->music_vocals_gender_m = 'checked="checked"';
-            } else if ($row->track_musician_type == 'f') {
-                $row->music_vocals_gender_f = 'checked="checked"';
             } else {
-                $row->music_vocals_gender_both = 'checked="checked"';
+                if ($row->track_musician_type == 'f') {
+                    $row->music_vocals_gender_f = 'checked="checked"';
+                } else {
+                    $row->music_vocals_gender_both = 'checked="checked"';
+                }
             }
 
 
@@ -1268,15 +1303,19 @@ Class uploadm extends CI_Model
         if ($type == "a") {
             $table = "albums_genre";
             $where = "(albumId='" . $detailId . "')";
-        } else if ($type == "m") {
-            $table = "track_moods";
-            $where = "(trackId='" . $detailId . "')";
-        } else if ($type == "in") {
-            $table = "track_instruments";
-            $where = "(trackId='" . $detailId . "')";
         } else {
-            $table = "track_genre";
-            $where = "(trackId='" . $detailId . "')";
+            if ($type == "m") {
+                $table = "track_moods";
+                $where = "(trackId='" . $detailId . "')";
+            } else {
+                if ($type == "in") {
+                    $table = "track_instruments";
+                    $where = "(trackId='" . $detailId . "')";
+                } else {
+                    $table = "track_genre";
+                    $where = "(trackId='" . $detailId . "')";
+                }
+            }
         }
         $this->db->from($table);
 
@@ -1345,7 +1384,7 @@ Class uploadm extends CI_Model
     }
 
     //delete track
-    function delete_trackfromdb($userId = NULL, $trackdet = NULL, $deltype = NULL)
+    function delete_trackfromdb($userId = null, $trackdet = null, $deltype = null)
     {
         $response = [];
         if ($userId > 0) {
@@ -1410,21 +1449,23 @@ Class uploadm extends CI_Model
                 $response["msg"] = $trackInfo["title"] . " deleted successfully.";
                 $response["track_sapce"] = $trackInfo["filesize"];
             } //first time fu just upload track
-            else if (($trackdet != "" || $trackdet != NULL) && $deltype == "fu") {
-                $filename = asset_path() . "temp/" . $userId . "/" . $trackdet;
-                $file_size = 0;
-                if (file_exists($filecname)) {
-                    $file_size = filesize($filename);
+            else {
+                if (($trackdet != "" || $trackdet != null) && $deltype == "fu") {
+                    $filename = asset_path() . "temp/" . $userId . "/" . $trackdet;
+                    $file_size = 0;
+                    if (file_exists($filecname)) {
+                        $file_size = filesize($filename);
+                    }
+                    $response["track_sapce"] = $file_size;
+                    $response["status"] = "success";
+                    $response["msg"] = "Upload cancelled - " . $trackdet;
+                    if (file_exists($filename)) {
+                        unlink($filename);
+                    }
+                } else {
+                    $response["status"] = "fail";
+                    $response["msg"] = "fail";
                 }
-                $response["track_sapce"] = $file_size;
-                $response["status"] = "success";
-                $response["msg"] = "Upload cancelled - " . $trackdet;
-                if (file_exists($filename)) {
-                    unlink($filename);
-                }
-            } else {
-                $response["status"] = "fail";
-                $response["msg"] = "fail";
             }
         } else {
             $response["status"] = "fail";

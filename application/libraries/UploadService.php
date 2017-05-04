@@ -57,7 +57,7 @@ class UploadService
 
     /**
      * @param string $file
-     * @param array $ciUploadConfig
+     * @param array  $ciUploadConfig
      * @return bool
      */
     public function uploadFile($file, $ciUploadConfig)
