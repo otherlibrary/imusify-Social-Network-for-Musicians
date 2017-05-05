@@ -5,6 +5,9 @@ class UploadService
     function __construct()
     {
         $this->ci =& get_instance();
+        $this->ci->load->library('upload');
+        $this->ci->load->library('session');
+        $this->ci->load->model('space_model');
     }
 
     /**
@@ -13,40 +16,82 @@ class UploadService
      */
     function uploadTrackFile()
     {
-        $this->ci->load->library('session');
-
         $userData = $this->ci->session->userdata('user');
         if ($userData->id) {
-            $availSpace = $userData->avail_space;
+//            $availSpace = $userData->avail_space;
             $availSpace = 20 * 1024;
-
             $uploadPath = asset_path() . 'upload/media/' . $userData->id . '/';
-            if (!is_dir($uploadPath)) {
-                mkdir($uploadPath);
-            }
 
             $uploadConfig = [
                 'upload_path' => $uploadPath,
                 'max_size' => '9999999999999999', // 'max_size' => $availSpace TODO(AlexSol): hot fix
                 'allowed_types' => 'mp3|mp2|ogg|aac|amr|wma|aiff|wav|flac|alac',
             ];
-            $this->ci->load->library('upload', $uploadConfig);
 
-            if (!$this->ci->upload->do_upload('file')) {
+            $this->fixUploadPath($uploadPath);
+            if (!$this->uploadFile('file', $uploadConfig)) {
                 $error = [
-                    'error' => $this->ci->upload->display_errors(' ', ' '),
+                    'error' => $this->getUploadErrors(),
                 ];
 
                 return $error;
             } else {
                 $data = [
-                    'upload_data' => $this->ci->upload->data(),
+                    'upload_data' => $this->getUploadResult(),
                 ];
+
+                $spaceData = $this->ci->space_model->getUserCommonSpace($userData->id);
+                if (!empty($spaceData)) {
+                    $this->ci->space_model->updateUserSpace(
+                        $userData->id,
+                        $spaceData['used_space'] + intval(($data['upload_data']['file_size'] * 1024))
+                    );
+                }
 
                 return $data;
             }
 
             return null;
+        }
+    }
+
+    /**
+     * @param string $file
+     * @param array  $ciUploadConfig
+     * @return bool
+     */
+    public function uploadFile($file, $ciUploadConfig)
+    {
+        $this->ci->upload->initialize($ciUploadConfig);
+
+        return $this->ci->upload->do_upload($file);
+    }
+
+    /**
+     * @param string $beginTag
+     * @param string $endTag
+     * @return string
+     */
+    public function getUploadErrors($beginTag = ' ', $endTag = ' ')
+    {
+        return $this->ci->upload->display_errors($beginTag, $endTag);
+    }
+
+    /**
+     * @return array
+     */
+    public function getUploadResult()
+    {
+        return $this->ci->upload->data();
+    }
+
+    /**
+     * @param string $path
+     */
+    public function fixUploadPath($path)
+    {
+        if (!is_dir($path)) {
+            mkdir($path);
         }
     }
 }

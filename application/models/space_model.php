@@ -93,7 +93,7 @@ Class space_model extends CI_Model
      * @param int $userId
      * @param int $usedSpace
      */
-    function updateUserSpace($userId, $usedSpace)
+    public function updateUserSpace($userId, $usedSpace)
     {
         $userData = getvalfromtbl('*', 'users', 'id = ' . $userId);
         $newData = [
@@ -103,7 +103,27 @@ Class space_model extends CI_Model
 
         $this->db->update('users', $newData, ['id' => $userId]);
     }
-    /*Function for updating user's new size ends*/
+
+    /**
+     * Returns the user's free, used and total space
+     * @param int $userId
+     * @return array
+     */
+    public function getUserCommonSpace($userId)
+    {
+        $userData = getvalfromtbl('*', 'users', 'id = ' . $userId);
+
+        $result = null;
+        if(!empty($userData)) {
+            $result = [
+                'avail_space' => $userData['avail_space'],
+                'used_space' => $userData['used_space'],
+                'total_space' => $userData['total_space']
+            ];
+        }
+
+        return $result;
+    }
 
 
 }
