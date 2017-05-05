@@ -1,9 +1,10 @@
-import { Component, OnInit, EventEmitter } from '@angular/core';
-import {UploadFile} from "../interfases/upload/IUploadFile";
-import {UploadInput} from "../interfases/upload/IUploadInput";
-import {UploadOutput} from "../interfases/upload/IUploadOutput";
+import {Component, EventEmitter} from '@angular/core';
+import {UploadInput, UploadOutput, UploadFile, UploadFileData} from "../interfases";
 import {ActivatedRoute, Router} from "@angular/router";
 import {Observable} from "rxjs/Observable";
+import {UploadService} from "./upload.service";
+import {environment} from "../../environments/environment";
+declare const jsmediatags: any;
 
 interface FormData {
   concurrency: number;
@@ -17,16 +18,27 @@ interface FormData {
   styleUrls: ['upload.component.scss']
 })
 export class UploadComponent {
-  formData: FormData;
-  files: UploadFile[];
-  uploadInput: EventEmitter<UploadInput>;
-  dragOver: boolean;
+  public formData: FormData;
+  public files: UploadFile[];
+  public fileId: string;
+  public uploadInput: EventEmitter<UploadInput>;
+  public dragOver: boolean;
+  public uploadTrackInfo: UploadFileData;
 
+
+  private host: {};
+
+  private cutNameExtension(name: string): string {
+    return name.match(/(.*)\.[^.]+$/)[1];
+  };
 
   constructor(
     private _router: Router,
-    private _route: ActivatedRoute
+    private _route: ActivatedRoute,
+    private _UploadService: UploadService
   ) {
+    this.host = environment.host;
+
     this.formData = {
       concurrency: 0,
       autoUpload: true,
@@ -34,7 +46,22 @@ export class UploadComponent {
     };
 
     this.files = [];
+    this.fileId = '';
     this.uploadInput = new EventEmitter<UploadInput>();
+  }
+
+  getTagsFile(e) {
+    let files = e.target.files;
+    let file = files[files.length - 1];
+
+    jsmediatags.read(file, {
+      onSuccess: (tag) => {
+        this._UploadService.trackImage = tag.tags.picture;
+      },
+      onError: (error) => {
+        console.log(':(', error.type, error.info);
+      }
+    });
   }
 
   onUploadOutput(output: UploadOutput): void {
@@ -42,14 +69,14 @@ export class UploadComponent {
       if (this.formData.autoUpload) {
         const event: UploadInput = {
           type: 'uploadAll',
-          url: '/api/track-upload/upload-track-file',
+          url: environment.host + environment.uploadFilesUrl,
           method: 'POST',
-          data: { foo: 'random' }
+          data: {track_id: this.fileId}
         };
-
         this.uploadInput.emit(event);
       }
     } else if (output.type === 'addedToQueue') {
+      this.fileId = output.file.id;
       this.files.push(output.file);
     } else if (output.type === 'uploading') {
       const index = this.files.findIndex(file => file.id === output.file.id);
@@ -62,14 +89,20 @@ export class UploadComponent {
       this.dragOver = false;
     } else if (output.type === 'drop') {
       this.dragOver = false;
-    } else if(output.type === 'done') {
+    } else if (output.type === 'done') {
+      let file = this.files[this.files.length - 1];
+
+      this._UploadService.uploadTrackInfo.title = this.cutNameExtension(file.name);
+      this._UploadService.uploadTrackInfo.track_id = file.id;
+      this._UploadService.uploadTrackInfo.filename = file.name;
+
       let t = Observable.timer(500).subscribe(() => {
-        this._router.navigate(['edit/10'], { relativeTo: this._route });
+        this._router.navigate(['edit/' + file.id], {relativeTo: this._route});
         t.unsubscribe();
       });
-    } else if(output.type === 'cancelled') {
+    } else if (output.type === 'cancelled') {
       console.log('cancelled');
-    } else if(output.type === 'start') {
+    } else if (output.type === 'start') {
       console.log('start');
     }
   }
@@ -77,16 +110,16 @@ export class UploadComponent {
   startUpload(): void {
     const event: UploadInput = {
       type: 'uploadAll',
-      url: '/api/track-upload/upload-track-file',
+      url: environment.host + environment.uploadFilesUrl,
       method: 'POST',
-      data: { foo: 'random' }
+      data: {foo: 'random'}
     };
 
     this.uploadInput.emit(event);
   }
 
   cancelUpload(id: string): void {
-    this.uploadInput.emit({ type: 'cancel', id: id });
+    this.uploadInput.emit({type: 'cancel', id: id});
   }
 
 }

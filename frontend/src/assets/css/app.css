@@ -33,7 +33,7 @@
     animation-timing-function: cubic-bezier(0.25, 0.1, 0.6, 1.32);
     animation-fill-mode: both;
 }
-input.ng-dirty.ng-invalid {
+input.ng-dirty.ng-invalid, textarea.ng-dirty.ng-invalid {
     border: 1px solid #e7283a !important;
 }
 .valid_style.ng-dirty.ng-invalid {

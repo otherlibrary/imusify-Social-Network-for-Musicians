@@ -16,13 +16,15 @@
              ngFileDrop
              (uploadOutput)="onUploadOutput($event)"
              [uploadInput]="uploadInput"
-             [ngClass]="{ 'is-drop-over': dragOver }">
+             [ngClass]="{ 'is-drop-over': dragOver }"
+             (change)="getTagsFile($event)">
           <input id="music-upload"
                  type="file"
                  name="music-upload"
                  ngFileSelect
                  (uploadOutput)="onUploadOutput($event)"
-                 [uploadInput]="uploadInput">
+                 [uploadInput]="uploadInput"
+                 (change)="getTagsFile($event)">
           <label class="item-info" for="music-upload">Browse or Drag&Drop your songs</label>
           <button class="import-btn music"><span>Import from Soundcloud</span></button>
         </div>

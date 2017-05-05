@@ -1,0 +1,20 @@
+.price-btn_wrap {
+  height: 100%;
+  .price-btn {
+    top: 1px;
+    bottom: 2px;
+  }
+}
+.inp-block.price-opt {
+  position: relative;
+  display: inline-block;
+  border: 1px solid rgba(255, 255, 255, 0.4);
+  border-radius: 4px;
+  opacity: .8;
+  padding: 0;
+}
+
+.edit-track-form .inp-block.price-opt .opt-name {
+  border: none;
+  box-shadow: none;
+}

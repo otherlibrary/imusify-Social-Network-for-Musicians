@@ -1,0 +1,24 @@
+<div class="inp-block price-opt">
+  <input type="checkbox" [id]="id" (change)="toggleCheck()">
+  <label class="opt-name" [for]="id">
+    <span><ng-content></ng-content></span>
+    <i></i>
+  </label>
+  <div class="price-btn_wrap">
+    <button class="price-btn"
+            [class.active]="priceStatusCheck"
+            [class.hidden]="!priceStatusCheck && priceReady"
+            (click)="togglePrice()">
+      $ {{price}}
+    </button>
+
+    <input class="hidden-price"
+           type="number"
+           [class.active]="priceReady"
+           (change)="changePrice($event)" [value]="price">
+
+    <span class="price-ready-btn"
+          [class.active]="priceReady"
+          (click)="togglePrice()"></span>
+  </div>
+</div>

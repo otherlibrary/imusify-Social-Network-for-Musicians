@@ -4,7 +4,7 @@ import {CommonModule} from '@angular/common';
 import {PreloaderComponent} from './index';
 import {AudioPlayerComponent} from "./audio-player/audio-player.component";
 import {pipes} from "../pipes/index";
-import {directives} from "../directives/index";
+import {directives, exportDirectives} from "../directives/index";
 import {SwiperModule} from "angular2-useful-swiper";
 
 @NgModule({
@@ -19,7 +19,9 @@ import {SwiperModule} from "angular2-useful-swiper";
     AudioPlayerComponent,
   ],
   exports: [
-    PreloaderComponent, AudioPlayerComponent
+    PreloaderComponent,
+    AudioPlayerComponent,
+    ...exportDirectives
   ],
   providers: []
 })

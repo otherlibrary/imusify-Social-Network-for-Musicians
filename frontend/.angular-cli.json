@@ -22,7 +22,8 @@
         "styles.scss"
       ],
       "scripts": [
-        "../src/assets/js/wavesurfer.min.js"
+        "../src/assets/js/wavesurfer.min.js",
+        "../src/assets/js/jsmediatags.min.js"
       ],
       "environmentSource": "environments/environment.ts",
       "environments": {

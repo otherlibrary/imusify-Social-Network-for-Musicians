@@ -4,3 +4,8 @@ export * from './new-track';
 export * from './IArtistData';
 export * from './IArtist';
 export * from './IUser';
+export * from './upload/IUploadFile';
+export * from './upload/IUploadFileData';
+export * from './upload/IUploadInput';
+export * from './upload/IUploadOutput';
+export * from './upload/IUploadProgress';

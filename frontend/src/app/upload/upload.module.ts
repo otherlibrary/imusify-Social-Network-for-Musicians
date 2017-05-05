@@ -1,17 +1,22 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { UploadRoutingModule } from "./upload-routing.module";
-import { uploadComponents } from './index';
-import { UploadService } from "./upload.service";
 import { NgUploaderModule } from 'ngx-uploader';
-import {FormsModule} from "@angular/forms";
+import {FormsModule, ReactiveFormsModule} from "@angular/forms";
+import {SharedModule} from "../shared/shared.module";
+
+import { UploadService } from "./upload.service";
+
+import { uploadComponents } from './index';
 
 @NgModule({
     imports: [
         CommonModule,
         UploadRoutingModule,
         FormsModule,
-        NgUploaderModule
+        ReactiveFormsModule,
+        NgUploaderModule,
+        SharedModule
     ],
     declarations: [
         ...uploadComponents

@@ -16,7 +16,6 @@ import {NotificationsComponent} from "./notifications/notifications.component";
 import {MessagesComponent} from "./messages/messages.component";
 import {ArtistProfileComponent} from "./artist-profile/artist-profile.component";
 import {NewsComponent} from "./news/news.component";
-import {AudioPlayerComponent} from "../shared/audio-player/audio-player.component";
 
 export const components = [
   NotFoundComponent,
@@ -40,5 +39,5 @@ export const components = [
 ];
 
 export const componentsExported = [
-  NewsComponent
+  NewsComponent,
 ];

@@ -12722,7 +12722,6 @@ body:not(.page-load) .profile-inner .prof-top-bg {
   position: relative;
   display: inline-block;
   padding: 15px 160px 15px 12px;
-  border: 1px solid rgba(255, 255, 255, 0.4);
   border-radius: 4px;
   transition: all .5s ease;
   font-weight: 300;
