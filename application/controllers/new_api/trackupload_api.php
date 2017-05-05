@@ -18,9 +18,12 @@ class trackupload_api extends REST_Controller
 
         $result = $this->uploadservice->uploadTrackFile();
 
-        echo json_encode($result);
+        $this->response($result);
     }
 
+    /**
+     * Insert track info into database
+     */
     public function upload_track_data_post()
     {
         $this->load->library('TrackDataService');
@@ -37,19 +40,19 @@ class trackupload_api extends REST_Controller
         $this->form_validation->set_rules('is_public', 'Public', $typicalValidation . '|integer');
         $this->form_validation->set_rules('track_upload_type', 'Upload Type', $typicalValidation);
         $this->form_validation->set_rules('track_upload_bpm', 'Track BPM', $typicalValidation);
-        $this->form_validation->set_rules('track_type', 'Track Type', $typicalValidation . '|integer');
+        $this->form_validation->set_rules('track_type', 'Track Type', $typicalValidation);
         $this->form_validation->set_rules('music_vocals_y', 'Music Vocals', $typicalValidation);
         $this->form_validation->set_rules('music_vocals_gender', 'Vocals Gender', $typicalValidation);
         $this->form_validation->set_rules('sale_available', 'Sale Available', $typicalValidation);
-        $this->form_validation->set_rules('licence_available', 'License Available', $typicalValidation);
+        $this->form_validation->set_rules('license_available', 'License Available', $typicalValidation);
         $this->form_validation->set_rules('nonprofit_available', 'Nonprofit Available', $typicalValidation);
         $this->form_validation->set_rules('release_date', 'Release Date', $typicalValidation);
-        //if ($this->form_validation->run() == false) {
-        //    $response = [
-        //        'errors' => $this->validation_errors(),
-        //    ];
-        //    $this->response($response, 200);
-        //}
+        if ($this->form_validation->run() == false) {
+            $response = [
+                'errors' => $this->validation_errors(),
+            ];
+            $this->response($response, 200);
+        }
 
 
         $userData = $this->session->userdata('user');
@@ -68,7 +71,7 @@ class trackupload_api extends REST_Controller
                 $usageType .= getvalfromtbl("id", "buy_usage_types", "type = 's'", "single") . ",";
             }
 
-            if (!empty($this->post('licence_available'))) {
+            if (!empty($this->post('license_available'))) {
                 $usageType .= getvalfromtbl("id", "buy_usage_types", "type = 'l'", "single") . ",";
             }
 
@@ -103,12 +106,15 @@ class trackupload_api extends REST_Controller
                 $this->post('music_vocals_y'),
                 $this->post('music_vocals_gender'),
                 $this->post('sale_available'),
-                $this->post('licence_available'),
+                $this->post('license_available'),
                 $this->post('nonprofit_available')
             );
 
-            var_dump($trackId);
-            exit;
+            $result = [
+                'track_id' => $trackId,
+            ];
+
+            $this->response($result, 200);
         }
     }
 }

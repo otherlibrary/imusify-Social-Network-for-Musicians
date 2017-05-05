@@ -102,6 +102,10 @@ Class space_model extends CI_Model
         ];
 
         $this->db->update('users', $newData, ['id' => $userId]);
+
+        $sessionUserData = $this->session->userdata('user');
+        $sessionUserData->avail_space_db = $userData['total_space'] - $usedSpace;
+        $this->session->set_userdata('user', $sessionUserData);
     }
 
     /**
@@ -124,8 +128,4 @@ Class space_model extends CI_Model
 
         return $result;
     }
-
-
 }
-
-?>
