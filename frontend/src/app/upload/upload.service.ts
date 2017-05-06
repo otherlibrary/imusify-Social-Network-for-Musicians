@@ -9,6 +9,7 @@ import {ApiService} from "../shared/services/api.service";
 export class UploadService {
   public uploadTrackInfo: UploadFileData;
   public trackImage: any;
+  public wavesurfer: any = null;
 
   constructor(private _apiService: ApiService) {
     this.uploadTrackInfo = new UploadTrackInfo();

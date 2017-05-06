@@ -35,5 +35,5 @@ export class ApiService {
       .catch(this.formatErrors)
       .map((res:Response) => res.json());
   }
-  
+
 }

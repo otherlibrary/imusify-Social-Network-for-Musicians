@@ -1,10 +1,12 @@
-import {Component, EventEmitter} from '@angular/core';
+import {Component, EventEmitter, OnInit} from '@angular/core';
 import {UploadInput, UploadOutput, UploadFile, UploadFileData} from "../interfases";
 import {ActivatedRoute, Router} from "@angular/router";
 import {Observable} from "rxjs/Observable";
 import {UploadService} from "./upload.service";
 import {environment} from "../../environments/environment";
+
 declare const jsmediatags: any;
+declare const WaveSurfer: any;
 
 interface FormData {
   concurrency: number;
@@ -17,7 +19,8 @@ interface FormData {
   templateUrl: 'upload.component.html',
   styleUrls: ['upload.component.scss']
 })
-export class UploadComponent {
+
+export class UploadComponent implements OnInit {
   public formData: FormData;
   public files: UploadFile[];
   public fileId: string;
@@ -28,14 +31,14 @@ export class UploadComponent {
 
   private host: {};
 
-  private cutNameExtension(name: string): string {
+  private _cutNameExtension(name: string): string {
     return name.match(/(.*)\.[^.]+$/)[1];
   };
 
   constructor(
     private _router: Router,
     private _route: ActivatedRoute,
-    private _UploadService: UploadService
+    private _uploadService: UploadService
   ) {
     this.host = environment.host;
 
@@ -50,13 +53,31 @@ export class UploadComponent {
     this.uploadInput = new EventEmitter<UploadInput>();
   }
 
+  ngOnInit() {
+    if (!this._uploadService.wavesurfer) {
+      this._uploadService.wavesurfer = WaveSurfer.create({
+        container: '#waveform',
+        backend: 'MediaElement'
+      });
+
+      this._uploadService.wavesurfer.on('waveform-ready', (e) => {
+        this._uploadService.uploadTrackInfo.waveform = this._uploadService.wavesurfer.backend.mergedPeaks;
+      });
+    }
+  }
+
   getTagsFile(e) {
     let files = e.target.files;
     let file = files[files.length - 1];
 
+    let fileURL = URL.createObjectURL(file);
+    this._uploadService.wavesurfer.empty();
+    this._uploadService.wavesurfer.load(fileURL);
+
     jsmediatags.read(file, {
       onSuccess: (tag) => {
-        this._UploadService.trackImage = tag.tags.picture;
+        //TODO(AlexSol): if image empty
+        this._uploadService.trackImage = tag.tags.picture;
       },
       onError: (error) => {
         console.log(':(', error.type, error.info);
@@ -92,9 +113,9 @@ export class UploadComponent {
     } else if (output.type === 'done') {
       let file = this.files[this.files.length - 1];
 
-      this._UploadService.uploadTrackInfo.title = this.cutNameExtension(file.name);
-      this._UploadService.uploadTrackInfo.track_id = file.id;
-      this._UploadService.uploadTrackInfo.filename = file.name;
+      this._uploadService.uploadTrackInfo.title = this._cutNameExtension(file.name);
+      this._uploadService.uploadTrackInfo.track_id = file.id;
+      this._uploadService.uploadTrackInfo.filename = file.name;
 
       let t = Observable.timer(500).subscribe(() => {
         this._router.navigate(['edit/' + file.id], {relativeTo: this._route});
