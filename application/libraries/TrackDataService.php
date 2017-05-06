@@ -82,6 +82,14 @@ class TrackDataService
             'track_buyable_current_type' => $track_buyable_current_type,
             'usage_type' => $usage_type,
             'createdDate' => date('Y-m-d H:i:s'),
+
+            'plays' => 0,
+            'likes' => 0,
+            'shares' => 0,
+            'comments' => 0,
+            'price' => 0,
+            'waveRunningDate' => date('Y-m-d H:i:s'),
+            'waveCompletedDate' => date('Y-m-d H:i:s'),
         ];
         if ($music_vocals_y != null) {
             $data["track_type"] = $music_vocals_y;
@@ -102,13 +110,7 @@ class TrackDataService
         if ($nonprofit_available != null) {
             $data["track_nonprofit_avail"] = $nonprofit_available;
         }
-        $trackData = array_map(function ($val) {
-            if (is_string($val)) {
-                return $this->ci->db->escape($val);
-            }
 
-            return $val;
-        }, $trackData);
         $this->ci->db->insert('tracks', $trackData);
 
         return $this->ci->db->insert_id();
@@ -136,7 +138,11 @@ class TrackDataService
         return null;
     }
 
-    function fetchTrackTypes($tracktype = null)
+    /**
+     * @param string|null $tracktype
+     * @return string
+     */
+    public function fetchTrackTypes($tracktype = null)
     {
         $this->ci->db->select('id');
         $this->ci->db->from('tracktypes');

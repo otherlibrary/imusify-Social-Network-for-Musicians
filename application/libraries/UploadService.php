@@ -24,7 +24,7 @@ class UploadService
 
             $uploadConfig = [
                 'upload_path' => $uploadPath,
-                'max_size' => '9999999999999999', // 'max_size' => $availSpace TODO(AlexSol): hot fix
+                'max_size' => $availSpace,
                 'allowed_types' => 'mp3|mp2|ogg|aac|amr|wma|aiff|wav|flac|alac',
             ];
 
