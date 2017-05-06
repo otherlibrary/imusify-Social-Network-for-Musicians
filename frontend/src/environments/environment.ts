@@ -8,9 +8,16 @@ export const environment = {
     host: 'http://imusify.loc',
     creds: 'ajax=true',
     assets: '/',
+    login: '/api/login',
+    signup: '/api/signup',
+    ulogout: '/ulogout',
+    checkAuth: '/api/user/check-auth',
     uploadTrackList: '/upload',
     uploadFilesUrl: '/api/track-upload/upload-track-file',
     musicList: '/music',
     uploadTrackImage: '/crop/index/trackImg',
-    saveTrack: '/save_track'
+    saveTrack: '/save_track',
+    browse: '/browse',
+    browseNewSongs:  '/browse/new-songs',
+    browsePopularArtist: '/browse/popular-artist'
 };

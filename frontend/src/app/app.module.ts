@@ -7,6 +7,7 @@ import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {HelpersService} from './shared/services/helpers.service';
 import {EmitterService} from './shared/services/emitter.service';
 import {SharedService} from "./shared/shared.service";
+import {ApiService} from "./shared/services/api.service";
 
 import {AuthGuard} from './common/index';
 import {UserModule} from './user/user.module';
@@ -31,7 +32,14 @@ import {AuthAllSuccessGuard} from "./common/auth-all-success.guard";
     routing,
     BrowserAnimationsModule
   ],
-  providers: [HelpersService, AuthGuard, AuthAllSuccessGuard, EmitterService, SharedService],
+  providers: [
+    HelpersService,
+    AuthGuard,
+    AuthAllSuccessGuard,
+    EmitterService,
+    SharedService,
+    ApiService
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule {

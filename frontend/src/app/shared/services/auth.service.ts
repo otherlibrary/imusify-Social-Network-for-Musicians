@@ -1,24 +1,24 @@
 import {Injectable} from '@angular/core';
-import {contentHeaders} from '../../common/headers';
-import {Http, Response} from '@angular/http';
 import {Observable} from 'rxjs/Rx';
+import {Subject} from "rxjs/Subject";
+
 import {HelpersService} from './helpers.service';
 import {environment} from '../../../environments/environment';
-import {Subject} from "rxjs/Subject";
 import {IUser} from "../../interfases/IUser";
+import {ApiService} from "./api.service";
 
 
 @Injectable()
 export class AuthService {
-  public host: Object = {};
   public profileData: any;
   public loggedin: boolean;
   public redirectUrl: string;
   public cleanUserSubject: Subject<Object> = new Subject<Object>();
 
-  constructor(private _http: Http, private _helpersService: HelpersService) {
-    this.host = environment.host;
-    // получаэм данные юзера из localStorage
+  constructor(
+    private _apiService: ApiService,
+    private _helpersService: HelpersService
+  ) {
     this.profileData = JSON.parse(localStorage.getItem('auth_data'));
     this.loggedin = this.profileData;
   }
@@ -30,12 +30,7 @@ export class AuthService {
    */
   login(userData) {
     const params = this._helpersService.toStringParam(userData);
-    return this._http.post(this.host + '/api/login', params, {
-      headers: contentHeaders,
-      withCredentials: true
-    })
-      .map((res: Response) => res.json())
-      .catch((error: any) => Observable.throw(error.json().error || 'Server error'));
+    return this._apiService.post(environment.login, params);
   }
 
   /**
@@ -44,12 +39,7 @@ export class AuthService {
    * @returns {Observable<R>}
    */
   signUp(newUser) {
-    return this._http.post(this.host + '/api/signup', newUser, {
-      headers: contentHeaders,
-      withCredentials: true
-    })
-      .map((res: Response) => res.json())
-      .catch((error: any) => Observable.throw(error.json().error || 'Server error'));
+    return this._apiService.post(environment.signup, newUser);
   }
 
   /**
@@ -57,12 +47,7 @@ export class AuthService {
    * @returns {Observable<R>}
    */
   logOut() {
-    return this._http.post(this.host + '/ulogout', environment.creds, {
-      headers: contentHeaders,
-      withCredentials: true
-    })
-      .map((res: Response) => res.json())
-      .catch((error: any) => Observable.throw(error.json().error || 'Server error'));
+    return this._apiService.post(environment.ulogout, environment.creds);
   }
 
   /**
@@ -70,12 +55,7 @@ export class AuthService {
    * @returns {boolean}
    */
   checkAuth():Observable<IUser> {
-    return this._http.get(this.host + '/api/user/check-auth', {
-      headers: contentHeaders,
-      withCredentials: true
-    })
-      .map((res: Response) => res.json())
-      .catch((error: any) => Observable.throw(error.json().error || 'Server error'));
+    return this._apiService.get(environment.checkAuth);
   }
 
 }

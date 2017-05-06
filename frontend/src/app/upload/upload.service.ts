@@ -1,20 +1,16 @@
 import {Injectable} from '@angular/core';
-import {Http, Response} from "@angular/http";
-import {contentHeaders} from "../common/headers";
-import {Observable} from "rxjs";
 import {environment} from "../../environments/environment";
 import {UploadFileData} from "../interfases";
 import {UploadTrackInfo} from "../models";
+import {ApiService} from "../shared/services/api.service";
 
 
 @Injectable()
 export class UploadService {
-  public host: Object = {};
   public uploadTrackInfo: UploadFileData;
   public trackImage: any;
 
-  constructor(private _http: Http) {
-    this.host = environment.host;
+  constructor(private _apiService: ApiService) {
     this.uploadTrackInfo = new UploadTrackInfo();
     this.trackImage = {
       data: ''
@@ -22,11 +18,6 @@ export class UploadService {
   }
 
   getTrackList() {
-    return this._http.post(this.host + environment.uploadTrackList, environment.creds, {
-      headers: contentHeaders,
-      withCredentials: true
-    })
-      .map((res: Response) => res.json())
-      .catch((error: any) => Observable.throw(error.json().error || 'Server error'));
+    return this._apiService.post(environment.uploadTrackList, environment.creds);
   }
 }

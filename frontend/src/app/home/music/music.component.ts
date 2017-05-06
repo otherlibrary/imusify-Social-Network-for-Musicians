@@ -30,9 +30,9 @@ export class MusicComponent implements OnInit {
      * @param data
      */
     addFollow(data) {
-        this._homeService.addFollow(data).subscribe(data => {
-            console.log(data);
-        })
+        // this._homeService.addFollow(data).subscribe(data => {
+        //     console.log(data);
+        // })
     }
 
     sharedRecord(link) {
