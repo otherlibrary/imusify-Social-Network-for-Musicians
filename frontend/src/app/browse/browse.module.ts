@@ -1,12 +1,12 @@
 import {NgModule} from '@angular/core';
-import {CommonModule} from '@angular/common';
 import {browseComponents} from "./index";
 import {BrowseRoutingModule} from "./browse-routing.module";
 import {BrowseService} from "./browse.service";
+import {SharedModule} from "../shared/shared.module";
 
 @NgModule({
     imports: [
-        CommonModule,
+        SharedModule,
         BrowseRoutingModule
     ],
     declarations: [

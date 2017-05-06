@@ -6,21 +6,27 @@ import {AudioPlayerComponent} from "./audio-player/audio-player.component";
 import {pipes} from "../pipes/index";
 import {directives, exportDirectives} from "../directives/index";
 import {SwiperModule} from "angular2-useful-swiper";
+import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 
 @NgModule({
   imports: [
     CommonModule,
-    SwiperModule
+    SwiperModule,
+    FormsModule,
+    ReactiveFormsModule
   ],
   declarations: [
     ...pipes,
     ...directives,
     PreloaderComponent,
-    AudioPlayerComponent,
+    AudioPlayerComponent
   ],
   exports: [
     PreloaderComponent,
     AudioPlayerComponent,
+    CommonModule,
+    FormsModule,
+    ReactiveFormsModule,
     ...exportDirectives
   ],
   providers: []
