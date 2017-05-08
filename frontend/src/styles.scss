@@ -265,3 +265,57 @@ $url_6: url(/assets/css/img/player/queue.svg);
     }
   }
 }
+.custom_picker {
+  .selection {
+    border: none !important;
+  }
+  .mydp {
+    .weekdaytitle,
+    .header,
+    .headerbtn,
+    .headerlabelbtn,
+    .headerbtncell,
+    .btnclear,
+    .btnpicker,
+    .headerbtn,
+    .headermonthtxt,
+    .headertodaybtn,
+    .headeryeartxt, .icon-mydptoday {
+      background-color: #333;
+      color: #fff;
+    }
+    .caltable, .daycell, .weekdaytitle {
+      color: #fff;
+    }
+    .caltable, .currmonth {
+      background-color: #000;
+    }
+    .nextmonth, .prevmonth {
+      color: darken(#fff, 50%);
+    }
+  }
+}
+.custom_select {
+  .ng-dirty.ng-invalid {
+    border: 1px solid #e7283a !important;
+  }
+  .below {
+    margin-bottom: 0;
+  }
+  input {
+    border: none !important;
+    padding: 0 !important;
+    margin-bottom: 0 !important;
+  }
+  > div > div.multiple > div.option {
+    background: #EA3F4F;
+    border-color: #EA3F4F;
+    color: #fff;
+    span.deselect-option {
+      color: #fff;
+      &:hover {
+        color: darken(#fff, 10%);
+      }
+    }
+  }
+}

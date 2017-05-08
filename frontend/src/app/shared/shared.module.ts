@@ -7,13 +7,17 @@ import {pipes} from "../pipes/index";
 import {directives, exportDirectives} from "../directives/index";
 import {SwiperModule} from "angular2-useful-swiper";
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
+import {SelectModule} from "ng-select";
+import {MyDatePickerModule} from "mydatepicker";
 
 @NgModule({
   imports: [
     CommonModule,
     SwiperModule,
     FormsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    SelectModule,
+    MyDatePickerModule
   ],
   declarations: [
     ...pipes,
@@ -27,6 +31,8 @@ import {FormsModule, ReactiveFormsModule} from "@angular/forms";
     CommonModule,
     FormsModule,
     ReactiveFormsModule,
+    SelectModule,
+    MyDatePickerModule,
     ...exportDirectives
   ],
   providers: []

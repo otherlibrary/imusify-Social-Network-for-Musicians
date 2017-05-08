@@ -53,60 +53,70 @@
             </div>
             <!--RELEASE DATE-->
             <div class="inp-block">
-              <input id="trackDate"
-                     type="text"
-                     value=""
-                     name="release_date"
-                     data-type="datepicker"
-                     required
-                     formControlName="release_date">
+              <my-date-picker class="custom_picker valid_style"
+                              name="release_date" id="trackDate"
+                              [options]="myDatePickerOptions"
+                              [(ngModel)]="currentDate"
+                              formControlName="release_date"></my-date-picker>
+              <!--<input id="trackDate"-->
+                     <!--type="text"-->
+                     <!--value=""-->
+                     <!--name="release_date"-->
+                     <!--data-type="datepicker"-->
+                     <!--required-->
+                     <!--formControlName="release_date">-->
               <label for="trackDate">Release date</label>
             </div>
             <!--TRACK TYPE-->
             <div class="inp-block">
-              <select id="trackType"
-                      data-placeholder="Please select track type"
-                      name="track_type"
-                      required
-                      formControlName="track_type">
-                <option value="0" selected>Select track type</option>
-                <option *ngFor="let type of trackTypesList" [value]="type.id">{{type.name}}</option>
-              </select>
+              <ng-select formControlName="track_type"
+                         id="trackType"
+                         class="custom_select"
+                         [options]="trackTypesList"
+                         [multiple]="true"
+                         [highlightColor]="'#242526'">
+              </ng-select>
               <label class="select2-label" for="trackType">Track type</label>
             </div>
             <!--TRACK GENRE-->
             <div class="inp-block">
-              <select id="trackGenre"
-                      data-placeholder="Please select track genre"
-                      name="genre_id"
-                      required
-                      formControlName="genre_id">
-                <option value="0" selected>Select primary genre</option>
-                <option *ngFor="let genre of genresList" [value]="genre.id">{{genre.genre}}</option>
-              </select>
+              <ng-select formControlName="genre_id"
+                         id="trackGenre"
+                         class="custom_select"
+                         [options]="genresList"
+                         [multiple]="true"
+                         [highlightColor]="'#242526'">
+              </ng-select>
               <label class="select2-label" for="trackGenre">Primary genre</label>
             </div>
             <!--SECOND GENRES-->
             <div class="inp-block">
-              <select id="secondGenre"
-                      data-placeholder="Please select secondary genre"
-                      name="second_genre_id"
-                      required
-                      formControlName="second_genre_id">
-                <option value="0" selected>Select secondary genre</option>
-                <option *ngFor="let genre of secGenresList" [value]="genre.id">{{genre.genre}}</option>
-              </select>
+              <ng-select formControlName="second_genre_id"
+                         id="secondGenre"
+                         class="custom_select"
+                         [options]="secGenresList"
+                         [multiple]="true"
+                         [highlightColor]="'#242526'">
+              </ng-select>
+              <!--<select id="secondGenre"-->
+                      <!--data-placeholder="Please select secondary genre"-->
+                      <!--name="second_genre_id"-->
+                      <!--required-->
+                      <!--&gt;-->
+                <!--<option value="0" selected>Select secondary genre</option>-->
+                <!--<option *ngFor="let genre of secGenresList" [value]="genre.id">{{genre.genre}}</option>-->
+              <!--</select>-->
               <label for="secondGenre">Secondary genre(pick two)</label>
             </div>
             <!--TRACK MOODS-->
             <div class="inp-block">
-              <select id="trackMoods"
-                      data-placeholder="Please select track genre"
-                      name="pick_moods"
-                      formControlName="pick_moods">
-                <option value="0" selected>Select pick moods</option>
-                <option *ngFor="let mood of moodsList" [value]="mood.id">{{mood.mood}}</option>
-              </select>
+              <ng-select formControlName="pick_moods"
+                         id="trackMoods"
+                         class="custom_select"
+                         [options]="moodsList"
+                         [multiple]="true"
+                         [highlightColor]="'#242526'">
+              </ng-select>
               <label for="trackMoods">Pick moods</label>
             </div>
             <!--TYPES PUBLIC-->

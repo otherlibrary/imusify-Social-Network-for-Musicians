@@ -1,7 +1,8 @@
 <track-edit *ngIf="isOpenEdit"
-            [genresList]="uploadDetails.genre"
-            [secGenresList]="uploadDetails.sec_genre"
-            [trackTypesList]="uploadDetails.track_upload_type_list" [moodsList]="uploadDetails.mood_list"></track-edit>
+            [genresList]="genres"
+            [secGenresList]="secondGenres"
+            [trackTypesList]="typeList"
+            [moodsList]="moodList"></track-edit>
 <section class="upload-audio">
   <app-track *ngFor="let track of trackList" [track]="track"></app-track>
 </section>

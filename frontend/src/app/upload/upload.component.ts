@@ -25,8 +25,6 @@ export class UploadComponent implements OnInit {
   public fileId: string;
   public uploadInput: EventEmitter<UploadInput>;
   public dragOver: boolean;
-  public uploadTrackInfo: UploadFileData;
-
 
   private host: {};
 
@@ -114,10 +112,11 @@ export class UploadComponent implements OnInit {
       this.dragOver = false;
     } else if (output.type === 'done') {
       let file = this.files[this.files.length - 1];
-
+      this._uploadService.uploadTrackInfo.file_name = file.response.upload_data.file_name;
+      console.log(output);
+      console.log(this._uploadService.uploadTrackInfo.file_name);
       this._uploadService.uploadTrackInfo.title = this._cutNameExtension(file.name);
       this._uploadService.uploadTrackInfo.track_id = file.id;
-      this._uploadService.uploadTrackInfo.filename = file.name;
 
       let t = Observable.timer(300).subscribe(() => {
         this._uploadService.editPopupSubject.next(true);

@@ -5,6 +5,7 @@ import {UploadFileData} from "../../interfases";
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {Genre} from "../../interfases/IGenre";
 import {IMood} from "../../interfases/IMood";
+import {IMyOptions} from "mydatepicker";
 
 function base64ArrayBuffer(arrayBuffer) {
   let base64 = '';
@@ -75,8 +76,13 @@ export class EditComponent implements OnInit {
   public uploadTrackForm: FormGroup;
   public trackImage: any;
   public uploadTrackInfo: UploadFileData;
+  public currentDate: Object;
   //TODO(AlexSol): type
   public sellData: any;
+
+  public myDatePickerOptions: IMyOptions = {
+    dateFormat: 'dd.mm.yyyy'
+  };
 
   public formErrors = {
     "title": "",
@@ -126,14 +132,12 @@ export class EditComponent implements OnInit {
         console.log(data);
         this.onValueChange(data);
       });
-
     this.onValueChange();
   }
 
-  constructor(
-    private _uploadService: UploadService,
-    private fb: FormBuilder
-  ) {}
+  constructor(private _uploadService: UploadService,
+              private fb: FormBuilder) {
+  }
 
   updatePrice(e) {
     this.sellData[e.id] = e.price;
@@ -141,16 +145,26 @@ export class EditComponent implements OnInit {
 
   ngOnInit() {
     this.uploadTrackInfo = this._uploadService.uploadTrackInfo;
-
     this.buildForm();
+
     //default data
     this.sellData = {
       album: '9.99',
       single: '0.99'
     };
 
+    //set current date
+    let date = new Date();
+    this.currentDate = {
+      date: {
+        year: date.getFullYear(),
+        month: date.getMonth() + 1,
+        day: date.getDate()
+      }
+    };
+
     //sound image
-    if(this._uploadService.trackImage) {
+    if (this._uploadService.trackImage) {
       this.trackImage = `data:${this._uploadService.trackImage.format};base64,${base64ArrayBuffer(this._uploadService.trackImage.data)}`;
     }
   }

@@ -1,7 +1,7 @@
 export interface UploadFileData {
   track_id: string;
   title: string;
-  filename: string;
+  file_name: string;
   release_date: string;
   track_type: number;
   genre_id: number;
