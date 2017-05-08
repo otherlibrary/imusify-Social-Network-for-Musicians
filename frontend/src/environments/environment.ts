@@ -16,6 +16,7 @@ export const environment = {
     uploadFilesUrl: '/api/track-upload/upload-track-file',
     musicList: '/music',
     uploadTrackImage: '/crop/index/trackImg',
+    uploadDetails: '/upload_details',
     saveTrack: '/save_track',
     browse: '/browse',
     browseNewSongs:  '/browse/new-songs',

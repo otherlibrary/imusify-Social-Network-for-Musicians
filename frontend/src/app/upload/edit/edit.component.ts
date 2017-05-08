@@ -1,9 +1,10 @@
-import {Component, OnInit} from '@angular/core';
-import {Router, ActivatedRoute} from '@angular/router';
+import {Component, Input, OnInit} from '@angular/core';
 import {UploadService} from '../upload.service';
 import 'rxjs/add/operator/switchMap';
 import {UploadFileData} from "../../interfases";
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
+import {Genre} from "../../interfases/IGenre";
+import {IMood} from "../../interfases/IMood";
 
 function base64ArrayBuffer(arrayBuffer) {
   let base64 = '';
@@ -55,12 +56,17 @@ function base64ArrayBuffer(arrayBuffer) {
 }
 
 @Component({
-  selector: 'app-edit',
+  selector: 'track-edit',
   templateUrl: './edit.component.html',
   styleUrls: ['./edit.component.scss']
 })
 
 export class EditComponent implements OnInit {
+  @Input() genresList: Genre[];
+  @Input() secGenresList: Genre[];
+  @Input() trackTypesList: any[];
+  @Input() moodsList: IMood[];
+
   public currentTab: number = 1;
   public saleStatus: boolean = false;
   public licensingStatus: boolean = false;
@@ -74,23 +80,22 @@ export class EditComponent implements OnInit {
 
   public formErrors = {
     "title": "",
-    "releaseDate": "",
-    "trackType": "",
-    "genreId": "",
-    "secondGenreId": ""
+    "release_date": "",
+    "track_type": "",
+    "genre_id": ""
   };
 
   validationMessages = {
     "title": {
       "required": "Required field."
     },
-    "releaseDate": {
+    "release_date": {
       "required": "Required field."
     },
-    "trackType": {
+    "track_type": {
       "required": "Required field."
     },
-    "genreId": {
+    "genre_id": {
       "required": "Required field."
     }
   };
@@ -100,15 +105,20 @@ export class EditComponent implements OnInit {
       "title": [this.uploadTrackInfo.title, [
         Validators.required
       ]],
-      "releaseDate": [this.uploadTrackInfo.release_date, [
+      "desc": this.uploadTrackInfo.desc,
+      "release_date": [this.uploadTrackInfo.release_date, [
         Validators.required
       ]],
-      "trackType": [this.uploadTrackInfo.track_upload_type, [
+      "track_type": [this.uploadTrackInfo.track_upload_type, [
         Validators.required
       ]],
-      "genreId": [this.uploadTrackInfo.genre_id, [
+      "genre_id": [this.uploadTrackInfo.genre_id, [
         Validators.required
-      ]]
+      ]],
+      "second_genre_id": this.uploadTrackInfo.genre_id,
+      "pick_moods": this.uploadTrackInfo.genre_id,
+      "type_artist": this.uploadTrackInfo.type_artist,
+      "is_public": this.uploadTrackInfo.is_public,
     });
 
     this.uploadTrackForm.valueChanges
@@ -120,27 +130,28 @@ export class EditComponent implements OnInit {
     this.onValueChange();
   }
 
-  constructor(private _router: Router,
-              private _UploadService: UploadService,
-              private fb: FormBuilder) {
-  }
+  constructor(
+    private _uploadService: UploadService,
+    private fb: FormBuilder
+  ) {}
 
   updatePrice(e) {
     this.sellData[e.id] = e.price;
   }
 
   ngOnInit() {
-    this.uploadTrackInfo = this._UploadService.uploadTrackInfo;
-    //sound image
-    if(this._UploadService.trackImage) {
-      this.trackImage = `data:${this._UploadService.trackImage.format};base64,${base64ArrayBuffer(this._UploadService.trackImage.data)}`;
-    }
+    this.uploadTrackInfo = this._uploadService.uploadTrackInfo;
 
     this.buildForm();
-
+    //default data
     this.sellData = {
       album: '9.99',
       single: '0.99'
+    };
+
+    //sound image
+    if(this._uploadService.trackImage) {
+      this.trackImage = `data:${this._uploadService.trackImage.format};base64,${base64ArrayBuffer(this._uploadService.trackImage.data)}`;
     }
   }
 
@@ -163,7 +174,7 @@ export class EditComponent implements OnInit {
   }
 
   closePopup() {
-    this._router.navigate(['upload']);
+    this._uploadService.editPopupSubject.next(false);
   }
 
   onSubmit() {
@@ -186,5 +197,10 @@ export class EditComponent implements OnInit {
 
   toggleSaleStatus() {
     this.saleStatus = !this.saleStatus;
+  }
+
+  showTest() {
+    console.log('sellData: ', this.sellData);
+    console.log('uploadTrackInfo: ', this.uploadTrackInfo);
   }
 }

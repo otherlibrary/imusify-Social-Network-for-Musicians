@@ -1,6 +1,5 @@
-import {Component, EventEmitter, OnInit} from '@angular/core';
+import {Component, EventEmitter, OnDestroy, OnInit} from '@angular/core';
 import {UploadInput, UploadOutput, UploadFile, UploadFileData} from "../interfases";
-import {ActivatedRoute, Router} from "@angular/router";
 import {Observable} from "rxjs/Observable";
 import {UploadService} from "./upload.service";
 import {environment} from "../../environments/environment";
@@ -36,8 +35,6 @@ export class UploadComponent implements OnInit {
   };
 
   constructor(
-    private _router: Router,
-    private _route: ActivatedRoute,
     private _uploadService: UploadService
   ) {
     this.host = environment.host;
@@ -54,6 +51,7 @@ export class UploadComponent implements OnInit {
   }
 
   ngOnInit() {
+    //init waveform
     if (!this._uploadService.wavesurfer) {
       this._uploadService.wavesurfer = WaveSurfer.create({
         container: '#waveform',
@@ -121,8 +119,8 @@ export class UploadComponent implements OnInit {
       this._uploadService.uploadTrackInfo.track_id = file.id;
       this._uploadService.uploadTrackInfo.filename = file.name;
 
-      let t = Observable.timer(500).subscribe(() => {
-        this._router.navigate(['edit/' + file.id], {relativeTo: this._route});
+      let t = Observable.timer(300).subscribe(() => {
+        this._uploadService.editPopupSubject.next(true);
         t.unsubscribe();
       });
     } else if (output.type === 'cancelled') {

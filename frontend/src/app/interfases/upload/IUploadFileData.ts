@@ -9,6 +9,7 @@ export interface UploadFileData {
   secondary_genre_id?: number;
   pick_moods_id?: number;
   waveform: string;
+  type_artist: string;
 
   is_public: number;
   track_upload_type: string;

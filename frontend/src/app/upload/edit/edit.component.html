@@ -22,9 +22,11 @@
       <div class="edit-track-content">
         <div class="tab-content"
              [class.active]="currentTab === 1">
+
           <form class="edit-track-form pad-left"
                 [formGroup]="uploadTrackForm"
                 (ngSubmit)="onSubmit()">
+            <!--TRACK IMAGE-->
             <div class="edit-photo">
               <img *ngIf="trackImage" [src]="trackImage" alt="">
               <input id="trackImg"
@@ -33,6 +35,7 @@
               <label class="img-upload"
                      for="trackImg">Upload image</label>
             </div>
+            <!--TITLE-->
             <div class="inp-block">
               <input id="trackTitle"
                      type="text"
@@ -43,90 +46,118 @@
                 <!--{{ formErrors.title }}-->
               <!--</div>-->
             </div>
+            <!--DESCRIPTION-->
             <div class="inp-block">
-              <textarea id="trackDesc" name="desc" cols="30" rows="10"></textarea>
-              <label for="trackDesc">Description</label>
+              <textarea id="trackDesc" name="desc" cols="30" rows="10" formControlName="desc"></textarea>
+              <label for="trackDesc" (click)="showTest()">Description</label>
             </div>
+            <!--RELEASE DATE-->
             <div class="inp-block">
               <input id="trackDate"
                      type="text"
                      value=""
-                     name="date"
+                     name="release_date"
                      data-type="datepicker"
                      required
-                     formControlName="releaseDate">
+                     formControlName="release_date">
               <label for="trackDate">Release date</label>
             </div>
+            <!--TRACK TYPE-->
             <div class="inp-block">
               <select id="trackType"
                       data-placeholder="Please select track type"
-                      name="type"
+                      name="track_type"
                       required
-                      formControlName="trackType" >
-                <option></option>
-                <option value="1">Type 1</option>
-                <option value="2">Song w. Vocals</option>
-                <option value="3">Type 2</option>
-                <option value="4">Type 3</option>
-                <option value="5">Type 4</option>
-                <option value="3">Type 5</option>
-                <option value="4">Type 6</option>
-                <option value="5">Type 7</option>
+                      formControlName="track_type">
+                <option value="0" selected>Select track type</option>
+                <option *ngFor="let type of trackTypesList" [value]="type.id">{{type.name}}</option>
               </select>
               <label class="select2-label" for="trackType">Track type</label>
             </div>
+            <!--TRACK GENRE-->
             <div class="inp-block">
               <select id="trackGenre"
                       data-placeholder="Please select track genre"
-                      name="genre"
+                      name="genre_id"
                       required
-                      formControlName="genreId">
-                <option></option>
-                <option value="0">Select track type</option>
-                <option value="1">Rock</option>
-                <option value="2">Dance</option>
-                <option value="3">Hip Hop</option>
-                <option value="4">Trap</option>
-                <option value="5">Classic</option>
+                      formControlName="genre_id">
+                <option value="0" selected>Select primary genre</option>
+                <option *ngFor="let genre of genresList" [value]="genre.id">{{genre.genre}}</option>
               </select>
               <label class="select2-label" for="trackGenre">Primary genre</label>
             </div>
+            <!--SECOND GENRES-->
             <div class="inp-block">
-              <input id="secondGenre"
-                     type="text"
-                     name="second-genre">
+              <select id="secondGenre"
+                      data-placeholder="Please select secondary genre"
+                      name="second_genre_id"
+                      required
+                      formControlName="second_genre_id">
+                <option value="0" selected>Select secondary genre</option>
+                <option *ngFor="let genre of secGenresList" [value]="genre.id">{{genre.genre}}</option>
+              </select>
               <label for="secondGenre">Secondary genre(pick two)</label>
             </div>
+            <!--TRACK MOODS-->
             <div class="inp-block">
-              <input id="trackMoods" type="text" name="moods">
+              <select id="trackMoods"
+                      data-placeholder="Please select track genre"
+                      name="pick_moods"
+                      formControlName="pick_moods">
+                <option value="0" selected>Select pick moods</option>
+                <option *ngFor="let mood of moodsList" [value]="mood.id">{{mood.mood}}</option>
+              </select>
               <label for="trackMoods">Pick moods</label>
             </div>
+            <!--TYPES PUBLIC-->
             <div class="inp-block">
               <label>Select track type</label>
               <label class="radio-lbl" for="typesPublic">
-                <input id="typesPublic" type="radio" name="types[]" checked value="public" />
+                <input id="typesPublic"
+                       type="radio"
+                       name="is_public"
+                       checked
+                       value="1"
+                       formControlName="is_public" />
                 <i></i><span>Public</span>
               </label>
               <label class="radio-lbl" for="typesPrivate">
-                <input id="typesPrivate" type="radio" name="types[]" value="private" />
+                <input id="typesPrivate"
+                       type="radio"
+                       name="is_public"
+                       value="0"
+                       formControlName="is_public"/>
                 <i></i><span>Private</span>
               </label>
             </div>
+            <!--TYPE ARTIST MALE-->
             <div class="inp-block">
               <label>Select type of artist</label>
               <label class="radio-lbl" for="typeArtistMale">
-                <input id="typeArtistMale" type="radio" name="type-artist[]" value="male" />
+                <input id="typeArtistMale"
+                       type="radio"
+                       name="type_artist"
+                       value="male" formControlName="type_artist" />
                 <i></i><span>Male</span>
               </label>
               <label class="radio-lbl" for="typeArtistFemale">
-                <input id="typeArtistFemale" type="radio" name="type-artist[]" value="female" />
+                <input id="typeArtistFemale"
+                       type="radio"
+                       name="type_artist"
+                       value="female"
+                       formControlName="type_artist" />
                 <i></i><span>Female</span>
               </label>
               <label class="radio-lbl" for="typeArtistBoth">
-                <input id="typeArtistBoth" type="radio" name="type-artist[]" value="both" />
+                <input id="typeArtistBoth"
+                       type="radio"
+                       name="type_artist"
+                       value="both"
+                       formControlName="type_artist" />
                 <i></i><span>Both</span>
               </label>
             </div>
+
             <button type="submit" [disabled]="!uploadTrackForm.valid">send</button>
           </form>
         </div>

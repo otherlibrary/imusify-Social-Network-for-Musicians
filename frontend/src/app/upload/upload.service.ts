@@ -3,6 +3,7 @@ import {environment} from "../../environments/environment";
 import {UploadFileData} from "../interfases";
 import {UploadTrackInfo} from "../models";
 import {ApiService} from "../shared/services/api.service";
+import {Subject} from "rxjs/Subject";
 
 
 @Injectable()
@@ -10,6 +11,7 @@ export class UploadService {
   public uploadTrackInfo: UploadFileData;
   public trackImage: any;
   public wavesurfer: any = null;
+  public editPopupSubject: Subject<Object> = new Subject<Object>();
 
   constructor(private _apiService: ApiService) {
     this.uploadTrackInfo = new UploadTrackInfo();
@@ -20,5 +22,9 @@ export class UploadService {
 
   getTrackList() {
     return this._apiService.post(environment.uploadTrackList, environment.creds);
+  }
+
+  getUploadDetails() {
+    return this._apiService.post(environment.uploadDetails, environment.creds);
   }
 }
