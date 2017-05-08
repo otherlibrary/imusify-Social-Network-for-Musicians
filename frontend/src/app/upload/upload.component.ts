@@ -76,8 +76,12 @@ export class UploadComponent implements OnInit {
 
     jsmediatags.read(file, {
       onSuccess: (tag) => {
-        //TODO(AlexSol): if image empty
-        this._uploadService.trackImage = tag.tags.picture;
+        let tags = tag.tags;
+        if( "picture" in tags ) {
+          this._uploadService.trackImage = tags.picture;
+        } else {
+          this._uploadService.trackImage = null;
+        }
       },
       onError: (error) => {
         console.log(':(', error.type, error.info);

@@ -131,7 +131,11 @@ export class EditComponent implements OnInit {
 
   ngOnInit() {
     this.uploadTrackInfo = this._UploadService.uploadTrackInfo;
-    this.trackImage = `data:${this._UploadService.trackImage.format};base64,${base64ArrayBuffer(this._UploadService.trackImage.data)}`;
+    //sound image
+    if(this._UploadService.trackImage) {
+      this.trackImage = `data:${this._UploadService.trackImage.format};base64,${base64ArrayBuffer(this._UploadService.trackImage.data)}`;
+    }
+
     this.buildForm();
 
     this.sellData = {
