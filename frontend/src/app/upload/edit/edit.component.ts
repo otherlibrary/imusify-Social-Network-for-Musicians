@@ -3,9 +3,9 @@ import {UploadService} from '../upload.service';
 import 'rxjs/add/operator/switchMap';
 import {UploadFileData} from "../../interfases";
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
-import {Genre} from "../../interfases/IGenre";
-import {IMood} from "../../interfases/IMood";
+import {Genre, IMood} from "../../interfases";
 import {IMyOptions} from "mydatepicker";
+import {LocalStorageService} from "../../shared/services/local-storage.service";
 
 function base64ArrayBuffer(arrayBuffer) {
   let base64 = '';
@@ -72,6 +72,7 @@ export class EditComponent implements OnInit {
   public currentTab: number = 2;
   public saleStatus: boolean = false;
   public licensingStatus: boolean = false;
+  public licensingEstatus: boolean = false;
   public nonProfitStatus: boolean = false;
 
   public uploadTrackForm: FormGroup;
@@ -137,27 +138,17 @@ export class EditComponent implements OnInit {
     this.onValueChange();
   }
 
-  constructor(private _uploadService: UploadService,
-              private fb: FormBuilder) {
-  }
-
-  updatePrice(e) {
-    this.sellData[e.id] = e.price;
-  }
-
-  checkedPrice(e) {
-    if(!e.status) {
-      this.sellData[e.id] = '';
-    } else {
-      this.sellData[e.id] = e.price
-    }
+  constructor(
+    private _uploadService: UploadService,
+    private fb: FormBuilder,
+    private _localStorageService: LocalStorageService
+  ) {
   }
 
   ngOnInit() {
     this.uploadTrackInfo = this._uploadService.uploadTrackInfo;
     this.buildForm();
 
-    //default data
     this.sellData = {
       album: '',
       single: '',
@@ -192,7 +183,6 @@ export class EditComponent implements OnInit {
       nonProfit: '',
       neverSale: false
     };
-
     this.salePlaceholder = {
       album: '9.99',
       single: '0.99',
@@ -227,6 +217,17 @@ export class EditComponent implements OnInit {
       nonProfit: '0',
       neverSale: null
     };
+    //get local storage
+    if(this._localStorageService.getLocalStorage('sellData')) {
+      let sellData = JSON.parse(this._localStorageService.getLocalStorage('sellData'));
+      
+      for(let key in sellData) {
+        if(sellData[key] !== '') {
+          console.log();
+          this.salePlaceholder[key] = sellData[key];
+        }
+      }
+    }
 
     //Set default value in form
     let date = new Date();
@@ -244,6 +245,22 @@ export class EditComponent implements OnInit {
     //sound image
     if (this._uploadService.trackImage) {
       this.trackImage = `data:${this._uploadService.trackImage.format};base64,${base64ArrayBuffer(this._uploadService.trackImage.data)}`;
+    }
+  }
+
+  updatePrice(e) {
+    this.sellData[e.id] = e.price;
+    this._localStorageService.setLocalStorage({
+      key: 'sellData',
+      val: JSON.stringify(this.sellData)
+    });
+  }
+
+  checkedPrice(e) {
+    if(!e.status) {
+      this.sellData[e.id] = '';
+    } else {
+      this.sellData[e.id] = this.salePlaceholder[e.id] || e.price;
     }
   }
 
@@ -279,12 +296,17 @@ export class EditComponent implements OnInit {
 
   toggleNonProfit() {
     this.nonProfitStatus = !this.nonProfitStatus;
-    this.licensingStatus = false;
+
     this.saleStatus = false;
+    this.licensingStatus = false;
+    this.licensingEstatus = false;
   }
 
   toggleLicensingStatus() {
     this.licensingStatus = !this.licensingStatus;
+  }
+  toggleLicensingEstatus() {
+    this.licensingEstatus = !this.licensingEstatus;
   }
 
   toggleSaleStatus() {

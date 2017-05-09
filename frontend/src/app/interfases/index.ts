@@ -9,3 +9,5 @@ export * from './upload/IUploadFileData';
 export * from './upload/IUploadInput';
 export * from './upload/IUploadOutput';
 export * from './upload/IUploadProgress';
+export * from './IGenre';
+export * from './IMood';

@@ -175,11 +175,12 @@
           <form class="edit-track-form" action="#">
             <!--SALE MUSIC-->
             <div class="inp-block">
-              <label (click)="showTest()">Wanna make your music available for sale</label>
+              <label (click)="showTest()">Make your music available for sale</label>
               <label class="toggleLabel" for="toggleSaleMusic">
                 <input  id="toggleSaleMusic"
                         type="checkbox"
                         name="music-sale"
+                        [checked]="saleStatus"
                         (change)="toggleSaleStatus()">
                 <span class="toggleElement">
                                             <i></i>
@@ -205,12 +206,13 @@
 
             <!--AVAILABLE FOR LICENSING-->
             <div class="inp-block">
-              <label>Wanna make your music available for licensing</label>
+              <label>Make your music available for licensing</label>
               <label class="toggleLabel"
                      for="toggleLicenseMusic">
                 <input id="toggleLicenseMusic"
                        type="checkbox"
                        name="music-license"
+                       [checked]="licensingStatus"
                        (change)="toggleLicensingStatus()">
                 <span class="toggleElement">
                                             <i></i>
@@ -232,13 +234,13 @@
                                (update)="updatePrice($event)"
                                (checks)="checkedPrice($event)">Corporate/Commercial film
               </app-price-field>
-              <app-price-field [id]="'documentary'"
+              <app-price-field [id]="'documentaryFilm'"
                                [price]="sellData.documentaryFilm"
                                [placeholder]="salePlaceholder.documentaryFilm"
                                (update)="updatePrice($event)"
                                (checks)="checkedPrice($event)">Documentary/Indie/Student film
               </app-price-field>
-              <app-price-field [id]="'tv'"
+              <app-price-field [id]="'film'"
                                [price]="sellData.film"
                                [placeholder]="salePlaceholder.film"
                                (update)="updatePrice($event)"
@@ -250,43 +252,43 @@
                                (update)="updatePrice($event)"
                                (checks)="checkedPrice($event)">Software
               </app-price-field>
-              <app-price-field [id]="'internet_video'"
+              <app-price-field [id]="'internetVideo'"
                                [price]="sellData.internetVideo"
                                [placeholder]="salePlaceholder.internetVideo"
                                (update)="updatePrice($event)"
                                (checks)="checkedPrice($event)">Internet Video
               </app-price-field>
-              <app-price-field [id]="'live_event'"
+              <app-price-field [id]="'liveEvent'"
                                [price]="sellData.liveEvent"
                                [placeholder]="salePlaceholder.liveEvent"
                                (update)="updatePrice($event)"
                                (checks)="checkedPrice($event)">Live Event
               </app-price-field>
-              <app-price-field [id]="'music_hold'"
+              <app-price-field [id]="'musicHold'"
                                [price]="sellData.musicHold"
                                [placeholder]="salePlaceholder.musicHold"
                                (update)="updatePrice($event)"
                                (checks)="checkedPrice($event)">Music on Hold
               </app-price-field>
-              <app-price-field [id]="'music_production_3'"
+              <app-price-field [id]="'musicProd51k'"
                                [price]="sellData.musicProd51k"
                                [placeholder]="salePlaceholder.musicProd51k"
                                (update)="updatePrice($event)"
                                (checks)="checkedPrice($event)">Music Production and Audio Project/Lease (over 50000 copies)
               </app-price-field>
-              <app-price-field [id]="'music_production_1'"
+              <app-price-field [id]="'musicProd50k'"
                                [price]="sellData.musicProd50k"
                                [placeholder]="salePlaceholder.musicProd50k"
                                (update)="updatePrice($event)"
                                (checks)="checkedPrice($event)">Music Production and Audio Project/Lease (10001 to 50000 copies)
               </app-price-field>
-              <app-price-field [id]="'music_production_2'"
+              <app-price-field [id]="'musicProd10k'"
                                [price]="sellData.musicProd10k"
                                [placeholder]="salePlaceholder.musicProd10k"
                                (update)="updatePrice($event)"
                                (checks)="checkedPrice($event)">Music Production and Audio Project/Lease (1001 to 10000 copies)
               </app-price-field>
-              <app-price-field [id]="'music_production_4'"
+              <app-price-field [id]="'musicProd1k'"
                                [price]="sellData.musicProd1k"
                                [placeholder]="salePlaceholder.musicProd1k"
                                (update)="updatePrice($event)"
@@ -300,6 +302,104 @@
               </app-price-field>
             </div>
 
+            <!--AVAILABLE FOR LICENSING EXCLUSIVE-->
+            <div class="inp-block">
+              <label>Make your music available for exclusive licensing</label>
+              <label class="toggleLabel"
+                     for="toggleLicenseEMusic">
+                <input id="toggleLicenseEMusic"
+                       type="checkbox"
+                       name="music-licenseE"
+                       [checked]="licensingEstatus"
+                       (change)="toggleLicensingEstatus()">
+                <span class="toggleElement">
+                                            <i></i>
+                                            <b class="toggle-on">On</b>
+                                            <b class="toggle-off">Off</b>
+                                        </span>
+              </label>
+            </div>
+            <div [hidden]="!licensingEstatus">
+              <app-price-field [id]="'advertisingE'"
+                               [price]="sellData.advertisingE"
+                               [placeholder]="salePlaceholder.advertisingE"
+                               (update)="updatePrice($event)"
+                               (checks)="checkedPrice($event)">Advertising
+              </app-price-field>
+              <app-price-field [id]="'corporateE'"
+                               [price]="sellData.corporateE"
+                               [placeholder]="salePlaceholder.corporateE"
+                               (update)="updatePrice($event)"
+                               (checks)="checkedPrice($event)">Corporate/Commercial film
+              </app-price-field>
+              <app-price-field [id]="'documentaryE'"
+                               [price]="sellData.documentaryFilmE"
+                               [placeholder]="salePlaceholder.documentaryFilmE"
+                               (update)="updatePrice($event)"
+                               (checks)="checkedPrice($event)">Documentary/Indie/Student film
+              </app-price-field>
+              <app-price-field [id]="'filmE'"
+                               [price]="sellData.filmE"
+                               [placeholder]="salePlaceholder.filmE"
+                               (update)="updatePrice($event)"
+                               (checks)="checkedPrice($event)">Film/TV Show
+              </app-price-field>
+              <app-price-field [id]="'softwareE'"
+                               [price]="sellData.softwareE"
+                               [placeholder]="salePlaceholder.softwareE"
+                               (update)="updatePrice($event)"
+                               (checks)="checkedPrice($event)">Software
+              </app-price-field>
+              <app-price-field [id]="'internetVideoE'"
+                               [price]="sellData.internetVideoE"
+                               [placeholder]="salePlaceholder.internetVideoE"
+                               (update)="updatePrice($event)"
+                               (checks)="checkedPrice($event)">Internet Video
+              </app-price-field>
+              <app-price-field [id]="'liveEventE'"
+                               [price]="sellData.liveEventE"
+                               [placeholder]="salePlaceholder.liveEventE"
+                               (update)="updatePrice($event)"
+                               (checks)="checkedPrice($event)">Live Event
+              </app-price-field>
+              <app-price-field [id]="'musicHoldE'"
+                               [price]="sellData.musicHoldE"
+                               [placeholder]="salePlaceholder.musicHoldE"
+                               (update)="updatePrice($event)"
+                               (checks)="checkedPrice($event)">Music on Hold
+              </app-price-field>
+              <app-price-field [id]="'musicProd51kE'"
+                               [price]="sellData.musicProd51kE"
+                               [placeholder]="salePlaceholder.musicProd51kE"
+                               (update)="updatePrice($event)"
+                               (checks)="checkedPrice($event)">Music Production and Audio Project/Lease (over 50000 copies)
+              </app-price-field>
+              <app-price-field [id]="'musicProd50kE'"
+                               [price]="sellData.musicProd50kE"
+                               [placeholder]="salePlaceholder.musicProd50kE"
+                               (update)="updatePrice($event)"
+                               (checks)="checkedPrice($event)">Music Production and Audio Project/Lease (10001 to 50000 copies)
+              </app-price-field>
+              <app-price-field [id]="'musicProd10kE'"
+                               [price]="sellData.musicProd10kE"
+                               [placeholder]="salePlaceholder.musicProd10kE"
+                               (update)="updatePrice($event)"
+                               (checks)="checkedPrice($event)">Music Production and Audio Project/Lease (1001 to 10000 copies)
+              </app-price-field>
+              <app-price-field [id]="'musicProd1kE'"
+                               [price]="sellData.musicProd1kE"
+                               [placeholder]="salePlaceholder.musicProd1kE"
+                               (update)="updatePrice($event)"
+                               (checks)="checkedPrice($event)">Music Production and Audio Project/Lease (up to 1000 copies)
+              </app-price-field>
+              <app-price-field [id]="'websiteE'"
+                               [price]="sellData.websiteE"
+                               [placeholder]="salePlaceholder.websiteE"
+                               (update)="updatePrice($event)"
+                               (checks)="checkedPrice($event)">Website
+              </app-price-field>
+            </div>
+
             <!--NON-PROFIT USE-->
             <div class="inp-block">
               <label>Wanna make your music available for non-profit use</label>
@@ -307,6 +407,7 @@
                 <input id="toggleUseMusic"
                        type="checkbox"
                        name="music-use"
+                       [checked]="nonProfitStatus"
                        (change)="toggleNonProfit()">
                 <span class="toggleElement">
                                             <i></i>

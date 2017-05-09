@@ -54,6 +54,7 @@ export class AppComponent {
     this.profileData = this._authService.profileData = null;
     this.loggedin = this._authService.loggedin = false;
     localStorage.removeItem('auth_data');
+    localStorage.removeItem('sellData');
   }
 
   /**

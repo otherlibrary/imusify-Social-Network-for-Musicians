@@ -9,6 +9,7 @@ import {
   EmitterService,
   SharedService,
   ApiService,
+  LocalStorageService,
   SharedModule
 } from './shared';
 
@@ -40,7 +41,8 @@ import {routing} from './app-routing.module';
     AuthAllSuccessGuard,
     EmitterService,
     SharedService,
-    ApiService
+    ApiService,
+    LocalStorageService
   ],
   bootstrap: [AppComponent]
 })

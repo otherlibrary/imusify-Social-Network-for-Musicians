@@ -29,7 +29,6 @@ export class PriceFieldComponent implements OnInit {
       status: this.priceStatusCheck,
       price: price
     });
-    console.log(price);
   }
 
   togglePrice() {
