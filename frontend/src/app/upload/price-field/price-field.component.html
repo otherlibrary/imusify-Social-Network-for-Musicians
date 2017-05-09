@@ -1,5 +1,5 @@
 <div class="inp-block price-opt">
-  <input type="checkbox" [id]="id" (change)="toggleCheck()">
+  <input type="checkbox" [id]="id" (change)="toggleCheck(price)">
   <label class="opt-name" [for]="id">
     <span><ng-content></ng-content></span>
     <i></i>
@@ -9,13 +9,14 @@
             [class.active]="priceStatusCheck"
             [class.hidden]="!priceStatusCheck && priceReady"
             (click)="togglePrice()">
-      $ {{price}}
+      $ <span *ngIf="priceStatusCheck">{{price}}</span> <span *ngIf="!priceStatusCheck">{{placeholder}}</span>
     </button>
 
     <input class="hidden-price"
            type="number"
            [class.active]="priceReady"
-           (change)="changePrice($event)" [value]="price">
+           [value]="price"
+           (change)="changePrice($event)" [placeholder]="placeholder">
 
     <span class="price-ready-btn"
           [class.active]="priceReady"

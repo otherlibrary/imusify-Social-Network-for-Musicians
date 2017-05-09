@@ -14,7 +14,8 @@ import {IMood} from "../../interfases/IMood";
 })
 export class AudioComponent implements OnInit, OnDestroy {
   public trackList: Object[] = [];
-  public isOpenEdit: boolean = false;
+  //TODO(AlexSol) change to false
+  public isOpenEdit: boolean = true;
   public editSubscriber: any;
 
   public uploadAudioData: UploadAudioData;

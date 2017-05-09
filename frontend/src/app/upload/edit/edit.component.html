@@ -126,7 +126,6 @@
                 <input id="typesPublic"
                        type="radio"
                        name="is_public"
-                       checked
                        value="1"
                        formControlName="is_public" />
                 <i></i><span>Public</span>
@@ -174,9 +173,9 @@
         <div class="tab-content"
              [class.active]="currentTab === 2">
           <form class="edit-track-form" action="#">
-
+            <!--SALE MUSIC-->
             <div class="inp-block">
-              <label>Wanna make your music available for sale</label>
+              <label (click)="showTest()">Wanna make your music available for sale</label>
               <label class="toggleLabel" for="toggleSaleMusic">
                 <input  id="toggleSaleMusic"
                         type="checkbox"
@@ -191,12 +190,20 @@
             </div>
             <div [hidden]="!saleStatus">
               <app-price-field [id]="'album'"
-                               [price]="sellData.album" (update)="updatePrice($event)">Album</app-price-field>
+                               [price]="sellData.album"
+                               [placeholder]="salePlaceholder.album"
+                               (update)="updatePrice($event)"
+                               (checks)="checkedPrice($event)">Album
+              </app-price-field>
               <app-price-field [id]="'single'"
                                [price]="sellData.single"
-                               (update)="updatePrice($event)">Single</app-price-field>
+                               [placeholder]="salePlaceholder.single"
+                               (update)="updatePrice($event)"
+                               (checks)="checkedPrice($event)">Single
+              </app-price-field>
             </div>
 
+            <!--AVAILABLE FOR LICENSING-->
             <div class="inp-block">
               <label>Wanna make your music available for licensing</label>
               <label class="toggleLabel"
@@ -214,46 +221,86 @@
             </div>
             <div [hidden]="!licensingStatus">
               <app-price-field [id]="'advertising'"
-                               [price]="225.00"
-                               (update)="updatePrice($event)">Advertising</app-price-field>
+                               [price]="sellData.advertising"
+                               [placeholder]="salePlaceholder.advertising"
+                               (update)="updatePrice($event)"
+                               (checks)="checkedPrice($event)">Advertising
+              </app-price-field>
               <app-price-field [id]="'corporate'"
-                               [price]="375.00"
-                               (update)="updatePrice($event)">Corporate/Commercial film</app-price-field>
+                               [price]="sellData.corporate"
+                               [placeholder]="salePlaceholder.corporate"
+                               (update)="updatePrice($event)"
+                               (checks)="checkedPrice($event)">Corporate/Commercial film
+              </app-price-field>
               <app-price-field [id]="'documentary'"
-                               [price]="60.00"
-                               (update)="updatePrice($event)">Documentary/Indie/Student film</app-price-field>
+                               [price]="sellData.documentaryFilm"
+                               [placeholder]="salePlaceholder.documentaryFilm"
+                               (update)="updatePrice($event)"
+                               (checks)="checkedPrice($event)">Documentary/Indie/Student film
+              </app-price-field>
               <app-price-field [id]="'tv'"
-                               [price]="120.00"
-                               (update)="updatePrice($event)">Film/TV Show</app-price-field>
+                               [price]="sellData.film"
+                               [placeholder]="salePlaceholder.film"
+                               (update)="updatePrice($event)"
+                               (checks)="checkedPrice($event)">Film/TV Show
+              </app-price-field>
               <app-price-field [id]="'software'"
-                               [price]="300.00"
-                               (update)="updatePrice($event)">Software</app-price-field>
+                               [price]="sellData.software"
+                               [placeholder]="salePlaceholder.software"
+                               (update)="updatePrice($event)"
+                               (checks)="checkedPrice($event)">Software
+              </app-price-field>
               <app-price-field [id]="'internet_video'"
-                               [price]="3.00"
-                               (update)="updatePrice($event)">Internet Video</app-price-field>
+                               [price]="sellData.internetVideo"
+                               [placeholder]="salePlaceholder.internetVideo"
+                               (update)="updatePrice($event)"
+                               (checks)="checkedPrice($event)">Internet Video
+              </app-price-field>
               <app-price-field [id]="'live_event'"
-                               [price]="15.00"
-                               (update)="updatePrice($event)">Live Event</app-price-field>
+                               [price]="sellData.liveEvent"
+                               [placeholder]="salePlaceholder.liveEvent"
+                               (update)="updatePrice($event)"
+                               (checks)="checkedPrice($event)">Live Event
+              </app-price-field>
               <app-price-field [id]="'music_hold'"
-                               [price]="30.00"
-                               (update)="updatePrice($event)">Music on Hold</app-price-field>
-              <app-price-field [id]="'music_production_1'"
-                               [price]="175.00"
-                               (update)="updatePrice($event)">Music Production and Audio Project/Lease (10001 to 50000 copies)</app-price-field>
-              <app-price-field [id]="'music_production_2'"
-                               [price]="105.00"
-                               (update)="updatePrice($event)">Music Production and Audio Project/Lease (1001 to 10000 copies)</app-price-field>
+                               [price]="sellData.musicHold"
+                               [placeholder]="salePlaceholder.musicHold"
+                               (update)="updatePrice($event)"
+                               (checks)="checkedPrice($event)">Music on Hold
+              </app-price-field>
               <app-price-field [id]="'music_production_3'"
-                               [price]="245.00"
-                               (update)="updatePrice($event)">Music Production and Audio Project/Lease (over 50000 copies)</app-price-field>
+                               [price]="sellData.musicProd51k"
+                               [placeholder]="salePlaceholder.musicProd51k"
+                               (update)="updatePrice($event)"
+                               (checks)="checkedPrice($event)">Music Production and Audio Project/Lease (over 50000 copies)
+              </app-price-field>
+              <app-price-field [id]="'music_production_1'"
+                               [price]="sellData.musicProd50k"
+                               [placeholder]="salePlaceholder.musicProd50k"
+                               (update)="updatePrice($event)"
+                               (checks)="checkedPrice($event)">Music Production and Audio Project/Lease (10001 to 50000 copies)
+              </app-price-field>
+              <app-price-field [id]="'music_production_2'"
+                               [price]="sellData.musicProd10k"
+                               [placeholder]="salePlaceholder.musicProd10k"
+                               (update)="updatePrice($event)"
+                               (checks)="checkedPrice($event)">Music Production and Audio Project/Lease (1001 to 10000 copies)
+              </app-price-field>
               <app-price-field [id]="'music_production_4'"
-                               [price]="35.00"
-                               (update)="updatePrice($event)">Music Production and Audio Project/Lease (up to 10000 copies)</app-price-field>
+                               [price]="sellData.musicProd1k"
+                               [placeholder]="salePlaceholder.musicProd1k"
+                               (update)="updatePrice($event)"
+                               (checks)="checkedPrice($event)">Music Production and Audio Project/Lease (up to 1000 copies)
+              </app-price-field>
               <app-price-field [id]="'website'"
-                               [price]="5.00"
-                               (update)="updatePrice($event)">Website</app-price-field>
+                               [price]="sellData.website"
+                               [placeholder]="salePlaceholder.website"
+                               (update)="updatePrice($event)"
+                               (checks)="checkedPrice($event)">Website
+              </app-price-field>
             </div>
 
+            <!--NON-PROFIT USE-->
             <div class="inp-block">
               <label>Wanna make your music available for non-profit use</label>
               <label class="toggleLabel" for="toggleUseMusic">

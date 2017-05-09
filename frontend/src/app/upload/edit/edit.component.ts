@@ -68,7 +68,8 @@ export class EditComponent implements OnInit {
   @Input() trackTypesList: any[];
   @Input() moodsList: IMood[];
 
-  public currentTab: number = 1;
+  //TODO(AlexSol): change to 1
+  public currentTab: number = 2;
   public saleStatus: boolean = false;
   public licensingStatus: boolean = false;
   public nonProfitStatus: boolean = false;
@@ -79,6 +80,7 @@ export class EditComponent implements OnInit {
   public currentDate: Object;
   //TODO(AlexSol): type
   public sellData: any;
+  public salePlaceholder: any;
 
   public myDatePickerOptions: IMyOptions = {
     dateFormat: 'dd.mm.yyyy'
@@ -143,17 +145,90 @@ export class EditComponent implements OnInit {
     this.sellData[e.id] = e.price;
   }
 
+  checkedPrice(e) {
+    if(!e.status) {
+      this.sellData[e.id] = '';
+    } else {
+      this.sellData[e.id] = e.price
+    }
+  }
+
   ngOnInit() {
     this.uploadTrackInfo = this._uploadService.uploadTrackInfo;
     this.buildForm();
 
     //default data
     this.sellData = {
-      album: '9.99',
-      single: '0.99'
+      album: '',
+      single: '',
+      advertising: '',
+      corporate: '',
+      documentaryFilm: '',
+      film: '',
+      software: '',
+      internetVideo: '',
+      liveEvent: '',
+      musicHold: '',
+      musicProd1k: '',
+      musicProd10k: '',
+      musicProd50k: '',
+      musicProd51k: '',
+      website: '',
+
+      advertisingE: '',
+      corporateE: '',
+      documentaryFilmE: '',
+      filmE: '',
+      softwareE: '',
+      internetVideoE: '',
+      liveEventE: '',
+      musicHoldE: '',
+      musicProd1kE: '',
+      musicProd10kE: '',
+      musicProd50kE: '',
+      musicProd51kE: '',
+      websiteE: '',
+
+      nonProfit: '',
+      neverSale: false
     };
 
-    //set current date
+    this.salePlaceholder = {
+      album: '9.99',
+      single: '0.99',
+      advertising: '225',
+      corporate: '495',
+      documentaryFilm: '60',
+      film: '120',
+      software: '300',
+      internetVideo: '3',
+      liveEvent: '15',
+      musicHold: '30',
+      musicProd1k: '35',
+      musicProd10k: '105',
+      musicProd50k: '175',
+      musicProd51k: '245',
+      website: '5',
+
+      advertisingE: '2250',
+      corporateE: '4950',
+      documentaryFilmE: '600',
+      filmE: '1200',
+      softwareE: '3000',
+      internetVideoE: '30',
+      liveEventE: '150',
+      musicHoldE: '300',
+      musicProd1kE: '350',
+      musicProd10kE: '1050',
+      musicProd50kE: '1750',
+      musicProd51kE: '2450',
+      websiteE: '50',
+
+      nonProfit: '0',
+      neverSale: null
+    };
+
+    //Set default value in form
     let date = new Date();
     this.currentDate = {
       date: {
@@ -162,6 +237,9 @@ export class EditComponent implements OnInit {
         day: date.getDate()
       }
     };
+    this.uploadTrackForm.patchValue({
+      is_public: "1"
+    });
 
     //sound image
     if (this._uploadService.trackImage) {

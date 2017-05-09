@@ -111,17 +111,23 @@ export class UploadComponent implements OnInit {
     } else if (output.type === 'drop') {
       this.dragOver = false;
     } else if (output.type === 'done') {
+      console.log('output: ', output);
       let file = this.files[this.files.length - 1];
-      this._uploadService.uploadTrackInfo.file_name = file.response.upload_data.file_name;
-      console.log(output);
-      console.log(this._uploadService.uploadTrackInfo.file_name);
-      this._uploadService.uploadTrackInfo.title = this._cutNameExtension(file.name);
-      this._uploadService.uploadTrackInfo.track_id = file.id;
+      if(file.response) {
+        this._uploadService.uploadTrackInfo.file_name = file.response.upload_data.file_name;
+        this._uploadService.uploadTrackInfo.title = this._cutNameExtension(file.name);
+        this._uploadService.uploadTrackInfo.track_id = file.id;
 
-      let t = Observable.timer(300).subscribe(() => {
-        this._uploadService.editPopupSubject.next(true);
-        t.unsubscribe();
-      });
+
+      } else {
+        console.log('error upload message');
+
+        //TODO(AlexSol): up
+        let t = Observable.timer(300).subscribe(() => {
+          this._uploadService.editPopupSubject.next(true);
+          t.unsubscribe();
+        });
+      }
     } else if (output.type === 'cancelled') {
       console.log('cancelled');
     } else if (output.type === 'start') {
