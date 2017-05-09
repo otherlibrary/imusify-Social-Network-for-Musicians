@@ -5,6 +5,7 @@ export class UploadTrackInfo implements UploadFileData {
   file_name: string;
   desc?: string;
   waveform: string;
+  copyright: boolean;
   genre_id: number;
   is_public: number;
   track_upload_type: string;
