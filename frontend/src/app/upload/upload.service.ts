@@ -27,4 +27,9 @@ export class UploadService {
   getUploadDetails() {
     return this._apiService.post(environment.uploadDetails, environment.creds);
   }
+
+  uploadImageTrack(img) {
+    return this._apiService.post(environment.uploadTrackImage, img);
+  }
+
 }

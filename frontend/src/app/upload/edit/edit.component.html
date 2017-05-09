@@ -3,444 +3,461 @@
   <div class="popup-bg"></div>
   <div class="popup-scroll popup_animate_inner">
     <div class="popup-inner">
-      <div class="edit-track-block">
-        <div class="title">Edit track</div>
-        <div class="song title">{{uploadTrackInfo.title}}</div>
-      </div>
-      <div class="tab-panel">
-        <button class="tab-pnl-btn"
-                type="button"
-                [class.active]="currentTab === 1"
-                (click)="toggleTabs(1)">
-          Basic</button>
-        <button class="tab-pnl-btn"
-                type="button"
-                [class.active]="currentTab === 2"
-                (click)="toggleTabs(2)">
-          Sell your music</button>
-      </div>
-      <div class="edit-track-content">
-        <div class="tab-content"
-             [class.active]="currentTab === 1">
-
-          <form class="edit-track-form pad-left"
-                [formGroup]="uploadTrackForm"
-                (ngSubmit)="onSubmit()">
-            <!--TRACK IMAGE-->
-            <div class="edit-photo">
-              <img *ngIf="trackImage" [src]="trackImage" alt="">
-              <input id="trackImg"
-                     type="file"
-                     name="trackImage"/>
-              <label class="img-upload"
-                     for="trackImg">Upload image</label>
-            </div>
-            <!--TITLE-->
-            <div class="inp-block">
-              <input id="trackTitle"
-                     type="text"
-                     name="title"
-                     formControlName="title">
-              <label for="trackTitle"></label>
-              <!--<div *ngIf="formErrors.title" class="alert alert-danger">-->
+      <form [formGroup]="uploadTrackForm"
+            (ngSubmit)="onSubmit()">
+        <div class="edit-track-block">
+          <div class="title">Edit track</div>
+          <div class="song title">{{uploadTrackInfo.title}}</div>
+        </div>
+        <div class="tab-panel">
+          <button class="tab-pnl-btn"
+                  type="button"
+                  [class.active]="currentTab === 1"
+                  (click)="toggleTabs(1)">
+            Basic
+          </button>
+          <button class="tab-pnl-btn"
+                  type="button"
+                  [class.active]="currentTab === 2"
+                  (click)="toggleTabs(2)">
+            Sell your music
+          </button>
+        </div>
+        <div class="edit-track-content">
+          <div class="tab-content"
+               [class.active]="currentTab === 1">
+            <div class="edit-track-form pad-left">
+              <!--TRACK IMAGE-->
+              <div class="edit-photo">
+                <img *ngIf="trackImage" [src]="trackImage" alt="">
+                <input id="trackImg"
+                       type="file"
+                       name="trackImage"/>
+                <label class="img-upload"
+                       for="trackImg">Upload image</label>
+              </div>
+              <!--TITLE-->
+              <div class="inp-block">
+                <input id="trackTitle"
+                       type="text"
+                       name="title"
+                       formControlName="title">
+                <label for="trackTitle"></label>
+                <!--<div *ngIf="formErrors.title" class="alert alert-danger">-->
                 <!--{{ formErrors.title }}-->
-              <!--</div>-->
-            </div>
-            <!--DESCRIPTION-->
-            <div class="inp-block">
-              <textarea id="trackDesc" name="desc" cols="30" rows="10" formControlName="desc"></textarea>
-              <label for="trackDesc" (click)="showTest()">Description</label>
-            </div>
-            <!--RELEASE DATE-->
-            <div class="inp-block">
-              <my-date-picker class="custom_picker valid_style"
-                              name="release_date" id="trackDate"
-                              [options]="myDatePickerOptions"
-                              [(ngModel)]="currentDate"
-                              formControlName="release_date"></my-date-picker>
-              <!--<input id="trackDate"-->
-                     <!--type="text"-->
-                     <!--value=""-->
-                     <!--name="release_date"-->
-                     <!--data-type="datepicker"-->
-                     <!--required-->
-                     <!--formControlName="release_date">-->
-              <label for="trackDate">Release date</label>
-            </div>
-            <!--TRACK TYPE-->
-            <div class="inp-block">
-              <ng-select formControlName="track_type"
-                         id="trackType"
-                         class="custom_select"
-                         [options]="trackTypesList"
-                         [multiple]="true"
-                         [highlightColor]="'#242526'">
-              </ng-select>
-              <label class="select2-label" for="trackType">Track type</label>
-            </div>
-            <!--TRACK GENRE-->
-            <div class="inp-block">
-              <ng-select formControlName="genre_id"
-                         id="trackGenre"
-                         class="custom_select"
-                         [options]="genresList"
-                         [multiple]="true"
-                         [highlightColor]="'#242526'">
-              </ng-select>
-              <label class="select2-label" for="trackGenre">Primary genre</label>
-            </div>
-            <!--SECOND GENRES-->
-            <div class="inp-block">
-              <ng-select formControlName="second_genre_id"
-                         id="secondGenre"
-                         class="custom_select"
-                         [options]="secGenresList"
-                         [multiple]="true"
-                         [highlightColor]="'#242526'">
-              </ng-select>
-              <!--<select id="secondGenre"-->
-                      <!--data-placeholder="Please select secondary genre"-->
-                      <!--name="second_genre_id"-->
-                      <!--required-->
-                      <!--&gt;-->
+                <!--</div>-->
+              </div>
+              <!--DESCRIPTION-->
+              <div class="inp-block">
+                <textarea id="trackDesc" name="desc" cols="30" rows="10" formControlName="desc"></textarea>
+                <label for="trackDesc" (click)="showTest()">Description</label>
+              </div>
+              <!--RELEASE DATE-->
+              <div class="inp-block">
+                <my-date-picker class="custom_picker valid_style"
+                                name="release_date" id="trackDate"
+                                [options]="myDatePickerOptions"
+                                [(ngModel)]="currentDate"
+                                formControlName="release_date"></my-date-picker>
+                <!--<input id="trackDate"-->
+                <!--type="text"-->
+                <!--value=""-->
+                <!--name="release_date"-->
+                <!--data-type="datepicker"-->
+                <!--required-->
+                <!--formControlName="release_date">-->
+                <label for="trackDate">Release date</label>
+              </div>
+              <!--TRACK TYPE-->
+              <div class="inp-block">
+                <ng-select formControlName="track_type"
+                           id="trackType"
+                           class="custom_select"
+                           [options]="trackTypesList"
+                           [multiple]="true"
+                           [highlightColor]="'#242526'">
+                </ng-select>
+                <label class="select2-label" for="trackType">Track type</label>
+              </div>
+              <!--TRACK GENRE-->
+              <div class="inp-block">
+                <ng-select formControlName="genre_id"
+                           id="trackGenre"
+                           class="custom_select"
+                           [options]="genresList"
+                           [multiple]="true"
+                           [highlightColor]="'#242526'">
+                </ng-select>
+                <label class="select2-label" for="trackGenre">Primary genre</label>
+              </div>
+              <!--SECOND GENRES-->
+              <div class="inp-block">
+                <ng-select formControlName="second_genre_id"
+                           id="secondGenre"
+                           class="custom_select"
+                           [options]="secGenresList"
+                           [multiple]="true"
+                           [highlightColor]="'#242526'">
+                </ng-select>
+                <!--<select id="secondGenre"-->
+                <!--data-placeholder="Please select secondary genre"-->
+                <!--name="second_genre_id"-->
+                <!--required-->
+                <!--&gt;-->
                 <!--<option value="0" selected>Select secondary genre</option>-->
                 <!--<option *ngFor="let genre of secGenresList" [value]="genre.id">{{genre.genre}}</option>-->
-              <!--</select>-->
-              <label for="secondGenre">Secondary genre(pick two)</label>
-            </div>
-            <!--TRACK MOODS-->
-            <div class="inp-block">
-              <ng-select formControlName="pick_moods"
-                         id="trackMoods"
-                         class="custom_select"
-                         [options]="moodsList"
-                         [multiple]="true"
-                         [highlightColor]="'#242526'">
-              </ng-select>
-              <label for="trackMoods">Pick moods</label>
-            </div>
-            <!--TYPES PUBLIC-->
-            <div class="inp-block">
-              <label>Select track type</label>
-              <label class="radio-lbl" for="typesPublic">
-                <input id="typesPublic"
-                       type="radio"
-                       name="is_public"
-                       value="1"
-                       formControlName="is_public" />
-                <i></i><span>Public</span>
-              </label>
-              <label class="radio-lbl" for="typesPrivate">
-                <input id="typesPrivate"
-                       type="radio"
-                       name="is_public"
-                       value="0"
-                       formControlName="is_public"/>
-                <i></i><span>Private</span>
-              </label>
-            </div>
-            <!--TYPE ARTIST MALE-->
-            <div class="inp-block">
-              <label>Select type of artist</label>
-              <label class="radio-lbl" for="typeArtistMale">
-                <input id="typeArtistMale"
-                       type="radio"
-                       name="type_artist"
-                       value="male" formControlName="type_artist" />
-                <i></i><span>Male</span>
-              </label>
-              <label class="radio-lbl" for="typeArtistFemale">
-                <input id="typeArtistFemale"
-                       type="radio"
-                       name="type_artist"
-                       value="female"
-                       formControlName="type_artist" />
-                <i></i><span>Female</span>
-              </label>
-              <label class="radio-lbl" for="typeArtistBoth">
-                <input id="typeArtistBoth"
-                       type="radio"
-                       name="type_artist"
-                       value="both"
-                       formControlName="type_artist" />
-                <i></i><span>Both</span>
-              </label>
-            </div>
-
-            <button type="submit" [disabled]="!uploadTrackForm.valid">send</button>
-          </form>
-        </div>
-        <div class="tab-content"
-             [class.active]="currentTab === 2">
-          <form class="edit-track-form" action="#">
-            <!--SALE MUSIC-->
-            <div class="inp-block">
-              <label (click)="showTest()">Make your music available for sale</label>
-              <label class="toggleLabel" for="toggleSaleMusic">
-                <input  id="toggleSaleMusic"
-                        type="checkbox"
-                        name="music-sale"
-                        [checked]="saleStatus"
-                        (change)="toggleSaleStatus()">
-                <span class="toggleElement">
-                                            <i></i>
-                                            <b class="toggle-on">On</b>
-                                            <b class="toggle-off">Off</b>
-                                        </span>
-              </label>
-            </div>
-            <div [hidden]="!saleStatus">
-              <app-price-field [id]="'album'"
-                               [price]="sellData.album"
-                               [placeholder]="salePlaceholder.album"
-                               (update)="updatePrice($event)"
-                               (checks)="checkedPrice($event)">Album
-              </app-price-field>
-              <app-price-field [id]="'single'"
-                               [price]="sellData.single"
-                               [placeholder]="salePlaceholder.single"
-                               (update)="updatePrice($event)"
-                               (checks)="checkedPrice($event)">Single
-              </app-price-field>
-            </div>
-
-            <!--AVAILABLE FOR LICENSING-->
-            <div class="inp-block">
-              <label>Make your music available for licensing</label>
-              <label class="toggleLabel"
-                     for="toggleLicenseMusic">
-                <input id="toggleLicenseMusic"
-                       type="checkbox"
-                       name="music-license"
-                       [checked]="licensingStatus"
-                       (change)="toggleLicensingStatus()">
-                <span class="toggleElement">
-                                            <i></i>
-                                            <b class="toggle-on">On</b>
-                                            <b class="toggle-off">Off</b>
-                                        </span>
-              </label>
-            </div>
-            <div [hidden]="!licensingStatus">
-              <app-price-field [id]="'advertising'"
-                               [price]="sellData.advertising"
-                               [placeholder]="salePlaceholder.advertising"
-                               (update)="updatePrice($event)"
-                               (checks)="checkedPrice($event)">Advertising
-              </app-price-field>
-              <app-price-field [id]="'corporate'"
-                               [price]="sellData.corporate"
-                               [placeholder]="salePlaceholder.corporate"
-                               (update)="updatePrice($event)"
-                               (checks)="checkedPrice($event)">Corporate/Commercial film
-              </app-price-field>
-              <app-price-field [id]="'documentaryFilm'"
-                               [price]="sellData.documentaryFilm"
-                               [placeholder]="salePlaceholder.documentaryFilm"
-                               (update)="updatePrice($event)"
-                               (checks)="checkedPrice($event)">Documentary/Indie/Student film
-              </app-price-field>
-              <app-price-field [id]="'film'"
-                               [price]="sellData.film"
-                               [placeholder]="salePlaceholder.film"
-                               (update)="updatePrice($event)"
-                               (checks)="checkedPrice($event)">Film/TV Show
-              </app-price-field>
-              <app-price-field [id]="'software'"
-                               [price]="sellData.software"
-                               [placeholder]="salePlaceholder.software"
-                               (update)="updatePrice($event)"
-                               (checks)="checkedPrice($event)">Software
-              </app-price-field>
-              <app-price-field [id]="'internetVideo'"
-                               [price]="sellData.internetVideo"
-                               [placeholder]="salePlaceholder.internetVideo"
-                               (update)="updatePrice($event)"
-                               (checks)="checkedPrice($event)">Internet Video
-              </app-price-field>
-              <app-price-field [id]="'liveEvent'"
-                               [price]="sellData.liveEvent"
-                               [placeholder]="salePlaceholder.liveEvent"
-                               (update)="updatePrice($event)"
-                               (checks)="checkedPrice($event)">Live Event
-              </app-price-field>
-              <app-price-field [id]="'musicHold'"
-                               [price]="sellData.musicHold"
-                               [placeholder]="salePlaceholder.musicHold"
-                               (update)="updatePrice($event)"
-                               (checks)="checkedPrice($event)">Music on Hold
-              </app-price-field>
-              <app-price-field [id]="'musicProd51k'"
-                               [price]="sellData.musicProd51k"
-                               [placeholder]="salePlaceholder.musicProd51k"
-                               (update)="updatePrice($event)"
-                               (checks)="checkedPrice($event)">Music Production and Audio Project/Lease (over 50000 copies)
-              </app-price-field>
-              <app-price-field [id]="'musicProd50k'"
-                               [price]="sellData.musicProd50k"
-                               [placeholder]="salePlaceholder.musicProd50k"
-                               (update)="updatePrice($event)"
-                               (checks)="checkedPrice($event)">Music Production and Audio Project/Lease (10001 to 50000 copies)
-              </app-price-field>
-              <app-price-field [id]="'musicProd10k'"
-                               [price]="sellData.musicProd10k"
-                               [placeholder]="salePlaceholder.musicProd10k"
-                               (update)="updatePrice($event)"
-                               (checks)="checkedPrice($event)">Music Production and Audio Project/Lease (1001 to 10000 copies)
-              </app-price-field>
-              <app-price-field [id]="'musicProd1k'"
-                               [price]="sellData.musicProd1k"
-                               [placeholder]="salePlaceholder.musicProd1k"
-                               (update)="updatePrice($event)"
-                               (checks)="checkedPrice($event)">Music Production and Audio Project/Lease (up to 1000 copies)
-              </app-price-field>
-              <app-price-field [id]="'website'"
-                               [price]="sellData.website"
-                               [placeholder]="salePlaceholder.website"
-                               (update)="updatePrice($event)"
-                               (checks)="checkedPrice($event)">Website
-              </app-price-field>
-            </div>
-
-            <!--AVAILABLE FOR LICENSING EXCLUSIVE-->
-            <div class="inp-block">
-              <label>Make your music available for exclusive licensing</label>
-              <label class="toggleLabel"
-                     for="toggleLicenseEMusic">
-                <input id="toggleLicenseEMusic"
-                       type="checkbox"
-                       name="music-licenseE"
-                       [checked]="licensingEstatus"
-                       (change)="toggleLicensingEstatus()">
-                <span class="toggleElement">
-                                            <i></i>
-                                            <b class="toggle-on">On</b>
-                                            <b class="toggle-off">Off</b>
-                                        </span>
-              </label>
-            </div>
-            <div [hidden]="!licensingEstatus">
-              <app-price-field [id]="'advertisingE'"
-                               [price]="sellData.advertisingE"
-                               [placeholder]="salePlaceholder.advertisingE"
-                               (update)="updatePrice($event)"
-                               (checks)="checkedPrice($event)">Advertising
-              </app-price-field>
-              <app-price-field [id]="'corporateE'"
-                               [price]="sellData.corporateE"
-                               [placeholder]="salePlaceholder.corporateE"
-                               (update)="updatePrice($event)"
-                               (checks)="checkedPrice($event)">Corporate/Commercial film
-              </app-price-field>
-              <app-price-field [id]="'documentaryE'"
-                               [price]="sellData.documentaryFilmE"
-                               [placeholder]="salePlaceholder.documentaryFilmE"
-                               (update)="updatePrice($event)"
-                               (checks)="checkedPrice($event)">Documentary/Indie/Student film
-              </app-price-field>
-              <app-price-field [id]="'filmE'"
-                               [price]="sellData.filmE"
-                               [placeholder]="salePlaceholder.filmE"
-                               (update)="updatePrice($event)"
-                               (checks)="checkedPrice($event)">Film/TV Show
-              </app-price-field>
-              <app-price-field [id]="'softwareE'"
-                               [price]="sellData.softwareE"
-                               [placeholder]="salePlaceholder.softwareE"
-                               (update)="updatePrice($event)"
-                               (checks)="checkedPrice($event)">Software
-              </app-price-field>
-              <app-price-field [id]="'internetVideoE'"
-                               [price]="sellData.internetVideoE"
-                               [placeholder]="salePlaceholder.internetVideoE"
-                               (update)="updatePrice($event)"
-                               (checks)="checkedPrice($event)">Internet Video
-              </app-price-field>
-              <app-price-field [id]="'liveEventE'"
-                               [price]="sellData.liveEventE"
-                               [placeholder]="salePlaceholder.liveEventE"
-                               (update)="updatePrice($event)"
-                               (checks)="checkedPrice($event)">Live Event
-              </app-price-field>
-              <app-price-field [id]="'musicHoldE'"
-                               [price]="sellData.musicHoldE"
-                               [placeholder]="salePlaceholder.musicHoldE"
-                               (update)="updatePrice($event)"
-                               (checks)="checkedPrice($event)">Music on Hold
-              </app-price-field>
-              <app-price-field [id]="'musicProd51kE'"
-                               [price]="sellData.musicProd51kE"
-                               [placeholder]="salePlaceholder.musicProd51kE"
-                               (update)="updatePrice($event)"
-                               (checks)="checkedPrice($event)">Music Production and Audio Project/Lease (over 50000 copies)
-              </app-price-field>
-              <app-price-field [id]="'musicProd50kE'"
-                               [price]="sellData.musicProd50kE"
-                               [placeholder]="salePlaceholder.musicProd50kE"
-                               (update)="updatePrice($event)"
-                               (checks)="checkedPrice($event)">Music Production and Audio Project/Lease (10001 to 50000 copies)
-              </app-price-field>
-              <app-price-field [id]="'musicProd10kE'"
-                               [price]="sellData.musicProd10kE"
-                               [placeholder]="salePlaceholder.musicProd10kE"
-                               (update)="updatePrice($event)"
-                               (checks)="checkedPrice($event)">Music Production and Audio Project/Lease (1001 to 10000 copies)
-              </app-price-field>
-              <app-price-field [id]="'musicProd1kE'"
-                               [price]="sellData.musicProd1kE"
-                               [placeholder]="salePlaceholder.musicProd1kE"
-                               (update)="updatePrice($event)"
-                               (checks)="checkedPrice($event)">Music Production and Audio Project/Lease (up to 1000 copies)
-              </app-price-field>
-              <app-price-field [id]="'websiteE'"
-                               [price]="sellData.websiteE"
-                               [placeholder]="salePlaceholder.websiteE"
-                               (update)="updatePrice($event)"
-                               (checks)="checkedPrice($event)">Website
-              </app-price-field>
-            </div>
-
-            <!--NON-PROFIT USE-->
-            <div class="inp-block">
-              <label>Wanna make your music available for non-profit use</label>
-              <label class="toggleLabel" for="toggleUseMusic">
-                <input id="toggleUseMusic"
-                       type="checkbox"
-                       name="music-use"
-                       [checked]="nonProfitStatus"
-                       (change)="toggleNonProfit()">
-                <span class="toggleElement">
-                                            <i></i>
-                                            <b class="toggle-on">On</b>
-                                            <b class="toggle-off">Off</b>
-                                        </span>
-              </label>
-            </div>
-            <div [hidden]="!nonProfitStatus">
-              <div class="inp-block price-opt">
-                <input id="optNonProfit" type="checkbox" name="optNonProfit">
-                <label class="opt-name" for="optNonProfit">
-                  <span>Non profit</span>
-                  <i></i>
-                  <button class="price-btn disabled">$ 0.00</button>
-                  <input class="hidden-price" type="text" name="price[]nonProfit">
-                  <span class="price-ready-btn"></span>
+                <!--</select>-->
+                <label for="secondGenre">Secondary genre(pick two)</label>
+              </div>
+              <!--TRACK MOODS-->
+              <div class="inp-block">
+                <ng-select formControlName="pick_moods"
+                           id="trackMoods"
+                           class="custom_select"
+                           [options]="moodsList"
+                           [multiple]="true"
+                           [highlightColor]="'#242526'">
+                </ng-select>
+                <label for="trackMoods">Pick moods</label>
+              </div>
+              <!--TYPES PUBLIC-->
+              <div class="inp-block">
+                <label>Select track type</label>
+                <label class="radio-lbl" for="typesPublic">
+                  <input id="typesPublic"
+                         type="radio"
+                         name="is_public"
+                         value="1"
+                         formControlName="is_public"/>
+                  <i></i><span>Public</span>
+                </label>
+                <label class="radio-lbl" for="typesPrivate">
+                  <input id="typesPrivate"
+                         type="radio"
+                         name="is_public"
+                         value="0"
+                         formControlName="is_public"/>
+                  <i></i><span>Private</span>
+                </label>
+              </div>
+              <!--TYPE ARTIST MALE-->
+              <div class="inp-block">
+                <label>Select type of artist</label>
+                <label class="radio-lbl" for="typeArtistMale">
+                  <input id="typeArtistMale"
+                         type="radio"
+                         name="type_artist"
+                         value="male" formControlName="type_artist"/>
+                  <i></i><span>Male</span>
+                </label>
+                <label class="radio-lbl" for="typeArtistFemale">
+                  <input id="typeArtistFemale"
+                         type="radio"
+                         name="type_artist"
+                         value="female"
+                         formControlName="type_artist"/>
+                  <i></i><span>Female</span>
+                </label>
+                <label class="radio-lbl" for="typeArtistBoth">
+                  <input id="typeArtistBoth"
+                         type="radio"
+                         name="type_artist"
+                         value="both"
+                         formControlName="type_artist"/>
+                  <i></i><span>Both</span>
                 </label>
               </div>
             </div>
-            <div class="inp-block copyright">
-              <label class="copyright-label" for="copyright">
-                <input id="copyright"
-                       type="checkbox"
-                       name="copyright"
-                       value="0">
-                <i></i>
-                <span class="privacy-info">I certify that I own the copyright in or have all the necessary rights related to such content to upload it.</span>
-              </label>
+          </div>
+          <div class="tab-content"
+               [class.active]="currentTab === 2">
+            <div class="edit-track-form">
+              <!--SALE MUSIC-->
+              <div class="inp-block">
+                <label (click)="showTest()">Make your music available for sale</label>
+                <label class="toggleLabel" for="toggleSaleMusic">
+                  <input id="toggleSaleMusic"
+                         type="checkbox"
+                         name="music-sale"
+                         [checked]="saleStatus"
+                         (change)="toggleSaleStatus()">
+                  <span class="toggleElement">
+                                            <i></i>
+                                            <b class="toggle-on">On</b>
+                                            <b class="toggle-off">Off</b>
+                                        </span>
+                </label>
+              </div>
+              <div *ngIf="saleStatus">
+                <app-price-field [id]="'album'"
+                                 [price]="sellData.album"
+                                 [placeholder]="salePlaceholder.album"
+                                 (update)="updatePrice($event)"
+                                 (checks)="checkedPrice($event)">Album
+                </app-price-field>
+                <app-price-field [id]="'single'"
+                                 [price]="sellData.single"
+                                 [placeholder]="salePlaceholder.single"
+                                 (update)="updatePrice($event)"
+                                 (checks)="checkedPrice($event)">Single
+                </app-price-field>
+              </div>
+
+              <!--AVAILABLE FOR LICENSING-->
+              <div class="inp-block">
+                <label>Make your music available for licensing</label>
+                <label class="toggleLabel"
+                       for="toggleLicenseMusic">
+                  <input id="toggleLicenseMusic"
+                         type="checkbox"
+                         name="music-license"
+                         [checked]="licensingStatus"
+                         (change)="toggleLicensingStatus()">
+                  <span class="toggleElement">
+                                            <i></i>
+                                            <b class="toggle-on">On</b>
+                                            <b class="toggle-off">Off</b>
+                                        </span>
+                </label>
+              </div>
+              <div *ngIf="licensingStatus">
+                <app-price-field [id]="'advertising'"
+                                 [price]="sellData.advertising"
+                                 [placeholder]="salePlaceholder.advertising"
+                                 (update)="updatePrice($event)"
+                                 (checks)="checkedPrice($event)">Advertising
+                </app-price-field>
+                <app-price-field [id]="'corporate'"
+                                 [price]="sellData.corporate"
+                                 [placeholder]="salePlaceholder.corporate"
+                                 (update)="updatePrice($event)"
+                                 (checks)="checkedPrice($event)">Corporate/Commercial film
+                </app-price-field>
+                <app-price-field [id]="'documentaryFilm'"
+                                 [price]="sellData.documentaryFilm"
+                                 [placeholder]="salePlaceholder.documentaryFilm"
+                                 (update)="updatePrice($event)"
+                                 (checks)="checkedPrice($event)">Documentary/Indie/Student film
+                </app-price-field>
+                <app-price-field [id]="'film'"
+                                 [price]="sellData.film"
+                                 [placeholder]="salePlaceholder.film"
+                                 (update)="updatePrice($event)"
+                                 (checks)="checkedPrice($event)">Film/TV Show
+                </app-price-field>
+                <app-price-field [id]="'software'"
+                                 [price]="sellData.software"
+                                 [placeholder]="salePlaceholder.software"
+                                 (update)="updatePrice($event)"
+                                 (checks)="checkedPrice($event)">Software
+                </app-price-field>
+                <app-price-field [id]="'internetVideo'"
+                                 [price]="sellData.internetVideo"
+                                 [placeholder]="salePlaceholder.internetVideo"
+                                 (update)="updatePrice($event)"
+                                 (checks)="checkedPrice($event)">Internet Video
+                </app-price-field>
+                <app-price-field [id]="'liveEvent'"
+                                 [price]="sellData.liveEvent"
+                                 [placeholder]="salePlaceholder.liveEvent"
+                                 (update)="updatePrice($event)"
+                                 (checks)="checkedPrice($event)">Live Event
+                </app-price-field>
+                <app-price-field [id]="'musicHold'"
+                                 [price]="sellData.musicHold"
+                                 [placeholder]="salePlaceholder.musicHold"
+                                 (update)="updatePrice($event)"
+                                 (checks)="checkedPrice($event)">Music on Hold
+                </app-price-field>
+                <app-price-field [id]="'musicProd51k'"
+                                 [price]="sellData.musicProd51k"
+                                 [placeholder]="salePlaceholder.musicProd51k"
+                                 (update)="updatePrice($event)"
+                                 (checks)="checkedPrice($event)">Music Production and Audio Project/Lease (over 50000 copies)
+                </app-price-field>
+                <app-price-field [id]="'musicProd50k'"
+                                 [price]="sellData.musicProd50k"
+                                 [placeholder]="salePlaceholder.musicProd50k"
+                                 (update)="updatePrice($event)"
+                                 (checks)="checkedPrice($event)">Music Production and Audio Project/Lease (10001 to 50000 copies)
+                </app-price-field>
+                <app-price-field [id]="'musicProd10k'"
+                                 [price]="sellData.musicProd10k"
+                                 [placeholder]="salePlaceholder.musicProd10k"
+                                 (update)="updatePrice($event)"
+                                 (checks)="checkedPrice($event)">Music Production and Audio Project/Lease (1001 to 10000 copies)
+                </app-price-field>
+                <app-price-field [id]="'musicProd1k'"
+                                 [price]="sellData.musicProd1k"
+                                 [placeholder]="salePlaceholder.musicProd1k"
+                                 (update)="updatePrice($event)"
+                                 (checks)="checkedPrice($event)">Music Production and Audio Project/Lease (up to 1000 copies)
+                </app-price-field>
+                <app-price-field [id]="'website'"
+                                 [price]="sellData.website"
+                                 [placeholder]="salePlaceholder.website"
+                                 (update)="updatePrice($event)"
+                                 (checks)="checkedPrice($event)">Website
+                </app-price-field>
+              </div>
+
+              <!--AVAILABLE FOR LICENSING EXCLUSIVE-->
+              <div class="inp-block">
+                <label>Make your music available for exclusive licensing</label>
+                <label class="toggleLabel"
+                       for="toggleLicenseEMusic">
+                  <input id="toggleLicenseEMusic"
+                         type="checkbox"
+                         name="music-licenseE"
+                         [checked]="licensingEstatus"
+                         (change)="toggleLicensingEStatus()">
+                  <span class="toggleElement">
+                                            <i></i>
+                                            <b class="toggle-on">On</b>
+                                            <b class="toggle-off">Off</b>
+                                        </span>
+                </label>
+              </div>
+              <div *ngIf="licensingEstatus">
+                <app-price-field [id]="'advertisingE'"
+                                 [price]="sellData.advertisingE"
+                                 [placeholder]="salePlaceholder.advertisingE"
+                                 (update)="updatePrice($event)"
+                                 (checks)="checkedPrice($event)">Advertising
+                </app-price-field>
+                <app-price-field [id]="'corporateE'"
+                                 [price]="sellData.corporateE"
+                                 [placeholder]="salePlaceholder.corporateE"
+                                 (update)="updatePrice($event)"
+                                 (checks)="checkedPrice($event)">Corporate/Commercial film
+                </app-price-field>
+                <app-price-field [id]="'documentaryE'"
+                                 [price]="sellData.documentaryFilmE"
+                                 [placeholder]="salePlaceholder.documentaryFilmE"
+                                 (update)="updatePrice($event)"
+                                 (checks)="checkedPrice($event)">Documentary/Indie/Student film
+                </app-price-field>
+                <app-price-field [id]="'filmE'"
+                                 [price]="sellData.filmE"
+                                 [placeholder]="salePlaceholder.filmE"
+                                 (update)="updatePrice($event)"
+                                 (checks)="checkedPrice($event)">Film/TV Show
+                </app-price-field>
+                <app-price-field [id]="'softwareE'"
+                                 [price]="sellData.softwareE"
+                                 [placeholder]="salePlaceholder.softwareE"
+                                 (update)="updatePrice($event)"
+                                 (checks)="checkedPrice($event)">Software
+                </app-price-field>
+                <app-price-field [id]="'internetVideoE'"
+                                 [price]="sellData.internetVideoE"
+                                 [placeholder]="salePlaceholder.internetVideoE"
+                                 (update)="updatePrice($event)"
+                                 (checks)="checkedPrice($event)">Internet Video
+                </app-price-field>
+                <app-price-field [id]="'liveEventE'"
+                                 [price]="sellData.liveEventE"
+                                 [placeholder]="salePlaceholder.liveEventE"
+                                 (update)="updatePrice($event)"
+                                 (checks)="checkedPrice($event)">Live Event
+                </app-price-field>
+                <app-price-field [id]="'musicHoldE'"
+                                 [price]="sellData.musicHoldE"
+                                 [placeholder]="salePlaceholder.musicHoldE"
+                                 (update)="updatePrice($event)"
+                                 (checks)="checkedPrice($event)">Music on Hold
+                </app-price-field>
+                <app-price-field [id]="'musicProd51kE'"
+                                 [price]="sellData.musicProd51kE"
+                                 [placeholder]="salePlaceholder.musicProd51kE"
+                                 (update)="updatePrice($event)"
+                                 (checks)="checkedPrice($event)">Music Production and Audio Project/Lease (over 50000 copies)
+                </app-price-field>
+                <app-price-field [id]="'musicProd50kE'"
+                                 [price]="sellData.musicProd50kE"
+                                 [placeholder]="salePlaceholder.musicProd50kE"
+                                 (update)="updatePrice($event)"
+                                 (checks)="checkedPrice($event)">Music Production and Audio Project/Lease (10001 to 50000 copies)
+                </app-price-field>
+                <app-price-field [id]="'musicProd10kE'"
+                                 [price]="sellData.musicProd10kE"
+                                 [placeholder]="salePlaceholder.musicProd10kE"
+                                 (update)="updatePrice($event)"
+                                 (checks)="checkedPrice($event)">Music Production and Audio Project/Lease (1001 to 10000 copies)
+                </app-price-field>
+                <app-price-field [id]="'musicProd1kE'"
+                                 [price]="sellData.musicProd1kE"
+                                 [placeholder]="salePlaceholder.musicProd1kE"
+                                 (update)="updatePrice($event)"
+                                 (checks)="checkedPrice($event)">Music Production and Audio Project/Lease (up to 1000 copies)
+                </app-price-field>
+                <app-price-field [id]="'websiteE'"
+                                 [price]="sellData.websiteE"
+                                 [placeholder]="salePlaceholder.websiteE"
+                                 (update)="updatePrice($event)"
+                                 (checks)="checkedPrice($event)">Website
+                </app-price-field>
+              </div>
+
+              <!--NON-PROFIT USE-->
+              <div class="inp-block">
+                <label>Wanna make your music available for non-profit use</label>
+                <label class="toggleLabel" for="toggleUseMusic">
+                  <input id="toggleUseMusic"
+                         type="checkbox"
+                         name="music-use"
+                         [checked]="nonProfitStatus"
+                         (change)="toggleNonProfit()">
+                  <span class="toggleElement">
+                                            <i></i>
+                                            <b class="toggle-on">On</b>
+                                            <b class="toggle-off">Off</b>
+                                        </span>
+                </label>
+              </div>
+              <div *ngIf="nonProfitStatus">
+                <app-price-field [id]="'nonProfit'"
+                                 [price]="sellData.nonProfit"
+                                 [placeholder]="salePlaceholder.nonProfit"
+                                 (update)="updatePrice($event)"
+                                 (checks)="checkedPrice($event)">Non profit
+                </app-price-field>
+              </div>
+
+              <!--NEVER SALE-->
+              <div class="inp-block">
+                <label>Never sale my music</label>
+                <label class="toggleLabel" for="neverSale">
+                  <input id="neverSale"
+                         type="checkbox"
+                         name="music-use"
+                         [checked]="neverSaleStatus"
+                         (change)="toggleNeverSale()">
+                  <span class="toggleElement">
+                                            <i></i>
+                                            <b class="toggle-on">On</b>
+                                            <b class="toggle-off">Off</b>
+                                        </span>
+                </label>
+              </div>
+
+              <div class="inp-block copyright">
+                <label class="copyright-label" for="copyright">
+                  <input id="copyright"
+                         type="checkbox"
+                         name="copyright"
+                         formControlName="copyright">
+                  <i></i>
+                  <span class="privacy-info">I certify that I own the copyright in or have all the necessary rights related to such content to upload it.</span>
+                </label>
+              </div>
+              <div class="sbm-block text-center">
+                <button type="submit" class="" [disabled]="!uploadTrackForm.valid">Send</button>
+              </div>
             </div>
-          </form>
+          </div>
         </div>
-      </div>
+      </form>
     </div>
   </div>
 </div>

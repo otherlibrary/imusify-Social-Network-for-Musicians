@@ -8,8 +8,9 @@ export interface UploadFileData {
   desc?: string;
   secondary_genre_id?: number;
   pick_moods_id?: number;
-  waveform: string;
+  waveform: any;
   type_artist: string;
+  copyright: boolean;
 
   is_public: number;
   track_upload_type: string;

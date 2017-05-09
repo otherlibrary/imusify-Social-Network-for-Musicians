@@ -6,6 +6,7 @@ import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {Genre, IMood} from "../../interfases";
 import {IMyOptions} from "mydatepicker";
 import {LocalStorageService} from "../../shared/services/local-storage.service";
+import * as _ from 'lodash';
 
 function base64ArrayBuffer(arrayBuffer) {
   let base64 = '';
@@ -68,12 +69,12 @@ export class EditComponent implements OnInit {
   @Input() trackTypesList: any[];
   @Input() moodsList: IMood[];
 
-  //TODO(AlexSol): change to 1
-  public currentTab: number = 2;
+  public currentTab: number = 1;
   public saleStatus: boolean = false;
   public licensingStatus: boolean = false;
   public licensingEstatus: boolean = false;
   public nonProfitStatus: boolean = false;
+  public neverSaleStatus: boolean = false;
 
   public uploadTrackForm: FormGroup;
   public trackImage: any;
@@ -111,23 +112,59 @@ export class EditComponent implements OnInit {
 
   buildForm() {
     this.uploadTrackForm = this.fb.group({
-      "title": [this.uploadTrackInfo.title, [
+      filename: this.uploadTrackInfo.file_name,
+      track_id: this.uploadTrackInfo.track_id,
+      waveform: '',
+      title: [this.uploadTrackInfo.title, [
         Validators.required
       ]],
-      "desc": this.uploadTrackInfo.desc,
-      "release_date": [this.uploadTrackInfo.release_date, [
+      desc: this.uploadTrackInfo.desc,
+      release_date: [this.uploadTrackInfo.release_date, [
         Validators.required
       ]],
-      "track_type": [this.uploadTrackInfo.track_upload_type, [
+      track_type: [this.uploadTrackInfo.track_upload_type, [
         Validators.required
       ]],
-      "genre_id": [this.uploadTrackInfo.genre_id, [
+      genre_id: [this.uploadTrackInfo.genre_id, [
         Validators.required
       ]],
-      "second_genre_id": this.uploadTrackInfo.genre_id,
-      "pick_moods": this.uploadTrackInfo.genre_id,
-      "type_artist": this.uploadTrackInfo.type_artist,
-      "is_public": this.uploadTrackInfo.is_public,
+      copyright: [this.uploadTrackInfo.copyright, [
+        Validators.required
+      ]],
+      second_genre_id: this.uploadTrackInfo.genre_id,
+      pick_moods: this.uploadTrackInfo.genre_id,
+      type_artist: this.uploadTrackInfo.type_artist,
+      is_public: this.uploadTrackInfo.is_public,
+      album: '',
+      single: '',
+      advertising: '',
+      corporate: '',
+      documentaryFilm: '',
+      film: '',
+      software: '',
+      internetVideo: '',
+      liveEvent: '',
+      musicHold: '',
+      musicProd1k: '',
+      musicProd10k: '',
+      musicProd50k: '',
+      musicProd51k: '',
+      website: '',
+      advertisingE: '',
+      corporateE: '',
+      documentaryFilmE: '',
+      filmE: '',
+      softwareE: '',
+      internetVideoE: '',
+      liveEventE: '',
+      musicHoldE: '',
+      musicProd1kE: '',
+      musicProd10kE: '',
+      musicProd50kE: '',
+      musicProd51kE: '',
+      websiteE: '',
+      nonProfit: '',
+      neverSale: false
     });
 
     this.uploadTrackForm.valueChanges
@@ -142,8 +179,7 @@ export class EditComponent implements OnInit {
     private _uploadService: UploadService,
     private fb: FormBuilder,
     private _localStorageService: LocalStorageService
-  ) {
-  }
+  ) {}
 
   ngOnInit() {
     this.uploadTrackInfo = this._uploadService.uploadTrackInfo;
@@ -152,6 +188,7 @@ export class EditComponent implements OnInit {
     this.sellData = {
       album: '',
       single: '',
+
       advertising: '',
       corporate: '',
       documentaryFilm: '',
@@ -179,7 +216,6 @@ export class EditComponent implements OnInit {
       musicProd50kE: '',
       musicProd51kE: '',
       websiteE: '',
-
       nonProfit: '',
       neverSale: false
     };
@@ -218,16 +254,7 @@ export class EditComponent implements OnInit {
       neverSale: null
     };
     //get local storage
-    if(this._localStorageService.getLocalStorage('sellData')) {
-      let sellData = JSON.parse(this._localStorageService.getLocalStorage('sellData'));
-      
-      for(let key in sellData) {
-        if(sellData[key] !== '') {
-          console.log();
-          this.salePlaceholder[key] = sellData[key];
-        }
-      }
-    }
+    this.getLocalStorageSell();
 
     //Set default value in form
     let date = new Date();
@@ -248,7 +275,20 @@ export class EditComponent implements OnInit {
     }
   }
 
-  updatePrice(e) {
+  public getLocalStorageSell() {
+    if(this._localStorageService.getLocalStorage('sellData')) {
+      let sellData = JSON.parse(this._localStorageService.getLocalStorage('sellData'));
+
+      for(let key in sellData) {
+        if(sellData[key] !== '') {
+          console.log();
+          this.salePlaceholder[key] = sellData[key];
+        }
+      }
+    }
+  }
+
+  public updatePrice(e) {
     this.sellData[e.id] = e.price;
     this._localStorageService.setLocalStorage({
       key: 'sellData',
@@ -256,7 +296,7 @@ export class EditComponent implements OnInit {
     });
   }
 
-  checkedPrice(e) {
+  public checkedPrice(e) {
     if(!e.status) {
       this.sellData[e.id] = '';
     } else {
@@ -264,7 +304,7 @@ export class EditComponent implements OnInit {
     }
   }
 
-  onValueChange(data?: any) {
+  public onValueChange(data?: any) {
     if (!this.uploadTrackForm) return;
     let form = this.uploadTrackForm;
 
@@ -282,39 +322,134 @@ export class EditComponent implements OnInit {
     }
   }
 
-  closePopup() {
+  public closePopup() {
     this._uploadService.editPopupSubject.next(false);
   }
 
-  onSubmit() {
+  public onSubmit() {
     console.log('submit');
   }
 
-  toggleTabs(tab) {
+  public toggleTabs(tab) {
     this.currentTab = tab;
   }
 
-  toggleNonProfit() {
+  //second tabs
+  public toggleSaleStatus() {
+    this.saleStatus = !this.saleStatus;
+    this.nonProfitStatus = false;
+    this.neverSaleStatus = false;
+    if(!this.saleStatus) {
+      this._clearAllSale();
+    } else {
+      this._clearNonProfit();
+    }
+  }
+  public toggleLicensingStatus() {
+    this.licensingStatus = !this.licensingStatus;
+    this.nonProfitStatus = false;
+    this.neverSaleStatus = false;
+    if(!this.licensingStatus) {
+      this._clearAllLicensing();
+    } else {
+      this._clearNonProfit();
+    }
+  }
+  public toggleLicensingEStatus() {
+    this.licensingEstatus = !this.licensingEstatus;
+    this.nonProfitStatus = false;
+    this.neverSaleStatus = false;
+    if(!this.licensingEstatus) {
+      this._clearAllELicensing();
+    } else {
+      this._clearNonProfit();
+    }
+  }
+  public toggleNonProfit() {
     this.nonProfitStatus = !this.nonProfitStatus;
 
     this.saleStatus = false;
     this.licensingStatus = false;
     this.licensingEstatus = false;
+    this.neverSaleStatus = false;
+    if(this.nonProfitStatus) {
+      this._clearAllLicensing();
+      this._clearAllELicensing();
+      this._clearAllSale();
+    }
+  }
+  public toggleNeverSale() {
+    this.neverSaleStatus = !this.neverSaleStatus;
+    this.saleStatus = false;
+    this.licensingStatus = false;
+    this.licensingEstatus = false;
+    this.nonProfitStatus = false;
+
+    if(this.neverSaleStatus) {
+      this._clearAllLicensing();
+      this._clearAllELicensing();
+      this._clearAllSale();
+      this._clearNonProfit();
+    }
   }
 
-  toggleLicensingStatus() {
-    this.licensingStatus = !this.licensingStatus;
+  private _clearAllLicensing() {
+    this.sellData.advertising = '';
+    this.sellData.corporate = '';
+    this.sellData.documentaryFilm = '';
+    this.sellData.film = '';
+    this.sellData.software = '';
+    this.sellData.internetVideo = '';
+    this.sellData.liveEvent = '';
+    this.sellData.musicHold = '';
+    this.sellData.musicProd1k = '';
+    this.sellData.musicProd10k = '';
+    this.sellData.musicProd50k = '';
+    this.sellData.musicProd51k = '';
+    this.sellData.website = '';
   }
-  toggleLicensingEstatus() {
-    this.licensingEstatus = !this.licensingEstatus;
+  private _clearAllELicensing() {
+    this.sellData.advertisingE = '';
+    this.sellData.corporateE = '';
+    this.sellData.documentaryFilmE = '';
+    this.sellData.filmE = '';
+    this.sellData.softwareE = '';
+    this.sellData.internetVideoE = '';
+    this.sellData.liveEventE = '';
+    this.sellData.musicHoldE = '';
+    this.sellData.musicProd1kE = '';
+    this.sellData.musicProd10kE = '';
+    this.sellData.musicProd50kE = '';
+    this.sellData.musicProd51kE = '';
+    this.sellData.websiteE = '';
   }
-
-  toggleSaleStatus() {
-    this.saleStatus = !this.saleStatus;
+  private _clearAllSale() {
+    this.sellData.album = '';
+    this.sellData.single = '';
+  }
+  private _clearNonProfit() {
+    this.sellData.nonProfit = '';
   }
 
   showTest() {
-    console.log('sellData: ', this.sellData);
-    console.log('uploadTrackInfo: ', this.uploadTrackInfo);
+    if(!this.nonProfitStatus) {
+      let mergeResult = _.merge(this.uploadTrackForm.value, this.sellData);
+      mergeResult.waveform = this._uploadService.uploadTrackInfo.waveform;
+      this.uploadTrackForm.patchValue(mergeResult);
+    } else {
+      let mergeResult = _.merge(this.uploadTrackForm.value, this.sellData);
+      mergeResult.waveform = this._uploadService.uploadTrackInfo.waveform;
+      this.uploadTrackForm.patchValue(mergeResult);
+    }
+
+    //TODO(AlexSol): upload image (convert array base64 to file)
+    let imageData = {
+      filename: this._uploadService.uploadTrackInfo.file_name,
+      image: this._uploadService.trackImage
+    };
+
+    this._uploadService.uploadImageTrack(imageData);
+    console.log('imageData: ', imageData);
+    console.log('uploadTrackForm.value: ', this.uploadTrackForm.value);
   }
 }
