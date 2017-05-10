@@ -172,6 +172,11 @@ export class AudioPlayerComponent implements OnInit, OnDestroy {
     this.isShuffleOn = !this.isShuffleOn;
   }
 
+  toggleVolume() {
+    console.log('toggle mute');
+    this.wavesurfer.toggleMute();
+  }
+
   getAudioTrackById(id: number) {
     return this.records.find((elem) => <string>elem.id === id.toString());
   }

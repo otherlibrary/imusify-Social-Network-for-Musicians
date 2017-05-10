@@ -28,6 +28,10 @@ export class UploadService {
     return this._apiService.post(environment.uploadDetails, environment.creds);
   }
 
+  uploadTrackDetails(formData) {
+    return this._apiService.post(environment.uploadTrackInfo, formData);
+  }
+
   uploadImageTrack(img) {
     return this._apiService.post(environment.uploadTrackImage, img);
   }

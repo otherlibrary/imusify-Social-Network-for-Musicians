@@ -7,6 +7,7 @@ import {Genre, IMood} from "../../interfases";
 import {IMyOptions} from "mydatepicker";
 import {LocalStorageService} from "../../shared/services/local-storage.service";
 import * as _ from 'lodash';
+import {HelpersService} from "../../shared/services/helpers.service";
 
 function base64ArrayBuffer(arrayBuffer) {
   let base64 = '';
@@ -178,7 +179,8 @@ export class EditComponent implements OnInit {
   constructor(
     private _uploadService: UploadService,
     private fb: FormBuilder,
-    private _localStorageService: LocalStorageService
+    private _localStorageService: LocalStorageService,
+    private _helpersService: HelpersService
   ) {}
 
   ngOnInit() {
@@ -326,8 +328,29 @@ export class EditComponent implements OnInit {
     this._uploadService.editPopupSubject.next(false);
   }
 
-  public onSubmit() {
-    console.log('submit');
+  public onSubmit(e) {
+    e.preventDefault();
+    if(!this.nonProfitStatus) {
+      let mergeResult = _.merge(this.uploadTrackForm.value, this.sellData);
+      mergeResult.waveform = this._uploadService.uploadTrackInfo.waveform;
+      this.uploadTrackForm.patchValue(mergeResult);
+    } else {
+      let mergeResult = _.merge(this.uploadTrackForm.value, this.sellData);
+      mergeResult.waveform = this._uploadService.uploadTrackInfo.waveform;
+      this.uploadTrackForm.patchValue(mergeResult);
+    }
+
+    let formData = this._helpersService.toStringParam((this.uploadTrackForm.value));
+    this._uploadService.uploadTrackDetails(formData).subscribe(data => {
+      console.log(data);
+    });
+    //TODO(AlexSol): upload image (convert array base64 to file)
+    // let imageData = {
+    //   filename: this._uploadService.uploadTrackInfo.file_name,
+    //   image: this._uploadService.trackImage
+    // };
+    //
+    // this._uploadService.uploadImageTrack(imageData);
   }
 
   public toggleTabs(tab) {

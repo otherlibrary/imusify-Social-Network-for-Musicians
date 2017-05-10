@@ -4,7 +4,7 @@
   <div class="popup-scroll popup_animate_inner">
     <div class="popup-inner">
       <form [formGroup]="uploadTrackForm"
-            (ngSubmit)="onSubmit()">
+            (ngSubmit)="onSubmit($event)">
         <div class="edit-track-block">
           <div class="title">Edit track</div>
           <div class="song title">{{uploadTrackInfo.title}}</div>
