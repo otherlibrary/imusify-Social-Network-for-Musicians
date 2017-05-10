@@ -3,7 +3,8 @@ import {UploadInput, UploadOutput, UploadFile, IToastOption} from "../interfases
 import {Observable} from "rxjs/Observable";
 import {UploadService} from "./upload.service";
 import {environment} from "../../environments/environment";
-import {ToastData, ToastOptions, ToastyConfig, ToastyService} from "ng2-toasty";
+import {ToastyConfig} from "ng2-toasty";
+import {SharedService} from "../shared/shared.service";
 
 declare const jsmediatags: any;
 declare const WaveSurfer: any;
@@ -33,7 +34,7 @@ export class UploadComponent implements OnInit {
   };
 
   constructor(private _uploadService: UploadService,
-              private _toastyService: ToastyService,
+              private _sharedService: SharedService,
               private _toastyConfig: ToastyConfig) {
     this.host = environment.host;
 
@@ -63,48 +64,6 @@ export class UploadComponent implements OnInit {
       });
     }
   }
-
-  public addToast(option: IToastOption) {
-    let toastOptions: ToastOptions = {
-      title: option.title,
-      msg: option.msg,
-      showClose: true,
-      timeout: 6000,
-      theme: 'material',
-      onAdd: (toast: ToastData) => {
-        console.log('Toast ' + toast.id + ' has been added!');
-      },
-      onRemove: function (toast: ToastData) {
-        console.log('Toast ' + toast.id + ' has been removed!');
-      }
-    };
-    switch (option.type) {
-      case 'default':
-        this._toastyService.default(toastOptions);
-        break;
-      case 'info':
-        this._toastyService.info(toastOptions);
-        break;
-      case 'success':
-        this._toastyService.success(toastOptions);
-        break;
-      case 'wait':
-        this._toastyService.wait(toastOptions);
-        break;
-      case 'error':
-        this._toastyService.error(toastOptions);
-        break;
-      case 'warning':
-        this._toastyService.warning(toastOptions);
-        break;
-    }
-  }
-
-  private _extFilter(fileExt: string, extArr: string[]) {
-    return extArr.some((item: string) => {
-      return fileExt === item;
-    })
-  };
 
   public getTagsFile(e) {
     let files = e.target.files;
@@ -166,14 +125,14 @@ export class UploadComponent implements OnInit {
           this._uploadService.editPopupSubject.next(true);
           t.unsubscribe();
         });
-        this.addToast({
+        this._sharedService.notificationSubject.next({
           title: 'Upload file',
           msg: 'Success upload',
           type: 'success'
         });
       } else {
         if (file.response.hasOwnProperty('error')) {
-          this.addToast({
+          this._sharedService.notificationSubject.next({
             title: 'Error upload file',
             msg: file.response.error,
             type: 'error'

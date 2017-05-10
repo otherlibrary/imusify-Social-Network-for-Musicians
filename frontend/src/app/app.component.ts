@@ -1,15 +1,17 @@
-import {Component, HostBinding} from '@angular/core';
+import {Component, HostBinding, OnDestroy, OnInit} from '@angular/core';
 import {EmitterService} from "./shared/services/emitter.service";
 import {AuthService} from "./shared/services/auth.service";
 import {Router} from "@angular/router";
-import {IUser} from "./interfases/IUser";
+import {IToastOption} from "./interfases";
+import {ToastData, ToastOptions, ToastyService} from "ng2-toasty";
+import {SharedService} from "./shared/shared.service";
 
 @Component({
   selector: 'body',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss']
 })
-export class AppComponent {
+export class AppComponent implements OnInit, OnDestroy {
   @HostBinding('class') public cssClass = '';
   //popup
   public isVisible: boolean = false;
@@ -18,8 +20,15 @@ export class AppComponent {
   public loggedin: boolean;
   public profileData: any;
 
+  private _cleanSubscriber: any;
+  private _notificationSubscriber: any;
 
-  constructor(private _authService: AuthService, private _router: Router) {
+
+  constructor(
+    private _authService: AuthService,
+    private _toastyService: ToastyService,
+    private _sharedService: SharedService,
+    private _router: Router) {
   }
 
   ngOnInit() {
@@ -28,9 +37,18 @@ export class AppComponent {
       this.isVisible = data;
     });
 
-    this._authService.cleanUserSubject.subscribe(() => {
+    this._cleanSubscriber = this._authService.cleanUserSubject.subscribe(() => {
       this.cleanProfile();
     });
+
+    this._notificationSubscriber = this._sharedService.notificationSubject.subscribe((option: IToastOption) => {
+      this.addToast(option);
+    });
+  }
+
+  ngOnDestroy() {
+    this._cleanSubscriber.unsubscribe();
+    this._notificationSubscriber.unsubscribe();
   }
 
   /**
@@ -75,6 +93,42 @@ export class AppComponent {
     EmitterService.get('LOGOUT').subscribe(data => {
       this.cleanProfile();
     });
+  }
+
+  addToast(option: IToastOption) {
+    let toastOptions: ToastOptions = {
+      title: option.title,
+      msg: option.msg,
+      showClose: true,
+      timeout: 6000,
+      theme: 'material',
+      onAdd: (toast: ToastData) => {
+        console.log('Toast ' + toast.id + ' has been added!');
+      },
+      onRemove: function (toast: ToastData) {
+        console.log('Toast ' + toast.id + ' has been removed!');
+      }
+    };
+    switch (option.type) {
+      case 'default':
+        this._toastyService.default(toastOptions);
+        break;
+      case 'info':
+        this._toastyService.info(toastOptions);
+        break;
+      case 'success':
+        this._toastyService.success(toastOptions);
+        break;
+      case 'wait':
+        this._toastyService.wait(toastOptions);
+        break;
+      case 'error':
+        this._toastyService.error(toastOptions);
+        break;
+      case 'warning':
+        this._toastyService.warning(toastOptions);
+        break;
+    }
   }
 
 }

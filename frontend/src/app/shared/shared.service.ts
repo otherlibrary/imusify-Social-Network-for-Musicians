@@ -13,6 +13,8 @@ export class SharedService {
   //Subject track
   public playTrackSubject: Subject<Object> = new Subject<Object>();
   public pauseTrackSubject: Subject<Object> = new Subject<Object>();
+  //Notification
+  public notificationSubject: Subject<Object> = new Subject<Object>();
 
   constructor(private _apiService: ApiService) {
   }
