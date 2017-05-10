@@ -166,7 +166,7 @@ export class EditComponent implements OnInit {
       nonProfit: '',
       neverSale: false
     });
-    console.log(this.uploadTrackForm);
+
     this.uploadTrackForm.valueChanges
       .subscribe(data => {
         console.log(data);
@@ -332,6 +332,20 @@ export class EditComponent implements OnInit {
 
   public toggleTabs(tab) {
     this.currentTab = tab;
+  }
+
+  public uploadImage(event) {
+    if (event.target.files && event.target.files[0]) {
+      let reader = new FileReader();
+
+      reader.onload = (event: any) => {
+        //TODO upload image track
+        this.trackImage = event.target.result;
+        this._uploadService.trackImage = event.target.result;
+      };
+
+      reader.readAsDataURL(event.target.files[0]);
+    }
   }
 
   //second tabs

@@ -33,7 +33,7 @@
                 <img *ngIf="trackImage" [src]="trackImage" alt="">
                 <input id="trackImg"
                        type="file"
-                       name="trackImage"/>
+                       name="trackImage" (change)="uploadImage($event)"/>
                 <label class="img-upload"
                        for="trackImg">Upload image</label>
               </div>
@@ -43,7 +43,7 @@
                        type="text"
                        name="title"
                        formControlName="title">
-                <label for="trackTitle"></label>
+                <label for="trackTitle">* </label>
                 <!--<div *ngIf="formErrors.title" class="alert alert-danger">-->
                 <!--{{ formErrors.title }}-->
                 <!--</div>-->
@@ -67,7 +67,7 @@
                 <!--data-type="datepicker"-->
                 <!--required-->
                 <!--formControlName="release_date">-->
-                <label for="trackDate">Release date</label>
+                <label for="trackDate">* Release date</label>
               </div>
               <!--TRACK TYPE-->
               <div class="inp-block">
@@ -78,7 +78,7 @@
                            [multiple]="true"
                            [highlightColor]="'#242526'">
                 </ng-select>
-                <label class="select2-label" for="trackType">Track type</label>
+                <label class="select2-label" for="trackType">* Track type</label>
               </div>
               <!--TRACK GENRE-->
               <div class="inp-block">
@@ -89,7 +89,7 @@
                            [multiple]="true"
                            [highlightColor]="'#242526'">
                 </ng-select>
-                <label class="select2-label" for="trackGenre">Primary genre</label>
+                <label class="select2-label" for="trackGenre">* Primary genre</label>
               </div>
               <!--SECOND GENRES-->
               <div class="inp-block">
@@ -169,9 +169,19 @@
                 </label>
               </div>
 
+              <div class="inp-block copyright"
+                   *ngIf="uploadTrackForm.controls.is_public.value === '0'">
+                <label class="copyright-label" for="copyright_pre">
+                  <input id="copyright_pre" type="checkbox"
+                         name="copyright"
+                         formControlName="copyright">
+                  <i></i>
+                  <span class="privacy-info">* I certify that I own the copyright in or have all the necessary rights related to such content to upload it.</span>
+                </label>
+              </div>
+
               <div class="sbm-block text-center">
                 <button *ngIf="uploadTrackForm.controls.is_public.value === '1'"
-                        [disabled]="!uploadTrackForm.valid"
                         (click)="toggleTabs(2)">Next</button>
                 <button type="submit"
                         *ngIf="uploadTrackForm.controls.is_public.value === '0'"
@@ -179,7 +189,7 @@
               </div>
             </div>
           </div>
-          <div class="tab-content"s
+          <div class="tab-content"
                *ngIf="uploadTrackForm.controls.is_public.value === '1'"
                [class.active]="currentTab === 2">
             <div class="edit-track-form">
@@ -459,7 +469,7 @@
                          name="copyright"
                          formControlName="copyright">
                   <i></i>
-                  <span class="privacy-info">I certify that I own the copyright in or have all the necessary rights related to such content to upload it.</span>
+                  <span class="privacy-info">* I certify that I own the copyright in or have all the necessary rights related to such content to upload it.</span>
                 </label>
               </div>
               <div class="sbm-block text-center">

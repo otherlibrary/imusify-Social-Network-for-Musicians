@@ -75,6 +75,7 @@ export class UploadComponent implements OnInit {
         let tags = tag.tags;
         if( "picture" in tags ) {
           this._uploadService.trackImage = tags.picture;
+          //TODO upload image track
         } else {
           this._uploadService.trackImage = null;
         }
