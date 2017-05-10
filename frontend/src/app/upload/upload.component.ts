@@ -123,6 +123,14 @@ export class UploadComponent implements OnInit {
         });
       } else {
         console.log('error upload message');
+        //TODO remove this
+        this._uploadService.uploadTrackInfo.file_name = '1';
+        this._uploadService.uploadTrackInfo.title = this._cutNameExtension(file.name);
+        this._uploadService.uploadTrackInfo.track_id = file.id;
+        let t = Observable.timer(300).subscribe(() => {
+          this._uploadService.editPopupSubject.next(true);
+          t.unsubscribe();
+        });
       }
     } else if (output.type === 'cancelled') {
       console.log('cancelled');

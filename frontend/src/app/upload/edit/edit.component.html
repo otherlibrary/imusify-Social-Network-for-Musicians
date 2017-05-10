@@ -18,6 +18,7 @@
           </button>
           <button class="tab-pnl-btn"
                   type="button"
+                  *ngIf="uploadTrackForm.controls.is_public.value === '1'"
                   [class.active]="currentTab === 2"
                   (click)="toggleTabs(2)">
             Sell your music
@@ -167,9 +168,19 @@
                   <i></i><span>Both</span>
                 </label>
               </div>
+
+              <div class="sbm-block text-center">
+                <button *ngIf="uploadTrackForm.controls.is_public.value === '1'"
+                        [disabled]="!uploadTrackForm.valid"
+                        (click)="toggleTabs(2)">Next</button>
+                <button type="submit"
+                        *ngIf="uploadTrackForm.controls.is_public.value === '0'"
+                        [disabled]="!uploadTrackForm.valid">Send</button>
+              </div>
             </div>
           </div>
-          <div class="tab-content"
+          <div class="tab-content"s
+               *ngIf="uploadTrackForm.controls.is_public.value === '1'"
                [class.active]="currentTab === 2">
             <div class="edit-track-form">
               <!--SALE MUSIC-->

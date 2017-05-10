@@ -166,7 +166,7 @@ export class EditComponent implements OnInit {
       nonProfit: '',
       neverSale: false
     });
-
+    console.log(this.uploadTrackForm);
     this.uploadTrackForm.valueChanges
       .subscribe(data => {
         console.log(data);
