@@ -144,7 +144,7 @@ input[type=range]:focus::-ms-fill-upper {
 input[type=range] {
   -webkit-appearance: none;
   margin: 18px 0;
-  width: 75px;
+  width: 60px;
 }
 input[type=range]:focus {
   outline: none;
@@ -242,7 +242,7 @@ input[type=range]:focus::-ms-fill-upper {
   }
 }
 .player-inner .play-type {
-  right: -60px;
+  right: -7%;
   width: 100px;
   display: flex;
   align-items: center;
@@ -253,6 +253,25 @@ input[type=range]:focus::-ms-fill-upper {
   &:hover {
     .svg-icon-volume {
       opacity: 0.8;
+    }
+  }
+}
+
+.wrap-volume {
+  position: relative;
+  
+  .range-vol {
+    position: absolute;
+    top: -10px;
+    left: 20px;
+    width: 0;
+    opacity: 0;
+    transition: width 0.2s linear;
+  }
+  &:hover {
+    .range-vol {
+      width: 60px;
+      opacity: 1;
     }
   }
 }

@@ -19,6 +19,7 @@ export class AudioPlayerComponent implements OnInit, OnDestroy {
   public isTrackRepeated: boolean;
   public isReady: boolean = false;
   public isBig: boolean = false;
+  public isMute: boolean;
   public isRecordPlayed: boolean;
   public records: IRecord[];
   public currentPlayedTrack: any = null;
@@ -141,6 +142,9 @@ export class AudioPlayerComponent implements OnInit, OnDestroy {
     this.isRecordPlayed = true;
     this.wavesurfer.play();
     this._sharedService.playPlayerTrackSubject.next(this.currentPlayedTrack);
+    if(this.isMute) {
+      this.wavesurfer.setVolume(0);
+    }
   }
 
   pauseTrack() {
@@ -173,8 +177,8 @@ export class AudioPlayerComponent implements OnInit, OnDestroy {
   }
 
   toggleVolume() {
-    console.log('toggle mute');
     this.wavesurfer.toggleMute();
+    this.isMute = this.wavesurfer.getMute();
   }
 
   getAudioTrackById(id: number) {
