@@ -1,8 +1,9 @@
-import {Component, EventEmitter, OnDestroy, OnInit} from '@angular/core';
-import {UploadInput, UploadOutput, UploadFile, UploadFileData} from "../interfases";
+import {Component, EventEmitter, OnInit} from '@angular/core';
+import {UploadInput, UploadOutput, UploadFile, IToastOption} from "../interfases";
 import {Observable} from "rxjs/Observable";
 import {UploadService} from "./upload.service";
 import {environment} from "../../environments/environment";
+import {ToastData, ToastOptions, ToastyConfig, ToastyService} from "ng2-toasty";
 
 declare const jsmediatags: any;
 declare const WaveSurfer: any;
@@ -25,17 +26,18 @@ export class UploadComponent implements OnInit {
   public fileId: string;
   public uploadInput: EventEmitter<UploadInput>;
   public dragOver: boolean;
-
   private host: {};
 
   private _cutNameExtension(name: string): string {
     return name.match(/(.*)\.[^.]+$/)[1];
   };
 
-  constructor(
-    private _uploadService: UploadService
-  ) {
+  constructor(private _uploadService: UploadService,
+              private _toastyService: ToastyService,
+              private _toastyConfig: ToastyConfig) {
     this.host = environment.host;
+
+    this._toastyConfig.theme = 'material';
 
     this.formData = {
       concurrency: 0,
@@ -62,10 +64,51 @@ export class UploadComponent implements OnInit {
     }
   }
 
-  getTagsFile(e) {
+  public addToast(option: IToastOption) {
+    let toastOptions: ToastOptions = {
+      title: option.title,
+      msg: option.msg,
+      showClose: true,
+      timeout: 6000,
+      theme: 'material',
+      onAdd: (toast: ToastData) => {
+        console.log('Toast ' + toast.id + ' has been added!');
+      },
+      onRemove: function (toast: ToastData) {
+        console.log('Toast ' + toast.id + ' has been removed!');
+      }
+    };
+    switch (option.type) {
+      case 'default':
+        this._toastyService.default(toastOptions);
+        break;
+      case 'info':
+        this._toastyService.info(toastOptions);
+        break;
+      case 'success':
+        this._toastyService.success(toastOptions);
+        break;
+      case 'wait':
+        this._toastyService.wait(toastOptions);
+        break;
+      case 'error':
+        this._toastyService.error(toastOptions);
+        break;
+      case 'warning':
+        this._toastyService.warning(toastOptions);
+        break;
+    }
+  }
+
+  private _extFilter(fileExt: string, extArr: string[]) {
+    return extArr.some((item: string) => {
+      return fileExt === item;
+    })
+  };
+
+  public getTagsFile(e) {
     let files = e.target.files;
     let file = files[files.length - 1];
-
     let fileURL = URL.createObjectURL(file);
     this._uploadService.wavesurfer.empty();
     this._uploadService.wavesurfer.load(fileURL);
@@ -73,7 +116,7 @@ export class UploadComponent implements OnInit {
     jsmediatags.read(file, {
       onSuccess: (tag) => {
         let tags = tag.tags;
-        if( "picture" in tags ) {
+        if ("picture" in tags) {
           this._uploadService.trackImage = tags.picture;
           //TODO upload image track
         } else {
@@ -86,7 +129,7 @@ export class UploadComponent implements OnInit {
     });
   }
 
-  onUploadOutput(output: UploadOutput): void {
+  public onUploadOutput(output: UploadOutput): void {
     if (output.type === 'allAddedToQueue') {
       if (this.formData.autoUpload) {
         const event: UploadInput = {
@@ -114,7 +157,8 @@ export class UploadComponent implements OnInit {
     } else if (output.type === 'done') {
       console.log('output: ', output);
       let file = this.files[this.files.length - 1];
-      if(file.response) {
+
+      if (file.response.hasOwnProperty('upload_data')) {
         this._uploadService.uploadTrackInfo.file_name = file.response.upload_data.file_name;
         this._uploadService.uploadTrackInfo.title = this._cutNameExtension(file.name);
         this._uploadService.uploadTrackInfo.track_id = file.id;
@@ -122,16 +166,19 @@ export class UploadComponent implements OnInit {
           this._uploadService.editPopupSubject.next(true);
           t.unsubscribe();
         });
-      } else {
-        console.log('error upload message');
-        //TODO remove this
-        this._uploadService.uploadTrackInfo.file_name = '1';
-        this._uploadService.uploadTrackInfo.title = this._cutNameExtension(file.name);
-        this._uploadService.uploadTrackInfo.track_id = file.id;
-        let t = Observable.timer(300).subscribe(() => {
-          this._uploadService.editPopupSubject.next(true);
-          t.unsubscribe();
+        this.addToast({
+          title: 'Upload file',
+          msg: 'Success upload',
+          type: 'success'
         });
+      } else {
+        if (file.response.hasOwnProperty('error')) {
+          this.addToast({
+            title: 'Error upload file',
+            msg: file.response.error,
+            type: 'error'
+          });
+        }
       }
     } else if (output.type === 'cancelled') {
       console.log('cancelled');
@@ -140,7 +187,7 @@ export class UploadComponent implements OnInit {
     }
   }
 
-  startUpload(): void {
+  public startUpload(): void {
     const event: UploadInput = {
       type: 'uploadAll',
       url: environment.host + environment.uploadFilesUrl,
@@ -151,7 +198,7 @@ export class UploadComponent implements OnInit {
     this.uploadInput.emit(event);
   }
 
-  cancelUpload(id: string): void {
+  public cancelUpload(id: string): void {
     this.uploadInput.emit({type: 'cancel', id: id});
   }
 

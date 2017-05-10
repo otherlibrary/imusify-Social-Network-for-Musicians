@@ -9,6 +9,7 @@ import {SwiperModule} from "angular2-useful-swiper";
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {SelectModule} from "ng-select";
 import {MyDatePickerModule} from "mydatepicker";
+import {ToastyModule} from "ng2-toasty";
 
 @NgModule({
   imports: [
@@ -17,7 +18,8 @@ import {MyDatePickerModule} from "mydatepicker";
     FormsModule,
     ReactiveFormsModule,
     SelectModule,
-    MyDatePickerModule
+    MyDatePickerModule,
+    ToastyModule.forRoot()
   ],
   declarations: [
     ...pipes,
@@ -33,6 +35,7 @@ import {MyDatePickerModule} from "mydatepicker";
     ReactiveFormsModule,
     SelectModule,
     MyDatePickerModule,
+    ToastyModule,
     ...exportDirectives
   ],
   providers: []
