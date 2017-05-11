@@ -340,8 +340,12 @@ export class EditComponent implements OnInit {
       this.uploadTrackForm.patchValue(mergeResult);
     }
 
-    let resultForm = this.uploadTrackForm.value;
-    resultForm.release_date = JSON.stringify(this.uploadTrackForm.value.release_date);
+    //TODO lodash use
+    let resultFormJSON = JSON.stringify(this.uploadTrackForm.value);
+    let release_date = this.uploadTrackForm.value.release_date;
+    let resultForm = JSON.parse(resultFormJSON);
+    resultForm.release_date = JSON.stringify(release_date);
+
     let formData = this._helpersService.toStringParam((resultForm));
     this._uploadService.uploadTrackDetails(formData).subscribe(data => {
       console.log(data);
@@ -406,16 +410,7 @@ export class EditComponent implements OnInit {
   }
   public toggleNonProfit() {
     this.nonProfitStatus = !this.nonProfitStatus;
-
-    this.saleStatus = false;
-    this.licensingStatus = false;
-    this.licensingEstatus = false;
     this.neverSaleStatus = false;
-    if(this.nonProfitStatus) {
-      this._clearAllLicensing();
-      this._clearAllELicensing();
-      this._clearAllSale();
-    }
   }
   public toggleNeverSale() {
     this.neverSaleStatus = !this.neverSaleStatus;

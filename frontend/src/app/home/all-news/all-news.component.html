@@ -1,8 +1,15 @@
-<div class="feed-boxes-flex">
-  <home-record class="feed-box" *ngFor="let record of records"
-               [record]="record"
-               (onfollow)="addFollow($event)"
-               (onsahred)="sharedRecord($event)"></home-record>
+<div class="masonry">
+  <ng-template ngFor let-record [ngForOf]="records">
+    <div class="feed-box masonry__item">
+      <home-record *ngIf="record.is_track" [record]="record"
+                   (onfollow)="addFollow($event)"
+                   (onsahred)="sharedRecord($event)">
+      </home-record>
+      <app-home-article *ngIf="record.is_article"
+                        [article]="record">
+      </app-home-article>
+    </div>
+  </ng-template>
 </div>
 <div [hidden]="!sharedUrl" class="shared_popup">
   <div class="popup-close" (click)="sharedUrl = null"></div>

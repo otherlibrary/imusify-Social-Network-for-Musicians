@@ -1,44 +1,41 @@
-<div  class="feed-box">
-    <div class="feed-inn">
-
-      <div class="feed-bg">
-        <img *ngIf="record.track_image"
-             [src]="record.track_image"
-             alt="Come again shared a new song"/>
-      </div>
-
-      <div [hidden]="!record.featured" class="feed-top">
-        <div class="featured-track">Featured track</div>
-      </div>
-
-      <button class="box-btn play"
-              title="play"
-              *ngIf="!isPlayed"
-              (click)="playRecord(record)"></button>
-      <button class="box-btn pause"
-              title="pause"
-              *ngIf="isPlayed"
-              (click)="pauseRecord(record)"></button>
-
-      <div class="feed-bottom">
-        <div class="track-info">
-          <a href="#" class="subtitle">{{record.username}}</a>
-          <a href="#" class="title">{{record.title}}</a>
-        </div>
-        <div class="track-timeline">
-          <div class="action-btns">
-            <button class="action-btn like" title="like">{{record.shares}}</button>
-            |
-            <button class="action-btn share" title="share" (click)="toShared()">share</button>
-            |
-            <button class="action-btn add" (click)="toFollow()" title="add">add</button>
-          </div>
-          <div class="sound-wave">
-            <span *ngIf="record.wave" [style.background-image]="getWave()"></span>
-            <i class="duration">{{record.timelength}}</i>
-          </div>
-        </div>
-      </div>
-
+<div class="feed-inn">
+    <div class="feed-bg">
+      <img *ngIf="record.track_image"
+           [src]="record.track_image"
+           alt="Come again shared a new song"/>
     </div>
+
+    <div [hidden]="!record.featured" class="feed-top">
+      <div class="featured-track">Featured track</div>
+    </div>
+
+    <button class="box-btn play"
+            title="play"
+            *ngIf="!isPlayed"
+            (click)="playRecord(record)"></button>
+    <button class="box-btn pause"
+            title="pause"
+            *ngIf="isPlayed"
+            (click)="pauseRecord(record)"></button>
+
+    <div class="feed-bottom">
+      <div class="track-info">
+        <a href="#" class="subtitle">{{record.username}}</a>
+        <a href="#" class="title">{{record.title}}</a>
+      </div>
+      <div class="track-timeline">
+        <div class="action-btns">
+          <button class="action-btn like" title="like">{{record.shares}}</button>
+          |
+          <button class="action-btn share" title="share" (click)="toShared()">share</button>
+          |
+          <button class="action-btn add" (click)="toFollow()" title="add">add</button>
+        </div>
+        <div class="sound-wave">
+          <span *ngIf="record.wave" [style.background-image]="getWave()"></span>
+          <i class="duration">{{record.timelength}}</i>
+        </div>
+      </div>
+    </div>
+
   </div>

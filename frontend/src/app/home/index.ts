@@ -11,6 +11,7 @@ import {StaticTermsComponent} from "./static/static-terms/static-terms.component
 import {ArticlesComponent} from "./articles/articles.component";
 import {InstrumentalComponent} from "./instrumental/instrumental.component";
 import {LicenceComponent} from "./licence/licence.component";
+import {HomeArticleComponent} from "./home-article/home-article.component";
 
 export const homeComponents = [
   HomeComponent,
@@ -25,7 +26,8 @@ export const homeComponents = [
   StaticTermsComponent,
   ArticlesComponent,
   InstrumentalComponent,
-  LicenceComponent
+  LicenceComponent,
+  HomeArticleComponent
 ];
 
 export const exportsHomeComponents = [

@@ -13,7 +13,10 @@ export class RecordComponent implements OnInit, OnDestroy {
   @Output() onfollow: EventEmitter<any> = new EventEmitter();
   @Output() onsahred: EventEmitter<any> = new EventEmitter();
   @Output() onNext: EventEmitter<any> = new EventEmitter();
+
   @Input() record: IRecord;
+  @Input() isArticle: boolean;
+
   public isPlayed: boolean;
   private pausePlayerTrackSubscription: Subscription;
   private playPlayerTrackSubscription: Subscription;

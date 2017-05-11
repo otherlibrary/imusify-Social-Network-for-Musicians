@@ -12,3 +12,4 @@ export * from './upload/IUploadProgress';
 export * from './IGenre';
 export * from './IMood';
 export * from './IToastOption';
+export * from './IArticle';
