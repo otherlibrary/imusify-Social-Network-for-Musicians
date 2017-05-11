@@ -20,6 +20,7 @@ export class AudioPlayerComponent implements OnInit, OnDestroy {
   public isReady: boolean = false;
   public isBig: boolean = false;
   public isMute: boolean;
+  public currentVol: number;
   public isRecordPlayed: boolean;
   public records: IRecord[];
   public currentPlayedTrack: any = null;
@@ -100,6 +101,8 @@ export class AudioPlayerComponent implements OnInit, OnDestroy {
           this.playNextTrack();
         }
       });
+
+      this.currentVol = this.wavesurfer.getVolume();
     } else {
       this.initialize();
       this.wavesurfer.load(this.streamTrack, peaks);
@@ -142,6 +145,8 @@ export class AudioPlayerComponent implements OnInit, OnDestroy {
     this.isRecordPlayed = true;
     this.wavesurfer.play();
     this._sharedService.playPlayerTrackSubject.next(this.currentPlayedTrack);
+    //volume control
+    this.wavesurfer.setVolume(this.currentVol);
     if(this.isMute) {
       this.wavesurfer.setVolume(0);
     }
@@ -179,6 +184,17 @@ export class AudioPlayerComponent implements OnInit, OnDestroy {
   toggleVolume() {
     this.wavesurfer.toggleMute();
     this.isMute = this.wavesurfer.getMute();
+  }
+
+  changeVolume(e) {
+    let val = e.target.value;
+    this.currentVol = val;
+    this.wavesurfer.setVolume(val);
+    if(val <= 0) {
+      this.isMute = !this.isMute;
+    } else if(val > 0){
+      this.isMute = false;
+    }
   }
 
   getAudioTrackById(id: number) {
