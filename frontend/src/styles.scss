@@ -319,3 +319,51 @@ $url_6: url(/assets/css/img/player/queue.svg);
     }
   }
 }
+.btn {
+  position: relative;
+  display: inline-flex;
+  vertical-align: middle;
+  width: auto;
+  height: 46px;
+  margin-top: 20px;
+  padding: 0 15px;
+  box-sizing: border-box;
+  background: #EA3F4F;
+  border-radius: 3px;
+  font-size: 12px;
+  letter-spacing: .05em;
+  color: #fff !important;
+  cursor: pointer;
+  text-align: center;
+  align-items: center;
+  justify-content: center;
+  
+  &:hover {
+    background: #e7283a;
+  }
+}
+.edit-track-form .sbm-block {
+  .btn {
+    position: relative;
+    display: inline-flex;
+    vertical-align: middle;
+    width: auto;
+    height: 46px;
+    margin-top: 20px;
+    padding: 0 15px;
+    box-sizing: border-box;
+    background: #EA3F4F;
+    border-radius: 3px;
+    font-size: 12px;
+    letter-spacing: .05em;
+    color: #fff !important;
+    cursor: pointer;
+    text-align: center;
+    align-items: center;
+    justify-content: center;
+    
+    &:hover {
+      background: #e7283a;
+    }
+  }
+}

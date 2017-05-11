@@ -181,8 +181,8 @@
               </div>
 
               <div class="sbm-block text-center">
-                <button *ngIf="uploadTrackForm.controls.is_public.value === '1'"
-                        (click)="toggleTabs(2)">Next</button>
+                <div class="btn" *ngIf="uploadTrackForm.controls.is_public.value === '1'"
+                        (click)="toggleTabs(2)">Next</div>
                 <button type="submit"
                         *ngIf="uploadTrackForm.controls.is_public.value === '0'"
                         [disabled]="!uploadTrackForm.valid">Send</button>

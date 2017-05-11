@@ -340,7 +340,9 @@ export class EditComponent implements OnInit {
       this.uploadTrackForm.patchValue(mergeResult);
     }
 
-    let formData = this._helpersService.toStringParam((this.uploadTrackForm.value));
+    let resultForm = this.uploadTrackForm.value;
+    resultForm.release_date = JSON.stringify(this.uploadTrackForm.value.release_date);
+    let formData = this._helpersService.toStringParam((resultForm));
     this._uploadService.uploadTrackDetails(formData).subscribe(data => {
       console.log(data);
     });
