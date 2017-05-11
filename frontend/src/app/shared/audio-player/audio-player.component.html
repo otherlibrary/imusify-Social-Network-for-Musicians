@@ -1,71 +1,32 @@
-<div id="player" [class.big]="isBig">
-  <div class="queue-table-wrap">
-    <table class="song-table ar`tists">
-      <thead>
-      <tr>
-        <th>Song</th>
-        <th>Artists</th>
-      </tr>
-      </thead>
-      <tbody>
-      <tr class="active">
-        <td>Border</td>
-        <td>Come Again</td>
-      </tr>
-      <tr>
-        <td>A Sky Full Of Stars</td>
-        <td>Coldplay</td>
-      </tr>
-      <tr>
-        <td>Problem</td>
-        <td>Arianna Grade</td>
-      </tr>
-      <tr>
-        <td>Summer</td>
-        <td>Calvin Harris</td>
-      </tr>
-      <tr>
-        <td>Falling for You</td>
-        <td>The 1975</td>
-      </tr>
-      <tr>
-        <td>Sing</td>
-        <td>The 1975</td>
-      </tr>
-      <tr>
-        <td>Fancy</td>
-        <td>Ed Sheeran</td>
-      </tr>
-      <tr>
-        <td>Falling for You</td>
-        <td>The 1975</td>
-      </tr>
-      <tr>
-        <td>Sing</td>
-        <td>The 1975</td>
-      </tr>
-      <tr>
-        <td>Fancy</td>
-        <td>Ed Sheeran</td>
-      </tr>
-      <tbody>
-    </table>
+<div id="player"
+     [class.big]="isBig">
+  <div class="queue-table-wrap"
+       [class.active]="isQueue">
+    <app-track-list *ngIf="records"
+                    [trackList]="records"
+                    [currentPlayed]="currentPlayedTrack"
+                    (play)="setCurrentPlayedTrack($event)">
+    </app-track-list>
   </div>
   <!--Normal & Hover-->
   <div class="big-block" *ngIf="currentPlayedTrack">
     <div class="big-top">
         <div class="big-block__img"
              *ngFor="let record of records; let i = index"
-             [class.active]="record.id == currentPlayedTrack.id" [appAudioSlider]="record.id == currentPlayedTrack.id">
+             [class.active]="record.id == currentPlayedTrack.id"
+             [appAudioSlider]="record.id == currentPlayedTrack.id">
           <a href="#" class="top-one">
-            <span class="bg_img" [ngStyle]="{'background-image': 'url(' + record.track_image + ')'}"></span>
+            <span class="bg_img"
+                  [ngStyle]="{'background-image': 'url(' + record.track_image + ')'}"></span>
           </a>
         </div>
     </div>
     <div class="big-bot">
       <div class="track-info">
         <div class="info-left">
-          <img *ngIf="currentPlayedTrack" [src]="currentPlayedTrack.track_image" alt=""/>
+          <img *ngIf="currentPlayedTrack"
+               [src]="currentPlayedTrack.track_image"
+               alt="imagTrack"/>
         </div>
         <div class="info-right">
           <a class="title" href="#"><span>Border</span></a>
@@ -163,7 +124,9 @@
     </div>
 
     <div class="player-queue">
-      <button type="button" class="ctrl-btn btn-queue" title="Show Queue"></button>
+      <button type="button"
+              class="ctrl-btn btn-queue"
+              title="Show Queue" (click)="toggleQueue()"></button>
       <button class="ctrl-btn btn-plus"
               title="Open big"
               type="button"

@@ -1,5 +1,6 @@
 export * from "./preloader/preloader.component";
 export * from "./audio-player/audio-player.component";
+export * from "./track-list/track-list.component";
 export * from "./services/api.service";
 export * from "./services/auth.service";
 export * from "./services/emitter.service";

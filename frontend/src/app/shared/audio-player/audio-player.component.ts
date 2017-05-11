@@ -20,6 +20,7 @@ export class AudioPlayerComponent implements OnInit, OnDestroy {
   public isReady: boolean = false;
   public isBig: boolean = false;
   public isMute: boolean;
+  public isQueue: boolean;
   public currentVol: number;
   private _casheVolume: number;
   public isRecordPlayed: boolean;
@@ -241,6 +242,10 @@ export class AudioPlayerComponent implements OnInit, OnDestroy {
 
   togglePlayer() {
     this.isBig = !this.isBig;
+  }
+
+  toggleQueue() {
+    this.isQueue = !this.isQueue;
   }
 
 }

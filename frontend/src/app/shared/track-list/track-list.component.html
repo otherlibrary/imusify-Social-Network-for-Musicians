@@ -1,0 +1,16 @@
+<table class="song-table artists">
+    <thead>
+    <tr>
+      <th>Song</th>
+      <th>Artists</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr *ngFor="let track of trackList"
+        [class.active]="track.id == currentPlayed.id"
+        (click)="playTrack(track)">
+      <td>{{track.title}}</td>
+      <td>{{track.artist_name}}</td>
+    </tr>
+    <tbody>
+  </table>

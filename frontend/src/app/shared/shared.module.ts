@@ -10,6 +10,7 @@ import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {SelectModule} from "ng-select";
 import {MyDatePickerModule} from "mydatepicker";
 import {ToastyModule} from "ng2-toasty";
+import { TrackListComponent } from './track-list/track-list.component';
 
 @NgModule({
   imports: [
@@ -25,7 +26,8 @@ import {ToastyModule} from "ng2-toasty";
     ...pipes,
     ...directives,
     PreloaderComponent,
-    AudioPlayerComponent
+    AudioPlayerComponent,
+    TrackListComponent
   ],
   exports: [
     PreloaderComponent,
