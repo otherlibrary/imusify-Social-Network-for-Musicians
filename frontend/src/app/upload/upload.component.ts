@@ -116,7 +116,7 @@ export class UploadComponent implements OnInit {
     } else if (output.type === 'done') {
       console.log('output: ', output);
       let file = this.files[this.files.length - 1];
-
+    
       if (file.response.hasOwnProperty('upload_data')) {
         this._uploadService.uploadTrackInfo.file_name = file.response.upload_data.file_name;
         this._uploadService.uploadTrackInfo.title = this._cutNameExtension(file.name);
