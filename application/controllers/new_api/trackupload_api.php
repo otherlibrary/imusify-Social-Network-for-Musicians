@@ -23,6 +23,7 @@ class trackupload_api extends REST_Controller
 
     /**
      * Insert track info into database
+     * [POST /api/track-upload/upload-track-info]
      */
     public function upload_track_data_post()
     {
@@ -32,20 +33,17 @@ class trackupload_api extends REST_Controller
         $this->load->model('commonfn');
 
         $typicalValidation = 'trim|required|xss_clean';
-        $this->form_validation->set_rules('album_id', 'Album ID', $typicalValidation . '|integer', ['required' => 'You have not provided %s.']);
+        $typicalNonreqValidation = 'trim|xss_clean';
+        $this->form_validation->set_rules('album_id', 'Album ID', $typicalNonreqValidation . '|integer');
         $this->form_validation->set_rules('title', 'Title', $typicalValidation);
         $this->form_validation->set_rules('filename', 'Filename', $typicalValidation);
         $this->form_validation->set_rules('desc', 'Description', $typicalValidation);
         $this->form_validation->set_rules('genre_id', 'Genre ID', $typicalValidation . '|integer');
         $this->form_validation->set_rules('is_public', 'Public', $typicalValidation . '|integer');
-        $this->form_validation->set_rules('track_upload_type', 'Upload Type', $typicalValidation);
-        $this->form_validation->set_rules('track_upload_bpm', 'Track BPM', $typicalValidation);
-        $this->form_validation->set_rules('track_type', 'Track Type', $typicalValidation);
-        $this->form_validation->set_rules('music_vocals_y', 'Music Vocals', $typicalValidation);
-        $this->form_validation->set_rules('music_vocals_gender', 'Vocals Gender', $typicalValidation);
-        $this->form_validation->set_rules('sale_available', 'Sale Available', $typicalValidation);
-        $this->form_validation->set_rules('license_available', 'License Available', $typicalValidation);
-        $this->form_validation->set_rules('nonprofit_available', 'Nonprofit Available', $typicalValidation);
+        $this->form_validation->set_rules('track_type', 'Upload Type', $typicalValidation);
+        //$this->form_validation->set_rules('tracktype', 'Track Type', $typicalNonreqValidation);
+        //$this->form_validation->set_rules('music_vocals_y', 'Music Vocals', $typicalNonreqValidation);
+        $this->form_validation->set_rules('type_artist', 'Type Artist', $typicalNonreqValidation);
         $this->form_validation->set_rules('release_date', 'Release Date', $typicalValidation);
         if ($this->form_validation->run() == false) {
             $response = [
@@ -54,28 +52,57 @@ class trackupload_api extends REST_Controller
             $this->response($response, 200);
         }
 
-
         $userData = $this->session->userdata('user');
 
         if ($userData->id) {
             $getID3 = new getID3;
-            $trackPath = $this->trackdataservice->getTrackPath(null, $this->post('filename'));
+            $trackPath = $this->trackdataservice->getTrackPath(null, $this->post('filename'), $userData->id);
             $trackInfo = $getID3->analyze($trackPath);
             $permaLink = $this->commonfn->get_permalink($this->post('title'), "tracks", "perLink", "id");
-            $buyableType = getvalfromtbl("id", "tracktypes", "name LIKE '%" . $this->post('track_type') . "%'", "single");
 
-            $date = explode('-', $this->post('release_date'));
+            $date = json_decode($this->post('release_date'));
+            if (!empty($date)) {
+                $date = $date->date;
+            }
 
             $usageType = null;
-            if (!empty($this->post('sale_available'))) {
+
+            $saleAvailable = 'n';
+            $saleAlbumPrice = $this->post('album');
+            $saleSinglePrice = $this->post('single');
+            if (!empty($saleAlbumPrice) || !empty($saleSinglePrice)) {
+                $saleAvailable = 'y';
                 $usageType .= getvalfromtbl("id", "buy_usage_types", "type = 's'", "single") . ",";
             }
 
-            if (!empty($this->post('license_available'))) {
-                $usageType .= getvalfromtbl("id", "buy_usage_types", "type = 'l'", "single") . ",";
+            $licensingKeys = [
+                'advertising',
+                'corporate',
+                'documentaryFilm',
+                'film',
+                'software',
+                'internetVideo',
+                'liveEvent',
+                'musicHold',
+                'musicProd1k',
+                'musicProd10k',
+                'musicProd50k',
+                'musicProd51k',
+                'website',
+            ];
+
+            $licenseAvailable = 'n';
+            foreach ($licensingKeys as $key) {
+                if (!empty($this->post($key))) {
+                    $licenseAvailable = 'y';
+                    $usageType .= getvalfromtbl("id", "buy_usage_types", "type = 'l'", "single") . ",";
+                    break;
+                }
             }
 
-            if (!empty($this->post('nonprofit_available'))) {
+            $nonprofitAvailable = 'n';
+            if (!empty($this->post('nonProfit'))) {
+                $nonprofitAvailable = 'y';
                 $usageType .= getvalfromtbl("id", "buy_usage_types", "type = 'np'", "single") . ",";
             }
 
@@ -92,23 +119,37 @@ class trackupload_api extends REST_Controller
                 $permaLink,
                 $this->post('filename'),
                 $this->post('desc'),
-                $date[1], // month
-                $date[0], // day
-                $date[2], // year
+                $date->month, // month
+                $date->day, // day
+                $date->year, // year
                 $this->post('genre_id'),
                 $this->post('is_public'),
                 filesize($trackPath),
-                $this->post('track_upload_type'),
-                $this->post('track_upload_bpm'),
-                $this->trackdataservice->fetchTrackTypes($this->post('track_type')),
-                $buyableType,
+                $this->post('track_type'),
+                $trackInfo['tags']['id3v2']['bpm'][0],
+                $this->trackdataservice->fetchTrackTypes($trackInfo['fileformat']),
+                $this->trackdataservice->fetchTrackType($trackInfo['fileformat']),
                 $usageType,
-                $this->post('music_vocals_y'),
-                $this->post('music_vocals_gender'),
-                $this->post('sale_available'),
-                $this->post('license_available'),
-                $this->post('nonprofit_available')
+                $this->trackdataservice->fetchTrackType($trackInfo['fileformat']),
+                $this->post('type_artist')[0],
+                $saleAvailable,
+                $licenseAvailable,
+                $nonprofitAvailable
             );
+
+            $secondGenres = $this->post('second_genre_id');
+            if (!empty($secondGenres)) {
+                $genreIds = explode(',', $secondGenres);
+                $this->trackdataservice->addSecondaryGenres($userData->id, $trackId, $genreIds);
+            }
+
+            $moods = $this->post('pick_moods');
+            if (!empty($moods)) {
+                $moodIds = explode(',', $moods);
+                $this->trackdataservice->addMoods($userData->id, $trackId, $moodIds);
+            }
+
+            $this->trackdataservice->createLicensesFromPost($this->post(), $trackId);
 
             $result = [
                 'track_id' => $trackId,

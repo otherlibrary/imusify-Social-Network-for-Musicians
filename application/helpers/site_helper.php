@@ -1,14 +1,16 @@
-<?php if (!defined('BASEPATH')) exit('No direct script access allowed');
+<?php if (!defined('BASEPATH')) {
+    exit('No direct script access allowed');
+}
 if (!function_exists('get_template_content')) {
 
-    function get_template_content($array = [], $data, $mainId = "MainPanel", $array_string = NULL)
+    function get_template_content($array = [], $data, $mainId = "MainPanel", $array_string = null)
     {
 
         $CI =& get_instance();
         $CI->load->library('Tmpl');
         $CI->load->model('commonfn');
         $ajax = $CI->config->item('ajax');
-        $temp_uimg = NULL;
+        $temp_uimg = null;
         //var_dump($CI->session->all_userdata());exit;
         if ($data != '') {
             if (isset($CI->session->userdata('user')->id) && $CI->session->userdata('user')->id > 0) {
@@ -25,8 +27,9 @@ if (!function_exists('get_template_content')) {
                 $temp_uimg = end($temp_array);*/
             }
 
-            if ($CI->router->fetch_class() != "" || $CI->router->fetch_class() != NULL)
+            if ($CI->router->fetch_class() != "" || $CI->router->fetch_class() != null) {
                 $classname = $CI->router->fetch_class();
+            }
             $title = ($CI->config->item('title') != '' && $CI->config->item('title') != SITE_NM) ? $CI->config->item('title') . " - " . SITE_NM : $CI->config->item('title');
             $data1 = [
                 'title' => SITE_NM,
@@ -128,7 +131,7 @@ if (!function_exists('get_client_ip')) {
     {
         if (!empty($_SERVER['HTTP_CLIENT_IP'])) {   //check ip from share internet
             $ip = $_SERVER['HTTP_CLIENT_IP'];
-        } elseif (!empty($_SERVER['HTTP_X_FORWARDED_FOR'])) {   //to check ip is pass from proxy
+        } else if (!empty($_SERVER['HTTP_X_FORWARDED_FOR'])) {   //to check ip is pass from proxy
             $ip = $_SERVER['HTTP_X_FORWARDED_FOR'];
         } else {
             $ip = $_SERVER['REMOTE_ADDR'];
@@ -141,13 +144,13 @@ if (!function_exists('get_client_ip')) {
 /*get value from table*/
 if (!function_exists('getvalfromtbl')) {
     /*Returns ip address*/
-    function getvalfromtbl($column = "*", $table, $cond, $param = "multiple", $orderby = NULL)
+    function getvalfromtbl($column = "*", $table, $cond, $param = "multiple", $orderby = null)
     {
         $CI =& get_instance();
-        if ($cond != NULL) {
+        if ($cond != null) {
             $cond = "WHERE  " . $cond;
         }
-        if ($orderby != NULL) {
+        if ($orderby != null) {
             $orderby = " ORDER BY " . $orderby;
         }
         $query = $CI->db->query("SELECT " . $column . " FROM " . $table . "  " . $cond . "  " . $orderby . " LIMIT 1");
@@ -168,17 +171,17 @@ if (!function_exists('getvalfromtbl')) {
 /*function for dumping value*/
 
 if (!function_exists('dump')) {
-    function dump($arr = NULL, $session = NULL)
+    function dump($arr = null, $session = null)
     {
 
-        if ($session == "session") {
+        if (!empty($session)) {
             $CI =& get_instance();
             print_r($CI->session->all_userdata());
         } else {
             if (!empty($arr)) {
-                echo "<pre>";
+                echo '<pre>';
                 print_r($arr);
-                echo "</pre>";
+                exit;
             }
         }
     }
@@ -200,7 +203,9 @@ function sortAndIndexArray($aArray, $fld)
     foreach ($aArray as $i => $sWord) {
         $aFinal[strtoupper(substr($sWord[$fld], 0, 1))][] = $aArray[$i];
     }
-    if (isset($aFinal)) ksort($aFinal);
+    if (isset($aFinal)) {
+        ksort($aFinal);
+    }
 
     return $aFinal;
 }
@@ -260,45 +265,51 @@ if (!function_exists('timeago')) {
         $seconds = floor($datediff);
         //year checker
         if ($difftext == "") {
-            if ($years > 1)
+            if ($years > 1) {
                 $difftext = $years . " years ago";
-            elseif ($years == 1)
+            } else if ($years == 1) {
                 $difftext = $years . " year ago";
+            }
         }
         //month checker
         if ($difftext == "") {
-            if ($months > 1)
+            if ($months > 1) {
                 $difftext = $months . " months ago";
-            elseif ($months == 1)
+            } else if ($months == 1) {
                 $difftext = $months . " month ago";
+            }
         }
         //month checker
         if ($difftext == "") {
-            if ($days > 1)
+            if ($days > 1) {
                 $difftext = $days . " days ago";
-            elseif ($days == 1)
+            } else if ($days == 1) {
                 $difftext = $days . " day ago";
+            }
         }
         //hour checker
         if ($difftext == "") {
-            if ($hours > 1)
+            if ($hours > 1) {
                 $difftext = $hours . " hours ago";
-            elseif ($hours == 1)
+            } else if ($hours == 1) {
                 $difftext = $hours . " hour ago";
+            }
         }
         //minutes checker
         if ($difftext == "") {
-            if ($minutes > 1)
+            if ($minutes > 1) {
                 $difftext = $minutes . " minutes ago";
-            elseif ($minutes == 1)
+            } else if ($minutes == 1) {
                 $difftext = $minutes . " minute ago";
+            }
         }
         //seconds checker
         if ($difftext == "") {
-            if ($seconds > 1)
+            if ($seconds > 1) {
                 $difftext = $seconds . " seconds ago";
-            elseif ($seconds == 1)
+            } else if ($seconds == 1) {
                 $difftext = $seconds . " second ago";
+            }
         }
 
         return $difftext;
@@ -327,7 +338,7 @@ if (!function_exists('csv_enter')) {
         $exp_array1 = explode("/", $csvfilepath);
         $file_oname = end($exp_array1);
         $i = 0;
-        while (($data = fgetcsv($csvfile, 1000, ",")) !== FALSE) {
+        while (($data = fgetcsv($csvfile, 1000, ",")) !== false) {
             if (!empty($data) && $data[0] != '') {
                 $data_array[$i][$columnname] = $data[0];
                 $data_array[$i]["parentId"] = '26';
@@ -347,13 +358,20 @@ if (!function_exists('nice_number')) {
         $n = (0 + str_replace(",", "", $n));
 
         /*is this a number?*/
-        if (!is_numeric($n)) return false;
+        if (!is_numeric($n)) {
+            return false;
+        }
 
         /*now filter it;*/
-        if ($n > 1000000000000) return round(($n / 1000000000000), 1) . ' trillion';
-        else if ($n > 1000000000) return round(($n / 1000000000), 1) . ' BILLION';
-        else if ($n > 1000000) return round(($n / 1000000), 1) . ' MILLION';
-        else if ($n > 1000) return round(($n / 1000), 1) . ' THOUSAND';
+        if ($n > 1000000000000) {
+            return round(($n / 1000000000000), 1) . ' trillion';
+        } else if ($n > 1000000000) {
+            return round(($n / 1000000000), 1) . ' BILLION';
+        } else if ($n > 1000000) {
+            return round(($n / 1000000), 1) . ' MILLION';
+        } else if ($n > 1000) {
+            return round(($n / 1000), 1) . ' THOUSAND';
+        }
 
         return number_format($n);
     }
