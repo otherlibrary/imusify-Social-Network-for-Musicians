@@ -21,6 +21,7 @@ export class AudioPlayerComponent implements OnInit, OnDestroy {
   public isBig: boolean = false;
   public isMute: boolean;
   public currentVol: number;
+  private _casheVolume: number;
   public isRecordPlayed: boolean;
   public records: IRecord[];
   public currentPlayedTrack: any = null;
@@ -184,6 +185,13 @@ export class AudioPlayerComponent implements OnInit, OnDestroy {
   toggleVolume() {
     this.wavesurfer.toggleMute();
     this.isMute = this.wavesurfer.getMute();
+    if(this.currentVol != 0) {
+      this._casheVolume = this.currentVol;
+      this.currentVol = 0;
+    } else {
+      this.currentVol = this._casheVolume;
+    }
+
   }
 
   changeVolume(e) {
