@@ -372,6 +372,7 @@ $url_6: url(/assets/css/img/player/queue.svg);
   -moz-column-gap: 0;
   -webkit-column-gap: 0;
   column-gap: 0;
+  
   &__item {
     display: inline-block;
     background: #fff;
@@ -411,10 +412,8 @@ $url_6: url(/assets/css/img/player/queue.svg);
     column-count: 4;
   }
 }
-.feed-box .feed-inn {
-  width: 100%;
-}
-
-.feed-box .sound-wave {
+.feed-box .action-btns,
+.feed-box:hover .action-btns .action-btn, .feed-box.active .action-btns .action-btn,
+.feed-box:hover .sound-wave, .feed-box.active .sound-wave {
   transform: none !important;
 }
