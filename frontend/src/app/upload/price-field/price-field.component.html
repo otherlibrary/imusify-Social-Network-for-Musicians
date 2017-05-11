@@ -5,7 +5,8 @@
     <i></i>
   </label>
   <div class="price-btn_wrap">
-    <button class="price-btn"
+    <button type="button"
+            class="price-btn"
             [class.active]="priceStatusCheck"
             [class.hidden]="!priceStatusCheck && priceReady"
             (click)="togglePrice()">
