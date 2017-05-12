@@ -8,6 +8,7 @@ import {IMyOptions} from "mydatepicker";
 import {LocalStorageService} from "../../shared/services/local-storage.service";
 import * as _ from 'lodash';
 import {HelpersService} from "../../shared/services/helpers.service";
+import {SharedService} from "../../shared/shared.service";
 
 function base64ArrayBuffer(arrayBuffer) {
   let base64 = '';
@@ -180,7 +181,8 @@ export class EditComponent implements OnInit {
     private _uploadService: UploadService,
     private fb: FormBuilder,
     private _localStorageService: LocalStorageService,
-    private _helpersService: HelpersService
+    private _helpersService: HelpersService,
+    private _sharedService: SharedService
   ) {}
 
   ngOnInit() {
@@ -347,8 +349,30 @@ export class EditComponent implements OnInit {
     resultForm.release_date = JSON.stringify(release_date);
 
     let formData = this._helpersService.toStringParam((resultForm));
-    this._uploadService.uploadTrackDetails(formData).subscribe(data => {
-      console.log(data);
+    this._uploadService.uploadTrackDetails(formData).subscribe(res => {
+      if(res.hasOwnProperty('track_id')) {
+        if(res.id != 0) {
+          this._sharedService.notificationSubject.next({
+            title: 'Save file',
+            msg: 'Success save',
+            type: 'success'
+          });
+          //update view
+          this._uploadService.editPopupSubject.next(false);
+        } else {
+          this._sharedService.notificationSubject.next({
+            title: 'Save file',
+            msg: 'Error save',
+            type: 'error'
+          });
+        }
+      } else {
+        this._sharedService.notificationSubject.next({
+          title: 'Save file',
+          msg: 'Error save',
+          type: 'error'
+        });
+      }
     });
     //TODO(AlexSol): upload image (convert array base64 to file)
     // let imageData = {

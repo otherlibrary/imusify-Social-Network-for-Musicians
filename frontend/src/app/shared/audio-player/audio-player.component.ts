@@ -43,6 +43,7 @@ export class AudioPlayerComponent implements OnInit, OnDestroy {
     this.getCurrentPlayList();
 
     this.initialize = _.once(() => {
+      console.log(this.wavesurfer);
       this.wavesurfer.on('ready', () => {
         this.playTrack();
       });
@@ -52,11 +53,15 @@ export class AudioPlayerComponent implements OnInit, OnDestroy {
      * @type {Subscription}
      */
     this.subscriberPlaySubject = this._sharedService.playTrackSubject.subscribe((track: IRecord) => {
-      if(track.id === this.currentPlayedTrack.id) {
-        this.playTrack();
+      if(this.currentPlayedTrack) {
+        if(track.id === this.currentPlayedTrack.id) {
+          this.playTrack();
+        } else {
+          this.setCurrentPlayedTrack(track);
+          this.initialize();
+        }
       } else {
         this.setCurrentPlayedTrack(track);
-        this.initialize();
       }
     });
 
@@ -130,6 +135,7 @@ export class AudioPlayerComponent implements OnInit, OnDestroy {
    * @param track
    */
   setCurrentPlayedTrack(track) {
+    console.log('set current play track');
     if(!track) {
       console.warn('empty track');
       return;

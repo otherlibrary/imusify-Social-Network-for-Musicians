@@ -2,6 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {HomeService} from "../home.service";
 import {EmitterService} from "../../shared/services/emitter.service";
 import {IRecord, ITracksData} from "../../interfases";
+import * as _ from 'lodash';
 
 @Component({
   selector: 'app-all-news',
@@ -25,7 +26,8 @@ export class AllNewsComponent implements OnInit {
     EmitterService.get('TOGGLE_PRELOADER').emit(true);
     this._homeService.getAllNews().subscribe(data => {
       this.homeData = data;
-      this.records = data.records;
+      this.records = _.sortBy(data.records, 'id');
+      console.log(this.records);
 
       EmitterService.get('TOGGLE_PRELOADER').emit(false);
     });

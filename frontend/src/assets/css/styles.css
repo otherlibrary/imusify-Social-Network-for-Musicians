@@ -6991,7 +6991,7 @@ body:not(.page-load) .profile-inner .prof-top-bg {
 }
 
 .browse-inner {
-  padding: 57px 5px 50px 20px;
+  padding: 57px 5px 50px 0;
   box-sizing: border-box;
 }
 

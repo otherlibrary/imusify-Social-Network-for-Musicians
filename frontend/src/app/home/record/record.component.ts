@@ -64,9 +64,9 @@ export class RecordComponent implements OnInit, OnDestroy {
   }
 
   playRecord(record): void {
-    this._sharedService.playTrackSubject.next(record);
-    this.isPlayed = true;
-    this.onNext.emit(record);
+      this._sharedService.playTrackSubject.next(record);
+      this.isPlayed = true;
+      this.onNext.emit(record);
   }
 
   pauseRecord(record): void {

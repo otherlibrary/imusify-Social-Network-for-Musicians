@@ -20,7 +20,7 @@ export class SharedService {
   }
 
   getMusic(): Observable<ITracksData> {
-    return this._apiService.post(environment.musicList, environment.creds);
+    return this._apiService.post(environment.host, environment.creds);
   }
 
   getTrackLink(url) {
