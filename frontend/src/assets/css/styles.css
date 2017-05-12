@@ -5231,9 +5231,11 @@ body:not(.page-load) .profile-inner .prof-top-bg {
 }
 
 .uploads {
-  display: flex;
-  flex-wrap: wrap;
   margin-top: 40px;
+}
+.inner-scroll .uploads .tab-panel {
+  position: relative;
+  top: 0;
 }
 
 .uploads .upload-item {
@@ -5517,6 +5519,11 @@ body:not(.page-load) .profile-inner .prof-top-bg {
 .upload-audio-item .audio-btn.play::after {
   left: 4px;
   background: url("img/feed-boxes/play.svg") 50% 50% no-repeat;
+  background-size: contain;
+}
+
+.upload-audio-item .audio-btn.pause::after {
+  background: url('img/feed-boxes/pause-button.svg') 50% 50% no-repeat;
   background-size: contain;
 }
 
@@ -6991,7 +6998,7 @@ body:not(.page-load) .profile-inner .prof-top-bg {
 }
 
 .browse-inner {
-  padding: 57px 5px 50px 20px;
+  padding: 57px 5px 50px 0;
   box-sizing: border-box;
 }
 

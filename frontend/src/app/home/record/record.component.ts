@@ -13,6 +13,7 @@ export class RecordComponent implements OnInit, OnDestroy {
   @Output() onfollow: EventEmitter<any> = new EventEmitter();
   @Output() onsahred: EventEmitter<any> = new EventEmitter();
   @Output() onNext: EventEmitter<any> = new EventEmitter();
+  @Output() onPlay: EventEmitter<any> = new EventEmitter();
 
   @Input() record: IRecord;
   @Input() isArticle: boolean;
@@ -64,9 +65,10 @@ export class RecordComponent implements OnInit, OnDestroy {
   }
 
   playRecord(record): void {
-    this._sharedService.playTrackSubject.next(record);
-    this.isPlayed = true;
-    this.onNext.emit(record);
+      this._sharedService.playTrackSubject.next(record);
+      this.isPlayed = true;
+      this.onNext.emit(record);
+      this.onPlay.emit(record);
   }
 
   pauseRecord(record): void {

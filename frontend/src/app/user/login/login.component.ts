@@ -4,6 +4,7 @@ import {Router} from '@angular/router';
 import {FormGroup, FormBuilder, Validators} from '@angular/forms';
 import {User} from './User'
 import {EmitterService} from "../../shared/services/emitter.service";
+import {SharedService} from "../../shared/shared.service";
 
 
 @Component({
@@ -36,7 +37,7 @@ export class LoginComponent implements OnInit {
     constructor(private _authService: AuthService,
                 private _router: Router,
                 private fb: FormBuilder,
-                private _emitterService: EmitterService) {
+                private _sharedService: SharedService) {
     }
 
     ngOnInit() {
@@ -80,21 +81,23 @@ export class LoginComponent implements OnInit {
     // TODO опрацювати помилки по всьому сайту
     login() {
         EmitterService.get('TOGGLE_PRELOADER').emit(true);
-
         this._authService.login(this.userLoginForm.value).subscribe(data => {
-            // отправляем данные пользователя в апп компонент для того что б не перезагружать страницу
             EmitterService.get('LOGIN').emit(data);
-
-            // сохраняем дание пользователя в localStorge
             localStorage.setItem('auth_data', JSON.stringify(data));
-
-            //закриваем окно авторизации
             this._router.navigate([{outlets: {popup: null}}]);
-
             EmitterService.get('TOGGLE_PRELOADER').emit(false);
+            this._sharedService.notificationSubject.next({
+                title: 'Sign in',
+                msg: 'success',
+                type: 'success'
+            });
         }, err => {
             EmitterService.get('TOGGLE_PRELOADER').emit(false);
-            console.log(err);
+            this._sharedService.notificationSubject.next({
+                title: 'Sign in',
+                msg: err.error,
+                type: 'error'
+            });
         })
     }
 

@@ -1,4 +1,4 @@
-<div id="player"
+<div *ngIf="currentPlayedTrack" id="player"
      [class.big]="isBig">
   <div class="queue-table-wrap"
        [class.active]="isQueue">
@@ -9,7 +9,7 @@
     </app-track-list>
   </div>
   <!--Normal & Hover-->
-  <div class="big-block" *ngIf="currentPlayedTrack">
+  <div class="big-block">
     <div class="big-top">
         <div class="big-block__img"
              *ngFor="let record of records; let i = index"

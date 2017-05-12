@@ -16,11 +16,15 @@ export class SharedService {
   //Notification
   public notificationSubject: Subject<Object> = new Subject<Object>();
 
+  //set playlist in player
+  public setPlaylistSubject: Subject<Object> = new Subject<Object>();
+
+
   constructor(private _apiService: ApiService) {
   }
 
   getMusic(): Observable<ITracksData> {
-    return this._apiService.post(environment.musicList, environment.creds);
+    return this._apiService.post('/', environment.creds);
   }
 
   getTrackLink(url) {

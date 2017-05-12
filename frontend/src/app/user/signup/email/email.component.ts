@@ -6,6 +6,7 @@ import {User} from "./User";
 import {HelpersService} from "../../../shared/services/helpers.service";
 import {IMyOptions} from 'mydatepicker';
 import {EmitterService} from "../../../shared/services/emitter.service";
+import {SharedService} from "../../../shared/shared.service";
 
 @Component({
     selector: 'app-email',
@@ -20,9 +21,11 @@ export class EmailComponent implements OnInit {
         {value: 'female', label: 'Female'}
     ];
 
-    constructor(private _userService: AuthService, private _router: Router, private helpers: HelpersService, private fb: FormBuilder) {
-
-    }
+    constructor(private _userService: AuthService,
+                private _router: Router,
+                private helpers: HelpersService,
+                private fb: FormBuilder,
+                private _sharedService: SharedService) {}
 
     ngOnInit() {
         this.buildForm();
@@ -138,7 +141,6 @@ export class EmailComponent implements OnInit {
             }
         }
         let dataStr = this.helpers.toStringParam(data);
-
         this._userService.signUp(dataStr).subscribe(data => {
             EmitterService.get('LOGIN').emit(data);
 
@@ -147,6 +149,19 @@ export class EmailComponent implements OnInit {
 
             EmitterService.get('TOGGLE_PRELOADER').emit(false);
             this._router.navigate([{outlets: {popup: null}}]);
+
+            this._sharedService.notificationSubject.next({
+                title: 'Sign up',
+                msg: 'sign up success',
+                type: 'success'
+            });
+        }, err => {
+            EmitterService.get('TOGGLE_PRELOADER').emit(false);
+            this._sharedService.notificationSubject.next({
+                title: 'Sign up',
+                msg: err.error,
+                type: 'error'
+            });
         });
         return false;
     }
