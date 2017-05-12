@@ -274,9 +274,11 @@ export class EditComponent implements OnInit {
       is_public: "1"
     });
 
-    //sound image
+    //TODO sound image
     if (this._uploadService.trackImage) {
-      this.trackImage = `data:${this._uploadService.trackImage.format};base64,${base64ArrayBuffer(this._uploadService.trackImage.data)}`;
+      this.trackImage = `data:${this._uploadService.trackImage.file.format};base64,${base64ArrayBuffer(this._uploadService.trackImage.file.data)}`;
+      this._uploadService.trackImage.file = this.trackImage;
+      console.log(this._uploadService.trackImage);
     }
   }
 
@@ -350,18 +352,19 @@ export class EditComponent implements OnInit {
     let release_date = this.uploadTrackForm.value.release_date;
     let resultForm = JSON.parse(resultFormJSON);
     resultForm.release_date = JSON.stringify(release_date);
-
     let formData = this._helpersService.toStringParam((resultForm));
+
+    //save track info
     this._uploadService.uploadTrackDetails(formData).subscribe(res => {
       if(res.hasOwnProperty('track_id')) {
-        if(res.id != 0) {
+        if(res.track_id != 0) {
           this._sharedService.notificationSubject.next({
             title: 'Save file',
             msg: 'Success save',
             type: 'success'
           });
-          //update view
-          this._uploadService.editPopupSubject.next(false);
+          //upload image
+          this.submitImage(res.track_id);
         } else {
           this._sharedService.notificationSubject.next({
             title: 'Save file',
@@ -378,13 +381,18 @@ export class EditComponent implements OnInit {
       }
       this.isSend = false;
     });
-    //TODO(AlexSol): upload image (convert array base64 to file)
-    // let imageData = {
-    //   filename: this._uploadService.uploadTrackInfo.file_name,
-    //   image: this._uploadService.trackImage
-    // };
-    //
-    // this._uploadService.uploadImageTrack(imageData);
+  }
+
+  public submitImage(trackId) {
+    this._uploadService.trackImage.track_id = trackId;
+    let req = this._helpersService.toStringParam(this._uploadService.trackImage);
+    this._uploadService.uploadImageTrack(req).subscribe(res => {
+      console.log(res);
+      //update view
+      this._uploadService.editPopupSubject.next(false);
+    }, err => {
+      console.log(err);
+    })
   }
 
   public toggleTabs(tab) {
@@ -398,9 +406,9 @@ export class EditComponent implements OnInit {
       reader.onload = (event: any) => {
         //TODO upload image track
         this.trackImage = event.target.result;
-        this._uploadService.trackImage = event.target.result;
+        this._uploadService.trackImage.file = event.target.result;
+        this._uploadService.trackImage.type = 'base64';
       };
-
       reader.readAsDataURL(event.target.files[0]);
     }
   }

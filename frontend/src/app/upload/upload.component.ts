@@ -76,10 +76,12 @@ export class UploadComponent implements OnInit {
       onSuccess: (tag) => {
         let tags = tag.tags;
         if ("picture" in tags) {
-          this._uploadService.trackImage = tags.picture;
-          //TODO upload image track
+          console.log(tags.picture);
+          this._uploadService.trackImage.file = tags.picture;
+          this._uploadService.trackImage.type = 'base64';
         } else {
-          this._uploadService.trackImage = null;
+          this._uploadService.trackImage.file = null;
+          this._uploadService.trackImage.type = '';
         }
       },
       onError: (error) => {

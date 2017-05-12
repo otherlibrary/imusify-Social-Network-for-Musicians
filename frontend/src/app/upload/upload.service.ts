@@ -16,7 +16,9 @@ export class UploadService {
   constructor(private _apiService: ApiService) {
     this.uploadTrackInfo = new UploadTrackInfo();
     this.trackImage = {
-      data: ''
+      track_id: '',
+      file: '',
+      type: ''
     };
   }
 
@@ -32,8 +34,8 @@ export class UploadService {
     return this._apiService.post(environment.uploadTrackInfo, formData);
   }
 
-  uploadImageTrack(img) {
-    return this._apiService.post(environment.uploadTrackImage, img);
+  uploadImageTrack(imgData) {
+    return this._apiService.post(environment.uploadTrackImage, imgData);
   }
 
 }
