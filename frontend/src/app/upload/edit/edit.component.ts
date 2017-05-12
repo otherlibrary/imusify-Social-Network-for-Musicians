@@ -71,6 +71,7 @@ export class EditComponent implements OnInit {
   @Input() trackTypesList: any[];
   @Input() moodsList: IMood[];
 
+  public isSend: boolean = false;
   public currentTab: number = 1;
   public saleStatus: boolean = false;
   public licensingStatus: boolean = false;
@@ -331,7 +332,9 @@ export class EditComponent implements OnInit {
   }
 
   public onSubmit(e) {
+    this.isSend = true;
     e.preventDefault();
+
     if(!this.nonProfitStatus) {
       let mergeResult = _.merge(this.uploadTrackForm.value, this.sellData);
       mergeResult.waveform = this._uploadService.uploadTrackInfo.waveform;
@@ -373,6 +376,7 @@ export class EditComponent implements OnInit {
           type: 'error'
         });
       }
+      this.isSend = false;
     });
     //TODO(AlexSol): upload image (convert array base64 to file)
     // let imageData = {
