@@ -275,7 +275,7 @@ export class EditComponent implements OnInit {
     });
 
     //TODO sound image
-    if (this._uploadService.trackImage) {
+    if (this._uploadService.trackImage.file) {
       this.trackImage = `data:${this._uploadService.trackImage.file.format};base64,${base64ArrayBuffer(this._uploadService.trackImage.file.data)}`;
       this._uploadService.trackImage.file = this.trackImage;
       console.log(this._uploadService.trackImage);

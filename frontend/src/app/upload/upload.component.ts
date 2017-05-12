@@ -75,13 +75,11 @@ export class UploadComponent implements OnInit {
     jsmediatags.read(file, {
       onSuccess: (tag) => {
         let tags = tag.tags;
+        this._uploadService.trackImage.type = 'base64';
         if ("picture" in tags) {
-          console.log(tags.picture);
           this._uploadService.trackImage.file = tags.picture;
-          this._uploadService.trackImage.type = 'base64';
         } else {
           this._uploadService.trackImage.file = null;
-          this._uploadService.trackImage.type = '';
         }
       },
       onError: (error) => {
@@ -124,6 +122,7 @@ export class UploadComponent implements OnInit {
         this._uploadService.uploadTrackInfo.file_name = file.response.upload_data.file_name;
         this._uploadService.uploadTrackInfo.title = this._cutNameExtension(file.name);
         this._uploadService.uploadTrackInfo.track_id = file.id;
+
         let t = Observable.timer(300).subscribe(() => {
           this._uploadService.editPopupSubject.next(true);
           t.unsubscribe();
