@@ -159,8 +159,30 @@ class trackupload_api extends REST_Controller
         }
     }
 
-    public function upload_track_img()
+    public function upload_track_img_post()
     {
+        $this->load->library('UploadService');
+        $this->load->library('form_validation');
 
+        $this->form_validation->set_rules('track_id', 'track_id', 'trim|required|xss_clean|integer');
+        $this->form_validation->set_rules('type', 'type', 'trim|required|xss_clean');
+
+        if ($this->form_validation->run() == false) {
+            $response = [
+                'errors' => $this->validation_errors(),
+            ];
+            $this->response($response, 200);
+        }
+
+        $userData = $this->session->userdata('user');
+        if (!empty($userData->id)) {
+            $result = $this->uploadservice->uploadTrackImage(
+                $this->post('track_id'),
+                $this->post('type') == 'base64' ? true : false,
+                $this->post()
+            );
+
+            $this->response($result, 200);
+        }
     }
 }
