@@ -121,6 +121,7 @@ $route['api/track-details/show-tracks-by-tag/(:num)/(:any)'] = 'new_api/trackdet
 /* New Track Upload API */
 $route['api/track-upload/upload-track-file'] = 'new_api/trackupload_api/upload_track/format/json';
 $route['api/track-upload/upload-track-info'] = 'new_api/trackupload_api/upload_track_data/format/json';
+$route['api/track-upload/upload-track-img'] = 'new_api/trackupload_api/upload_track_img/format/json';
 
 /* New Users API */
 $route['api/user/check-auth'] = 'api/user_api/check_auth/format/json';

@@ -123,7 +123,7 @@ class trackupload_api extends REST_Controller
                 $date->day, // day
                 $date->year, // year
                 $this->post('genre_id'),
-                $this->post('is_public'),
+                $this->post('is_public') ? 'y' : 'n',
                 filesize($trackPath),
                 $this->post('track_type'),
                 $trackInfo['tags']['id3v2']['bpm'][0],
@@ -157,5 +157,10 @@ class trackupload_api extends REST_Controller
 
             $this->response($result, 200);
         }
+    }
+
+    public function upload_track_img()
+    {
+
     }
 }
