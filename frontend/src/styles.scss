@@ -368,6 +368,10 @@ $url_6: url(/assets/css/img/player/queue.svg);
   }
 }
 
+button:disabled {
+  background: #ccc !important;
+}
+
 .masonry {
   -moz-column-gap: 0;
   -webkit-column-gap: 0;
@@ -420,5 +424,20 @@ $url_6: url(/assets/css/img/player/queue.svg);
 }
 
 .main {
-  padding-bottom: 50px;
+  padding-bottom: 40px;
+}
+
+.loader-spinner {
+  display: block;
+  border: 3px solid #f3f3f3;
+  border-top: 3px solid #c23a48;
+  border-radius: 50%;
+  width: 10px;
+  height: 10px;
+  animation: loader-spinner 2s linear infinite;
+}
+
+@keyframes loader-spinner {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
 }

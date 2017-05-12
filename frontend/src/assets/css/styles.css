@@ -5522,6 +5522,11 @@ body:not(.page-load) .profile-inner .prof-top-bg {
   background-size: contain;
 }
 
+.upload-audio-item .audio-btn.pause::after {
+  background: url('img/feed-boxes/pause-button.svg') 50% 50% no-repeat;
+  background-size: contain;
+}
+
 .upload-audio-item .audio-btn:hover {
   border: 1px solid rgba(255, 255, 255, 0.6);
 }

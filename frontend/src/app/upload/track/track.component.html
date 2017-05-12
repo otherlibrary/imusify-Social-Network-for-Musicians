@@ -1,51 +1,59 @@
-<article *ngIf="track" class="upload-audio-item">
+<article class="upload-audio-item">
     <div class="upload-img">
         <div class="img-container">
-            <img [src]="track.track_image" alt="">
+            <img [src]="record.track_image" alt="">
         </div>
-        <button class="audio-btn play" title="play"></button>
+        <!--<button class="audio-btn play" title="play"></button>-->
+        <button class="audio-btn play"
+                title="play"
+                *ngIf="!isPlayed"
+                (click)="playRecord(record)"></button>
+        <button class="audio-btn pause"
+                title="pause"
+                *ngIf="isPlayed"
+                (click)="pauseRecord(record)"></button>
     </div>
     <div class="audio-content">
         <div class="song-info-head">
             <div class="left-part">
                 <div class="song-info-title">Track info</div>
-                <span class="song-added">Added on {{track.createdDate}}</span>
+                <span class="song-added">Added on {{record.createdDate}}</span>
             </div>
             <div class="right-part">
-                <a class="song-options edit" href="#" [routerLink]="['edit/'+ track.id]">edit</a>
+                <a class="song-options edit" href="#" [routerLink]="['edit/'+ record.id]">edit</a>
                 <i class="sep" style="top:0;"></i>
                 <button class="song-options remove">remove</button>
             </div>
         </div>
         <div class="song-info-content">
             <div class="row-data">
-                <div class="row-head left">{{track.main_title}}</div>
-                {{track.title}}
+                <div class="row-head left">{{record.main_title}}</div>
+                {{record.title}}
             </div>
             <div class="row-data">
                 <div class="row-head ico-time"></div>
-                {{track.timelength}}
+                {{record.timelength}}
             </div>
             <div class="row-data">
                 <div class="row-head">plays</div>
-                {{track.plays}}
+                {{record.plays}}
             </div>
             <div class="row-data">
                 <div class="row-head">likes</div>
-                {{track.likes}}
+                {{record.likes}}
             </div>
             <div class="row-data">
                 <div class="row-head">comments</div>
-                {{track.comments}}
+                {{record.comments}}
             </div>
             <div class="row-data">
                 <div class="row-head">shares</div>
-                {{track.shares}}
+                {{record.shares}}
             </div>
         </div>
         <div class="song-tags">
-            <div class="tags-title" [hidden]="!track.tags">Tags</div>
-            <a class="song-tag" href="#" *ngFor="let tag of track.tags">{{tag}}</a>
+            <div class="tags-title" [hidden]="!record.tags">Tags</div>
+            <a class="song-tag" href="#" *ngFor="let tag of record.tags">{{tag}}</a>
         </div>
     </div>
 </article>
