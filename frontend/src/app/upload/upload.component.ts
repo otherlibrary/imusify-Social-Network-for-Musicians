@@ -118,6 +118,7 @@ export class UploadComponent implements OnInit {
       let file = this.files[this.files.length - 1];
 
       if (file.response.hasOwnProperty('upload_data')) {
+        //file data
         this._uploadService.uploadTrackInfo.file_name = file.response.upload_data.file_name;
         this._uploadService.uploadTrackInfo.title = this._cutNameExtension(file.name);
         this._uploadService.uploadTrackInfo.track_id = file.id;
@@ -125,6 +126,8 @@ export class UploadComponent implements OnInit {
           this._uploadService.editPopupSubject.next(true);
           t.unsubscribe();
         });
+
+        //notification
         this._sharedService.notificationSubject.next({
           title: 'Upload file',
           msg: 'Success upload',
