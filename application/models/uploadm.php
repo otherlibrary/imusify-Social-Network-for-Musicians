@@ -803,7 +803,7 @@ Class uploadm extends CI_Model
 
 
         }
-        $song_name_ret["track_link"] = base_url() . $user_data->profileLink . "/" . $song_name[0]["perLink"];
+        $song_name_ret["trackLink"] = base_url() . $user_data->profileLink . "/" . $song_name[0]["perLink"];
         $song_name_ret["editid"] = $song_name[0]["id"];
 
         /**/
