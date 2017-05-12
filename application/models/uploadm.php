@@ -803,7 +803,7 @@ Class uploadm extends CI_Model
 
 
         }
-        $song_name_ret["trackLink"] = base_url() . $user_data->profileLink . "/" . $song_name[0]["perLink"];
+        $song_name_ret["track_link"] = base_url() . $user_data->profileLink . "/" . $song_name[0]["perLink"];
         $song_name_ret["editid"] = $song_name[0]["id"];
 
         /**/
@@ -886,7 +886,7 @@ Class uploadm extends CI_Model
 
         foreach ($query->result_array() as $row) {
             $row["track_image"] = $this->commonfn->get_photo('t', $row["id"]);
-            $row["track_link"] = base_url() . $row["userperlink"] . "/" . $row["perLink"];
+            $row["trackLink"] = base_url() . $row["userperlink"] . "/" . $row["perLink"];
             $row["editid"] = $row["id"];
             $row["edittype"] = "t";
             $row["main_title"] = $row["title"];
