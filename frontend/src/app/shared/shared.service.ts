@@ -16,6 +16,10 @@ export class SharedService {
   //Notification
   public notificationSubject: Subject<Object> = new Subject<Object>();
 
+  //set playlist in player
+  public setPlaylistSubject: Subject<Object> = new Subject<Object>();
+
+
   constructor(private _apiService: ApiService) {
   }
 

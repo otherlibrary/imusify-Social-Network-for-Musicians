@@ -40,6 +40,11 @@ export class AudioPlayerComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit() {
+    this._sharedService.setPlaylistSubject.subscribe((playlist: IRecord[]) => {
+      console.log('playlist', playlist);
+      this.records = playlist;
+    });
+
     this.getCurrentPlayList();
 
     this.initialize = _.once(() => {

@@ -29,4 +29,6 @@ export interface IRecord {
   user_image?: string
   wave?: string
   waveform?: string
+  likes?: string
+  tags?: string[]
 }
