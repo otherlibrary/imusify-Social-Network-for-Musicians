@@ -58,7 +58,8 @@ class TrackDataService
         $track_musician_type = 'm',
         $sale_available = null,
         $licence_available = null,
-        $nonprofit_available = null
+        $nonprofit_available = null,
+        $waveform = null
     )
     {
         $trackData = [
@@ -94,19 +95,23 @@ class TrackDataService
             'waveCompletedDate' => date('Y-m-d H:i:s'),
         ];
 
-        $data['is_sellable'] = 'n';
+        $trackData['is_sellable'] = 'n';
         if ($sale_available != null) {
-            $data['is_sellable'] = $sale_available;
+            $trackData['is_sellable'] = $sale_available;
         }
 
-        $data['license'] = 'n';
+        $trackData['license'] = 'n';
         if ($licence_available != null) {
-            $data['license'] = $licence_available;
+            $trackData['license'] = $licence_available;
         }
 
-        $data['track_nonprofit_avail'] = 'n';
+        $trackData['track_nonprofit_avail'] = 'n';
         if ($nonprofit_available != null) {
-            $data['track_nonprofit_avail'] = $nonprofit_available;
+            $trackData['track_nonprofit_avail'] = $nonprofit_available;
+        }
+
+        if (!empty($waveform)) {
+            $trackData['waveform'] = $waveform;
         }
 
         $this->ci->db->insert('tracks', $trackData);

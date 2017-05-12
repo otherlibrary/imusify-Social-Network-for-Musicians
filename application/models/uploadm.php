@@ -875,7 +875,7 @@ Class uploadm extends CI_Model
         }
 
 
-        $query = $this->db->query("SELECT tt.description,tt.id,tt.perLink,tt.title,tt.release_mm,tt.release_dd,tt.release_yy,tt.createdDate,tt.timelength,tt.plays,tt.likes,tt.comments,tt.shares,g.genre,(SELECT profileLink from users where id = tt.userId) AS userperlink FROM tracks as tt,genre as g " . $cond . " " . $orderby . " " . $limit . " ");
+        $query = $this->db->query("SELECT tt.description,tt.waveform,tt.id,tt.perLink,tt.title,tt.release_mm,tt.release_dd,tt.release_yy,tt.createdDate,tt.timelength,tt.plays,tt.likes,tt.comments,tt.shares,g.genre,(SELECT profileLink from users where id = tt.userId) AS userperlink FROM tracks as tt,genre as g " . $cond . " " . $orderby . " " . $limit . " ");
 
         /*echo $this->db->last_query();*/
 
@@ -886,7 +886,7 @@ Class uploadm extends CI_Model
 
         foreach ($query->result_array() as $row) {
             $row["track_image"] = $this->commonfn->get_photo('t', $row["id"]);
-            $row["track_link"] = base_url() . $row["userperlink"] . "/" . $row["perLink"];
+            $row["trackLink"] = base_url() . $row["userperlink"] . "/" . $row["perLink"];
             $row["editid"] = $row["id"];
             $row["edittype"] = "t";
             $row["main_title"] = $row["title"];
