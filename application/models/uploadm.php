@@ -875,7 +875,7 @@ Class uploadm extends CI_Model
         }
 
 
-        $query = $this->db->query("SELECT tt.description,tt.id,tt.perLink,tt.title,tt.release_mm,tt.release_dd,tt.release_yy,tt.createdDate,tt.timelength,tt.plays,tt.likes,tt.comments,tt.shares,g.genre,(SELECT profileLink from users where id = tt.userId) AS userperlink FROM tracks as tt,genre as g " . $cond . " " . $orderby . " " . $limit . " ");
+        $query = $this->db->query("SELECT tt.description,tt.waveform,tt.id,tt.perLink,tt.title,tt.release_mm,tt.release_dd,tt.release_yy,tt.createdDate,tt.timelength,tt.plays,tt.likes,tt.comments,tt.shares,g.genre,(SELECT profileLink from users where id = tt.userId) AS userperlink FROM tracks as tt,genre as g " . $cond . " " . $orderby . " " . $limit . " ");
 
         /*echo $this->db->last_query();*/
 

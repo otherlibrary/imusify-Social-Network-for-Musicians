@@ -134,7 +134,8 @@ class trackupload_api extends REST_Controller
                 $this->post('type_artist')[0],
                 $saleAvailable,
                 $licenseAvailable,
-                $nonprofitAvailable
+                $nonprofitAvailable,
+                $this->post('waveform')
             );
 
             $secondGenres = $this->post('second_genre_id');

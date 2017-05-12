@@ -123,7 +123,7 @@ Class playlist_model extends CI_Model
 					$row["album_name"] = ($row["name"] == "" || $row["name"] == null) ? '-' : $row["name"];;
 					$row["song_name"] = $row["title"];
 					$row["song_length"] = $row["timelength"];				
-					$row["waveform"] = img_url()."wave1.png";
+					$row["waveform"] = $row['waveform'];
 
 					$output["songs"][] = $row;
 					$i++;											
