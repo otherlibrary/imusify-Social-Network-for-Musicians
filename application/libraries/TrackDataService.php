@@ -47,7 +47,7 @@ class TrackDataService
         $releaseDay,
         $releaseYear,
         $genreId,
-        $isPublic,
+        $isPublic = 'n',
         $filesize,
         $trackuploadType,
         $trackuploadbpm,
@@ -110,8 +110,6 @@ class TrackDataService
         }
 
         $this->ci->db->insert('tracks', $trackData);
-
-        //dump($this->ci->db);
 
         return $this->ci->db->insert_id();
     }
