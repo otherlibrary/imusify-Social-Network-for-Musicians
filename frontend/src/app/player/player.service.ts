@@ -8,8 +8,8 @@ import {environment} from "../../environments/environment";
 @Injectable()
 export class PlayerService {
   public wavesurfer: any;
-  public playerSubject: Subject<Object> = new Subject<Object>();
-  public playerEventSubject: Subject<Object> = new Subject<Object>();
+  public playInputSubject: Subject<Object> = new Subject<Object>();
+  public playerOutputSubject: Subject<Object> = new Subject<Object>();
 
   constructor(private _apiService: ApiService) {
     console.warn('constructor player service init');

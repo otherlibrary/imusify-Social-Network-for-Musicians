@@ -3,8 +3,7 @@
     <div class="feed-box masonry__item">
       <home-record *ngIf="record.is_track" [record]="record"
                    (onfollow)="addFollow($event)"
-                   (onsahred)="sharedRecord($event)"
-                   (onPlay)="p(record)">
+                   (onsahred)="sharedRecord($event)">
       </home-record>
       <app-home-article *ngIf="record.is_article"
                         [article]="record">

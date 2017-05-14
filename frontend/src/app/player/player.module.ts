@@ -1,18 +1,20 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import {exportsPlayerCompoonents, playerCompoonents} from "./index";
+import {exportsPlayerComponents, playerComponents} from "./index";
 import {TimeFormatPipe} from "./pipes/time-format.pipe";
+import {AudioSliderDirective} from "../directives/audio-slider.directive";
 
 @NgModule({
   imports: [
     CommonModule
   ],
   declarations: [
-    ...playerCompoonents,
-    TimeFormatPipe
+    ...playerComponents,
+    TimeFormatPipe,
+    AudioSliderDirective
   ],
   exports: [
-    ...exportsPlayerCompoonents
+    ...exportsPlayerComponents
   ]
 })
 export class PlayerModule { }
