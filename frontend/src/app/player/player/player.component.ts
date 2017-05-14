@@ -13,10 +13,13 @@ export class PlayerComponent implements OnInit {
   public records: IRecord[];
   public wavesurfer: any;
   public isReady: boolean;
+  public autoPlay: boolean;
   public currentTrack: IRecord;
+  public lastPlayedTrack: IRecord;
   public isPlay: boolean;
   public streamTrack: any;
   public currentTime: number;
+  public durationTime: number;
 
   constructor(private _playerService: PlayerService, public zone: NgZone) {
   }
@@ -24,6 +27,19 @@ export class PlayerComponent implements OnInit {
   ngOnInit() {
     console.warn('player component init');
     this._initWaveSurfer();
+    this.getCurrentPlayList();
+  }
+
+  getCurrentPlayList() {
+    this._playerService.getCurrentPlaylist().subscribe(data => {
+      this.records = data.records;
+      if(this.records.length > 0) {
+        this.lastPlayedTrack = this.records[0];
+        this.setCurrentPlayedTrack(this.lastPlayedTrack);
+      } else {
+        console.warn('empty records');
+      }
+    }, err => console.error(err));
   }
 
   /**
@@ -45,19 +61,21 @@ export class PlayerComponent implements OnInit {
     wavesurfer.on('ready', () => {
       console.warn('ready');
       this.isReady = true;
-      this._playerService.wavesurfer.play();
+      if(this.autoPlay) {
+        this._playerService.wavesurfer.play();
+      }
       this._playerService.playerEventSubject.next({type: 'ready', data: this.currentTrack});
     });
 
     wavesurfer.on('play', () => {
       console.warn('play');
-      this.isPlay = true;
+      this.isPlay = this.isPlaying();
       this._playerService.playerEventSubject.next({type: 'play', data: this.currentTrack});
     });
 
     wavesurfer.on('pause', () => {
       console.warn('pause');
-      this.isPlay = false;
+      this.isPlay = this.isPlaying();
       this._playerService.playerEventSubject.next({type: 'pause', data: this.currentTrack});
     });
 
@@ -73,6 +91,7 @@ export class PlayerComponent implements OnInit {
     });
 
     this._playerService.playerSubject.subscribe((record: IRecord) => {
+      this.autoPlay = true;
       this.setCurrentPlayedTrack(record);
     });
   }
@@ -83,11 +102,11 @@ export class PlayerComponent implements OnInit {
    */
   public setCurrentPlayedTrack(record: IRecord): void {
     this.isReady = false;
-    this.isPlay = false;
     this.currentTrack = record;
     this._playerService.getTrackLink(record.trackLink).subscribe(track => {
       this.streamTrack = track.stream_url + '?nor=1';
       this._playerService.wavesurfer.load(this.streamTrack, peaks, 'auto');
+      this.durationTime = track.duration;
     });
   }
 
@@ -114,6 +133,7 @@ export class PlayerComponent implements OnInit {
   }
 
   playNextTrack() {
+    console.log(this.getNextTrack());
     this.setCurrentPlayedTrack(this.getNextTrack());
   }
 
@@ -137,10 +157,19 @@ export class PlayerComponent implements OnInit {
     return this.records[currentTrackIndex - 1];
   }
 
+  /**
+   * get audio track by id
+   * @param id
+   * @returns {undefined|IRecord}
+   */
   getAudioTrackById(id: string) {
     return this.records.find((elem) => <string>elem.id === id);
   }
 
+  /**
+   * get current track index
+   * @returns {number}
+   */
   getCurrentAudioTrackIndex() {
     let id = (this.currentTrack.id).toString();
     return this.records.indexOf(this.getAudioTrackById(id));
