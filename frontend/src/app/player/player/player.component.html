@@ -11,7 +11,7 @@
     <div class="big-top">
       <div class="big-block__img"
            *ngFor="let record of records"
-           [class.active]="record.id == currentTrack.id" [appAudioSlider]="record.id == currentTrack.id">
+           [class.active]="record.id == currentTrack.id">
         <a href="#" class="top-one">
             <span class="bg_img"
                   [ngStyle]="{'background-image': 'url(' + record.track_image + ')'}"></span>
