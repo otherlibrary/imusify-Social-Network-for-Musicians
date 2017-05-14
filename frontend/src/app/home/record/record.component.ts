@@ -16,28 +16,27 @@ export class RecordComponent implements OnInit, OnDestroy {
   @Output() onsahred: EventEmitter<any> = new EventEmitter();
 
   @Input() record: IRecord;
-  @Input() isArticle: boolean;
 
   public isPlayed: boolean;
   private playerEventSubscription: Subscription;
 
-  constructor(
-    private sanitizer: DomSanitizer,
-    public _playerService: PlayerService
-  ) {}
+  constructor(private sanitizer: DomSanitizer,
+              public _playerService: PlayerService) {
+  }
 
   ngOnInit() {
     //play/pause
-    this.playerEventSubscription = this._playerService.playerOutputSubject.subscribe((res: IRecordEvent) => {
-      if(res.type === 'play') {
-        this.isPlayed = res.record.id === this.record.id;
-      }
-      if(res.type === 'pause') {
-        if(res.record.id === this.record.id) {
-          this.isPlayed = false;
+    this.playerEventSubscription = this._playerService.playerOutputSubject
+      .subscribe((res: IRecordEvent) => {
+        if (res.type === 'play') {
+          this.isPlayed = res.record.id === this.record.id;
         }
-      }
-    });
+        if (res.type === 'pause') {
+          if (res.record.id === this.record.id) {
+            this.isPlayed = false;
+          }
+        }
+      });
   }
 
   ngOnDestroy() {
