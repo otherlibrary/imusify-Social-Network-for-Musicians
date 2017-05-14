@@ -4,7 +4,7 @@
       <home-record *ngIf="record.is_track" [record]="record"
                    (onfollow)="addFollow($event)"
                    (onsahred)="sharedRecord($event)"
-                   (onPlay)="playPlaylist(record)">
+                   (onPlay)="p(record)">
       </home-record>
       <app-home-article *ngIf="record.is_article"
                         [article]="record">

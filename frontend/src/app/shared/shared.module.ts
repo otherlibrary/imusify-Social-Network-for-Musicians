@@ -3,7 +3,6 @@ import {CommonModule} from '@angular/common';
 
 import {PreloaderComponent} from './index';
 import {AudioPlayerComponent} from "./audio-player/audio-player.component";
-import {pipes} from "../pipes/index";
 import {directives, exportDirectives} from "../directives/index";
 import {SwiperModule} from "angular2-useful-swiper";
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
@@ -23,7 +22,6 @@ import { TrackListComponent } from './track-list/track-list.component';
     ToastyModule.forRoot()
   ],
   declarations: [
-    ...pipes,
     ...directives,
     PreloaderComponent,
     AudioPlayerComponent,

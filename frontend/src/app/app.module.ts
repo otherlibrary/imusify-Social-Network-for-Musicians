@@ -3,6 +3,7 @@ import {BrowserModule} from '@angular/platform-browser';
 import {HttpModule} from '@angular/http';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {UserModule} from './user/user.module';
+import {PlayerModule} from "./player/player.module";
 
 import {
   HelpersService,
@@ -12,6 +13,7 @@ import {
   LocalStorageService,
   SharedModule
 } from './shared';
+import {PlayerService} from "./player/player.service";
 
 import {
   AuthGuard,
@@ -32,6 +34,7 @@ import {routing} from './app-routing.module';
     BrowserModule,
     HttpModule,
     UserModule,
+    PlayerModule,
     routing,
     BrowserAnimationsModule
   ],
@@ -42,7 +45,8 @@ import {routing} from './app-routing.module';
     EmitterService,
     SharedService,
     ApiService,
-    LocalStorageService
+    LocalStorageService,
+    PlayerService
   ],
   bootstrap: [AppComponent]
 })

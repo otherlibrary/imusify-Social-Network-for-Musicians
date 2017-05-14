@@ -4,6 +4,7 @@ import {EmitterService} from "../../shared/services/emitter.service";
 import {IRecord, ITracksData} from "../../interfases";
 import * as _ from 'lodash';
 import {SharedService} from "../../shared/shared.service";
+import {PlayerService} from "../../player/player.service";
 
 @Component({
   selector: 'app-all-news',
@@ -18,11 +19,17 @@ export class AllNewsComponent implements OnInit {
 
   constructor(
     private _homeService: HomeService,
-    private _sharedService: SharedService
+    private _sharedService: SharedService,
+    private _playerService: PlayerService
   ) {}
 
   ngOnInit() {
     this.getAllNews();
+    this._playerService.playerEventSubject.subscribe(a => console.log(a));
+  }
+
+  p(r) {
+    this._playerService.playerSubject.next(r);
   }
 
   getAllNews() {

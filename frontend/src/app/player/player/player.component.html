@@ -1,3 +1,125 @@
-<p>
-  player works!
-</p>
+<div id="player">
+  <!--<div class="queue-table-wrap"-->
+       <!--[class.active]="isQueue">-->
+    <!--<app-track-list *ngIf="records"-->
+                    <!--[trackList]="records"-->
+                    <!--[currentPlayed]="currentPlayedTrack"-->
+                    <!--(play)="setCurrentPlayedTrack($event)">-->
+    <!--</app-track-list>-->
+  <!--</div>-->
+  <!--Normal & Hover-->
+  <div class="big-block">
+    <div class="big-top">
+      <!--<div class="big-block__img"-->
+           <!--*ngFor="let record of records; let i = index"-->
+           <!--[class.active]="record.id == currentPlayedTrack.id"-->
+           <!--[appAudioSlider]="record.id == currentPlayedTrack.id">-->
+        <!--<a href="#" class="top-one">-->
+            <!--<span class="bg_img"-->
+                  <!--[ngStyle]="{'background-image': 'url(' + record.track_image + ')'}"></span>-->
+        <!--</a>-->
+      <!--</div>-->
+    </div>
+    <div class="big-bot">
+      <div class="track-info">
+        <div class="info-left">
+          <!--<img *ngIf="currentPlayedTrack"-->
+               <!--[src]="currentPlayedTrack.track_image"-->
+               <!--alt="imagTrack"/>-->
+        </div>
+        <div class="info-right">
+          <a class="title" href="#"><span>Border</span></a>
+          <a class="subtitle" href="#"><span>Come Again</span></a>
+        </div>
+      </div>
+      <div class="controls">
+        <button class="ctrl-btn btn-backwards"
+                type="button"
+                title="Fast backwards"
+                (click)="playPreviousTrack()"></button>
+        <button class="ctrl-btn btn-play"
+                type="button"
+                (click)="playTrack()"></button>
+        <button class="ctrl-btn btn-pause"
+                type="button"
+                (click)="pauseTrack()"></button>
+        <button class="ctrl-btn btn-forward"
+                type="button"
+                title="Fast Forward"
+                (click)="playNextTrack()"></button>
+      </div>
+    </div>
+  </div>
+  <div class="player-bg">
+  </div>
+  <div class="player-inner">
+    <div class="track-info">
+      <div class="info-left">
+        <img alt=""/>
+      </div>
+      <div class="info-right">
+        <a class="title" href="#"><span></span></a>
+        <div class="subtitle"><span>title</span></div>
+      </div>
+    </div>
+    <div class="player-center">
+      <div class="controls">
+        <button class="ctrl-btn btn-backwards"
+                type="button"
+                title="Fast backwards"
+                (click)="playPreviousTrack()"></button>
+
+        <button type="button"
+                class="ctrl-btn btn-play"
+                *ngIf="!isPlay"
+                (click)="playTrack()"></button>
+        <button type="button"
+                class="ctrl-btn btn-pause"
+                *ngIf="isPlay"
+                (click)="pauseTrack()"></button>
+
+        <button class="ctrl-btn btn-forward"
+                type="button"
+                title="Fast Forward"
+                (click)="playNextTrack()"></button>
+      </div>
+
+      <div class="play-time">
+        <span class="time-passed">{{currentTime | timeFormat}}</span>
+        <div id="waveform" class="timeline">
+          <!--<progress id="progress" class="progress progress-striped" value="0" max="100"></progress>-->
+        </div>
+        <span class="duration"></span>
+      </div>
+
+      <div class="play-type">
+        <button class="ctrl-btn btn-shuffle"
+                type="button"
+                title="Shuffle"></button>
+        <button type="button"
+                class="ctrl-btn btn-repeat"
+                title="Repeat indefinitely"
+                ></button>
+        <div class="wrap-volume">
+          <!--<input type="range"-->
+                 <!--class="range-vol"-->
+                 <!--min="0"-->
+                 <!--max="1"-->
+                 <!--step="0.1" [value]="currentVol"-->
+                 <!--(input)="changeVolume($event)">-->
+        </div>
+      </div>
+    </div>
+
+    <div class="player-queue">
+      <button type="button"
+              class="ctrl-btn btn-queue"
+              title="Show Queue">
+      </button>
+      <button class="ctrl-btn btn-plus"
+              title="Open big"
+              type="button">
+      </button>
+    </div>
+  </div>
+</div>
