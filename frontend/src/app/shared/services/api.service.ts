@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import {Http} from "@angular/http";
+import {Http, URLSearchParams} from "@angular/http";
 import {Observable} from "rxjs/Observable";
 import {environment} from "../../../environments/environment";
 import {contentHeaders} from "../../common/headers";

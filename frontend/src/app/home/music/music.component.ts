@@ -26,7 +26,7 @@ export class MusicComponent implements OnInit {
     this.getMusic()
   }
 
-  playPlaylist(record) {
+  playPlaylist() {
     if(!this.isPlayPlaylist) {
       console.log('set playlist');
       this._sharedService.setPlaylistSubject.next(this.records);
@@ -53,7 +53,7 @@ export class MusicComponent implements OnInit {
    */
   getMusic(): void {
     EmitterService.get('TOGGLE_PRELOADER').emit(true);
-    this._sharedService.getMusic().subscribe((data: ITracksData) => {
+    this._homeService.getMusic().subscribe((data: ITracksData) => {
       this.musicData = data;
       this.records = this.musicData.records;
 

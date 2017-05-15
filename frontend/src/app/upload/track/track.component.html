@@ -53,6 +53,7 @@
         </div>
         <div class="song-tags">
             <div class="tags-title" [hidden]="!record.tags">Tags</div>
+            <a class="song-tag" href="#">{{record.genre}}</a>
             <a class="song-tag" href="#" *ngFor="let tag of record.tags">{{tag}}</a>
         </div>
     </div>
