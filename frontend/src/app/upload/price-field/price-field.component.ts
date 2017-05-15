@@ -8,11 +8,10 @@ import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 export class PriceFieldComponent implements OnInit {
   @Input() price: string;
   @Input() id: string;
-  @Input() placeholder: string;
   @Output() update: EventEmitter<any> = new EventEmitter<any>();
   @Output() checks: EventEmitter<any> = new EventEmitter<any>();
 
-  public priceStatusCheck: boolean = false;
+  public priceStatusCheck: boolean = true;
   public priceReady: boolean = false;
 
   constructor() { }

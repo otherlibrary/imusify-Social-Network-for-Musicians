@@ -85,7 +85,7 @@ export class EditComponent implements OnInit {
   public currentDate: Object;
   //TODO(AlexSol): type
   public sellData: any;
-  public salePlaceholder: any;
+  public cacheSellData: any;
 
   public myDatePickerOptions: IMyOptions = {
     dateFormat: 'dd.mm.yyyy'
@@ -193,7 +193,6 @@ export class EditComponent implements OnInit {
     this.sellData = {
       album: '',
       single: '',
-
       advertising: '',
       corporate: '',
       documentaryFilm: '',
@@ -221,43 +220,11 @@ export class EditComponent implements OnInit {
       musicProd50kE: '',
       musicProd51kE: '',
       websiteE: '',
+
       nonProfit: '',
-      neverSale: false
-    };
-    this.salePlaceholder = {
-      album: '9.99',
-      single: '0.99',
-      advertising: '225',
-      corporate: '495',
-      documentaryFilm: '60',
-      film: '120',
-      software: '300',
-      internetVideo: '3',
-      liveEvent: '15',
-      musicHold: '30',
-      musicProd1k: '35',
-      musicProd10k: '105',
-      musicProd50k: '175',
-      musicProd51k: '245',
-      website: '5',
-
-      advertisingE: '2250',
-      corporateE: '4950',
-      documentaryFilmE: '600',
-      filmE: '1200',
-      softwareE: '3000',
-      internetVideoE: '30',
-      liveEventE: '150',
-      musicHoldE: '300',
-      musicProd1kE: '350',
-      musicProd10kE: '1050',
-      musicProd50kE: '1750',
-      musicProd51kE: '2450',
-      websiteE: '50',
-
-      nonProfit: '0',
       neverSale: null
     };
+
     //get local storage
     this.getLocalStorageSell();
 
@@ -284,14 +251,7 @@ export class EditComponent implements OnInit {
 
   public getLocalStorageSell() {
     if(this._localStorageService.getLocalStorage('sellData')) {
-      let sellData = JSON.parse(this._localStorageService.getLocalStorage('sellData'));
-
-      for(let key in sellData) {
-        if(sellData[key] !== '') {
-          console.log();
-          this.salePlaceholder[key] = sellData[key];
-        }
-      }
+       this.cacheSellData = JSON.parse(this._localStorageService.getLocalStorage('sellData'));
     }
   }
 
@@ -307,7 +267,7 @@ export class EditComponent implements OnInit {
     if(!e.status) {
       this.sellData[e.id] = '';
     } else {
-      this.sellData[e.id] = this.salePlaceholder[e.id] || e.price;
+      this.sellData[e.id] = e.price;
     }
   }
 
@@ -421,6 +381,7 @@ export class EditComponent implements OnInit {
     if(!this.saleStatus) {
       this._clearAllSale();
     } else {
+      this._checkAllSale();
       this._clearNonProfit();
     }
   }
@@ -431,6 +392,7 @@ export class EditComponent implements OnInit {
     if(!this.licensingStatus) {
       this._clearAllLicensing();
     } else {
+      this._checkAllLicensing();
       this._clearNonProfit();
     }
   }
@@ -441,12 +403,18 @@ export class EditComponent implements OnInit {
     if(!this.licensingEstatus) {
       this._clearAllELicensing();
     } else {
+      this._checkAllELicensing();
       this._clearNonProfit();
     }
   }
   public toggleNonProfit() {
     this.nonProfitStatus = !this.nonProfitStatus;
     this.neverSaleStatus = false;
+    if(this.nonProfitStatus) {
+      this._checkNonProfit();
+    } else {
+      this._clearNonProfit();
+    }
   }
   public toggleNeverSale() {
     this.neverSaleStatus = !this.neverSaleStatus;
@@ -463,6 +431,10 @@ export class EditComponent implements OnInit {
     }
   }
 
+  private _clearAllSale() {
+    this.sellData.album = '';
+    this.sellData.single = '';
+  }
   private _clearAllLicensing() {
     this.sellData.advertising = '';
     this.sellData.corporate = '';
@@ -493,12 +465,46 @@ export class EditComponent implements OnInit {
     this.sellData.musicProd51kE = '';
     this.sellData.websiteE = '';
   }
-  private _clearAllSale() {
-    this.sellData.album = '';
-    this.sellData.single = '';
-  }
   private _clearNonProfit() {
     this.sellData.nonProfit = '';
+  }
+
+  private _checkAllSale() {
+    this.sellData.album = this.cacheSellData.album || '9.99';
+    this.sellData.single = this.cacheSellData.single || '0.99';
+  }
+  private _checkAllLicensing() {
+    this.sellData.advertising = this.cacheSellData.advertising || '225';
+    this.sellData.corporate = this.cacheSellData.corporate || '495';
+    this.sellData.documentaryFilm = this.cacheSellData.documentaryFilm || '60';
+    this.sellData.film = this.cacheSellData.film || '120';
+    this.sellData.software = this.cacheSellData.software || '300';
+    this.sellData.internetVideo = this.cacheSellData.internetVideo || '3';
+    this.sellData.liveEvent = this.cacheSellData.liveEvent || '15';
+    this.sellData.musicHold = this.cacheSellData.musicHold || '30';
+    this.sellData.musicProd1k = this.cacheSellData.musicProd1k || '35';
+    this.sellData.musicProd10k = this.cacheSellData.musicProd10k || '105';
+    this.sellData.musicProd50k = this.cacheSellData.musicProd50k || '175';
+    this.sellData.musicProd51k = this.cacheSellData.musicProd51k || '245';
+    this.sellData.website = this.cacheSellData.website || '5';
+  }
+  private _checkAllELicensing() {
+    this.sellData.advertisingE = this.cacheSellData.advertisingE || '2250';
+    this.sellData.corporateE = this.cacheSellData.corporateE || '4950';
+    this.sellData.documentaryFilmE = this.cacheSellData.documentaryFilmE || '600';
+    this.sellData.filmE = this.cacheSellData.filmE || '1200';
+    this.sellData.softwareE = this.cacheSellData.softwareE || '3000';
+    this.sellData.internetVideoE = this.cacheSellData.internetVideoE || '30';
+    this.sellData.liveEventE = this.cacheSellData.liveEventE || '150';
+    this.sellData.musicHoldE = this.cacheSellData.musicHoldE || '300';
+    this.sellData.musicProd1kE = this.cacheSellData.musicProd1kE || '350';
+    this.sellData.musicProd10kE = this.cacheSellData.musicProd10kE || '1050';
+    this.sellData.musicProd50kE = this.cacheSellData.musicProd50kE || '1750';
+    this.sellData.musicProd51kE = this.cacheSellData.musicProd51kE || '2450';
+    this.sellData.websiteE = this.cacheSellData.websiteE || '50';
+  }
+  private _checkNonProfit() {
+    this.sellData.nonProfit = this.cacheSellData.nonProfit || '0';
   }
 
   showTest() {

@@ -212,13 +212,11 @@
               <div *ngIf="saleStatus">
                 <app-price-field [id]="'album'"
                                  [price]="sellData.album"
-                                 [placeholder]="salePlaceholder.album"
                                  (update)="updatePrice($event)"
                                  (checks)="checkedPrice($event)">Album
                 </app-price-field>
                 <app-price-field [id]="'single'"
                                  [price]="sellData.single"
-                                 [placeholder]="salePlaceholder.single"
                                  (update)="updatePrice($event)"
                                  (checks)="checkedPrice($event)">Single
                 </app-price-field>
@@ -244,79 +242,66 @@
               <div *ngIf="licensingStatus">
                 <app-price-field [id]="'advertising'"
                                  [price]="sellData.advertising"
-                                 [placeholder]="salePlaceholder.advertising"
                                  (update)="updatePrice($event)"
                                  (checks)="checkedPrice($event)">Advertising
                 </app-price-field>
                 <app-price-field [id]="'corporate'"
                                  [price]="sellData.corporate"
-                                 [placeholder]="salePlaceholder.corporate"
                                  (update)="updatePrice($event)"
                                  (checks)="checkedPrice($event)">Corporate/Commercial film
                 </app-price-field>
                 <app-price-field [id]="'documentaryFilm'"
                                  [price]="sellData.documentaryFilm"
-                                 [placeholder]="salePlaceholder.documentaryFilm"
                                  (update)="updatePrice($event)"
                                  (checks)="checkedPrice($event)">Documentary/Indie/Student film
                 </app-price-field>
                 <app-price-field [id]="'film'"
                                  [price]="sellData.film"
-                                 [placeholder]="salePlaceholder.film"
                                  (update)="updatePrice($event)"
                                  (checks)="checkedPrice($event)">Film/TV Show
                 </app-price-field>
                 <app-price-field [id]="'software'"
                                  [price]="sellData.software"
-                                 [placeholder]="salePlaceholder.software"
                                  (update)="updatePrice($event)"
                                  (checks)="checkedPrice($event)">Software
                 </app-price-field>
                 <app-price-field [id]="'internetVideo'"
                                  [price]="sellData.internetVideo"
-                                 [placeholder]="salePlaceholder.internetVideo"
                                  (update)="updatePrice($event)"
                                  (checks)="checkedPrice($event)">Internet Video
                 </app-price-field>
                 <app-price-field [id]="'liveEvent'"
                                  [price]="sellData.liveEvent"
-                                 [placeholder]="salePlaceholder.liveEvent"
                                  (update)="updatePrice($event)"
                                  (checks)="checkedPrice($event)">Live Event
                 </app-price-field>
                 <app-price-field [id]="'musicHold'"
                                  [price]="sellData.musicHold"
-                                 [placeholder]="salePlaceholder.musicHold"
                                  (update)="updatePrice($event)"
                                  (checks)="checkedPrice($event)">Music on Hold
                 </app-price-field>
                 <app-price-field [id]="'musicProd51k'"
                                  [price]="sellData.musicProd51k"
-                                 [placeholder]="salePlaceholder.musicProd51k"
                                  (update)="updatePrice($event)"
                                  (checks)="checkedPrice($event)">Music Production and Audio Project/Lease (over 50000 copies)
                 </app-price-field>
                 <app-price-field [id]="'musicProd50k'"
                                  [price]="sellData.musicProd50k"
-                                 [placeholder]="salePlaceholder.musicProd50k"
                                  (update)="updatePrice($event)"
                                  (checks)="checkedPrice($event)">Music Production and Audio Project/Lease (10001 to 50000 copies)
                 </app-price-field>
                 <app-price-field [id]="'musicProd10k'"
                                  [price]="sellData.musicProd10k"
-                                 [placeholder]="salePlaceholder.musicProd10k"
                                  (update)="updatePrice($event)"
                                  (checks)="checkedPrice($event)">Music Production and Audio Project/Lease (1001 to 10000 copies)
                 </app-price-field>
                 <app-price-field [id]="'musicProd1k'"
                                  [price]="sellData.musicProd1k"
-                                 [placeholder]="salePlaceholder.musicProd1k"
                                  (update)="updatePrice($event)"
                                  (checks)="checkedPrice($event)">Music Production and Audio Project/Lease (up to 1000 copies)
                 </app-price-field>
                 <app-price-field [id]="'website'"
                                  [price]="sellData.website"
-                                 [placeholder]="salePlaceholder.website"
                                  (update)="updatePrice($event)"
                                  (checks)="checkedPrice($event)">Website
                 </app-price-field>
@@ -342,79 +327,66 @@
               <div *ngIf="licensingEstatus">
                 <app-price-field [id]="'advertisingE'"
                                  [price]="sellData.advertisingE"
-                                 [placeholder]="salePlaceholder.advertisingE"
                                  (update)="updatePrice($event)"
                                  (checks)="checkedPrice($event)">Advertising
                 </app-price-field>
                 <app-price-field [id]="'corporateE'"
                                  [price]="sellData.corporateE"
-                                 [placeholder]="salePlaceholder.corporateE"
                                  (update)="updatePrice($event)"
                                  (checks)="checkedPrice($event)">Corporate/Commercial film
                 </app-price-field>
                 <app-price-field [id]="'documentaryE'"
                                  [price]="sellData.documentaryFilmE"
-                                 [placeholder]="salePlaceholder.documentaryFilmE"
                                  (update)="updatePrice($event)"
                                  (checks)="checkedPrice($event)">Documentary/Indie/Student film
                 </app-price-field>
                 <app-price-field [id]="'filmE'"
                                  [price]="sellData.filmE"
-                                 [placeholder]="salePlaceholder.filmE"
                                  (update)="updatePrice($event)"
                                  (checks)="checkedPrice($event)">Film/TV Show
                 </app-price-field>
                 <app-price-field [id]="'softwareE'"
                                  [price]="sellData.softwareE"
-                                 [placeholder]="salePlaceholder.softwareE"
                                  (update)="updatePrice($event)"
                                  (checks)="checkedPrice($event)">Software
                 </app-price-field>
                 <app-price-field [id]="'internetVideoE'"
                                  [price]="sellData.internetVideoE"
-                                 [placeholder]="salePlaceholder.internetVideoE"
                                  (update)="updatePrice($event)"
                                  (checks)="checkedPrice($event)">Internet Video
                 </app-price-field>
                 <app-price-field [id]="'liveEventE'"
                                  [price]="sellData.liveEventE"
-                                 [placeholder]="salePlaceholder.liveEventE"
                                  (update)="updatePrice($event)"
                                  (checks)="checkedPrice($event)">Live Event
                 </app-price-field>
                 <app-price-field [id]="'musicHoldE'"
                                  [price]="sellData.musicHoldE"
-                                 [placeholder]="salePlaceholder.musicHoldE"
                                  (update)="updatePrice($event)"
                                  (checks)="checkedPrice($event)">Music on Hold
                 </app-price-field>
                 <app-price-field [id]="'musicProd51kE'"
                                  [price]="sellData.musicProd51kE"
-                                 [placeholder]="salePlaceholder.musicProd51kE"
                                  (update)="updatePrice($event)"
                                  (checks)="checkedPrice($event)">Music Production and Audio Project/Lease (over 50000 copies)
                 </app-price-field>
                 <app-price-field [id]="'musicProd50kE'"
                                  [price]="sellData.musicProd50kE"
-                                 [placeholder]="salePlaceholder.musicProd50kE"
                                  (update)="updatePrice($event)"
                                  (checks)="checkedPrice($event)">Music Production and Audio Project/Lease (10001 to 50000 copies)
                 </app-price-field>
                 <app-price-field [id]="'musicProd10kE'"
                                  [price]="sellData.musicProd10kE"
-                                 [placeholder]="salePlaceholder.musicProd10kE"
                                  (update)="updatePrice($event)"
                                  (checks)="checkedPrice($event)">Music Production and Audio Project/Lease (1001 to 10000 copies)
                 </app-price-field>
                 <app-price-field [id]="'musicProd1kE'"
                                  [price]="sellData.musicProd1kE"
-                                 [placeholder]="salePlaceholder.musicProd1kE"
                                  (update)="updatePrice($event)"
                                  (checks)="checkedPrice($event)">Music Production and Audio Project/Lease (up to 1000 copies)
                 </app-price-field>
                 <app-price-field [id]="'websiteE'"
                                  [price]="sellData.websiteE"
-                                 [placeholder]="salePlaceholder.websiteE"
                                  (update)="updatePrice($event)"
                                  (checks)="checkedPrice($event)">Website
                 </app-price-field>
@@ -439,7 +411,6 @@
               <div *ngIf="nonProfitStatus">
                 <app-price-field [id]="'nonProfit'"
                                  [price]="sellData.nonProfit"
-                                 [placeholder]="salePlaceholder.nonProfit"
                                  (update)="updatePrice($event)"
                                  (checks)="checkedPrice($event)">Non profit
                 </app-price-field>
