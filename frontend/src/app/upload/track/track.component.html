@@ -20,7 +20,7 @@
                 <span class="song-added">Added on {{record.createdDate}}</span>
             </div>
             <div class="right-part">
-                <a class="song-options edit" href="#" [routerLink]="['edit/'+ record.id]">edit</a>
+                <div class="song-options edit" (click)="editTrack(record.id)">edit</div>
                 <i class="sep" style="top:0;"></i>
                 <button class="song-options remove">remove</button>
             </div>

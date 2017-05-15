@@ -70,6 +70,7 @@ export class EditComponent implements OnInit {
   @Input() secGenresList: Genre[];
   @Input() trackTypesList: any[];
   @Input() moodsList: IMood[];
+  @Input() editTrack: any;
 
   public isSend: boolean = false;
   public currentTab: number = 1;
@@ -247,6 +248,8 @@ export class EditComponent implements OnInit {
       this._uploadService.trackImage.file = this.trackImage;
       console.log(this._uploadService.trackImage);
     }
+
+    this.setEditData();
   }
 
   public getLocalStorageSell() {
@@ -527,5 +530,55 @@ export class EditComponent implements OnInit {
     this._uploadService.uploadImageTrack(imageData);
     console.log('imageData: ', imageData);
     console.log('uploadTrackForm.value: ', this.uploadTrackForm.value);
+  }
+
+  public setEditData() {
+    if(this.editTrack) {
+      this.uploadTrackForm.patchValue({
+        filename: this.editTrack.filename,
+        track_id: this.editTrack.track_id,
+        waveform: this.editTrack.waveform,
+        title: this.editTrack.title,
+        desc: this.editTrack.desc,
+        release_date: this.editTrack.release_date,
+        track_type: this.editTrack.track_type,
+        genre_id: this.editTrack.genre_id,
+        copyright: this.editTrack.copyright,
+        second_genre_id: this.editTrack.second_genre_id,
+        pick_moods: this.editTrack.pick_moods,
+        type_artist: this.editTrack.type_artist,
+        is_public: this.editTrack.is_public,
+        album: this.editTrack.album,
+        single: this.editTrack.single,
+        advertising: this.editTrack.advertising,
+        corporate: this.editTrack.corporate,
+        documentaryFilm: this.editTrack.documentaryFilm,
+        film: this.editTrack.film,
+        software: this.editTrack.software,
+        internetVideo: this.editTrack.internetVideo,
+        liveEvent: this.editTrack.liveEvent,
+        musicHold: this.editTrack.musicHold,
+        musicProd1k: this.editTrack.musicProd1k,
+        musicProd10k: this.editTrack.musicProd10k,
+        musicProd50k: this.editTrack.musicProd50k,
+        musicProd51k: this.editTrack.musicProd51k,
+        website: this.editTrack.website,
+        advertisingE: this.editTrack.advertisingE,
+        corporateE: this.editTrack.corporateE,
+        documentaryFilmE: this.editTrack.documentaryFilmE,
+        filmE: this.editTrack.filmE,
+        softwareE: this.editTrack.softwareE,
+        internetVideoE: this.editTrack.internetVideoE,
+        liveEventE: this.editTrack.liveEventE,
+        musicHoldE: this.editTrack.musicHoldE,
+        musicProd1kE: this.editTrack.musicProd1kE,
+        musicProd10kE: this.editTrack.musicProd10kE,
+        musicProd50kE: this.editTrack.musicProd50kE,
+        musicProd51kE: this.editTrack.musicProd51kE,
+        websiteE: this.editTrack.websiteE,
+        nonProfit: this.editTrack.nonProfit,
+        neverSale: this.editTrack.neverSale
+      });
+    }
   }
 }

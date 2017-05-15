@@ -14,7 +14,7 @@ const routes: Routes = [
     children: [
       {
         path: '',
-        component: AudioComponent,
+        component: AudioComponent
       },
       {
         path: 'albums',

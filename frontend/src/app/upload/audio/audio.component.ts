@@ -6,6 +6,7 @@ import {IUploadDetails} from "../../interfases/upload/IUploadDetails";
 import {Genre} from "../../interfases/IGenre";
 import {IOption} from "ng-select";
 import {IMood} from "../../interfases/IMood";
+import {IRecord} from "../../interfases/IRecord";
 
 @Component({
   selector: 'app-audio',
@@ -16,6 +17,7 @@ export class AudioComponent implements OnInit, OnDestroy {
   public trackList: Object[] = [];
   public isOpenEdit: boolean = false;
   public editSubscriber: any;
+  public editTrack: any;
 
   public uploadAudioData: UploadAudioData;
   public uploadDetails: IUploadDetails;
@@ -74,4 +76,16 @@ export class AudioComponent implements OnInit, OnDestroy {
       console.log(err);
     });
   }
+
+  getTrackById(trackId) {
+    console.log(trackId);
+    this._uploadService.getTrackById(trackId).subscribe((record: IRecord) => {
+      this.editTrack = record;
+      console.log(this.editTrack);
+      this.isOpenEdit = true;
+    }, err => {
+      console.error(err);
+    })
+  }
+
 }
