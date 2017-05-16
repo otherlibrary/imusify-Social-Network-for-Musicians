@@ -75,9 +75,9 @@ export class UploadComponent implements OnInit {
     jsmediatags.read(file, {
       onSuccess: (tag) => {
         let tags = tag.tags;
-        this._uploadService.trackImage.type = 'base64';
+       this._uploadService.trackImage.type = 'base64';
         if ("picture" in tags) {
-          this._uploadService.trackImage.file = tags.picture;
+         this._uploadService.trackImage.file = tags.picture;
         } else {
           this._uploadService.trackImage.file = null;
         }
@@ -128,17 +128,7 @@ export class UploadComponent implements OnInit {
       });
       // remove
 
-
-      let date = new Date();
-      let currentDate = {
-        date: {
-          year: date.getFullYear(),
-          month: date.getMonth() + 1,
-          day: date.getDate()
-        }
-      };
-      this._uploadService.uploadTrackInfo.release_date = currentDate;
-
+      this._uploadService.uploadTrackInfo.is_public = "1";
       this._uploadService.uploadTrackInfo.album = "9.99";
       this._uploadService.uploadTrackInfo.single = '0.99';
       this._uploadService.uploadTrackInfo.advertising = '225';

@@ -30,10 +30,10 @@
             <div class="edit-track-form pad-left">
               <!--TRACK IMAGE-->
               <div class="edit-photo">
-                <img *ngIf="trackImage" [src]="trackImage" alt="">
+                <img *ngIf="uploadTrackImg" [src]="uploadTrackImg" alt="">
                 <input id="trackImg"
                        type="file"
-                       name="trackImage" (change)="checkImage($event)"/>
+                       name="trackImage" (change)="changeImage($event)"/>
                 <label class="img-upload"
                        for="trackImg">Upload image</label>
               </div>
@@ -56,7 +56,7 @@
               <!--RELEASE DATE-->
               <div class="inp-block">
                 <my-date-picker class="custom_picker valid_style"
-                                name="release_date" id="trackDate"
+                                name="release_date" id="release_date"
                                 [options]="myDatePickerOptions"
                                 [(ngModel)]="currentDate"
                                 formControlName="release_date"></my-date-picker>
@@ -67,7 +67,7 @@
                 <!--data-type="datepicker"-->
                 <!--required-->
                 <!--formControlName="release_date">-->
-                <label for="trackDate">* Release date</label>
+                <label for="release_date">* Release date</label>
               </div>
               <!--TRACK TYPE-->
               <div class="inp-block">
@@ -434,7 +434,7 @@
                 </label>
               </div>
               <div class="sbm-block text-center">
-                <button type="submit" class="" [disabled]="!uploadTrackForm.valid">Send</button>
+                <button type="submit" class="" [disabled]="!uploadTrackForm.valid || isSubmit">Send</button>
               </div>
             </div>
           </div>

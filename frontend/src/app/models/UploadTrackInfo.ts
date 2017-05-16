@@ -7,7 +7,7 @@ export class UploadTrackInfo implements UploadFileData {
   waveform: string;
   copyright: boolean;
   genre_id: number;
-  is_public: number;
+  is_public: string;
   track_upload_type: string;
   track_upload_bpm: string;
   track_type: number;
@@ -17,7 +17,7 @@ export class UploadTrackInfo implements UploadFileData {
   sale_available: string;
   licence_available: string;
   nonprofit_available: string;
-  release_date: string;
+  release_date: any;
   album: string;
   single: string;
   advertising: string;

@@ -17,7 +17,6 @@ export class UploadService {
 
   constructor(private _apiService: ApiService) {
     this.uploadTrackInfo = new UploadTrackInfo();
-
     this.trackImage = {
       track_id: '',
       file: '',

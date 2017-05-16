@@ -5,6 +5,8 @@ import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {Genre, IMood} from "../../interfases";
 import {IMyOptions} from "mydatepicker";
 import {UploadFileData} from "app/interfases/upload/IUploadFileData";
+import {HelpersService} from "../../shared/services/helpers.service";
+import {SharedService} from "../../shared/shared.service";
 
 function base64ArrayBuffer(arrayBuffer) {
   let base64 = '';
@@ -67,6 +69,10 @@ function base64ArrayBuffer(arrayBuffer) {
 export class EditComponent implements OnInit {
   public uploadTrackForm: FormGroup;
   public uploadTrackInfo: UploadFileData;
+  public uploadTrackImg: any;
+  public currentDate: Object;
+  public isSubmit: boolean = false;
+
   @Input() genresList: Genre[];
   @Input() secGenresList: Genre[];
   @Input() trackTypesList: any[];
@@ -99,15 +105,30 @@ export class EditComponent implements OnInit {
   };
 
   /**
+   * stringify image to base 64
+   * @param imageData: <Object>{ track_id: string, file: string, type: string }
+   * @returns {any}
+   * @private
+   */
+  private _stringifyImage(imageData: any) {
+    if(imageData.file) {
+      return imageData.file.hasOwnProperty('format') ? `data:${imageData.file.format};base64,${base64ArrayBuffer(imageData.file.data)}` : null;
+    } else {
+      return null;
+    }
+  }
+
+  /**
    * building form
    */
   buildForm() {
     this.uploadTrackInfo = this._uploadService.uploadTrackInfo;
+    this.uploadTrackImg = this._stringifyImage(this._uploadService.trackImage);
 
     this.uploadTrackForm = this.fb.group({
       filename: this.uploadTrackInfo.file_name,
       track_id: this.uploadTrackInfo.track_id,
-      waveform: this.uploadTrackInfo.waveform,
+      waveform: null,
       title: [this.uploadTrackInfo.title, [
         Validators.required
       ]],
@@ -127,7 +148,7 @@ export class EditComponent implements OnInit {
       second_genre_id: this.uploadTrackInfo.genre_id,
       pick_moods: this.uploadTrackInfo.pick_moods_id,
       type_artist: this.uploadTrackInfo.type_artist,
-      is_public: this.uploadTrackInfo.is_public || "1",
+      is_public: this.uploadTrackInfo.is_public,
 
       album: this.uploadTrackInfo.album,
       single: this.uploadTrackInfo.single,
@@ -171,11 +192,22 @@ export class EditComponent implements OnInit {
 
   constructor(
     private _uploadService: UploadService,
+    private _helpersService: HelpersService,
+    private _sharedService: SharedService,
     private fb: FormBuilder
   ) {}
 
   ngOnInit() {
     this.buildForm();
+    //if date none, set current date
+    let date = new Date();
+    this.currentDate = {
+      date: {
+        year: date.getFullYear(),
+        month: date.getMonth() + 1,
+        day: date.getDate()
+      }
+    };
   }
 
   /**
@@ -204,16 +236,75 @@ export class EditComponent implements OnInit {
    * change image track
    * @param event
    */
-  public checkImage(event) {
-    console.log(event);
+  public changeImage(event) {
+    if (event.target.files && event.target.files[0]) {
+      let reader = new FileReader();
+      reader.onload = (event: any) => {
+        this.uploadTrackImg = event.target.result;
+      };
+      reader.readAsDataURL(event.target.files[0]);
+    }
   }
 
   /**
-   * submit form
-   * @param e
+   * upload image
+   * @param trackId
    */
-  public onSubmit(e) {
-    console.log(e);
+  public submitImage(trackId) {
+    this._uploadService.trackImage.track_id = trackId;
+    let req = this._helpersService.toStringParam({
+      track_id: trackId,
+      file: this.uploadTrackImg,
+      type: 'base64'
+    });
+    this._uploadService.uploadImageTrack(req).subscribe(res => {
+      this._uploadService.editPopupSubject.next(false);
+      console.log(res);
+    }, err => {
+      console.log(err);
+    })
+  }
+  /**
+   * submit form
+   * @param event
+   */
+  public onSubmit(event) {
+    event.preventDefault();
+    this.isSubmit = true;
+    this.uploadTrackForm.controls['waveform'].setValue(this._uploadService.uploadTrackInfo.waveform);
+    //save track info
+    let resultFormJSON = JSON.stringify(this.uploadTrackForm.value);
+    let release_date = this.uploadTrackForm.value.release_date;
+    let resultForm = JSON.parse(resultFormJSON);
+    resultForm.release_date = JSON.stringify(release_date);
+    let formData = this._helpersService.toStringParam((resultForm));
+
+    this._uploadService.uploadTrackDetails(formData).subscribe(res => {
+      if(res.hasOwnProperty('track_id')) {
+        if(res.track_id != 0) {
+          this._sharedService.notificationSubject.next({
+            title: 'Save file',
+            msg: 'Success save',
+            type: 'success'
+          });
+          //upload image
+          this.submitImage(res.track_id);
+          this.isSubmit = false;
+        } else {
+          this._sharedService.notificationSubject.next({
+            title: 'Save file',
+            msg: 'Error save',
+            type: 'error'
+          });
+        }
+      } else {
+        this._sharedService.notificationSubject.next({
+          title: 'Save file',
+          msg: 'Error save',
+          type: 'error'
+        });
+      }
+    });
   }
 
   public test() {
