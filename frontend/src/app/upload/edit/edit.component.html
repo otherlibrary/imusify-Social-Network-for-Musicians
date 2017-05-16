@@ -192,6 +192,7 @@
                   <input id="toggleSaleMusic"
                          type="checkbox"
                          name="music-sale"
+                         [checked]="saleIsOpen"
                          (change)="switchSale()">
                   <span class="toggleElement">
                                             <i></i>
@@ -223,6 +224,7 @@
                   <input id="toggleLicenseMusic"
                          type="checkbox"
                          name="music-license"
+                         [checked]="licensingIsOpen"
                          (change)="switchLicensing()">
                   <span class="toggleElement">
                                             <i></i>
@@ -308,6 +310,7 @@
                   <input id="toggleLicenseEMusic"
                          type="checkbox"
                          name="music-licenseE"
+                         [checked]="licensingEIsOpen"
                          (change)="switchELicensing()">
                   <span class="toggleElement">
                                             <i></i>
@@ -391,6 +394,7 @@
                   <input id="toggleUseMusic"
                          type="checkbox"
                          name="music-use"
+                         [checked]="noneProfitIsOpen"
                          (change)="switchNoneProfit()">
                   <span class="toggleElement">
                                             <i></i>
@@ -407,13 +411,14 @@
                 </app-price-field>
               </div>
 
-              NEVER SALE
+              <!--NEVER SALE-->
               <div class="inp-block">
                 <label>Never sale my music</label>
                 <label class="toggleLabel" for="neverSale">
                   <input id="neverSale"
                          type="checkbox"
                          name="music-use"
+                         [checked]="neverSaleIsOpen"
                          (change)="switchNeverSale()">
                   <span class="toggleElement">
                                             <i></i>

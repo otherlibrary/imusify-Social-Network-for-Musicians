@@ -324,33 +324,151 @@ export class EditComponent implements OnInit {
     this.currentTab = tab;
   }
 
+  /**
+   * sale switch
+   * @type {boolean}
+   */
   public saleIsOpen: boolean = true;
+  private _switchSaleValue(flag) {
+    if(!flag) {
+      this.uploadTrackForm.patchValue({
+        album: null,
+        single: null
+      })
+    } else {
+      this.neverSaleIsOpen = false;
+      this.uploadTrackForm.patchValue({
+        album: this.uploadTrackInfo.album,
+        single: this.uploadTrackInfo.single
+      })
+    }
+  }
   public switchSale() {
     this.saleIsOpen = !this.saleIsOpen;
+    this._switchSaleValue(this.saleIsOpen);
   }
 
+  /**
+   * licensing switch
+   * @type {boolean}
+   */
   public licensingIsOpen: boolean = true;
+  private _switchLicensingValue(flag) {
+    if(!flag) {
+      this.uploadTrackForm.patchValue({
+        advertising: null,
+        corporate: null,
+        documentaryFilm: null,
+        film: null,
+        software: null,
+        internetVideo: null,
+        liveEvent: null,
+        musicHold: null,
+        musicProd1k: null,
+        musicProd10k: null,
+        musicProd50k: null,
+        musicProd51k: null,
+        website: null
+      })
+    } else {
+      this.neverSaleIsOpen = false;
+      this.uploadTrackForm.patchValue({
+        advertising: this.uploadTrackInfo.advertising,
+        corporate: this.uploadTrackInfo.corporate,
+        documentaryFilm: this.uploadTrackInfo.documentaryFilm,
+        film: this.uploadTrackInfo.film,
+        software: this.uploadTrackInfo.software,
+        internetVideo: this.uploadTrackInfo.internetVideo,
+        liveEvent: this.uploadTrackInfo.liveEvent,
+        musicHold: this.uploadTrackInfo.musicHold,
+        musicProd1k: this.uploadTrackInfo.musicProd1k,
+        musicProd10k: this.uploadTrackInfo.musicProd10k,
+        musicProd50k: this.uploadTrackInfo.musicProd50k,
+        musicProd51k: this.uploadTrackInfo.musicProd51k,
+        website: this.uploadTrackInfo.website
+      })
+    }
+  }
   public switchLicensing() {
     this.licensingIsOpen = !this.licensingIsOpen;
+    this._switchLicensingValue(this.licensingIsOpen);
   }
 
+  /**
+   * licensing Exclusive switch
+   * @type {boolean}
+   */
   public licensingEIsOpen: boolean = true;
+  private _switchLicensingEValue(flag) {
+    if(!flag) {
+      this.uploadTrackForm.patchValue({
+        advertisingE: null,
+        corporateE: null,
+        documentaryFilmE: null,
+        filmE: null,
+        softwareE: null,
+        internetVideoE: null,
+        liveEventE: null,
+        musicHoldE: null,
+        musicProd1kE: null,
+        musicProd10kE: null,
+        musicProd50kE: null,
+        musicProd51kE: null,
+        websiteE: null
+      })
+    } else {
+      this.neverSaleIsOpen = false;
+      this.uploadTrackForm.patchValue({
+        advertisingE: this.uploadTrackInfo.advertisingE,
+        corporateE: this.uploadTrackInfo.corporateE,
+        documentaryFilmE: this.uploadTrackInfo.documentaryFilmE,
+        filmE: this.uploadTrackInfo.filmE,
+        softwareE: this.uploadTrackInfo.softwareE,
+        internetVideoE: this.uploadTrackInfo.internetVideoE,
+        liveEventE: this.uploadTrackInfo.liveEventE,
+        musicHoldE: this.uploadTrackInfo.musicHoldE,
+        musicProd1kE: this.uploadTrackInfo.musicProd1kE,
+        musicProd10kE: this.uploadTrackInfo.musicProd10kE,
+        musicProd50kE: this.uploadTrackInfo.musicProd50kE,
+        musicProd51kE: this.uploadTrackInfo.musicProd51kE,
+        websiteE: this.uploadTrackInfo.websiteE
+      })
+    }
+  }
   public switchELicensing() {
     this.licensingEIsOpen = !this.licensingEIsOpen;
+    this._switchLicensingEValue(this.licensingEIsOpen);
   }
 
+  /**
+   * non profit switch
+   * @type {boolean}
+   */
   public noneProfitIsOpen: boolean = true;
   public switchNoneProfit() {
     this.noneProfitIsOpen = !this.noneProfitIsOpen;
   }
 
+  /**
+   * never sale switch
+   */
+  public neverSaleIsOpen: boolean = false;
   public switchNeverSale() {
+    this.neverSaleIsOpen = !this.neverSaleIsOpen;
     this.saleIsOpen = false;
     this.licensingIsOpen = false;
     this.licensingEIsOpen = false;
     this.noneProfitIsOpen = false;
+
+    this._switchSaleValue(false);
+    this._switchLicensingValue(false);
+    this._switchLicensingEValue(false);
   }
 
+  /**
+   * button-input price toggles
+   * @type {boolean}
+   */
   public priceStatusCheck: boolean = false;
   public priceReady: boolean = false;
   public toggleCheck() {
