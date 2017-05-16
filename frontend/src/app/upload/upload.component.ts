@@ -116,6 +116,8 @@ export class UploadComponent implements OnInit {
     } else if (output.type === 'done') {
       console.log('output: ', output);
       let file = this.files[this.files.length - 1];
+
+      // remove
       this._uploadService.uploadTrackInfo.file_name = 'file.response.upload_data.file_name';
       this._uploadService.uploadTrackInfo.title = this._cutNameExtension(file.name);
       this._uploadService.uploadTrackInfo.track_id = file.id;
@@ -124,6 +126,51 @@ export class UploadComponent implements OnInit {
         this._uploadService.editPopupSubject.next(true);
         t.unsubscribe();
       });
+      // remove
+
+
+      let date = new Date();
+      let currentDate = {
+        date: {
+          year: date.getFullYear(),
+          month: date.getMonth() + 1,
+          day: date.getDate()
+        }
+      };
+      this._uploadService.uploadTrackInfo.release_date = currentDate;
+
+      this._uploadService.uploadTrackInfo.album = "9.99";
+      this._uploadService.uploadTrackInfo.single = '0.99';
+      this._uploadService.uploadTrackInfo.advertising = '225';
+      this._uploadService.uploadTrackInfo.corporate = '495';
+      this._uploadService.uploadTrackInfo.documentaryFilm = '60';
+      this._uploadService.uploadTrackInfo.film = '120';
+      this._uploadService.uploadTrackInfo.software = '300';
+      this._uploadService.uploadTrackInfo.internetVideo = '3';
+      this._uploadService.uploadTrackInfo.liveEvent = '15';
+      this._uploadService.uploadTrackInfo.musicHold = '30';
+      this._uploadService.uploadTrackInfo.musicProd1k = '35';
+      this._uploadService.uploadTrackInfo.musicProd10k = '105';
+      this._uploadService.uploadTrackInfo.musicProd50k = '175';
+      this._uploadService.uploadTrackInfo.musicProd51k = '245';
+      this._uploadService.uploadTrackInfo.website = '5';
+
+      this._uploadService.uploadTrackInfo.advertisingE = '2250';
+      this._uploadService.uploadTrackInfo.corporateE = '4950';
+      this._uploadService.uploadTrackInfo.documentaryFilmE = '600';
+      this._uploadService.uploadTrackInfo.filmE = '1200';
+      this._uploadService.uploadTrackInfo.softwareE = '3000';
+      this._uploadService.uploadTrackInfo.internetVideoE = '30';
+      this._uploadService.uploadTrackInfo.liveEventE = '150';
+      this._uploadService.uploadTrackInfo.musicHoldE = '300';
+      this._uploadService.uploadTrackInfo.musicProd1kE = '350';
+      this._uploadService.uploadTrackInfo.musicProd10kE = '1050';
+      this._uploadService.uploadTrackInfo.musicProd50kE = '1750';
+      this._uploadService.uploadTrackInfo.musicProd51kE = '2450';
+      this._uploadService.uploadTrackInfo.websiteE = '50';
+
+      this._uploadService.uploadTrackInfo.nonProfit = '0';
+      this._uploadService.uploadTrackInfo.neverSale = null;
 
       if (file.response.hasOwnProperty('upload_data')) {
         //file data

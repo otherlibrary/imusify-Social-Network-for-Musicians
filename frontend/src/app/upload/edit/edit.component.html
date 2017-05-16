@@ -7,7 +7,7 @@
             (ngSubmit)="onSubmit($event)">
         <div class="edit-track-block">
           <div class="title">Edit track</div>
-          <div class="song title">{{uploadTrackInfo.title}}</div>
+          <div class="song title">{{uploadTrackForm.controls.title.value}}</div>
         </div>
         <div class="tab-panel">
           <button class="tab-pnl-btn"
@@ -33,7 +33,7 @@
                 <img *ngIf="trackImage" [src]="trackImage" alt="">
                 <input id="trackImg"
                        type="file"
-                       name="trackImage" (change)="uploadImage($event)"/>
+                       name="trackImage" (change)="checkImage($event)"/>
                 <label class="img-upload"
                        for="trackImg">Upload image</label>
               </div>
@@ -100,14 +100,6 @@
                            [multiple]="true"
                            [highlightColor]="'#242526'">
                 </ng-select>
-                <!--<select id="secondGenre"-->
-                <!--data-placeholder="Please select secondary genre"-->
-                <!--name="second_genre_id"-->
-                <!--required-->
-                <!--&gt;-->
-                <!--<option value="0" selected>Select secondary genre</option>-->
-                <!--<option *ngFor="let genre of secGenresList" [value]="genre.id">{{genre.genre}}</option>-->
-                <!--</select>-->
                 <label for="secondGenre">Secondary genre(pick two)</label>
               </div>
               <!--TRACK MOODS-->
@@ -195,13 +187,12 @@
             <div class="edit-track-form">
               <!--SALE MUSIC-->
               <div class="inp-block">
-                <label (click)="showTest()">Make your music available for sale</label>
+                <label (click)="test()">Make your music available for sale</label>
                 <label class="toggleLabel" for="toggleSaleMusic">
                   <input id="toggleSaleMusic"
                          type="checkbox"
                          name="music-sale"
-                         [checked]="saleStatus"
-                         (change)="toggleSaleStatus()">
+                         (change)="switchSale()">
                   <span class="toggleElement">
                                             <i></i>
                                             <b class="toggle-on">On</b>
@@ -209,16 +200,18 @@
                                         </span>
                 </label>
               </div>
-              <div *ngIf="saleStatus">
+              <div *ngIf="saleIsOpen">
                 <app-price-field [id]="'album'"
-                                 [price]="sellData.album"
+                                 [price]="uploadTrackInfo.album"
                                  (update)="updatePrice($event)"
-                                 (checks)="checkedPrice($event)">Album
+                                 (checks)="checkPrice($event)">
+                  Album
                 </app-price-field>
                 <app-price-field [id]="'single'"
-                                 [price]="sellData.single"
+                                 [price]="uploadTrackInfo.single"
                                  (update)="updatePrice($event)"
-                                 (checks)="checkedPrice($event)">Single
+                                 (checks)="checkPrice($event)">
+                  Single
                 </app-price-field>
               </div>
 
@@ -230,8 +223,7 @@
                   <input id="toggleLicenseMusic"
                          type="checkbox"
                          name="music-license"
-                         [checked]="licensingStatus"
-                         (change)="toggleLicensingStatus()">
+                         (change)="switchLicensing()">
                   <span class="toggleElement">
                                             <i></i>
                                             <b class="toggle-on">On</b>
@@ -239,71 +231,72 @@
                                         </span>
                 </label>
               </div>
-              <div *ngIf="licensingStatus">
+              <div *ngIf="licensingIsOpen">
                 <app-price-field [id]="'advertising'"
-                                 [price]="sellData.advertising"
+                                 [price]="uploadTrackInfo.advertising"
                                  (update)="updatePrice($event)"
-                                 (checks)="checkedPrice($event)">Advertising
+                                 (checks)="checkPrice($event)">
+                  Advertising
                 </app-price-field>
                 <app-price-field [id]="'corporate'"
-                                 [price]="sellData.corporate"
+                                 [price]="uploadTrackInfo.corporate"
                                  (update)="updatePrice($event)"
-                                 (checks)="checkedPrice($event)">Corporate/Commercial film
+                                 (checks)="checkPrice($event)">Corporate/Commercial film
                 </app-price-field>
                 <app-price-field [id]="'documentaryFilm'"
-                                 [price]="sellData.documentaryFilm"
+                                 [price]="uploadTrackInfo.documentaryFilm"
                                  (update)="updatePrice($event)"
-                                 (checks)="checkedPrice($event)">Documentary/Indie/Student film
+                                 (checks)="checkPrice($event)">Documentary/Indie/Student film
                 </app-price-field>
                 <app-price-field [id]="'film'"
-                                 [price]="sellData.film"
+                                 [price]="uploadTrackInfo.film"
                                  (update)="updatePrice($event)"
-                                 (checks)="checkedPrice($event)">Film/TV Show
+                                 (checks)="checkPrice($event)">Film/TV Show
                 </app-price-field>
                 <app-price-field [id]="'software'"
-                                 [price]="sellData.software"
+                                 [price]="uploadTrackInfo.software"
                                  (update)="updatePrice($event)"
-                                 (checks)="checkedPrice($event)">Software
+                                 (checks)="checkPrice($event)">Software
                 </app-price-field>
                 <app-price-field [id]="'internetVideo'"
-                                 [price]="sellData.internetVideo"
+                                 [price]="uploadTrackInfo.internetVideo"
                                  (update)="updatePrice($event)"
-                                 (checks)="checkedPrice($event)">Internet Video
+                                 (checks)="checkPrice($event)">Internet Video
                 </app-price-field>
                 <app-price-field [id]="'liveEvent'"
-                                 [price]="sellData.liveEvent"
+                                 [price]="uploadTrackInfo.liveEvent"
                                  (update)="updatePrice($event)"
-                                 (checks)="checkedPrice($event)">Live Event
+                                 (checks)="checkPrice($event)">Live Event
                 </app-price-field>
                 <app-price-field [id]="'musicHold'"
-                                 [price]="sellData.musicHold"
+                                 [price]="uploadTrackInfo.musicHold"
                                  (update)="updatePrice($event)"
-                                 (checks)="checkedPrice($event)">Music on Hold
+                                 (checks)="checkPrice($event)">Music on Hold
                 </app-price-field>
                 <app-price-field [id]="'musicProd51k'"
-                                 [price]="sellData.musicProd51k"
+                                 [price]="uploadTrackInfo.musicProd51k"
                                  (update)="updatePrice($event)"
-                                 (checks)="checkedPrice($event)">Music Production and Audio Project/Lease (over 50000 copies)
+                                 (checks)="checkPrice($event)">Music Production and Audio Project/Lease (over 50000 copies)
                 </app-price-field>
                 <app-price-field [id]="'musicProd50k'"
-                                 [price]="sellData.musicProd50k"
+                                 [price]="uploadTrackInfo.musicProd50k"
                                  (update)="updatePrice($event)"
-                                 (checks)="checkedPrice($event)">Music Production and Audio Project/Lease (10001 to 50000 copies)
+                                 (checks)="checkPrice($event)">Music Production and Audio Project/Lease (10001 to 50000 copies)
                 </app-price-field>
                 <app-price-field [id]="'musicProd10k'"
-                                 [price]="sellData.musicProd10k"
+                                 [price]="uploadTrackInfo.musicProd10k"
                                  (update)="updatePrice($event)"
-                                 (checks)="checkedPrice($event)">Music Production and Audio Project/Lease (1001 to 10000 copies)
+                                 (checks)="checkPrice($event)">Music Production and Audio Project/Lease (1001 to 10000 copies)
                 </app-price-field>
                 <app-price-field [id]="'musicProd1k'"
-                                 [price]="sellData.musicProd1k"
+                                 [price]="uploadTrackInfo.musicProd1k"
                                  (update)="updatePrice($event)"
-                                 (checks)="checkedPrice($event)">Music Production and Audio Project/Lease (up to 1000 copies)
+                                 (checks)="checkPrice($event)">Music Production and Audio Project/Lease (up to 1000 copies)
                 </app-price-field>
                 <app-price-field [id]="'website'"
-                                 [price]="sellData.website"
+                                 [price]="uploadTrackInfo.website"
                                  (update)="updatePrice($event)"
-                                 (checks)="checkedPrice($event)">Website
+                                 (checks)="checkPrice($event)">Website
                 </app-price-field>
               </div>
 
@@ -315,8 +308,7 @@
                   <input id="toggleLicenseEMusic"
                          type="checkbox"
                          name="music-licenseE"
-                         [checked]="licensingEstatus"
-                         (change)="toggleLicensingEStatus()">
+                         (change)="switchELicensing()">
                   <span class="toggleElement">
                                             <i></i>
                                             <b class="toggle-on">On</b>
@@ -324,71 +316,71 @@
                                         </span>
                 </label>
               </div>
-              <div *ngIf="licensingEstatus">
+              <div *ngIf="licensingEIsOpen">
                 <app-price-field [id]="'advertisingE'"
-                                 [price]="sellData.advertisingE"
+                                 [price]="uploadTrackInfo.advertisingE"
                                  (update)="updatePrice($event)"
-                                 (checks)="checkedPrice($event)">Advertising
+                                 (checks)="checkPrice($event)">Advertising
                 </app-price-field>
                 <app-price-field [id]="'corporateE'"
-                                 [price]="sellData.corporateE"
+                                 [price]="uploadTrackInfo.corporateE"
                                  (update)="updatePrice($event)"
-                                 (checks)="checkedPrice($event)">Corporate/Commercial film
+                                 (checks)="checkPrice($event)">Corporate/Commercial film
                 </app-price-field>
-                <app-price-field [id]="'documentaryE'"
-                                 [price]="sellData.documentaryFilmE"
+                <app-price-field [id]="'documentaryFilmE'"
+                                 [price]="uploadTrackInfo.documentaryFilmE"
                                  (update)="updatePrice($event)"
-                                 (checks)="checkedPrice($event)">Documentary/Indie/Student film
+                                 (checks)="checkPrice($event)">Documentary/Indie/Student film
                 </app-price-field>
                 <app-price-field [id]="'filmE'"
-                                 [price]="sellData.filmE"
+                                 [price]="uploadTrackInfo.filmE"
                                  (update)="updatePrice($event)"
-                                 (checks)="checkedPrice($event)">Film/TV Show
+                                 (checks)="checkPrice($event)">Film/TV Show
                 </app-price-field>
                 <app-price-field [id]="'softwareE'"
-                                 [price]="sellData.softwareE"
+                                 [price]="uploadTrackInfo.softwareE"
                                  (update)="updatePrice($event)"
-                                 (checks)="checkedPrice($event)">Software
+                                 (checks)="checkPrice($event)">Software
                 </app-price-field>
                 <app-price-field [id]="'internetVideoE'"
-                                 [price]="sellData.internetVideoE"
+                                 [price]="uploadTrackInfo.internetVideoE"
                                  (update)="updatePrice($event)"
-                                 (checks)="checkedPrice($event)">Internet Video
+                                 (checks)="checkPrice($event)">Internet Video
                 </app-price-field>
                 <app-price-field [id]="'liveEventE'"
-                                 [price]="sellData.liveEventE"
+                                 [price]="uploadTrackInfo.liveEventE"
                                  (update)="updatePrice($event)"
-                                 (checks)="checkedPrice($event)">Live Event
+                                 (checks)="checkPrice($event)">Live Event
                 </app-price-field>
                 <app-price-field [id]="'musicHoldE'"
-                                 [price]="sellData.musicHoldE"
+                                 [price]="uploadTrackInfo.musicHoldE"
                                  (update)="updatePrice($event)"
-                                 (checks)="checkedPrice($event)">Music on Hold
+                                 (checks)="checkPrice($event)">Music on Hold
                 </app-price-field>
                 <app-price-field [id]="'musicProd51kE'"
-                                 [price]="sellData.musicProd51kE"
+                                 [price]="uploadTrackInfo.musicProd51kE"
                                  (update)="updatePrice($event)"
-                                 (checks)="checkedPrice($event)">Music Production and Audio Project/Lease (over 50000 copies)
+                                 (checks)="checkPrice($event)">Music Production and Audio Project/Lease (over 50000 copies)
                 </app-price-field>
                 <app-price-field [id]="'musicProd50kE'"
-                                 [price]="sellData.musicProd50kE"
+                                 [price]="uploadTrackInfo.musicProd50kE"
                                  (update)="updatePrice($event)"
-                                 (checks)="checkedPrice($event)">Music Production and Audio Project/Lease (10001 to 50000 copies)
+                                 (checks)="checkPrice($event)">Music Production and Audio Project/Lease (10001 to 50000 copies)
                 </app-price-field>
                 <app-price-field [id]="'musicProd10kE'"
-                                 [price]="sellData.musicProd10kE"
+                                 [price]="uploadTrackInfo.musicProd10kE"
                                  (update)="updatePrice($event)"
-                                 (checks)="checkedPrice($event)">Music Production and Audio Project/Lease (1001 to 10000 copies)
+                                 (checks)="checkPrice($event)">Music Production and Audio Project/Lease (1001 to 10000 copies)
                 </app-price-field>
                 <app-price-field [id]="'musicProd1kE'"
-                                 [price]="sellData.musicProd1kE"
+                                 [price]="uploadTrackInfo.musicProd1kE"
                                  (update)="updatePrice($event)"
-                                 (checks)="checkedPrice($event)">Music Production and Audio Project/Lease (up to 1000 copies)
+                                 (checks)="checkPrice($event)">Music Production and Audio Project/Lease (up to 1000 copies)
                 </app-price-field>
                 <app-price-field [id]="'websiteE'"
-                                 [price]="sellData.websiteE"
+                                 [price]="uploadTrackInfo.websiteE"
                                  (update)="updatePrice($event)"
-                                 (checks)="checkedPrice($event)">Website
+                                 (checks)="checkPrice($event)">Website
                 </app-price-field>
               </div>
 
@@ -399,8 +391,7 @@
                   <input id="toggleUseMusic"
                          type="checkbox"
                          name="music-use"
-                         [checked]="nonProfitStatus"
-                         (change)="toggleNonProfit()">
+                         (change)="switchNoneProfit()">
                   <span class="toggleElement">
                                             <i></i>
                                             <b class="toggle-on">On</b>
@@ -408,23 +399,22 @@
                                         </span>
                 </label>
               </div>
-              <div *ngIf="nonProfitStatus">
+              <div *ngIf="noneProfitIsOpen">
                 <app-price-field [id]="'nonProfit'"
-                                 [price]="sellData.nonProfit"
+                                 [price]="uploadTrackInfo.nonProfit"
                                  (update)="updatePrice($event)"
-                                 (checks)="checkedPrice($event)">Non profit
+                                 (checks)="checkPrice($event)">Non profit
                 </app-price-field>
               </div>
 
-              <!--NEVER SALE-->
+              NEVER SALE
               <div class="inp-block">
                 <label>Never sale my music</label>
                 <label class="toggleLabel" for="neverSale">
                   <input id="neverSale"
                          type="checkbox"
                          name="music-use"
-                         [checked]="neverSaleStatus"
-                         (change)="toggleNeverSale()">
+                         (change)="switchNeverSale()">
                   <span class="toggleElement">
                                             <i></i>
                                             <b class="toggle-on">On</b>
@@ -444,7 +434,7 @@
                 </label>
               </div>
               <div class="sbm-block text-center">
-                <button type="submit" class="" [disabled]="!uploadTrackForm.valid || isSend">Send</button>
+                <button type="submit" class="" [disabled]="!uploadTrackForm.valid">Send</button>
               </div>
             </div>
           </div>
