@@ -7,6 +7,7 @@ import {Genre} from "../../interfases/IGenre";
 import {IOption} from "ng-select";
 import {IMood} from "../../interfases/IMood";
 import {IRecord} from "../../interfases/IRecord";
+import {HelpersService} from "../../shared/services/helpers.service";
 
 @Component({
   selector: 'app-audio',
@@ -26,7 +27,7 @@ export class AudioComponent implements OnInit, OnDestroy {
   public typeList: IOption[];
   public moodList: IOption[];
 
-  constructor(private _uploadService: UploadService) {
+  constructor(private _uploadService: UploadService, private _helperService: HelpersService) {
   }
 
   ngOnInit() {
@@ -85,6 +86,26 @@ export class AudioComponent implements OnInit, OnDestroy {
       this.isOpenEdit = true;
     }, err => {
       console.error(err);
+    })
+  }
+
+  removeTrack(record) {
+    let delTrack = {
+      userId: record.userId,
+      trackId: record.id,
+      deltype: "au"
+    };
+    let req = this._helperService.toStringParam(delTrack);
+    this._uploadService.deleteTrack(req).subscribe(res => {
+      console.log(res);
+      if(res.status === "success") {
+        let index: number = this.trackList.indexOf(record);
+        if (index !== -1) {
+          this.trackList.splice(index, 1);
+        }
+      }
+    }, err => {
+      console.log(err);
     })
   }
 

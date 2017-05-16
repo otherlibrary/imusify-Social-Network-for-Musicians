@@ -93,4 +93,10 @@ export class UploadService {
     })
   }
 
+  editTrack(trackId) {}
+
+  deleteTrack(trackData) {
+    return this._apiService.post(environment.deleteTrack, trackData);
+  }
+
 }

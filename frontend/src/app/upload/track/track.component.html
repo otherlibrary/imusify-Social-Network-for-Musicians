@@ -22,7 +22,7 @@
             <div class="right-part">
                 <div class="song-options edit" (click)="editTrack(record.id)">edit</div>
                 <i class="sep" style="top:0;"></i>
-                <button class="song-options remove">remove</button>
+                <button type="button" class="song-options remove" (click)="removeTrack(record)">remove</button>
             </div>
         </div>
         <div class="song-info-content">

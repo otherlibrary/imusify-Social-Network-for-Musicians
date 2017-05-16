@@ -3,7 +3,7 @@
             [secGenresList]="secondGenres"
             [trackTypesList]="typeList"
             [moodsList]="moodList"></track-edit>
-<div (click)="getTrackById(1)">test</div>
+<!--<div (click)="getTrackById(1)">test</div>-->
 <section class="upload-audio">
-  <app-track *ngFor="let track of trackList" [record]="track" (onEdit)="getTrackById($event)"></app-track>
+  <app-track *ngFor="let track of trackList" [record]="track" (onEdit)="getTrackById($event)" (onRemove)="removeTrack($event)"></app-track>
 </section>
