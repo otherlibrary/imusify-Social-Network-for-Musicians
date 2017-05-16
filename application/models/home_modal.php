@@ -84,7 +84,7 @@ Class home_modal extends CI_Model
             $orderby = "ORDER BY tt.id DESC";
         }
 
-        $this->db->select('tt.id,tt.featured,tt.title,tt.release_mm,tt.release_dd,tt.release_yy,tt.createdDate,tt.trackuploadbpm,tt.timelength,tt.plays,tt.comments,tt.shares,tt.perLink,tt.isPublic,tt.userId as trackuserid,g.genre,u.firstname as artist_name,u.lastname,u.id as uid,u.profileLink,a.name as album');
+        $this->db->select('tt.id,tt.featured,tt.title,tt.release_mm,tt.release_dd,tt.release_yy,tt.createdDate,tt.trackuploadbpm,tt.timelength,tt.plays,tt.comments,tt.shares,tt.perLink,tt.isPublic,tt.userId as trackuserid,tt.waveform,g.genre,u.firstname as artist_name,u.lastname,u.id as uid,u.profileLink,a.name as album');
         $this->db->from('tracks as tt');
         $this->db->join('genre as g', 'tt.genreId = g.id', 'left');
         $this->db->join('albums as a', 'tt.albumId = a.id', 'left');
