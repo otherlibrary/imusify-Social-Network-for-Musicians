@@ -15,6 +15,7 @@ export const environment = {
   uploadTrackInfo: '/api/track-upload/upload-track-info',
   saveTrack: '/save_track',
   getTrackId: '/get-track-id/',
+  deleteTrack: '/track_delete',
   browse: '/browse',
   browseNewSongs:  '/browse/new-songs',
   browsePopularArtist: '/browse/popular-artist'
