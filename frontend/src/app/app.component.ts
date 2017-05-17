@@ -5,6 +5,7 @@ import {Router} from "@angular/router";
 import {IToastOption} from "./interfases";
 import {ToastData, ToastOptions, ToastyService} from "ng2-toasty";
 import {SharedService} from "./shared/shared.service";
+import {IUser} from "./interfases/IUser";
 
 @Component({
   selector: 'body',
@@ -39,6 +40,12 @@ export class AppComponent implements OnInit, OnDestroy {
 
     this._cleanSubscriber = this._authService.cleanUserSubject.subscribe(() => {
       this.cleanProfile();
+    });
+
+    this._authService.checkAuth().subscribe((user: IUser) => {
+      if(!user.loggedin) {
+        this._router.navigate([{outlets: {popup: 'about'}}]);
+      }
     });
 
     this._notificationSubscriber = this._sharedService.notificationSubject.subscribe((option: IToastOption) => {
@@ -88,6 +95,7 @@ export class AppComponent implements OnInit, OnDestroy {
     // если пользователь уже залогинен вытягиваем даные из сервиса
     this.profileData = this._authService.profileData;
     this.loggedin = this._authService.loggedin;
+    //this._router.navigate([{outlets: {popup: 'about'}}]);
 
     //обработчик если пользователь разлогинен каким либо другим образом кроме LOGOUT
     EmitterService.get('LOGOUT').subscribe(data => {
