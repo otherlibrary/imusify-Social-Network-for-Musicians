@@ -27,6 +27,7 @@ export class AudioComponent implements OnInit, OnDestroy {
   public secondGenres: IOption[];
   public typeList: IOption[];
   public moodList: IOption[];
+  public licensesList: any[];
 
   constructor(
     private _uploadService: UploadService,
@@ -37,6 +38,7 @@ export class AudioComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this.getTrackList();
     this.getUploadDetails();
+    this.getLicensesList();
     //edit track popup
     this.editSubscriber = this._uploadService.editPopupSubject.subscribe((flag: boolean) => {
       this.isOpenEdit = flag;
@@ -68,6 +70,12 @@ export class AudioComponent implements OnInit, OnDestroy {
         return {value: mood.id, label: mood.mood};
       });
     })
+  }
+
+  getLicensesList() {
+    this._uploadService.getLicensesList().subscribe(licenses => {
+      this.licensesList = licenses;
+    });
   }
 
   getTrackList() {

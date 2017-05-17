@@ -1,7 +1,7 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, Input, OnChanges, OnInit} from '@angular/core';
 import {UploadService} from '../upload.service';
 import 'rxjs/add/operator/switchMap';
-import {FormBuilder, FormGroup, Validators} from "@angular/forms";
+import {FormArray, FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {Genre, IMood} from "../../interfases";
 import {IMyOptions} from "mydatepicker";
 import {IUploadFileData} from "app/interfases/upload/IUploadFileData";
@@ -66,17 +66,21 @@ function base64ArrayBuffer(arrayBuffer) {
 /**
  * initial data from this form is uploadService.uploadTrackInfo
  */
-export class EditComponent implements OnInit {
+export class EditComponent implements OnInit, OnChanges {
   public uploadTrackForm: FormGroup;
   public uploadTrackInfo: IUploadFileData;
   public uploadTrackImg: any;
   public currentDate: Object;
   public isSubmit: boolean = false;
+  //TODO set track type
+  private _typePrice: string = 'mp3';
+  public prefixLicId: string = 'lic_id_';
 
   @Input() genresList: Genre[];
   @Input() secGenresList: Genre[];
   @Input() trackTypesList: any[];
   @Input() moodsList: IMood[];
+  @Input() licensesList: any[];
 
   public myDatePickerOptions: IMyOptions = {
     dateFormat: 'dd.mm.yyyy'
@@ -125,7 +129,7 @@ export class EditComponent implements OnInit {
     this.uploadTrackInfo = this._uploadService.uploadTrackInfo;
     this.uploadTrackImg = this._stringifyImage(this._uploadService.trackImage);
 
-    this.uploadTrackForm = this.fb.group({
+    const initGroup = {
       filename: this.uploadTrackInfo.file_name,
       track_id: this.uploadTrackInfo.track_id,
       waveform: null,
@@ -148,39 +152,14 @@ export class EditComponent implements OnInit {
       second_genre_id: this.uploadTrackInfo.genre_id,
       pick_moods: this.uploadTrackInfo.pick_moods_id,
       type_artist: this.uploadTrackInfo.type_artist,
-      is_public: this.uploadTrackInfo.is_public,
-
-      album: this.uploadTrackInfo.album,
-      single: this.uploadTrackInfo.single,
-      advertising: this.uploadTrackInfo.advertising,
-      corporate: this.uploadTrackInfo.corporate,
-      documentaryFilm: this.uploadTrackInfo.documentaryFilm,
-      film: this.uploadTrackInfo.film,
-      software: this.uploadTrackInfo.software,
-      internetVideo: this.uploadTrackInfo.internetVideo,
-      liveEvent: this.uploadTrackInfo.liveEvent,
-      musicHold: this.uploadTrackInfo.musicHold,
-      musicProd1k: this.uploadTrackInfo.musicProd1k,
-      musicProd10k: this.uploadTrackInfo.musicProd10k,
-      musicProd50k: this.uploadTrackInfo.musicProd50k,
-      musicProd51k: this.uploadTrackInfo.musicProd51k,
-      website: this.uploadTrackInfo.website,
-      advertisingE: this.uploadTrackInfo.advertisingE,
-      corporateE: this.uploadTrackInfo.corporateE,
-      documentaryFilmE: this.uploadTrackInfo.documentaryFilmE,
-      filmE: this.uploadTrackInfo.filmE,
-      softwareE: this.uploadTrackInfo.softwareE,
-      internetVideoE: this.uploadTrackInfo.internetVideoE,
-      liveEventE: this.uploadTrackInfo.liveEventE,
-      musicHoldE: this.uploadTrackInfo.musicHoldE,
-      musicProd1kE: this.uploadTrackInfo.musicProd1kE,
-      musicProd10kE: this.uploadTrackInfo.musicProd10kE,
-      musicProd50kE: this.uploadTrackInfo.musicProd50kE,
-      musicProd51kE: this.uploadTrackInfo.musicProd51kE,
-      websiteE: this.uploadTrackInfo.websiteE,
-      nonProfit: this.uploadTrackInfo.nonProfit,
-      neverSale: this.uploadTrackInfo.neverSale
+      is_public: this.uploadTrackInfo.is_public
+    };
+    //move licenses to formGroup
+    this.licensesList.map(item => {
+      initGroup[this.prefixLicId + item.id] = null;
     });
+
+    this.uploadTrackForm = this.fb.group(initGroup);
 
     this.uploadTrackForm.valueChanges
       .subscribe(data => {
@@ -308,8 +287,14 @@ export class EditComponent implements OnInit {
   }
 
   public test() {
-    console.log(this._uploadService.uploadTrackInfo);
+    //this.addLicense();
     console.log(this.uploadTrackForm.value);
+    // console.log(this._uploadService.uploadTrackInfo);
+    // console.log(this.uploadTrackForm.value);
+  }
+
+  ngOnChanges(data) {
+    console.log(data);
   }
 
   /**
@@ -325,22 +310,32 @@ export class EditComponent implements OnInit {
   }
 
   /**
+   * update value licenses for type
+   * @param type: string (s: sale, l: licenses, el: exclusive licenses, np: non profit)
+   * @param val: boolean (true: price, false: null)
+   * @private
+   */
+  private _licenseFilterUpdate(type: string, val?: boolean) {
+    const _cacheObj: Object = {};
+    this.licensesList.map(item => {
+      if(item.lic_type == type) {
+        _cacheObj['lic_id_' + item.id] = val ? item[this._typePrice] : null;
+      }
+    });
+    this.uploadTrackForm.patchValue(_cacheObj);
+  }
+
+  /**
    * sale switch
    * @type {boolean}
    */
-  public saleIsOpen: boolean = true;
+  public saleIsOpen: boolean = false;
   private _switchSaleValue(flag) {
     if(!flag) {
-      this.uploadTrackForm.patchValue({
-        album: null,
-        single: null
-      })
+      this._licenseFilterUpdate('s', false)
     } else {
       this.neverSaleIsOpen = false;
-      this.uploadTrackForm.patchValue({
-        album: this.uploadTrackInfo.album,
-        single: this.uploadTrackInfo.single
-      })
+      this._licenseFilterUpdate('s', true);
     }
   }
   public switchSale() {
@@ -352,41 +347,13 @@ export class EditComponent implements OnInit {
    * licensing switch
    * @type {boolean}
    */
-  public licensingIsOpen: boolean = true;
+  public licensingIsOpen: boolean = false;
   private _switchLicensingValue(flag) {
     if(!flag) {
-      this.uploadTrackForm.patchValue({
-        advertising: null,
-        corporate: null,
-        documentaryFilm: null,
-        film: null,
-        software: null,
-        internetVideo: null,
-        liveEvent: null,
-        musicHold: null,
-        musicProd1k: null,
-        musicProd10k: null,
-        musicProd50k: null,
-        musicProd51k: null,
-        website: null
-      })
+      this._licenseFilterUpdate('l', false);
     } else {
       this.neverSaleIsOpen = false;
-      this.uploadTrackForm.patchValue({
-        advertising: this.uploadTrackInfo.advertising,
-        corporate: this.uploadTrackInfo.corporate,
-        documentaryFilm: this.uploadTrackInfo.documentaryFilm,
-        film: this.uploadTrackInfo.film,
-        software: this.uploadTrackInfo.software,
-        internetVideo: this.uploadTrackInfo.internetVideo,
-        liveEvent: this.uploadTrackInfo.liveEvent,
-        musicHold: this.uploadTrackInfo.musicHold,
-        musicProd1k: this.uploadTrackInfo.musicProd1k,
-        musicProd10k: this.uploadTrackInfo.musicProd10k,
-        musicProd50k: this.uploadTrackInfo.musicProd50k,
-        musicProd51k: this.uploadTrackInfo.musicProd51k,
-        website: this.uploadTrackInfo.website
-      })
+      this._licenseFilterUpdate('l', true);
     }
   }
   public switchLicensing() {
@@ -398,41 +365,13 @@ export class EditComponent implements OnInit {
    * licensing Exclusive switch
    * @type {boolean}
    */
-  public licensingEIsOpen: boolean = true;
+  public licensingEIsOpen: boolean = false;
   private _switchLicensingEValue(flag) {
     if(!flag) {
-      this.uploadTrackForm.patchValue({
-        advertisingE: null,
-        corporateE: null,
-        documentaryFilmE: null,
-        filmE: null,
-        softwareE: null,
-        internetVideoE: null,
-        liveEventE: null,
-        musicHoldE: null,
-        musicProd1kE: null,
-        musicProd10kE: null,
-        musicProd50kE: null,
-        musicProd51kE: null,
-        websiteE: null
-      })
+      this._licenseFilterUpdate('el', false);
     } else {
       this.neverSaleIsOpen = false;
-      this.uploadTrackForm.patchValue({
-        advertisingE: this.uploadTrackInfo.advertisingE,
-        corporateE: this.uploadTrackInfo.corporateE,
-        documentaryFilmE: this.uploadTrackInfo.documentaryFilmE,
-        filmE: this.uploadTrackInfo.filmE,
-        softwareE: this.uploadTrackInfo.softwareE,
-        internetVideoE: this.uploadTrackInfo.internetVideoE,
-        liveEventE: this.uploadTrackInfo.liveEventE,
-        musicHoldE: this.uploadTrackInfo.musicHoldE,
-        musicProd1kE: this.uploadTrackInfo.musicProd1kE,
-        musicProd10kE: this.uploadTrackInfo.musicProd10kE,
-        musicProd50kE: this.uploadTrackInfo.musicProd50kE,
-        musicProd51kE: this.uploadTrackInfo.musicProd51kE,
-        websiteE: this.uploadTrackInfo.websiteE
-      })
+      this._licenseFilterUpdate('el', true);
     }
   }
   public switchELicensing() {
@@ -444,9 +383,14 @@ export class EditComponent implements OnInit {
    * non profit switch
    * @type {boolean}
    */
-  public noneProfitIsOpen: boolean = true;
+  public noneProfitIsOpen: boolean = false;
   public switchNoneProfit() {
     this.noneProfitIsOpen = !this.noneProfitIsOpen;
+    if(!this.noneProfitIsOpen) {
+      this._licenseFilterUpdate('np', false);
+    } else {
+      this._licenseFilterUpdate('np', true);
+    }
   }
 
   /**
@@ -463,6 +407,7 @@ export class EditComponent implements OnInit {
     this._switchSaleValue(false);
     this._switchLicensingValue(false);
     this._switchLicensingEValue(false);
+    this._licenseFilterUpdate('np', false);
   }
 
   /**

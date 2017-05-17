@@ -7,6 +7,7 @@ import {PicturesComponent} from "./pictures/pictures.component";
 import {UploadPlaylistComponent} from "./upload-playlist/upload-playlist.component";
 import {TrackComponent} from "./track/track.component";
 import {PriceFieldComponent} from "./price-field/price-field.component";
+import {LicenseTypePipe} from "./pipes/license-type.pipe";
 
 export const uploadComponents = [
   UploadComponent,
@@ -17,5 +18,6 @@ export const uploadComponents = [
   PicturesComponent,
   UploadPlaylistComponent,
   TrackComponent,
-  PriceFieldComponent
+  PriceFieldComponent,
+  LicenseTypePipe
 ];

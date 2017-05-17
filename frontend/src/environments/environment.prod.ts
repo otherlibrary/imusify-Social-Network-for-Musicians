@@ -16,6 +16,7 @@ export const environment = {
   saveTrack: '/save_track',
   getTrackId: '/get-track-id/',
   deleteTrack: '/track_delete',
+  licensesList: '/api/licenses-list',
   browse: '/browse',
   browseNewSongs:  '/browse/new-songs',
   browsePopularArtist: '/browse/popular-artist'
