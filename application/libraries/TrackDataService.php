@@ -205,6 +205,17 @@ class TrackDataService
     }
 
     /**
+     * @param $trackId
+     * @return mixed
+     */
+    public function removeSecondaryGenres($trackId)
+    {
+        $this->ci->db->delete('track_genre', ['trackId' => $trackId]);
+
+        return $this->ci->db->affected_rows();
+    }
+
+    /**
      * @param int   $userId
      * @param int   $trackId
      * @param array $moods
@@ -227,6 +238,17 @@ class TrackDataService
         }
 
         $this->ci->db->insert_batch('track_moods', $insertData);
+
+        return $this->ci->db->affected_rows();
+    }
+
+    /**
+     * @param $trackId
+     * @return mixed
+     */
+    public function removeMoods($trackId)
+    {
+        $this->ci->db->delete('track_moods', ['trackId' => $trackId]);
 
         return $this->ci->db->affected_rows();
     }
@@ -280,5 +302,81 @@ class TrackDataService
                 $this->ci->db->insert('track_licence_price_details', $insertData);
             }
         }
+    }
+
+    /**
+     * @param $trackId
+     * @return mixed
+     */
+    public function removeLicenses($trackId)
+    {
+        $this->ci->db->delete('track_lincence_price_details', ['trackId' => $trackId]);
+
+        return $this->ci->db->affected_rows();
+    }
+
+    /**
+     * @param int         $trackId
+     * @param int         $albumId
+     * @param int         $userId
+     * @param string      $title
+     * @param string      $description
+     * @param int         $releaseMonth
+     * @param int         $releaseDay
+     * @param int         $releaseYear
+     * @param int         $genreId
+     * @param string      $isPublic
+     * @param string      $usage_type
+     * @param string      $track_musician_type
+     * @param string|null $sale_available
+     * @param string|null $licence_available
+     * @param string|null $nonprofit_available
+     */
+    public function updateTrack(
+        $trackId,
+        $albumId,
+        $userId,
+        $title,
+        $description,
+        $releaseMonth,
+        $releaseDay,
+        $releaseYear,
+        $genreId,
+        $isPublic = 'n',
+        $usage_type,
+        $track_musician_type = 'm',
+        $sale_available = null,
+        $licence_available = null,
+        $nonprofit_available = null
+    )
+    {
+        $trackData = [
+            'albumId' => $albumId,
+            'userId' => $userId,
+            'title' => $title,
+            'description' => $description,
+            'release_mm' => $releaseMonth,
+            'release_dd' => $releaseDay,
+            'release_yy' => $releaseYear,
+            'genreId' => $genreId,
+            'isPublic' => $isPublic,
+            'usage_type' => $usage_type,
+            'track_musician_type' => $track_musician_type,
+        ];
+
+        if ($sale_available != null) {
+            $trackData['is_sellable'] = $sale_available;
+        }
+
+        if ($licence_available != null) {
+            $trackData['license'] = $licence_available;
+        }
+
+        if ($nonprofit_available != null) {
+            $trackData['track_nonprofit_avail'] = $nonprofit_available;
+        }
+
+        $this->ci->db->where('id', $trackId);
+        $this->ci->db->update('tracks', $trackData);
     }
 }
