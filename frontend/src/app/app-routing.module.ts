@@ -132,8 +132,7 @@ const APP_ROUTES: Routes = [
   {
     path: 'about',
     component: AboutComponent,
-    outlet: 'popup',
-    canActivate: [AuthGuard]
+    outlet: 'popup'
   },
   {
     path: 'login',

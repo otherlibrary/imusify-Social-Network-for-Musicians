@@ -56,12 +56,15 @@ export class UploadComponent implements OnInit {
     //init waveform
     if (!this._uploadService.wavesurfer) {
       this._uploadService.wavesurfer = WaveSurfer.create({
-        container: '#waveform',
-        backend: 'MediaElement'
+        container: '#waveform2',
+        backend: 'MediaElement',
+        pixelRatio: 1
       });
 
       this._uploadService.wavesurfer.on('waveform-ready', (e) => {
         this._uploadService.uploadTrackInfo.waveform = this._uploadService.wavesurfer.backend.mergedPeaks;
+        console.log(this._uploadService.uploadTrackInfo.waveform);
+        console.log(this._uploadService.wavesurfer.backend);
       });
     }
   }
