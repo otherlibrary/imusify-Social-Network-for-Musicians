@@ -1105,7 +1105,7 @@ Class uploadm extends CI_Model
                     $mood_list_final_array[] = $value1;
                 }
             }
-            $row->moods_list = $mood_list_final_array;
+//            $row->moods_list = $mood_list_final_array;
             /*Mood List ends*/
 
             /*Instruments List*/
@@ -1122,7 +1122,7 @@ Class uploadm extends CI_Model
                 }
             }
 
-            $row->instuments_list = $instrument_list_final_array;
+//            $row->instuments_list = $instrument_list_final_array;
             /*Instruments List ends*/
 
             /*sell type list*/
@@ -1231,7 +1231,7 @@ Class uploadm extends CI_Model
                 $genre_final_array[] = $value;
             }
         }
-        $row->genre_list = $genre_final_array;
+//        $row->genre_list = $genre_final_array;
         /*Genre ends*/
 
         /*Secondary genres*/
@@ -1246,7 +1246,7 @@ Class uploadm extends CI_Model
                 $sec_genre_final_array[] = $value;
             }
         }
-        $row->sec_genre_list = $sec_genre_final_array;
+//        $row->sec_genre_list = $sec_genre_final_array;
         /*Secondary genres*/
 
 
@@ -1262,9 +1262,9 @@ Class uploadm extends CI_Model
             }
         }
 
-        $row->sound_like_list = $sound_like_final_array;
+//        $row->sound_like_list = $sound_like_final_array;
 
-        $row->track_upload_type_list = $this->commonfn->get_track_upload_types();
+//        $row->track_upload_type_list = $this->commonfn->get_track_upload_types();
         $row->r = $row->id;
         $row->delid = $row->id;
         $row->deltype = "au";

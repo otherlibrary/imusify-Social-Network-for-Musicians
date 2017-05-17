@@ -20,7 +20,6 @@ class Commonfn_Api extends REST_Controller
 
     function upload_list_post()
     {
-
         $genre_list = $this->commonfn->get_genre("type='p'");
         $sec_genre_list = $this->commonfn->get_genre("type = 's'");
         $sound_like_list = $this->commonfn->get_soundlike();

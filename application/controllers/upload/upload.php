@@ -180,13 +180,16 @@ class Upload extends MY_Controller
 
     function trackedit($id)
     {
+
         $userId = $this->session->userdata('user')->id;
+        $userId = 52;
         //var_dump($userId);exit();
         $is_exist = getvalfromtbl("id", "tracks", "id='" . $id . "' AND userId = '" . $userId . "'");
-        if ($is_exist) {
-            if ($this->session->userdata('user')->id > 0) {
-                $data = $this->uploadm->fetch_info($id, 't');
 
+        if ($is_exist) {
+            if (true) {
+                $data = $this->uploadm->fetch_info($id, 't');
+        var_dump($data);die;
                 $this->config->set_item('title', 'Edit Track');
                 $template_arry['MainPanel'] = "main.html";
                 $template_arry['leftPanel'] = "left_panel.html";
