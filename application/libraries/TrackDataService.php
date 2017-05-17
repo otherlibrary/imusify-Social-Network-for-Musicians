@@ -32,6 +32,7 @@ class TrackDataService
      * @param null        $sale_available
      * @param null        $licence_available
      * @param null        $nonprofit_available
+     * @param string|null $waveform
      * @return int
      */
     public function createTrack(
@@ -111,7 +112,7 @@ class TrackDataService
         }
 
         if (!empty($waveform)) {
-            $trackData['waveform'] = $waveform;
+            $trackData['waveform'] = '[' . $waveform . ']';
         }
 
         $this->ci->db->insert('tracks', $trackData);
@@ -261,10 +262,10 @@ class TrackDataService
             'internetVideoE' => 23,
             'liveEventE' => 29,
             'musicHoldE' => 27,
-            'musicProd1kE' => 31,
-            'musicProd10kE' => 31,
-            'musicProd50kE' => 31,
-            'musicProd51kE' => 31,
+            'musicProd1kE' => 32,
+            'musicProd10kE' => 33,
+            'musicProd50kE' => 34,
+            'musicProd51kE' => 35,
             'websiteE' => 24,
         ];
 
