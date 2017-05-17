@@ -1,5 +1,5 @@
-import {UploadFileData} from "../interfases";
-export class UploadTrackInfo implements UploadFileData {
+import {IUploadFileData} from "../interfases";
+export class UploadTrackInfo implements IUploadFileData {
   track_id: string;
   title: string;
   file_name: string;

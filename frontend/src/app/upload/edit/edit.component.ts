@@ -4,7 +4,7 @@ import 'rxjs/add/operator/switchMap';
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {Genre, IMood} from "../../interfases";
 import {IMyOptions} from "mydatepicker";
-import {UploadFileData} from "app/interfases/upload/IUploadFileData";
+import {IUploadFileData} from "app/interfases/upload/IUploadFileData";
 import {HelpersService} from "../../shared/services/helpers.service";
 import {SharedService} from "../../shared/shared.service";
 
@@ -68,7 +68,7 @@ function base64ArrayBuffer(arrayBuffer) {
  */
 export class EditComponent implements OnInit {
   public uploadTrackForm: FormGroup;
-  public uploadTrackInfo: UploadFileData;
+  public uploadTrackInfo: IUploadFileData;
   public uploadTrackImg: any;
   public currentDate: Object;
   public isSubmit: boolean = false;

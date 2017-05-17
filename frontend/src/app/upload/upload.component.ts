@@ -5,6 +5,7 @@ import {UploadService} from "./upload.service";
 import {environment} from "../../environments/environment";
 import {ToastyConfig} from "ng2-toasty";
 import {SharedService} from "../shared/shared.service";
+import {UploadTrackInfo} from "../models/UploadTrackInfo";
 
 declare const jsmediatags: any;
 declare const WaveSurfer: any;

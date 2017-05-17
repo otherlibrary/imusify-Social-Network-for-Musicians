@@ -8,6 +8,7 @@ import {IOption} from "ng-select";
 import {IMood} from "../../interfases/IMood";
 import {IRecord} from "../../interfases/IRecord";
 import {HelpersService} from "../../shared/services/helpers.service";
+import {SharedService} from "../../shared/shared.service";
 
 @Component({
   selector: 'app-audio',
@@ -27,8 +28,11 @@ export class AudioComponent implements OnInit, OnDestroy {
   public typeList: IOption[];
   public moodList: IOption[];
 
-  constructor(private _uploadService: UploadService, private _helperService: HelpersService) {
-  }
+  constructor(
+    private _uploadService: UploadService,
+    private _helperService: HelpersService,
+    private _sharedService: SharedService
+  ) {}
 
   ngOnInit() {
     this.getTrackList();
@@ -103,9 +107,18 @@ export class AudioComponent implements OnInit, OnDestroy {
         if (index !== -1) {
           this.trackList.splice(index, 1);
         }
+        this._sharedService.notificationSubject.next({
+          title: 'Remove track',
+          msg: 'success',
+          type: 'success'
+        });
       }
     }, err => {
-      console.log(err);
+      this._sharedService.notificationSubject.next({
+        title: 'Remove track',
+        msg: 'error',
+        type: 'error'
+      });
     })
   }
 

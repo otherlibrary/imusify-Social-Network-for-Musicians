@@ -1,4 +1,4 @@
-export interface UploadFileData {
+export interface IUploadFileData {
   track_id: string;
   title: string;
   file_name: string;
