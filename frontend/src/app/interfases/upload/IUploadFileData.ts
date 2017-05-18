@@ -6,8 +6,8 @@ export interface IUploadFileData {
   track_type: number;
   genre_id: number;
   desc?: string;
-  secondary_genre_id?: number;
-  pick_moods_id?: number;
+  secondary_genre_id?: any[];
+  pick_moods_id?: any[];
   waveform: any;
   type_artist: string;
   copyright: boolean;

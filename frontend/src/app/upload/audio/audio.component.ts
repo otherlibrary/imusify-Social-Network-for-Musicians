@@ -21,6 +21,7 @@ export class AudioComponent implements OnInit, OnDestroy {
   public editSubscriber: any;
   public editTrack: IEditTrack;
   public typePriceLicense: string = 'mp3';
+  public openSwitch: boolean = false;
 
   public uploadAudioData: UploadAudioData;
   public uploadDetails: IUploadDetails;
@@ -99,6 +100,7 @@ export class AudioComponent implements OnInit, OnDestroy {
       this.editTrack = record.track;
       console.log('editTrack: ', this.editTrack);
       this.typePriceLicense = 'licencePrice';
+
       this._uploadService.uploadTrackInfo.track_id = this.editTrack.trackId;
       this._uploadService.uploadTrackInfo.desc = this.editTrack.description;
       this._uploadService.uploadTrackInfo.title = this.editTrack.title;
@@ -106,16 +108,19 @@ export class AudioComponent implements OnInit, OnDestroy {
       this._uploadService.uploadTrackInfo.genre_id = this.editTrack.genreId;
       this._uploadService.uploadTrackInfo.track_upload_type = this.editTrack.trackuploadType;
       this._uploadService.uploadTrackInfo.type_artist = this.editTrack.track_musician_type;
-      if(this.editTrack.track_musician_type ===  'm') {
+      this._uploadService.uploadTrackInfo.secondary_genre_id = this.editTrack.secondary_genres;
+      this._uploadService.uploadTrackInfo.pick_moods_id = this.editTrack.moods;
+      this.licensesList = this.editTrack.licences;
+
+      if(this.editTrack.track_musician_type === 'm') {
         this._uploadService.uploadTrackInfo.type_artist = 'male';
       }
-      if(this.editTrack.track_musician_type ===  'f') {
+      if(this.editTrack.track_musician_type === 'f') {
         this._uploadService.uploadTrackInfo.type_artist = 'female';
       }
-      if(this.editTrack.track_musician_type ===  'b') {
+      if(this.editTrack.track_musician_type === 'b') {
         this._uploadService.uploadTrackInfo.type_artist = 'both';
       }
-      //this._uploadService.uploadTrackInfo.secondary_genre_id = this.editTrack.secondary_genres;
       this._uploadService.uploadTrackInfo.release_date = {
         date: {
           year: this.editTrack.release_yy,
@@ -123,9 +128,8 @@ export class AudioComponent implements OnInit, OnDestroy {
           day: this.editTrack.release_dd
         }
       };
-      //this.editTrack.licences
-      this.licensesList = [{id: "1", name: "Abversti", description: "dsdsds", lic_type: 's', licencePrice: '9.9999'}];
       this.isOpenEdit = true;
+      this.openSwitch = true;
     }, err => {
       console.error(err);
     })

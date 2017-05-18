@@ -6,11 +6,11 @@ export interface IEditTrack {
   genreId: number;
   isPublic: string;
   licences: any[];
-  moods: IMood[];
+  moods: any[];
   release_dd: string;
   release_mm: string;
   release_yy: string;
-  secondary_genres: IGenre[]
+  secondary_genres: any[];
   title: string;
   trackId: string;
   track_musician_type: string;
