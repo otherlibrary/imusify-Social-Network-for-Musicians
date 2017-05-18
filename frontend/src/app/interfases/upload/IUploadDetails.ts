@@ -1,4 +1,4 @@
-import {Genre} from "../IGenre";
+import {IGenre} from "../IGenre";
 import {Like} from "../ILike";
 import {IMood} from "../IMood";
 import {IItemDetails} from "./IItemDetails";
@@ -7,7 +7,7 @@ import {IItemDetails} from "./IItemDetails";
 
 export interface IUploadDetails {
   el_type_list: IItemDetails[];
-  genre: Genre[];
+  genre: IGenre[];
   higher_type_list: string[];
   instuments_list: IItemDetails[];
   licence_type_list: IItemDetails[];

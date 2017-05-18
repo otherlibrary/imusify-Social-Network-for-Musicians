@@ -3,12 +3,13 @@ import {UploadService} from "../upload.service";
 import {EmitterService} from "../../shared/services/emitter.service";
 import {UploadAudioData} from "../../interfases/upload/IUploadAudioData";
 import {IUploadDetails} from "../../interfases/upload/IUploadDetails";
-import {Genre} from "../../interfases/IGenre";
+import {IGenre} from "../../interfases/IGenre";
 import {IOption} from "ng-select";
 import {IMood} from "../../interfases/IMood";
 import {IRecord} from "../../interfases/IRecord";
 import {HelpersService} from "../../shared/services/helpers.service";
 import {SharedService} from "../../shared/shared.service";
+import {IEditTrack} from "../../interfases/IEditTrack";
 
 @Component({
   selector: 'app-audio',
@@ -57,13 +58,13 @@ export class AudioComponent implements OnInit, OnDestroy {
     this._uploadService.getUploadDetails().subscribe((data: IUploadDetails) => {
       this.uploadDetails = data;
 
-      this.genres = data.genre.map((genre: Genre) => {
+      this.genres = data.genre.map((genre: IGenre) => {
         return {value: genre.id, label: genre.genre};
       });
-      this.secondGenres = data.sec_genre.map((genre: Genre) => {
+      this.secondGenres = data.sec_genre.map((genre: IGenre) => {
         return {value: genre.id, label: genre.genre};
       });
-      this.typeList = data.track_upload_type_list.map((type: Genre) => {
+      this.typeList = data.track_upload_type_list.map((type: IGenre) => {
         return {value: type.id, label: type.name};
       });
       this.moodList = data.mood_list.map((mood: IMood) => {
@@ -91,10 +92,8 @@ export class AudioComponent implements OnInit, OnDestroy {
   }
 
   getTrackById(trackId) {
-    console.log(trackId);
-    this._uploadService.getTrackById(trackId).subscribe((record: IRecord) => {
+    this._uploadService.getTrackById(trackId).subscribe((record: any) => {
       this.editTrack = record;
-      console.log(this.editTrack);
       this.isOpenEdit = true;
     }, err => {
       console.error(err);

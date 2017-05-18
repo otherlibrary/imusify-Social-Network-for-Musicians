@@ -2,7 +2,7 @@ import {Component, Input, OnChanges, OnInit} from '@angular/core';
 import {UploadService} from '../upload.service';
 import 'rxjs/add/operator/switchMap';
 import {FormArray, FormBuilder, FormGroup, Validators} from "@angular/forms";
-import {Genre, IMood} from "../../interfases";
+import {IGenre, IMood} from "../../interfases";
 import {IMyOptions} from "mydatepicker";
 import {IUploadFileData} from "app/interfases/upload/IUploadFileData";
 import {HelpersService} from "../../shared/services/helpers.service";
@@ -76,8 +76,8 @@ export class EditComponent implements OnInit, OnChanges {
   private _typePrice: string = 'mp3';
   public prefixLicId: string = 'lic_id_';
 
-  @Input() genresList: Genre[];
-  @Input() secGenresList: Genre[];
+  @Input() genresList: IGenre[];
+  @Input() secGenresList: IGenre[];
   @Input() trackTypesList: any[];
   @Input() moodsList: IMood[];
   @Input() licensesList: any[];

@@ -19,7 +19,7 @@ export const environment = {
   uploadDetails: '/upload_details',
   uploadTrackInfo: '/api/track-upload/upload-track-info',
   saveTrack: '/save_track',
-  getTrackId: '/get-track-id/',
+  getTrackId: '/api/track-details/track_by_id/',
   deleteTrack: '/track_delete',
   licensesList: '/api/licenses-list',
   browse: '/browse',
