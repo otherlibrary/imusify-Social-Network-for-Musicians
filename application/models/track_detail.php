@@ -604,4 +604,75 @@ class track_detail extends CI_Model
             return null;
         }
     }
+
+    /**
+     *
+     */
+    public function track_by_id($trackId)
+    {
+        $track = 'SELECT 
+                    t.id AS trackId,
+                    t.title,
+                    t.description,
+                    t.release_dd,
+                    t.release_mm,
+                    t.release_yy,
+                    t.trackuploadType,
+                    t.genreId,
+                    g.genre,
+                    t.isPublic,
+                    t.track_musician_type                      
+                FROM tracks t 
+                    LEFT JOIN genre g ON g.Id = t.genreId  
+                    LEFT JOIN track_moods tm ON tm.trackId = t.Id 
+                WHERE t.id = ' . $trackId;
+
+        $secondary_genres = 'SELECT 
+                                tg.genreId,
+                                genre
+                             FROM track_genre tg
+                                 LEFT JOIN genre g ON g.Id = tg.genreId
+                             WHERE tg.trackId = ' . $trackId;
+
+        $moods = 'SELECT
+                      tm.moodId,
+                      m.mood
+                  FROM track_moods tm
+                      LEFT JOIN mood m ON m.Id = tm.MoodId
+                  WHERE tm.trackId = ' . $trackId;
+
+        $licenses = 'SELECT 
+                        tlpd.licenceId,
+                        tlpd.licencePrice
+                     FROM track_licence_price_details tlpd
+                        LEFT JOIN track_licence_types tlt ON tlt.id = tlpd.licenceId
+                     WHERE tlpd.trackId = '. $trackId;
+
+        $track = $this->db->query($track)->result_array();
+        $secondary_genres = $this->db->query($secondary_genres)->result_array();
+        $moods = $this->db->query($moods)->result_array();
+        $licenses = $this->db->query($licenses)->result_array();
+
+
+        if (!empty($track[0])) {
+            $res_licences = [];
+            foreach($licenses as $license){
+                $res_licences[$license["licenceId"]] = $license["licencePrice"];
+            }
+            $licenses = [];
+            foreach(range(1,35) as $value){
+                if (array_key_exists($value, $res_licences)) {
+                    $licenses[$value] = $res_licences[$value];
+                } else {
+                    $licenses[$value] = null;
+                }
+            }
+            $track[0]['moods'] = $moods;
+            $track[0]['secondary_genres'] = $secondary_genres;
+            $track[0]['licences'] = $licenses;
+            return $track[0];
+        }
+
+        return null;
+    }
 }

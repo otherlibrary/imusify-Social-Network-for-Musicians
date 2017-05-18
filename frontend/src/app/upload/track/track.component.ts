@@ -13,6 +13,7 @@ export class TrackComponent implements OnInit, OnDestroy {
   @Input() isArticle: boolean;
   @Output() onNext: EventEmitter<any> = new EventEmitter();
   @Output() onEdit: EventEmitter<any> = new EventEmitter();
+  @Output() onRemove: EventEmitter<any> = new EventEmitter();
 
   public isPlayed: boolean;
   private pausePlayerTrackSubscription: Subscription;
@@ -52,6 +53,10 @@ export class TrackComponent implements OnInit, OnDestroy {
 
   editTrack(track) {
     this.onEdit.emit(track);
+  }
+
+  removeTrack(track) {
+    this.onRemove.emit(track);
   }
 
 }

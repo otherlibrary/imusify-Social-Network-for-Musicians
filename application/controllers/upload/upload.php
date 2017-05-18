@@ -189,7 +189,6 @@ class Upload extends MY_Controller
         if ($is_exist) {
             if (true) {
                 $data = $this->uploadm->fetch_info($id, 't');
-        var_dump($data);die;
                 $this->config->set_item('title', 'Edit Track');
                 $template_arry['MainPanel'] = "main.html";
                 $template_arry['leftPanel'] = "left_panel.html";

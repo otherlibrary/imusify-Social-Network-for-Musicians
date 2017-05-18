@@ -47,7 +47,7 @@ Class browse_recommended extends CI_Model
         }
 
         $query = $this->db->query("SELECT tt.id,tt.title,tt.release_mm,tt.release_dd,tt.release_yy,tt.createdDate,tt.timelength,tt.plays,tt.comments,
-                    tt.shares,tt.perLink,g.genre,u.firstname as artist_name,u.lastname,u.username,u.profileLink,
+                    tt.shares,tt.perLink,tt.waveform,g.genre,u.firstname as artist_name,u.lastname,u.username,u.profileLink,
                     al.name as album, tt.albumId as albumid FROM tracks as tt,genre as g,users as u,albums as al " . $cond . " " . $orderby . " " . $limit . " ");
 //               $query = $this->db->query("SELECT tt.id,tt.title,tt.release_mm,tt.release_dd,tt.release_yy,tt.createdDate,tt.timelength,tt.plays,tt.comments,
 //                    tt.shares,tt.perLink,g.genre,u.firstname as artist_name,u.lastname,u.profileLink
@@ -75,7 +75,7 @@ Class browse_recommended extends CI_Model
             $row["main_title"] = character_limiter($row["title"], 20, $end_char = '...');
             $row["artist_mini_name"] = character_limiter($row["artist_name"], 20, $end_char = '...');
             $row["total_songs"] = "";
-            $row["waveform"] = base_url() . "waveform/" . $row["profileLink"] . "/" . $row["perLink"] . ".json";
+            $row["waveform"] = $row['waveform'];
             $row["trackLink"] = base_url() . $row["profileLink"] . "/" . $row["perLink"];
             $row["profileLink"] = base_url() . $row["profileLink"];
 
@@ -140,7 +140,7 @@ Class browse_recommended extends CI_Model
             $orderby = "ORDER BY tt.id DESC";
         }
 
-        $this->db->select('tt.id,tt.featured,tt.title,tt.release_mm,tt.release_dd,tt.release_yy,tt.createdDate,tt.timelength,tt.plays,tt.comments,tt.shares,tt.perLink,tt.isPublic,tt.userId as trackuserid,g.genre,u.firstname as artist_name,u.lastname,u.id as uid,u.profileLink,a.name as album');
+        $this->db->select('tt.id,tt.featured,tt.title,tt.release_mm,tt.release_dd,tt.release_yy,tt.createdDate,tt.timelength,tt.plays,tt.comments,tt.shares,tt.perLink,tt.isPublic,tt.userId as trackuserid,tt.waveform,g.genre,u.firstname as artist_name,u.lastname,u.id as uid,u.profileLink,a.name as album');
         $this->db->from('tracks as tt');
         $this->db->join('genre as g', 'tt.genreId = g.id', 'left');
         $this->db->join('albums as a', 'tt.albumId = a.id', 'left');
@@ -227,7 +227,7 @@ Class browse_recommended extends CI_Model
             $orderby = "ORDER BY tt.id DESC";
         }
 
-        $query = $this->db->query("SELECT tt.id,tt.featured,tt.title,tt.release_mm,tt.release_dd,tt.release_yy,tt.createdDate,tt.timelength,tt.plays,tt.comments,tt.shares,tt.perLink,g.genre,u.firstname as artist_name,u.lastname,u.id as uid,u.profileLink,al.name as album FROM tracks as tt,genre as g,users as u,track_instruments as ti,albums as al " . $cond . " " . $orderby . " " . $limit . " ");
+        $query = $this->db->query("SELECT tt.id,tt.featured,tt.title,tt.release_mm,tt.release_dd,tt.release_yy,tt.createdDate,tt.timelength,tt.plays,tt.comments,tt.shares,tt.perLink,tt.waveform,g.genre,u.firstname as artist_name,u.lastname,u.id as uid,u.profileLink,al.name as album FROM tracks as tt,genre as g,users as u,track_instruments as ti,albums as al " . $cond . " " . $orderby . " " . $limit . " ");
 
         if ($counter != null) {
             return $query->num_rows();
@@ -249,7 +249,7 @@ Class browse_recommended extends CI_Model
             $row["i"] = $i;
             $row["total_songs"] = "";
             //$row["waveform"] = img_url()."wave1.png";
-            $row["waveform"] = base_url() . "waveform/" . $row["profileLink"] . "/" . $row["perLink"] . ".json";
+            $row["waveform"] = $row['waveform'];
             $row["wave"] = img_url() . 'hover-wave-img.png';
 
             $row["trackLink"] = base_url() . $row["profileLink"] . "/" . $row["perLink"];
@@ -327,7 +327,7 @@ Class browse_recommended extends CI_Model
 
             $row["i"] = $i;
             $row["total_songs"] = "";
-            $row["waveform_img"] = img_url() . "wave1.png";
+            //$row["waveform_img"] = img_url() . "wave1.png";
             $row["link"] = base_url() . $row["profileLink"];
             $row["role"] = base_url() . $row["profile"];
             $output[] = $row;
@@ -386,7 +386,7 @@ Class browse_recommended extends CI_Model
         foreach ($query->result_array() as $row) {
             $row["user_img"] = $this->commonfn->get_photo('p', $row["id"], IMG_156, IMG_156);
             $row["artist_name"] = $row["firstname"] . " " . $row["lastname"];
-            $row["waveform_img"] = img_url() . "wave1.png";
+            //$row["waveform_img"] = img_url() . "wave1.png";
             $row["link"] = base_url() . $row["profileLink"];
             $row["role"] = base_url() . $row["profile"];
             $row["i"] = $i;
@@ -427,7 +427,7 @@ Class browse_recommended extends CI_Model
         foreach ($query->result_array() as $row) {
             $row["user_img"] = $this->commonfn->get_photo('pl', $row["id"], IMG_176, IMG_176);
             $row["artist_name"] = $row["name"];
-            $row["waveform_img"] = img_url() . "wave1.png";
+            //$row["waveform_img"] = img_url() . "wave1.png";
 
             $row["link"] = base_url() . $row["profileLink"] . "/sets/" . $row["perLink"];
             $row["role"] = "playlist-detail";
@@ -470,7 +470,7 @@ Class browse_recommended extends CI_Model
         foreach ($query->result_array() as $row) {
             $row["user_img"] = $this->commonfn->get_photo('pl', $row["id"], IMG_176, IMG_176);
             $row["artist_name"] = $row["name"];
-            $row["waveform_img"] = img_url() . "wave1.png";
+            //$row["waveform_img"] = img_url() . "wave1.png";
 
             $row["link"] = base_url() . $row["profileLink"] . "/sets/" . $row["perLink"];
             $row["role"] = "playlist-detail";

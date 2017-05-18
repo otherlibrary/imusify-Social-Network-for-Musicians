@@ -1,6 +1,6 @@
 import {Injectable} from '@angular/core';
 import {environment} from "../../environments/environment";
-import {UploadFileData} from "../interfases";
+import {IUploadFileData} from "../interfases";
 import {UploadTrackInfo} from "../models";
 import {ApiService} from "../shared/services/api.service";
 import {Subject} from "rxjs/Subject";
@@ -10,7 +10,7 @@ import {IRecord} from "../interfases/IRecord";
 
 @Injectable()
 export class UploadService {
-  public uploadTrackInfo: UploadFileData;
+  public uploadTrackInfo: IUploadFileData;
   public trackImage: any;
   public wavesurfer: any = null;
   public editPopupSubject: Subject<Object> = new Subject<Object>();
@@ -91,6 +91,12 @@ export class UploadService {
         })
       }, 1000);
     })
+  }
+
+  editTrack(trackId) {}
+
+  deleteTrack(trackData) {
+    return this._apiService.post(environment.deleteTrack, trackData);
   }
 
 }

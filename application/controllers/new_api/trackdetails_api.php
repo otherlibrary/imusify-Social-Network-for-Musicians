@@ -149,4 +149,22 @@ class trackdetails_api extends REST_Controller
 
         echo json_encode($result);
     }
+
+    /**
+     * Returns the JSON with track info by TrackId
+     * @param $trackId
+     * [GET ]
+     */
+    function track_by_id_get($trackId)
+    {
+        $this->load->model('track_detail');
+
+        $track = $this->track_detail->track_by_id($trackId);
+
+        $result = [
+            'track' => $track,
+        ];
+
+        echo json_encode($result);
+    }
 }

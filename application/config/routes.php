@@ -117,6 +117,7 @@ $route['api/track-details/playlists-count/(:num)'] = 'new_api/trackdetails_api/p
 $route['api/track-details/downloads-count/(:num)'] = 'new_api/trackdetails_api/downloads_count/$1/format/json';
 $route['api/track-details/common-details/(:num)'] = 'new_api/trackdetails_api/common_details/$1/format/json';
 $route['api/track-details/show-tracks-by-tag/(:num)/(:any)'] = 'new_api/trackdetails_api/show_tracks_by_tag/$1/$2/format/json';
+$route['api/track-details/track_by_id/(:num)'] = 'new_api/trackdetails_api/track_by_id/$1/format/json';
 
 /* New Track Upload API */
 $route['api/track-upload/upload-track-file'] = 'new_api/trackupload_api/upload_track/format/json';

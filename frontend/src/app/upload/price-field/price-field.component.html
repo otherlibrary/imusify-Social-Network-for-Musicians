@@ -1,5 +1,5 @@
 <div class="inp-block price-opt">
-  <input type="checkbox" checked [id]="id" (change)="toggleCheck(price)">
+  <input type="checkbox" [checked]="priceStatusCheck" [id]="id" (change)="toggleCheck(price)">
   <label class="opt-name" [for]="id">
     <span><ng-content></ng-content></span>
     <i></i>

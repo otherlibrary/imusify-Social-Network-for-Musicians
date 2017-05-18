@@ -1,8 +1,8 @@
-export interface UploadFileData {
+export interface IUploadFileData {
   track_id: string;
   title: string;
   file_name: string;
-  release_date: string;
+  release_date: any;
   track_type: number;
   genre_id: number;
   desc?: string;
@@ -12,7 +12,7 @@ export interface UploadFileData {
   type_artist: string;
   copyright: boolean;
 
-  is_public: number;
+  is_public: string;
   track_upload_type: string;
   track_upload_bpm: string;
   music_vocals_y: string;
@@ -20,4 +20,34 @@ export interface UploadFileData {
   sale_available: string;
   licence_available: string;
   nonprofit_available: string;
+  album: string;
+  single: string;
+  advertising: string;
+  corporate: string;
+  documentaryFilm: string;
+  film: string;
+  software: string;
+  internetVideo: string;
+  liveEvent: string;
+  musicHold: string;
+  musicProd1k: string;
+  musicProd10k: string;
+  musicProd50k: string;
+  musicProd51k: string;
+  website: string;
+  advertisingE: string;
+  corporateE: string;
+  documentaryFilmE: string;
+  filmE: string;
+  softwareE: string;
+  internetVideoE: string;
+  liveEventE: string;
+  musicHoldE: string;
+  musicProd1kE: string;
+  musicProd10kE: string;
+  musicProd50kE: string;
+  musicProd51kE: string;
+  websiteE: string;
+  nonProfit: string;
+  neverSale: string;
 }
