@@ -1,5 +1,5 @@
 <div class="popup popup_animate">
-  <button class="popup-close" type="button" (click)="closePopup()">Close</button>
+  <button class="popup-close" type="button" (click)="openPopup(null)">Close</button>
   <div class="popup-bg"></div>
   <div class="popup-scroll popup_animate_inner">
     <div class="scroll-bg"></div>
@@ -9,77 +9,6 @@
         <div class="title">about</div>
         <div class="logo"></div>
         <div class="logo-info">Your social network for audio hosting!</div>
-      </div>
-
-      <div class="about-block">
-        <div class="title">team</div>
-        <div class="peoples-wrap">
-          <div class="people-one">
-            <div class="img">
-              <img src="assets/images/peoples/1.jpg" alt=""/>
-            </div>
-            <div class="name">David Walters</div>
-            <div class="position">FOUNDER&CEO</div>
-            <a href="//facebook.com/" target="_blank" class="fb-link"></a>
-          </div>
-          <div class="people-one">
-            <div class="img">
-              <img src="assets/images/peoples/2.jpg" alt=""/>
-            </div>
-            <div class="name">Lola Tamislova</div>
-            <div class="position">ASSISTANT</div>
-            <a href="//facebook.com/" target="_blank" class="fb-link"></a>
-          </div>
-          <div class="people-one">
-            <div class="img">
-              <img src="assets/images/peoples/3.jpg" alt=""/>
-            </div>
-            <div class="name">Tatiana Kortilova</div>
-            <div class="position">ASSISTANT</div>
-            <a href="//facebook.com/" target="_blank" class="fb-link"></a>
-          </div>
-          <div class="people-one">
-            <div class="img">
-              <img src="assets/images/peoples/4.jpg" alt=""/>
-            </div>
-            <div class="name">Lila Morgan</div>
-            <div class="position">PRODUCT MANAGER</div>
-            <a href="//facebook.com/" target="_blank" class="fb-link"></a>
-          </div>
-          <div class="people-one">
-            <div class="img">
-              <img src="assets/images/peoples/1.jpg" alt=""/>
-            </div>
-            <div class="name">David Walters</div>
-            <div class="position">FOUNDER&CEO</div>
-            <a href="//facebook.com/" target="_blank" class="fb-link"></a>
-          </div>
-          <div class="people-one">
-            <div class="img">
-              <img src="assets/images/peoples/2.jpg" alt=""/>
-            </div>
-            <div class="name">Lola Tamislova</div>
-            <div class="position">ASSISTANT</div>
-            <a href="//facebook.com/" target="_blank" class="fb-link"></a>
-          </div>
-          <div class="people-one">
-            <div class="img">
-              <img src="assets/images/peoples/3.jpg" alt=""/>
-            </div>
-            <div class="name">Tatiana Kortilova</div>
-            <div class="position">ASSISTANT</div>
-            <a href="//facebook.com/" target="_blank" class="fb-link"></a>
-          </div>
-          <div class="people-one">
-            <div class="img">
-              <img src="assets/images/peoples/4.jpg" alt=""/>
-            </div>
-            <div class="name">Lila Morgan</div>
-            <div class="position">PRODUCT MANAGER</div>
-            <a href="//facebook.com/" target="_blank" class="fb-link"></a>
-          </div>
-
-        </div>
       </div>
 
       <div class="about-block">
@@ -389,7 +318,8 @@
           <p>Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut.</p>
           <p>odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt. Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit, sed quia non numquam eius modi tempora incidunt ut labore et dolore magnam aliquam quaerat voluptatem. Ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur? Quis autem vel eum iure reprehenderit qui in ea voluptate velit esse quam nihil molestiae consequatur, vel illum qui dolorem eum fugiat quo voluptas nulla pariatur</p>
         </div>
-        <a href="#" class="info-text-btn">BE A PART OF THE COMMUNITY</a>
+        <button type="button"
+                class="info-text-btn" (click)="openPopup('signup')">BE A PART OF THE COMMUNITY</button>
       </div>
 
     </div>

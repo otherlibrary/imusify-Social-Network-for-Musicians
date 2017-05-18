@@ -14,7 +14,7 @@ export class AboutComponent implements OnInit {
     ngOnInit() {
     }
 
-    closePopup() {
-        this._router.navigate([{outlets: {popup: null}}]);
+    openPopup(name: string) {
+        this._router.navigate([{outlets: {popup: name}}]);
     }
 }

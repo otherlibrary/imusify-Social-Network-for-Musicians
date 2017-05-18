@@ -1,4 +1,4 @@
-<div class="popup popup_animate">
+<div class="popup popup_animate" *ngIf="licensesList">
   <button class="popup-close" (click)="closePopup()" type="button">Close</button>
   <div class="popup-bg"></div>
   <div class="popup-scroll popup_animate_inner">
@@ -202,18 +202,20 @@
                 </label>
               </div>
               <div *ngIf="saleIsOpen">
-                <app-price-field [id]="'album'"
-                                 [price]="uploadTrackInfo.album"
+
+                <app-price-field *ngFor="let license of licensesList | licenseType: 's'"
+                                 [id]="prefixLicId + license.id"
+                                 [price]="license.mp3"
                                  (update)="updatePrice($event)"
                                  (checks)="checkPrice($event)">
-                  Album
+                  {{license.name}}
                 </app-price-field>
-                <app-price-field [id]="'single'"
-                                 [price]="uploadTrackInfo.single"
-                                 (update)="updatePrice($event)"
-                                 (checks)="checkPrice($event)">
-                  Single
-                </app-price-field>
+                <!--<app-price-field [id]="'single'"-->
+                                 <!--[price]="uploadTrackInfo.single"-->
+                                 <!--(update)="updatePrice($event)"-->
+                                 <!--(checks)="checkPrice($event)">-->
+                  <!--Single-->
+                <!--</app-price-field>-->
               </div>
 
               <!--AVAILABLE FOR LICENSING-->
@@ -234,71 +236,12 @@
                 </label>
               </div>
               <div *ngIf="licensingIsOpen">
-                <app-price-field [id]="'advertising'"
-                                 [price]="uploadTrackInfo.advertising"
+                <app-price-field *ngFor="let license of licensesList | licenseType: 'l'"
+                                 [id]="prefixLicId + license.id"
+                                 [price]="license.mp3"
                                  (update)="updatePrice($event)"
                                  (checks)="checkPrice($event)">
-                  Advertising
-                </app-price-field>
-                <app-price-field [id]="'corporate'"
-                                 [price]="uploadTrackInfo.corporate"
-                                 (update)="updatePrice($event)"
-                                 (checks)="checkPrice($event)">Corporate/Commercial film
-                </app-price-field>
-                <app-price-field [id]="'documentaryFilm'"
-                                 [price]="uploadTrackInfo.documentaryFilm"
-                                 (update)="updatePrice($event)"
-                                 (checks)="checkPrice($event)">Documentary/Indie/Student film
-                </app-price-field>
-                <app-price-field [id]="'film'"
-                                 [price]="uploadTrackInfo.film"
-                                 (update)="updatePrice($event)"
-                                 (checks)="checkPrice($event)">Film/TV Show
-                </app-price-field>
-                <app-price-field [id]="'software'"
-                                 [price]="uploadTrackInfo.software"
-                                 (update)="updatePrice($event)"
-                                 (checks)="checkPrice($event)">Software
-                </app-price-field>
-                <app-price-field [id]="'internetVideo'"
-                                 [price]="uploadTrackInfo.internetVideo"
-                                 (update)="updatePrice($event)"
-                                 (checks)="checkPrice($event)">Internet Video
-                </app-price-field>
-                <app-price-field [id]="'liveEvent'"
-                                 [price]="uploadTrackInfo.liveEvent"
-                                 (update)="updatePrice($event)"
-                                 (checks)="checkPrice($event)">Live Event
-                </app-price-field>
-                <app-price-field [id]="'musicHold'"
-                                 [price]="uploadTrackInfo.musicHold"
-                                 (update)="updatePrice($event)"
-                                 (checks)="checkPrice($event)">Music on Hold
-                </app-price-field>
-                <app-price-field [id]="'musicProd51k'"
-                                 [price]="uploadTrackInfo.musicProd51k"
-                                 (update)="updatePrice($event)"
-                                 (checks)="checkPrice($event)">Music Production and Audio Project/Lease (over 50000 copies)
-                </app-price-field>
-                <app-price-field [id]="'musicProd50k'"
-                                 [price]="uploadTrackInfo.musicProd50k"
-                                 (update)="updatePrice($event)"
-                                 (checks)="checkPrice($event)">Music Production and Audio Project/Lease (10001 to 50000 copies)
-                </app-price-field>
-                <app-price-field [id]="'musicProd10k'"
-                                 [price]="uploadTrackInfo.musicProd10k"
-                                 (update)="updatePrice($event)"
-                                 (checks)="checkPrice($event)">Music Production and Audio Project/Lease (1001 to 10000 copies)
-                </app-price-field>
-                <app-price-field [id]="'musicProd1k'"
-                                 [price]="uploadTrackInfo.musicProd1k"
-                                 (update)="updatePrice($event)"
-                                 (checks)="checkPrice($event)">Music Production and Audio Project/Lease (up to 1000 copies)
-                </app-price-field>
-                <app-price-field [id]="'website'"
-                                 [price]="uploadTrackInfo.website"
-                                 (update)="updatePrice($event)"
-                                 (checks)="checkPrice($event)">Website
+                  {{license.name}}
                 </app-price-field>
               </div>
 
@@ -320,70 +263,12 @@
                 </label>
               </div>
               <div *ngIf="licensingEIsOpen">
-                <app-price-field [id]="'advertisingE'"
-                                 [price]="uploadTrackInfo.advertisingE"
+                <app-price-field *ngFor="let license of licensesList | licenseType: 'el'"
+                                 [id]="prefixLicId + license.id"
+                                 [price]="license.mp3"
                                  (update)="updatePrice($event)"
-                                 (checks)="checkPrice($event)">Advertising
-                </app-price-field>
-                <app-price-field [id]="'corporateE'"
-                                 [price]="uploadTrackInfo.corporateE"
-                                 (update)="updatePrice($event)"
-                                 (checks)="checkPrice($event)">Corporate/Commercial film
-                </app-price-field>
-                <app-price-field [id]="'documentaryFilmE'"
-                                 [price]="uploadTrackInfo.documentaryFilmE"
-                                 (update)="updatePrice($event)"
-                                 (checks)="checkPrice($event)">Documentary/Indie/Student film
-                </app-price-field>
-                <app-price-field [id]="'filmE'"
-                                 [price]="uploadTrackInfo.filmE"
-                                 (update)="updatePrice($event)"
-                                 (checks)="checkPrice($event)">Film/TV Show
-                </app-price-field>
-                <app-price-field [id]="'softwareE'"
-                                 [price]="uploadTrackInfo.softwareE"
-                                 (update)="updatePrice($event)"
-                                 (checks)="checkPrice($event)">Software
-                </app-price-field>
-                <app-price-field [id]="'internetVideoE'"
-                                 [price]="uploadTrackInfo.internetVideoE"
-                                 (update)="updatePrice($event)"
-                                 (checks)="checkPrice($event)">Internet Video
-                </app-price-field>
-                <app-price-field [id]="'liveEventE'"
-                                 [price]="uploadTrackInfo.liveEventE"
-                                 (update)="updatePrice($event)"
-                                 (checks)="checkPrice($event)">Live Event
-                </app-price-field>
-                <app-price-field [id]="'musicHoldE'"
-                                 [price]="uploadTrackInfo.musicHoldE"
-                                 (update)="updatePrice($event)"
-                                 (checks)="checkPrice($event)">Music on Hold
-                </app-price-field>
-                <app-price-field [id]="'musicProd51kE'"
-                                 [price]="uploadTrackInfo.musicProd51kE"
-                                 (update)="updatePrice($event)"
-                                 (checks)="checkPrice($event)">Music Production and Audio Project/Lease (over 50000 copies)
-                </app-price-field>
-                <app-price-field [id]="'musicProd50kE'"
-                                 [price]="uploadTrackInfo.musicProd50kE"
-                                 (update)="updatePrice($event)"
-                                 (checks)="checkPrice($event)">Music Production and Audio Project/Lease (10001 to 50000 copies)
-                </app-price-field>
-                <app-price-field [id]="'musicProd10kE'"
-                                 [price]="uploadTrackInfo.musicProd10kE"
-                                 (update)="updatePrice($event)"
-                                 (checks)="checkPrice($event)">Music Production and Audio Project/Lease (1001 to 10000 copies)
-                </app-price-field>
-                <app-price-field [id]="'musicProd1kE'"
-                                 [price]="uploadTrackInfo.musicProd1kE"
-                                 (update)="updatePrice($event)"
-                                 (checks)="checkPrice($event)">Music Production and Audio Project/Lease (up to 1000 copies)
-                </app-price-field>
-                <app-price-field [id]="'websiteE'"
-                                 [price]="uploadTrackInfo.websiteE"
-                                 (update)="updatePrice($event)"
-                                 (checks)="checkPrice($event)">Website
+                                 (checks)="checkPrice($event)">
+                  {{license.name}}
                 </app-price-field>
               </div>
 
@@ -404,10 +289,12 @@
                 </label>
               </div>
               <div *ngIf="noneProfitIsOpen">
-                <app-price-field [id]="'nonProfit'"
-                                 [price]="uploadTrackInfo.nonProfit"
+                <app-price-field *ngFor="let license of licensesList | licenseType: 'np'"
+                                 [id]="prefixLicId + license.id"
+                                 [price]="license.mp3"
                                  (update)="updatePrice($event)"
-                                 (checks)="checkPrice($event)">Non profit
+                                 (checks)="checkPrice($event)">
+                  {{license.name}}
                 </app-price-field>
               </div>
 

@@ -99,4 +99,8 @@ export class UploadService {
     return this._apiService.post(environment.deleteTrack, trackData);
   }
 
+  getLicensesList() {
+    return this._apiService.get(environment.licensesList);
+  }
+
 }

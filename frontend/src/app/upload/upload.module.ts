@@ -6,6 +6,7 @@ import {SharedModule} from "../shared/shared.module";
 import { UploadService } from "./upload.service";
 
 import { uploadComponents } from './index';
+import { LicenseTypePipe } from './pipes/license-type.pipe';
 
 @NgModule({
     imports: [

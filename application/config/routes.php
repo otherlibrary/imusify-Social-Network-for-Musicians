@@ -124,6 +124,10 @@ $route['api/track-upload/upload-track-file'] = 'new_api/trackupload_api/upload_t
 $route['api/track-upload/upload-track-info'] = 'new_api/trackupload_api/upload_track_data/format/json';
 $route['api/track-upload/upload-track-img'] = 'new_api/trackupload_api/upload_track_img/format/json';
 
+$route['api/track-edit/edit-track-info'] = 'new_api/trackedit_api/edit_track_info/format/json';
+
+$route['api/licenses-list'] = 'new_api/common_api/licenses_list/format/json';
+
 /* New Users API */
 $route['api/user/check-auth'] = 'api/user_api/check_auth/format/json';
 
