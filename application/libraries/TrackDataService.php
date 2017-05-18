@@ -279,7 +279,7 @@ class TrackDataService
      */
     public function removeLicenses($trackId)
     {
-        $this->ci->db->delete('track_lincence_price_details', ['trackId' => $trackId]);
+        $this->ci->db->delete('track_licence_price_details', ['trackId' => $trackId]);
 
         return $this->ci->db->affected_rows();
     }
