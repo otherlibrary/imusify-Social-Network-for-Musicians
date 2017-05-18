@@ -621,35 +621,38 @@ class track_detail extends CI_Model
                     t.genreId,
                     g.genre,
                     t.isPublic,
-                    t.track_musician_type                      
+                    t.track_musician_type
                 FROM tracks t 
                     LEFT JOIN genre g ON g.Id = t.genreId  
                     LEFT JOIN track_moods tm ON tm.trackId = t.Id 
                 WHERE t.id = ' . $trackId;
 
-        $secondary_genres = 'SELECT 
-                                tg.genreId,
-                                genre
-                             FROM track_genre tg
-                                 LEFT JOIN genre g ON g.Id = tg.genreId
-                             WHERE tg.trackId = ' . $trackId;
+        $secondary_genres = 'SELECT  
+                                genreId
+                             FROM track_genre 
+                             WHERE trackId = ' . $trackId;
+
 
         $moods = 'SELECT
-                      tm.moodId,
-                      m.mood
+                      tm.moodId
                   FROM track_moods tm
                       LEFT JOIN mood m ON m.Id = tm.MoodId
                   WHERE tm.trackId = ' . $trackId;
 
         $licenses = 'SELECT 
-                        tlpd.licenceId,
-                        tlt.name,
-                        tlt.description,
-                        tlt.lic_type,
-                        tlpd.licencePrice
-                     FROM track_licence_price_details tlpd
-                        LEFT JOIN track_licence_types tlt ON tlt.id = tlpd.licenceId
-                     WHERE tlpd.trackId = '. $trackId;
+                        licenceId AS id,
+                        licencePrice 
+                     FROM track_licence_price_details 
+                     WHERE trackId = '. $trackId;
+
+        $licence_list = 'SELECT 
+                             id,
+                             name,
+                             description,
+                             lic_type
+                         FROM track_licence_types 
+                         WHERE status = \'y\'  ';
+        $licence_list = $this->db->query($licence_list)->result_array();
 
         $track = $this->db->query($track)->result_array();
         $secondary_genres = $this->db->query($secondary_genres)->result_array();
@@ -658,8 +661,31 @@ class track_detail extends CI_Model
 
 
         if (!empty($track[0])) {
-            $track[0]['moods'] = $moods;
-            $track[0]['secondary_genres'] = $secondary_genres;
+            $res_secondary_genres = [];
+            foreach ($secondary_genres as $secondary_genre){
+                $res_secondary_genres[] = $secondary_genre["genreId"];
+            }
+            $res_moods = [];
+            foreach ($moods as $mood){
+                $res_moods[] = $mood["moodId"];
+            }
+            $res_licences = [];
+                 foreach($licenses as $license){
+                     $res_licences[$license["id"]] = $license["licencePrice"];
+                 }
+            $licenses = [];
+            foreach($licence_list as $value){
+                 if (array_key_exists($value['id'], $res_licences)) {
+                      $value['licencePrice'] = $res_licences[$value['id']];
+                      $licenses[] = $value;
+                 } else {
+                       $value['licencePrice'] = null;
+                       $licenses[] = $value;
+                 }
+            }
+
+            $track[0]['moods'] = $res_moods;
+            $track[0]['secondary_genres'] = $res_secondary_genres;
             $track[0]['licences'] = $licenses;
             return $track[0];
         }
