@@ -643,6 +643,9 @@ class track_detail extends CI_Model
 
         $licenses = 'SELECT 
                         tlpd.licenceId,
+                        tlt.name,
+                        tlt.description,
+                        tlt.lic_type,
                         tlpd.licencePrice
                      FROM track_licence_price_details tlpd
                         LEFT JOIN track_licence_types tlt ON tlt.id = tlpd.licenceId
@@ -655,18 +658,6 @@ class track_detail extends CI_Model
 
 
         if (!empty($track[0])) {
-            $res_licences = [];
-            foreach($licenses as $license){
-                $res_licences[$license["licenceId"]] = $license["licencePrice"];
-            }
-            $licenses = [];
-            foreach(range(1,35) as $value){
-                if (array_key_exists($value, $res_licences)) {
-                    $licenses[$value] = $res_licences[$value];
-                } else {
-                    $licenses[$value] = null;
-                }
-            }
             $track[0]['moods'] = $moods;
             $track[0]['secondary_genres'] = $secondary_genres;
             $track[0]['licences'] = $licenses;

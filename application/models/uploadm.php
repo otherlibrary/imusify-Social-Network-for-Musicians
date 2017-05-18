@@ -1437,12 +1437,6 @@ Class uploadm extends CI_Model
 
 
                 /*Unlink a photo from folder*/
-                $track_delete = 'DELETE t, tm
-                                    FROM tracks t
-                                        LEFT JOIN track_moods tm ON tm.trackId = t.id
-                                    WHERE t.id = ' . $trackdet;
-
-                $track_delete = $this->db->query($track_delete);
 
                 $this->db->where('id', $trackdet);
                 $this->db->where('userId', $userId);
