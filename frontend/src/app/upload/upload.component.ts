@@ -121,14 +121,14 @@ export class UploadComponent implements OnInit {
       console.log('output: ', output);
       let file = this.files[this.files.length - 1];
       //remove ---------
-      this._uploadService.uploadTrackInfo.file_name = 'file.response.upload_data.file_name';
-      this._uploadService.uploadTrackInfo.title = this._cutNameExtension(file.name);
-      this._uploadService.uploadTrackInfo.track_id = file.id;
-
-      let t = Observable.timer(300).subscribe(() => {
-        this._uploadService.editPopupSubject.next(true);
-        t.unsubscribe();
-      });
+      // this._uploadService.uploadTrackInfo.file_name = 'file.response.upload_data.file_name';
+      // this._uploadService.uploadTrackInfo.title = this._cutNameExtension(file.name);
+      // this._uploadService.uploadTrackInfo.track_id = file.id;
+      //
+      // let t = Observable.timer(300).subscribe(() => {
+      //   this._uploadService.editPopupSubject.next(true);
+      //   t.unsubscribe();
+      // });
       //remove ----------
       if (file.response.hasOwnProperty('upload_data')) {
         //file data

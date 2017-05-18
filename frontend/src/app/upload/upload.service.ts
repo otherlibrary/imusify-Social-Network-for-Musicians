@@ -55,6 +55,10 @@ export class UploadService {
     return this._apiService.get(environment.getTrackId + trackId);
   }
 
+  saveEditTrack(trackData) {
+    return this._apiService.post(environment.editTrack, trackData);
+  }
+
   deleteTrack(trackData) {
     return this._apiService.post(environment.deleteTrack, trackData);
   }

@@ -1,10 +1,10 @@
-import {Component, Input, OnChanges, OnDestroy, OnInit} from '@angular/core';
-import {UploadService} from '../upload.service';
+import {Component, Input, OnChanges, OnInit} from '@angular/core';
+import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import 'rxjs/add/operator/switchMap';
-import {FormArray, FormBuilder, FormGroup, Validators} from "@angular/forms";
-import {IGenre, IMood} from "../../interfases";
+import {IGenre, IMood, IUploadFileData} from "../../interfases";
 import {IMyOptions} from "mydatepicker";
-import {IUploadFileData} from "app/interfases/upload/IUploadFileData";
+
+import {UploadService} from '../upload.service';
 import {HelpersService} from "../../shared/services/helpers.service";
 import {SharedService} from "../../shared/shared.service";
 
@@ -66,14 +66,13 @@ function base64ArrayBuffer(arrayBuffer) {
 /**
  * initial data from this form is uploadService.uploadTrackInfo
  */
-export class EditComponent implements OnInit, OnChanges, OnDestroy {
+export class EditComponent implements OnInit, OnChanges {
   public uploadTrackForm: FormGroup;
   public uploadTrackInfo: IUploadFileData;
   public uploadTrackImg: any;
   public currentDate: Object;
   public isSubmit: boolean = false;
   public prefixLicId: string = 'lic_id_';
-  private _editSwitchersSubscriber: any;
 
   @Input() genresList: IGenre[];
   @Input() secGenresList: IGenre[];
@@ -188,15 +187,10 @@ export class EditComponent implements OnInit, OnChanges, OnDestroy {
       };
     this.buildForm();
 
-    //open all switch
-    console.log(this.openSwitch);
+    //open all switch if click to edit track
     if(this.openSwitch) {
       this.toggleAllSwitch();
     }
-  }
-
-  ngOnDestroy() {
-
   }
 
   /**
@@ -279,6 +273,42 @@ export class EditComponent implements OnInit, OnChanges, OnDestroy {
           });
           //upload image
           this.submitImage(res.track_id);
+          this.isSubmit = false;
+        } else {
+          this._sharedService.notificationSubject.next({
+            title: 'Save file',
+            msg: 'Error save',
+            type: 'error'
+          });
+        }
+      } else {
+        this._sharedService.notificationSubject.next({
+          title: 'Save file',
+          msg: 'Error save',
+          type: 'error'
+        });
+      }
+    });
+  }
+
+  public anSubmitEdit(event) {
+    event.preventDefault();
+    this.isSubmit = true;
+    //save track info
+    let resultFormJSON = JSON.stringify(this.uploadTrackForm.value);
+    let release_date = this.uploadTrackForm.value.release_date;
+    let resultForm = JSON.parse(resultFormJSON);
+    resultForm.release_date = JSON.stringify(release_date);
+    let formData = this._helpersService.toStringParam((resultForm));
+
+    this._uploadService.saveEditTrack(formData).subscribe(res => {
+      if (res.hasOwnProperty('track_id')) {
+        if (res.track_id != 0) {
+          this._sharedService.notificationSubject.next({
+            title: 'Save file',
+            msg: 'Success save',
+            type: 'success'
+          });
           this.isSubmit = false;
         } else {
           this._sharedService.notificationSubject.next({
