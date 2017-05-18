@@ -150,7 +150,7 @@ class trackupload_api extends REST_Controller
                 $this->trackdataservice->addMoods($userData->id, $trackId, $moodIds);
             }
 
-            $this->trackdataservice->createLicensesFromPost($this->post(), $trackId);
+            $this->trackdataservice->createLicensesFromPost($trackId, $this->post());
 
             $result = [
                 'track_id' => $trackId,
