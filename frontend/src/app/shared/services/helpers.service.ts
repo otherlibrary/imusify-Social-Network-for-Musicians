@@ -43,4 +43,8 @@ export class HelpersService {
 
     return array;
   }
+
+  public move(array, fromIndex, toIndex) {
+    array.splice(toIndex, 0, array.splice(fromIndex, 1)[0]);
+  }
 }

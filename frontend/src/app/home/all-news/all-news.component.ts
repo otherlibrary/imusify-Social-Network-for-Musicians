@@ -4,6 +4,7 @@ import {EmitterService} from "../../shared/services/emitter.service";
 import {IRecord, ITracksData} from "../../interfases";
 import {SharedService} from "../../shared/shared.service";
 import {HelpersService} from "../../shared/services/helpers.service";
+import {IArticle} from "../../interfases/IArticle";
 
 @Component({
   selector: 'app-all-news',
@@ -12,7 +13,7 @@ import {HelpersService} from "../../shared/services/helpers.service";
 })
 export class AllNewsComponent implements OnInit {
   homeData: ITracksData;
-  records: IRecord[];
+  records: IRecord[] = [];
   sharedUrl: null;
   private isPlayPlaylist: boolean = false;
 
@@ -30,8 +31,13 @@ export class AllNewsComponent implements OnInit {
     EmitterService.get('TOGGLE_PRELOADER').emit(true);
     this._homeService.getAllNews().subscribe(data => {
       this.homeData = data;
-      this.records = this._helpersService.shuffle(data.records);
-      console.log(this.records);
+      let len = data.records.length;
+      data.records.map((item: any, index) => {
+        this.records.push(item);
+        if(item.is_article) {
+          this._helpersService.move(this.records, index, len - index);
+        }
+      });
       EmitterService.get('TOGGLE_PRELOADER').emit(false);
     });
   }
