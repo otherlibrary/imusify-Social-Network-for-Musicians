@@ -120,7 +120,7 @@ class trackedit_api extends REST_Controller
         }
 
         $this->trackdataservice->removeLicenses($trackId);
-        $this->trackdataservice->createLicensesFromPost($this->post(), $trackId);
+        $this->trackdataservice->createLicensesFromPost($trackId, $this->post());
 
         $result = $this->post();
 

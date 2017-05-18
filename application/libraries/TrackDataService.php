@@ -254,49 +254,18 @@ class TrackDataService
     }
 
     /**
-     * @param array $query
      * @param int   $trackId
+     * @param array $postData
      */
-    public function createLicensesFromPost($query, $trackId)
+    public function createLicensesFromPost($trackId, $postData)
     {
-        $licensingKeys = [
-            'single' => 1,
-            'album' => 2,
-            'advertising' => 14,
-            'corporate' => 10,
-            'documentaryFilm' => 9,
-            'film' => 8,
-            'software' => 16,
-            'internetVideo' => 11,
-            'liveEvent' => 17,
-            'musicHold' => 15,
-            'musicProd1k' => 4,
-            'musicProd10k' => 5,
-            'musicProd50k' => 6,
-            'musicProd51k' => 7,
-            'website' => 12,
-            // exclusive
-            'advertisingE' => 26,
-            'corporateE' => 22,
-            'documentaryFilmE' => 21,
-            'filmE' => 20,
-            'softwareE' => 28,
-            'internetVideoE' => 23,
-            'liveEventE' => 29,
-            'musicHoldE' => 27,
-            'musicProd1kE' => 32,
-            'musicProd10kE' => 33,
-            'musicProd50kE' => 34,
-            'musicProd51kE' => 35,
-            'websiteE' => 24,
-        ];
-
-        foreach ($licensingKeys as $key => $value) {
-            if (!empty($query[$key])) {
+        $query = $this->ci->db->query('SELECT id FROM track_licence_types WHERE status = \'y\'');
+        foreach ($query->result_array() as $lic) {
+            if (!empty($postData['lic_id_' . $lic['id']])) {
                 $insertData = [
                     'trackId' => $trackId,
-                    'licenceId' => $value,
-                    'licencePrice' => $query[$key],
+                    'licenceId' => $lic['id'],
+                    'licencePrice' => $postData['lic_id_' . $lic['id']],
                     'createdDate' => date('Y-m-d H:i:s'),
                 ];
                 $this->ci->db->insert('track_licence_price_details', $insertData);
