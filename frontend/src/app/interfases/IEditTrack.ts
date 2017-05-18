@@ -3,9 +3,9 @@ import {IGenre} from "app/interfases";
 export interface IEditTrack {
   description: string;
   genre: string;
-  genreId: string;
+  genreId: number;
   isPublic: string;
-  licences: Object
+  licences: any[];
   moods: IMood[];
   release_dd: string;
   release_mm: string;
@@ -15,4 +15,5 @@ export interface IEditTrack {
   trackId: string;
   track_musician_type: string;
   trackuploadType: string;
+  typeArtist: string;
 }

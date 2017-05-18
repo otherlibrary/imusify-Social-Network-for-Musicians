@@ -6,7 +6,6 @@ import {IUploadDetails} from "../../interfases/upload/IUploadDetails";
 import {IGenre} from "../../interfases/IGenre";
 import {IOption} from "ng-select";
 import {IMood} from "../../interfases/IMood";
-import {IRecord} from "../../interfases/IRecord";
 import {HelpersService} from "../../shared/services/helpers.service";
 import {SharedService} from "../../shared/shared.service";
 import {IEditTrack} from "../../interfases/IEditTrack";
@@ -20,7 +19,8 @@ export class AudioComponent implements OnInit, OnDestroy {
   public trackList: Object[] = [];
   public isOpenEdit: boolean = false;
   public editSubscriber: any;
-  public editTrack: any;
+  public editTrack: IEditTrack;
+  public typePriceLicense: string = 'mp3';
 
   public uploadAudioData: UploadAudioData;
   public uploadDetails: IUploadDetails;
@@ -42,8 +42,10 @@ export class AudioComponent implements OnInit, OnDestroy {
     this.getLicensesList();
     //edit track popup
     this.editSubscriber = this._uploadService.editPopupSubject.subscribe((flag: boolean) => {
+      this._uploadService.clearUploadTrackInfo();
       this.isOpenEdit = flag;
       if(!this.isOpenEdit) {
+        this.getLicensesList();
         this.getTrackList();
         this.getUploadDetails();
       }
@@ -76,6 +78,7 @@ export class AudioComponent implements OnInit, OnDestroy {
   getLicensesList() {
     this._uploadService.getLicensesList().subscribe(licenses => {
       this.licensesList = licenses;
+      this.typePriceLicense = "mp3";
     });
   }
 
@@ -93,7 +96,35 @@ export class AudioComponent implements OnInit, OnDestroy {
 
   getTrackById(trackId) {
     this._uploadService.getTrackById(trackId).subscribe((record: any) => {
-      this.editTrack = record;
+      this.editTrack = record.track;
+      console.log('editTrack: ', this.editTrack);
+      this.typePriceLicense = 'licencePrice';
+      this._uploadService.uploadTrackInfo.track_id = this.editTrack.trackId;
+      this._uploadService.uploadTrackInfo.desc = this.editTrack.description;
+      this._uploadService.uploadTrackInfo.title = this.editTrack.title;
+      this._uploadService.uploadTrackInfo.is_public = this.editTrack.isPublic == "y" ? "1" : null;
+      this._uploadService.uploadTrackInfo.genre_id = this.editTrack.genreId;
+      this._uploadService.uploadTrackInfo.track_upload_type = this.editTrack.trackuploadType;
+      this._uploadService.uploadTrackInfo.type_artist = this.editTrack.track_musician_type;
+      if(this.editTrack.track_musician_type ===  'm') {
+        this._uploadService.uploadTrackInfo.type_artist = 'male';
+      }
+      if(this.editTrack.track_musician_type ===  'f') {
+        this._uploadService.uploadTrackInfo.type_artist = 'female';
+      }
+      if(this.editTrack.track_musician_type ===  'b') {
+        this._uploadService.uploadTrackInfo.type_artist = 'both';
+      }
+      //this._uploadService.uploadTrackInfo.secondary_genre_id = this.editTrack.secondary_genres;
+      this._uploadService.uploadTrackInfo.release_date = {
+        date: {
+          year: this.editTrack.release_yy,
+          month: this.editTrack.release_mm,
+          day: this.editTrack.release_dd
+        }
+      };
+      //this.editTrack.licences
+      this.licensesList = [{id: "1", name: "Abversti", description: "dsdsds", lic_type: 's', licencePrice: '9.9999'}];
       this.isOpenEdit = true;
     }, err => {
       console.error(err);

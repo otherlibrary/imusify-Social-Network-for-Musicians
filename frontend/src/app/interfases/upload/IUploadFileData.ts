@@ -11,8 +11,8 @@ export interface IUploadFileData {
   waveform: any;
   type_artist: string;
   copyright: boolean;
-
   is_public: string;
+
   track_upload_type: string;
   track_upload_bpm: string;
   music_vocals_y: string;

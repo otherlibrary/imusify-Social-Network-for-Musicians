@@ -24,6 +24,17 @@ export class UploadService {
     };
   }
 
+  /**
+   * clear all field in track info
+   * @private
+   */
+  public clearUploadTrackInfo() {
+    for(let k in this.uploadTrackInfo) {
+      this.uploadTrackInfo[k] = null;
+    }
+    this.uploadTrackInfo.is_public = "1";
+  }
+
   getTrackList(): Observable<any> {
     return this._apiService.post(environment.uploadTrackList, environment.creds);
   }

@@ -72,8 +72,6 @@ export class EditComponent implements OnInit, OnChanges {
   public uploadTrackImg: any;
   public currentDate: Object;
   public isSubmit: boolean = false;
-  //TODO set track type
-  private _typePrice: string = 'mp3';
   public prefixLicId: string = 'lic_id_';
 
   @Input() genresList: IGenre[];
@@ -81,6 +79,7 @@ export class EditComponent implements OnInit, OnChanges {
   @Input() trackTypesList: any[];
   @Input() moodsList: IMood[];
   @Input() licensesList: any[];
+  @Input() typePrice: string;
 
   public myDatePickerOptions: IMyOptions = {
     dateFormat: 'dd.mm.yyyy'
@@ -149,7 +148,7 @@ export class EditComponent implements OnInit, OnChanges {
       copyright: [this.uploadTrackInfo.copyright, [
         Validators.required
       ]],
-      second_genre_id: this.uploadTrackInfo.genre_id,
+      second_genre_id: this.uploadTrackInfo.secondary_genre_id,
       pick_moods: this.uploadTrackInfo.pick_moods_id,
       type_artist: this.uploadTrackInfo.type_artist,
       is_public: this.uploadTrackInfo.is_public
@@ -177,16 +176,16 @@ export class EditComponent implements OnInit, OnChanges {
   ) {}
 
   ngOnInit() {
-    this.buildForm();
     //if date none, set current date
     let date = new Date();
-    this.currentDate = {
+    this.currentDate = this._uploadService.uploadTrackInfo.release_date || {
       date: {
         year: date.getFullYear(),
         month: date.getMonth() + 1,
         day: date.getDate()
       }
     };
+    this.buildForm();
   }
 
   /**
@@ -319,7 +318,7 @@ export class EditComponent implements OnInit, OnChanges {
     const _cacheObj: Object = {};
     this.licensesList.map(item => {
       if(item.lic_type == type) {
-        _cacheObj['lic_id_' + item.id] = val ? item[this._typePrice] : null;
+        _cacheObj['lic_id_' + item.id] = val ? item[this.typePrice] : null;
       }
     });
     this.uploadTrackForm.patchValue(_cacheObj);

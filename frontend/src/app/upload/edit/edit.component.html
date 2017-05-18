@@ -205,7 +205,7 @@
 
                 <app-price-field *ngFor="let license of licensesList | licenseType: 's'"
                                  [id]="prefixLicId + license.id"
-                                 [price]="license.mp3"
+                                 [price]="license[typePrice]"
                                  (update)="updatePrice($event)"
                                  (checks)="checkPrice($event)">
                   {{license.name}}
@@ -238,7 +238,7 @@
               <div *ngIf="licensingIsOpen">
                 <app-price-field *ngFor="let license of licensesList | licenseType: 'l'"
                                  [id]="prefixLicId + license.id"
-                                 [price]="license.mp3"
+                                 [price]="license[typePrice]"
                                  (update)="updatePrice($event)"
                                  (checks)="checkPrice($event)">
                   {{license.name}}
@@ -265,7 +265,7 @@
               <div *ngIf="licensingEIsOpen">
                 <app-price-field *ngFor="let license of licensesList | licenseType: 'el'"
                                  [id]="prefixLicId + license.id"
-                                 [price]="license.mp3"
+                                 [price]="license[typePrice]"
                                  (update)="updatePrice($event)"
                                  (checks)="checkPrice($event)">
                   {{license.name}}
@@ -291,7 +291,7 @@
               <div *ngIf="noneProfitIsOpen">
                 <app-price-field *ngFor="let license of licensesList | licenseType: 'np'"
                                  [id]="prefixLicId + license.id"
-                                 [price]="license.mp3"
+                                 [price]="license[typePrice]"
                                  (update)="updatePrice($event)"
                                  (checks)="checkPrice($event)">
                   {{license.name}}
