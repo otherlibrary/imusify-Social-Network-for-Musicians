@@ -88,6 +88,7 @@ class trackedit_api extends REST_Controller
             }
 
             $this->trackdataservice->updateTrack(
+                $trackId,
                 $this->post('album_id'),
                 $userData->id,
                 $this->post('title'),
