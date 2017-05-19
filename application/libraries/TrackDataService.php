@@ -363,4 +363,58 @@ class TrackDataService
         $this->ci->db->where('id', $trackId);
         $this->ci->db->update('tracks', $trackData);
     }
+
+    /**
+     * Deletes the specified track and returns the result array
+     * @param int $trackId
+     * @param int $userId
+     * @return array|null
+     */
+    public function deleteTrack($trackId, $userId)
+    {
+        $trackInfo = getvalfromtbl("*", "tracks", "id='" . $trackId . "' AND userId = '" . $userId . "'");
+        if (!empty($trackInfo)) {
+            $this->ci->db->delete('tracks', ['id' => $trackId]);
+            $this->ci->db->delete('tracks_downloads', ['track_id' => $trackId]);
+            $this->ci->db->delete('track_soundlike', ['trackId' => $trackId]);
+            $this->ci->db->delete('track_moods', ['trackId' => $trackId]);
+            $this->ci->db->delete('track_licence_price_details', ['trackId' => $trackId]);
+            $this->ci->db->delete('track_instruments', ['trackId' => $trackId]);
+            $this->ci->db->delete('track_genre', ['trackId' => $trackId]);
+            $this->ci->db->delete('track_comments', ['trackId' => $trackId]);
+            $this->ci->db->delete('playlist_detail', ['trackId' => $trackId]);
+            $this->ci->db->delete('playinglog', ['trackId' => $trackId]);
+            $this->ci->db->delete('likelog', ['trackId' => $trackId]);
+
+            $file_path = asset_path() . "upload/media/" . $userId . "/" . $trackInfo["trackName"];
+            if (file_exists($file_path)) {
+                @unlink($file_path);
+            }
+
+            $trackPhoto = getvalfromtbl("*", "photos", "detailId='" . $trackdet . "' AND type = 't'");
+            if (!empty($trackPhoto)) {
+                $filename = asset_path() . 'upload/' . $trackPhoto['dir'] . $trackPhoto['name'];
+                if (file_exists($filename)) {
+                    @unlink($filename);
+                }
+                $this->ci->db->delete('photos', ['detailId' => $trackId, 'dir' => 'track/']);
+            }
+
+            $this->load->model('space_model');
+            $userCurrentSpace = $this->space_model->getUserCommonSpace($userId);
+            $this->space_model->updateUserSpace($userId, $userCurrentSpace['used_space'] - $trackInfo['filesize']);
+
+            $result = [
+                'status' => 'success',
+                'msg' => 'Specified track successfully deleted.',
+            ];
+        } else {
+            $result = [
+                'status' => 'fail',
+                'msg' => 'Can\'t find specified track.',
+            ];
+        }
+
+        return $result;
+    }
 }
