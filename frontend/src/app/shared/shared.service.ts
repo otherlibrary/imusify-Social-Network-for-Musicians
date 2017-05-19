@@ -37,7 +37,9 @@ export class SharedService {
     return this._apiService.get(environment.getUserRoles);
   }
 
-  setUserRoles(formData: FormData) {
-    return this._apiService.post(environment.getUserRoles, formData);
+  setUserRoles(roles) {
+    let formData = new FormData();
+    formData.append('user_roles[]', roles);
+    return this._apiService.post(environment.setUserRoles, formData);
   }
 }

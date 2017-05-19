@@ -326,6 +326,10 @@ $url_6: url(/assets/css/img/player/queue.svg);
 .roles-block .role-form .inp-block .roles-label span {
   display: inline;
 }
+.profile .img-box {
+  border-radius: 100%;
+  overflow: hidden;
+}
 .btn {
   position: relative;
   display: inline-flex;

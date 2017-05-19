@@ -43,16 +43,14 @@ export class RolesComponent implements OnInit {
   }
 
   saveUserRoles() {
-    let formData = new FormData();
-    this.userRoles.map((roleId: string) => {
-      formData.append('user_roles[]', roleId);
-    });
-    this._sharedService.setUserRoles(formData).subscribe(res => {
+    // this.userRoles.map((roleId: string) => {
+    //
+    // });
+    this._sharedService.setUserRoles(this.userRoles).subscribe(res => {
       console.log(res);
     }, err => {
       console.log(err);
     });
-    console.log(formData);
   }
 
   testRole() {
