@@ -92,8 +92,7 @@ export class AudioPlayerComponent implements OnInit, OnDestroy {
         progressColor: '#c23a48',
         cursorColor: '#fff',
         barWidth: 1.5,
-        renderer: 'MultiCanvas',
-        normalize: true
+        renderer: 'MultiCanvas'
       });
       let waveform = JSON.parse(this.currentPlayedTrack.waveform);
       this.wavesurfer.load(this.streamTrack, waveform);

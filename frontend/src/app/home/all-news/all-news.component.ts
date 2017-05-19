@@ -35,7 +35,8 @@ export class AllNewsComponent implements OnInit {
       data.records.map((item: any, index) => {
         this.records.push(item);
         if(item.is_article) {
-          this._helpersService.move(this.records, index, len - index);
+          let random = this._helpersService.getRandomInt(0, len);
+          this._helpersService.move(this.records, index, random);
         }
       });
       EmitterService.get('TOGGLE_PRELOADER').emit(false);

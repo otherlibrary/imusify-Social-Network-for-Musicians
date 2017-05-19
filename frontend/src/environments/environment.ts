@@ -23,7 +23,7 @@ export const environment = {
   saveTrack: '/save_track',
   editTrack: '/api/track-edit/edit-track-info',
   getTrackId: '/api/track-details/track_by_id/',
-  deleteTrack: '/track_delete',
+  deleteTrack: '/api/track-delete',
   licensesList: '/api/licenses-list',
   browse: '/browse',
   browseNewSongs: '/browse/new-songs',

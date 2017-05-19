@@ -44,7 +44,28 @@ export class HelpersService {
     return array;
   }
 
+  /**
+   * set element array to from-to index
+   * @param array
+   * @param fromIndex
+   * @param toIndex
+   */
   public move(array, fromIndex, toIndex) {
     array.splice(toIndex, 0, array.splice(fromIndex, 1)[0]);
+  }
+
+  /**
+   * Returns a random number between min (inclusive) and max (exclusive)
+   */
+  public getRandomArbitrary(min, max) {
+    return Math.random() * (max - min) + min;
+  }
+
+  /**
+   * Returns a random integer between min (inclusive) and max (inclusive)
+   * Using Math.round() will give you a non-uniform distribution!
+   */
+  public getRandomInt(min, max) {
+    return Math.floor(Math.random() * (max - min + 1)) + min;
   }
 }
