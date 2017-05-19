@@ -310,13 +310,21 @@ $url_6: url(/assets/css/img/player/queue.svg);
     background: #EA3F4F;
     border-color: #EA3F4F;
     color: #fff;
+    position: relative;
+    padding-right: 18px;
     span.deselect-option {
       color: #fff;
+      position: absolute;
+      right: 4px;
+      top: 2px;
       &:hover {
         color: darken(#fff, 10%);
       }
     }
   }
+}
+.roles-block .role-form .inp-block .roles-label span {
+  display: inline;
 }
 .btn {
   position: relative;
@@ -372,15 +380,35 @@ button:disabled {
 }
 
 .masonry {
-  -moz-column-gap: 0;
-  -webkit-column-gap: 0;
-  column-gap: 0;
+  -moz-column-gap: 4px;
+  -webkit-column-gap: 4px;
+  column-gap: 4px;
   margin-top: 150px;
   
   &__item {
-    display: inline-block;
+    display: block;
+    break-inside: avoid;
+    margin-bottom: 4px;
     width: 100%;
     box-sizing: border-box;
+    position: relative;
+    &:after {
+      content: '';
+      position: absolute;
+      display: block;
+      top: 0;
+      left: 0;
+      bottom: 0;
+      right: 0;
+      background: #000;
+      opacity: 0.65;
+      z-index: 0;
+      will-change: opacity;
+      transition: opacity 0.5s cubic-bezier(0.39, 0.575, 0.565, 1);
+    }
+    &:hover:after, &.active:after {
+      opacity: .25;
+    }
   }
 }
 
