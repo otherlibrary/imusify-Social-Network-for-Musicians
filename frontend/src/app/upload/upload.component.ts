@@ -58,7 +58,8 @@ export class UploadComponent implements OnInit {
       this._uploadService.wavesurfer = WaveSurfer.create({
         container: '#waveform2',
         backend: 'MediaElement',
-        pixelRatio: 1
+        pixelRatio: 1,
+        normalize: true
       });
 
       this._uploadService.wavesurfer.on('waveform-ready', (e) => {
@@ -69,6 +70,7 @@ export class UploadComponent implements OnInit {
 
   public getTagsFile(e) {
     this._uploadService.clearUploadTrackInfo();
+
     let files = e.target.files;
     let file = files[files.length - 1];
     let fileURL = URL.createObjectURL(file);
@@ -119,16 +121,7 @@ export class UploadComponent implements OnInit {
       this.dragOver = false;
     } else if (output.type === 'done') {
       let file = this.files[this.files.length - 1];
-      //remove ---------
-      // this._uploadService.uploadTrackInfo.file_name = 'file.response.upload_data.file_name';
-      // this._uploadService.uploadTrackInfo.title = this._cutNameExtension(file.name);
-      // this._uploadService.uploadTrackInfo.track_id = file.id;
-      //
-      // let t = Observable.timer(300).subscribe(() => {
-      //   this._uploadService.editPopupSubject.next(true);
-      //   t.unsubscribe();
-      // });
-      //remove ----------
+
       if (file.response.hasOwnProperty('upload_data')) {
         this._uploadService.uploadTrackInfo.file_name = file.response.upload_data.file_name;
         this._uploadService.uploadTrackInfo.title = this._cutNameExtension(file.name);
