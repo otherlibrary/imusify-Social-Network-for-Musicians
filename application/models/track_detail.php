@@ -627,7 +627,8 @@ class track_detail extends CI_Model
     }
 
     /**
-     *
+     * @param int $trackId
+     * @return array|null
      */
     public function track_by_id($trackId)
     {
@@ -683,18 +684,22 @@ class track_detail extends CI_Model
 
 
         if (!empty($track[0])) {
+
             $res_secondary_genres = [];
             foreach ($secondary_genres as $secondary_genre) {
                 $res_secondary_genres[] = $secondary_genre["genreId"];
             }
+
             $res_moods = [];
             foreach ($moods as $mood) {
                 $res_moods[] = $mood["moodId"];
             }
+
             $res_licences = [];
             foreach ($licenses as $license) {
                 $res_licences[$license["id"]] = $license["licencePrice"];
             }
+
             $licenses = [];
             foreach ($licence_list as $value) {
                 if (!empty($value['licencePrice'])) {
