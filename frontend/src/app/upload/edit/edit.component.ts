@@ -186,7 +186,7 @@ export class EditComponent implements OnInit {
       };
     this.buildForm();
 
-    if(this.openSwitch) {
+    if (this.openSwitch) {
       //clear all data track
       this._uploadService.clearUploadTrackInfo();
       this._uploadService.trackImage.file = null;
@@ -304,28 +304,14 @@ export class EditComponent implements OnInit {
     let formData = this._helpersService.toStringParam((resultForm));
 
     this._uploadService.saveEditTrack(formData).subscribe(res => {
-      if (res.hasOwnProperty('track_id')) {
-        if (res.track_id != 0) {
-          this._sharedService.notificationSubject.next({
-            title: 'Save file',
-            msg: 'Success save',
-            type: 'success'
-          });
-          this.isSubmit = false;
-        } else {
-          this._sharedService.notificationSubject.next({
-            title: 'Save file',
-            msg: 'Error save',
-            type: 'error'
-          });
-        }
-      } else {
-        this._sharedService.notificationSubject.next({
-          title: 'Save file',
-          msg: 'Error save',
-          type: 'error'
-        });
-      }
+      this.isSubmit = false;
+      this._sharedService.notificationSubject.next({
+        title: 'Save file',
+        msg: 'Success save',
+        type: 'success'
+      });
+    }, err => {
+      console.log(err);
     });
   }
 
