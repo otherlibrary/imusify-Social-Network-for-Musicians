@@ -702,7 +702,7 @@ class track_detail extends CI_Model
 
             $licenses = [];
             foreach ($licence_list as $value) {
-                if (!empty($value['licencePrice'])) {
+                if (empty($value['licencePrice'])) {
                     $value['licencePrice'] = $res_licences[$value['id']];
                     $licenses[] = $value;
                 } else {
