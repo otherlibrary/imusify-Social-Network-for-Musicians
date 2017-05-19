@@ -11,7 +11,7 @@ class track_detail extends CI_Model
     }
 
     //Function to get user details...
-    function get_song_details($trackId = NULL, $cond = NULL, $flag = NULL, $returnflag = false)
+    function get_song_details($trackId = null, $cond = null, $flag = null, $returnflag = false)
     {
         $this->load->model('user_profile');
         //artist_firstname  artist_lastname no_of_followers no_of_songs no_of_albums track_genre
@@ -107,8 +107,9 @@ class track_detail extends CI_Model
         $this->db->from('tracktypes');
         $this->db->where_in('id', $track_buyable_types);
 
-        if ($limit != NULL)
+        if ($limit != null) {
             $this->db->limit($limit);
+        }
 
         $query = $this->db->get();
 
@@ -133,7 +134,7 @@ class track_detail extends CI_Model
         $buy_session_current_ar = $this->session->userdata('buy_' . $trackId);
         /*Wave file and selected for download as mp3*/
         /*$track_common_detail["trackFileTypes"]*/
-        $trackdata = $this->get_song_details($trackId, NULL, NULL, true);
+        $trackdata = $this->get_song_details($trackId, null, null, true);
         /*track_buyable_current_type*/
         /*echo "<pre>";
         print_r($buy_session_current_ar);
@@ -172,27 +173,31 @@ class track_detail extends CI_Model
 
         $where = " (ttd.trackId='" . $trackId . "' AND tlt.lic_type = 'l') ";
 
-        if ($cond != NULL)
+        if ($cond != null) {
             $where .= " AND " . $cond;
+        }
 
         $this->db->select('ttd.licencePrice,tlt.*');
         $this->db->from('track_licence_price_details as ttd');
         $this->db->join('track_licence_types as tlt', 'tlt.id = ttd.licenceId', 'left');
         $this->db->where($where);
 
-        if ($limit != NULL)
+        if ($limit != null) {
             $this->db->limit($limit);
+        }
 
         $query = $this->db->get();
         $records_count = $query->num_rows();
 
-        if ($counter != NULL)
+        if ($counter != null) {
             return $records_count;
+        }
 
         if ($records_count > 0) {
             $i = 1;
-            if ($start_limit != NULL)
+            if ($start_limit != null) {
                 $i = $start_limit + 1;
+            }
 
             foreach ($query->result_array() as $row) {
                 $row["row_class"] = 'licence_type_sel_js';
@@ -215,30 +220,35 @@ class track_detail extends CI_Model
     }
 
     /*Comments songs*/
-    function fetch_track_comments($trackId, $cond = NULL, $limit = NULL, $orderby = NULL, $counter = NULL)
+    function fetch_track_comments($trackId, $cond = null, $limit = null, $orderby = null, $counter = null)
     {
         $output = [];
 
-        if ($trackId <= 0)
+        if ($trackId <= 0) {
             return "";
+        }
 
-        if ($cond != NULL)
+        if ($cond != null) {
             $cond = " WHERE tc.status = 'y' AND tc.userId = u.id AND tc.trackId = '" . $trackId . "' AND " . $cond . "";
-        else
+        } else {
             $cond = " WHERE tc.status = 'y' AND tc.userId = u.id AND tc.trackId = '" . $trackId . "'";
+        }
 
-        if ($limit != NULL)
+        if ($limit != null) {
             $limit = " LIMIT " . $limit . " ";
+        }
 
-        if ($orderby != NULL)
+        if ($orderby != null) {
             $orderby = "ORDER BY tc.id DESC," . $orderby;
-        else
+        } else {
             $orderby = "ORDER BY tc.id DESC";
+        }
 
         $query = $this->db->query("SELECT tc.id as commentId,tc.comment,tc.createdDate,u.firstname,u.lastname,u.profileLink,u.id as uid  FROM track_comments as tc,users as u " . $cond . " " . $orderby . " " . $limit . " ");
         //print_query();
-        if ($counter != NULL)
+        if ($counter != null) {
             return $query->num_rows();
+        }
 
         //echo print_query();
         foreach ($query->result_array() as $row) {
@@ -261,30 +271,35 @@ class track_detail extends CI_Model
 
 
     /*Likes songs*/
-    function fetch_track_likes($trackId, $cond = NULL, $limit = NULL, $orderby = NULL, $counter = NULL)
+    function fetch_track_likes($trackId, $cond = null, $limit = null, $orderby = null, $counter = null)
     {
-        if ($trackId <= 0)
+        if ($trackId <= 0) {
             return "";
+        }
 
         $output = [];
 
-        if ($cond != NULL)
+        if ($cond != null) {
             $cond = " WHERE u.id = ll.userId AND u.status = 'y' AND ll.trackId = '" . $trackId . "' " . $cond . "";
-        else
+        } else {
             $cond = " WHERE u.id = ll.userId AND u.status = 'y' AND ll.trackId = '" . $trackId . "' ";
+        }
 
-        if ($limit != NULL)
+        if ($limit != null) {
             $limit = " LIMIT " . $limit . " ";
+        }
 
-        if ($orderby != NULL)
+        if ($orderby != null) {
             $orderby = "ORDER BY ll.id DESC," . $orderby;
-        else
+        } else {
             $orderby = "ORDER BY ll.id DESC";
+        }
 
         $query = $this->db->query("SELECT u.username,u.id,u.profileLink FROM likelog as ll,users as u " . $cond . " " . $orderby . " " . $limit . " ");
         //print_query();
-        if ($counter != NULL)
+        if ($counter != null) {
             return $query->num_rows();
+        }
 
         //echo print_query();
         foreach ($query->result_array() as $row) {
@@ -301,29 +316,34 @@ class track_detail extends CI_Model
     /*likes songs ends*/
 
     /*similar songs*/
-    function fetch_similar_tracks($trackId, $cond = NULL, $limit = NULL, $orderby = NULL, $counter = NULL)
+    function fetch_similar_tracks($trackId, $cond = null, $limit = null, $orderby = null, $counter = null)
     {
-        if ($trackId <= 0)
+        if ($trackId <= 0) {
             return "";
+        }
 
         $output = [];
 
         $cur_genre_id = getvalfromtbl("genreId,userId", "tracks", "id = '" . $trackId . "'");
 
-        if ($cond != NULL)
-            //$cond = " WHERE tt.status = 'y' AND u.id = tt.userId AND tt.id != '".$trackId."' AND (tt.genreId = '".$cur_genre_id["genreId"]."' OR tt.userId != '".$cur_genre_id["userId"]."') ".$cond."";
+        if ($cond != null) //$cond = " WHERE tt.status = 'y' AND u.id = tt.userId AND tt.id != '".$trackId."' AND (tt.genreId = '".$cur_genre_id["genreId"]."' OR tt.userId != '".$cur_genre_id["userId"]."') ".$cond."";
+        {
             $cond = " WHERE tt.status = 'y' AND u.id = tt.userId AND tt.id != '" . $trackId . "' AND (tt.genreId = '" . $cur_genre_id["genreId"] . "') " . $cond . "";
-        else
-            //$cond = " WHERE tt.status = 'y' AND u.id = tt.userId AND tt.id != '".$trackId."'  AND (tt.genreId = '".$cur_genre_id["genreId"]."' OR tt.userId != '".$cur_genre_id["userId"]."')";
+        } else //$cond = " WHERE tt.status = 'y' AND u.id = tt.userId AND tt.id != '".$trackId."'  AND (tt.genreId = '".$cur_genre_id["genreId"]."' OR tt.userId != '".$cur_genre_id["userId"]."')";
+        {
             $cond = " WHERE tt.status = 'y' AND u.id = tt.userId AND tt.id != '" . $trackId . "'  AND (tt.genreId = '" . $cur_genre_id["genreId"] . "')";
+        }
 
-        if ($limit != NULL)
+        if ($limit != null) {
             $limit = " LIMIT " . $limit . " ";
-        else $limit = " LIMIT 10";
-        if ($orderby != NULL)
+        } else {
+            $limit = " LIMIT 10";
+        }
+        if ($orderby != null) {
             $orderby = "ORDER BY tt.id DESC," . $orderby;
-        else
+        } else {
             $orderby = "ORDER BY tt.id DESC";
+        }
 
         $query = $this->db->query("SELECT tt.id as tid,tt.title,tt.perLink,u.firstname,u.lastname,u.profileLink,u.username FROM tracks as tt,users as u " . $cond . " " . $orderby . " " . $limit . " ");
 
@@ -332,8 +352,9 @@ class track_detail extends CI_Model
             $query = $this->db->query("SELECT tt.id as tid,tt.title,tt.perLink,u.firstname,u.lastname,u.profileLink,u.username FROM tracks as tt,users as u " . $cond . " " . $orderby . " " . $limit . " ");
         }
         //print_query();exit;
-        if ($counter != NULL)
+        if ($counter != null) {
             return $query->num_rows();
+        }
 
         //echo print_query();
         foreach ($query->result_array() as $row) {
@@ -643,7 +664,7 @@ class track_detail extends CI_Model
                         licenceId AS id,
                         licencePrice 
                      FROM track_licence_price_details 
-                     WHERE trackId = '. $trackId;
+                     WHERE trackId = ' . $trackId;
 
         $licence_list = 'SELECT 
                              id,
@@ -663,31 +684,32 @@ class track_detail extends CI_Model
 
         if (!empty($track[0])) {
             $res_secondary_genres = [];
-            foreach ($secondary_genres as $secondary_genre){
+            foreach ($secondary_genres as $secondary_genre) {
                 $res_secondary_genres[] = $secondary_genre["genreId"];
             }
             $res_moods = [];
-            foreach ($moods as $mood){
+            foreach ($moods as $mood) {
                 $res_moods[] = $mood["moodId"];
             }
             $res_licences = [];
-                 foreach($licenses as $license){
-                     $res_licences[$license["id"]] = $license["licencePrice"];
-                 }
+            foreach ($licenses as $license) {
+                $res_licences[$license["id"]] = $license["licencePrice"];
+            }
             $licenses = [];
-            foreach($licence_list as $value){
-                 if (array_key_exists($value['id'], $res_licences)) {
-                      $value['licencePrice'] = $res_licences[$value['id']];
-                      $licenses[] = $value;
-                 } else {
-                       $value['licencePrice'] = null;
-                       $licenses[] = $value;
-                 }
+            foreach ($licence_list as $value) {
+                if (!empty($value['licencePrice'])) {
+                    $value['licencePrice'] = $res_licences[$value['id']];
+                    $licenses[] = $value;
+                } else {
+                    $value['licencePrice'] = null;
+                    $licenses[] = $value;
+                }
             }
 
             $track[0]['moods'] = $res_moods;
             $track[0]['secondary_genres'] = $res_secondary_genres;
             $track[0]['licences'] = $licenses;
+
             return $track[0];
         }
 
