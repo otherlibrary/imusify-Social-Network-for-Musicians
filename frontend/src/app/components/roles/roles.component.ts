@@ -20,34 +20,16 @@ export class RolesComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    this.roles = [{
-        default: false,
-        id: "20",
-        role: "A&R",
-        selected: false
-      },
-      {
-        default: false,
-        id: "21",
-        role: "test",
-        selected: false
-      },
-      {
-        default: false,
-        id: "23",
-        role: "test2",
-        selected: false
-      }]
+    this.getUserRoles();
   }
 
   closePopup() {
     this._router.navigate([{outlets: {popup: null}}]);
-
   }
 
   getUserRoles() {
     this._sharedService.getUserRoles().subscribe((data: any) => {
-      //this.roles = data.roles;
+      this.roles = data.roles;
     })
   }
 

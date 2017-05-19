@@ -6,7 +6,7 @@ export const environment = {
   login: '/api/login',
   signup: '/api/signup',
   setUserRoles: '/api/userrolesapi',
-  getUserRoles: '/setup',
+  getUserRoles: '/api/roles',
   ulogout: '/ulogout',
   checkAuth: '/api/user/check-auth',
   uploadTrackList: '/upload',

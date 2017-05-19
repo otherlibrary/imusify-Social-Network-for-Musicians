@@ -30,7 +30,7 @@ export class UploadService {
    */
   public clearUploadTrackInfo() {
     for(let k in this.uploadTrackInfo) {
-      this.uploadTrackInfo[k] = null;
+        this.uploadTrackInfo[k] = null;
     }
     this.uploadTrackInfo.is_public = "1";
   }

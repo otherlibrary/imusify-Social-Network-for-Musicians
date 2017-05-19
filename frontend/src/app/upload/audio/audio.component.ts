@@ -43,7 +43,6 @@ export class AudioComponent implements OnInit, OnDestroy {
     this.getLicensesList();
     //edit track popup
     this.editSubscriber = this._uploadService.editPopupSubject.subscribe((flag: boolean) => {
-      this._uploadService.clearUploadTrackInfo();
       this.openSwitch = false;
 
       this.isOpenEdit = flag;

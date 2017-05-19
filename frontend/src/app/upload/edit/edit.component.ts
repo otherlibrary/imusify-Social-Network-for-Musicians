@@ -1,4 +1,4 @@
-import {Component, Input, OnChanges, OnInit} from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import 'rxjs/add/operator/switchMap';
 import {IGenre, IMood, IUploadFileData} from "../../interfases";
@@ -66,7 +66,7 @@ function base64ArrayBuffer(arrayBuffer) {
 /**
  * initial data from this form is uploadService.uploadTrackInfo
  */
-export class EditComponent implements OnInit, OnChanges {
+export class EditComponent implements OnInit {
   public uploadTrackForm: FormGroup;
   public uploadTrackInfo: IUploadFileData;
   public uploadTrackImg: any;
@@ -164,7 +164,6 @@ export class EditComponent implements OnInit, OnChanges {
     this.uploadTrackForm.valueChanges
       .subscribe(data => {
         this.onValueChange(data);
-        console.log(data);
       });
     this.onValueChange();
   }
@@ -187,8 +186,12 @@ export class EditComponent implements OnInit, OnChanges {
       };
     this.buildForm();
 
-    //open all switch if click to edit track
     if(this.openSwitch) {
+      //clear all data track
+      this._uploadService.clearUploadTrackInfo();
+      this._uploadService.trackImage.file = null;
+
+      //open all switch if click to edit track
       this.toggleAllSwitch();
     }
   }
@@ -242,7 +245,6 @@ export class EditComponent implements OnInit, OnChanges {
     });
     this._uploadService.uploadImageTrack(req).subscribe(res => {
       this._uploadService.editPopupSubject.next(false);
-      console.log(res);
     }, err => {
       console.log(err);
     })
@@ -328,14 +330,7 @@ export class EditComponent implements OnInit, OnChanges {
   }
 
   public test() {
-    //this.addLicense();
     console.log(this.uploadTrackForm.value);
-    // console.log(this._uploadService.uploadTrackInfo);
-    // console.log(this.uploadTrackForm.value);
-  }
-
-  ngOnChanges(data) {
-    console.log(data);
   }
 
   /**
@@ -403,7 +398,6 @@ export class EditComponent implements OnInit, OnChanges {
   }
 
   public switchLicensing() {
-    console.log(this.licensingIsOpen);
     this.licensingIsOpen = !this.licensingIsOpen;
     this._switchLicensingValue(this.licensingIsOpen);
   }

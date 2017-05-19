@@ -63,18 +63,18 @@ export class UploadComponent implements OnInit {
 
       this._uploadService.wavesurfer.on('waveform-ready', (e) => {
         this._uploadService.uploadTrackInfo.waveform = this._uploadService.wavesurfer.backend.mergedPeaks;
-        console.log(this._uploadService.uploadTrackInfo.waveform);
-        console.log(this._uploadService.wavesurfer.backend);
       });
     }
   }
 
   public getTagsFile(e) {
+    this._uploadService.clearUploadTrackInfo();
     let files = e.target.files;
     let file = files[files.length - 1];
     let fileURL = URL.createObjectURL(file);
     this._uploadService.wavesurfer.empty();
     this._uploadService.wavesurfer.load(fileURL);
+    this._uploadService.trackImage.file = null;
 
     jsmediatags.read(file, {
       onSuccess: (tag) => {
@@ -118,7 +118,6 @@ export class UploadComponent implements OnInit {
     } else if (output.type === 'drop') {
       this.dragOver = false;
     } else if (output.type === 'done') {
-      console.log('output: ', output);
       let file = this.files[this.files.length - 1];
       //remove ---------
       // this._uploadService.uploadTrackInfo.file_name = 'file.response.upload_data.file_name';
@@ -131,7 +130,6 @@ export class UploadComponent implements OnInit {
       // });
       //remove ----------
       if (file.response.hasOwnProperty('upload_data')) {
-        //file data
         this._uploadService.uploadTrackInfo.file_name = file.response.upload_data.file_name;
         this._uploadService.uploadTrackInfo.title = this._cutNameExtension(file.name);
         this._uploadService.uploadTrackInfo.track_id = file.id;

@@ -326,8 +326,17 @@
                 </label>
               </div>
               <div class="sbm-block text-center">
-                <button type="submit" class="" [disabled]="!uploadTrackForm.valid || isSubmit">Send</button>
-                <button type="button" (click)="anSubmitEdit($event)" class="" [disabled]="!uploadTrackForm.valid || isSubmit">EDIT</button>
+                <button type="submit"
+                        *ngIf="!openSwitch"
+                        [disabled]="!uploadTrackForm.valid || isSubmit">
+                  Save
+                </button>
+                <button type="button"
+                        *ngIf="openSwitch" 
+                        [disabled]="!uploadTrackForm.valid || isSubmit"
+                        (click)="anSubmitEdit($event)">
+                  EDIT
+                </button>
               </div>
             </div>
           </div>

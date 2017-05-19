@@ -12,7 +12,7 @@ export const environment = {
   signup: '/api/signup',
   ulogout: '/ulogout',
   setUserRoles: '/api/userrolesapi',
-  getUserRoles: '/setup',
+  getUserRoles: '/api/roles',
   checkAuth: '/api/user/check-auth',
   uploadTrackList: '/upload',
   uploadFilesUrl: '/api/track-upload/upload-track-file',
