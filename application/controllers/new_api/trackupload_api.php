@@ -41,8 +41,6 @@ class trackupload_api extends REST_Controller
         $this->form_validation->set_rules('genre_id', 'Genre ID', $typicalValidation . '|integer');
         $this->form_validation->set_rules('is_public', 'Public', $typicalValidation . '|integer');
         $this->form_validation->set_rules('track_type', 'Upload Type', $typicalValidation);
-        //$this->form_validation->set_rules('tracktype', 'Track Type', $typicalNonreqValidation);
-        //$this->form_validation->set_rules('music_vocals_y', 'Music Vocals', $typicalNonreqValidation);
         $this->form_validation->set_rules('type_artist', 'Type Artist', $typicalNonreqValidation);
         $this->form_validation->set_rules('release_date', 'Release Date', $typicalValidation);
         if ($this->form_validation->run() == false) {
@@ -65,51 +63,6 @@ class trackupload_api extends REST_Controller
                 $date = $date->date;
             }
 
-            $usageType = null;
-
-            $saleAvailable = 'n';
-            $saleAlbumPrice = $this->post('album');
-            $saleSinglePrice = $this->post('single');
-            if (!empty($saleAlbumPrice) || !empty($saleSinglePrice)) {
-                $saleAvailable = 'y';
-                $usageType .= getvalfromtbl("id", "buy_usage_types", "type = 's'", "single") . ",";
-            }
-
-            $licensingKeys = [
-                'advertising',
-                'corporate',
-                'documentaryFilm',
-                'film',
-                'software',
-                'internetVideo',
-                'liveEvent',
-                'musicHold',
-                'musicProd1k',
-                'musicProd10k',
-                'musicProd50k',
-                'musicProd51k',
-                'website',
-            ];
-
-            $licenseAvailable = 'n';
-            foreach ($licensingKeys as $key) {
-                if (!empty($this->post($key))) {
-                    $licenseAvailable = 'y';
-                    $usageType .= getvalfromtbl("id", "buy_usage_types", "type = 'l'", "single") . ",";
-                    break;
-                }
-            }
-
-            $nonprofitAvailable = 'n';
-            if (!empty($this->post('nonProfit'))) {
-                $nonprofitAvailable = 'y';
-                $usageType .= getvalfromtbl("id", "buy_usage_types", "type = 'np'", "single") . ",";
-            }
-
-            if ($usageType != null) {
-                $usageType = rtrim($usageType, ",");
-            }
-
             $trackId = $this->trackdataservice->createTrack(
                 $this->post('album_id'),
                 $userData->id,
@@ -129,12 +82,8 @@ class trackupload_api extends REST_Controller
                 $trackInfo['tags']['id3v2']['bpm'][0],
                 $this->trackdataservice->fetchTrackTypes($trackInfo['fileformat']),
                 $this->trackdataservice->fetchTrackType($trackInfo['fileformat']),
-                $usageType,
                 $this->trackdataservice->fetchTrackType($trackInfo['fileformat']),
                 $this->post('type_artist')[0],
-                $saleAvailable,
-                $licenseAvailable,
-                $nonprofitAvailable,
                 $this->post('waveform')
             );
 
@@ -160,6 +109,10 @@ class trackupload_api extends REST_Controller
         }
     }
 
+    /**
+     * Upload image for specified track from img / base64 data
+     * [POST /api/track-upload/upload-track-img]
+     */
     public function upload_track_img_post()
     {
         $this->load->library('UploadService');
