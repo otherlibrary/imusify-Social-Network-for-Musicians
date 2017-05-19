@@ -261,7 +261,7 @@ class TrackDataService
     {
         $query = $this->ci->db->query('SELECT id FROM track_licence_types WHERE status = \'y\'');
         foreach ($query->result_array() as $lic) {
-            if (!empty($postData['lic_id_' . $lic['id']])) {
+            if (!empty($postData['lic_id_' . $lic['id']]) && $postData['lic_id_' . $lic['id']] != 'null') {
                 $insertData = [
                     'trackId' => $trackId,
                     'licenceId' => $lic['id'],
