@@ -1,4 +1,5 @@
 <?php
+
 Class user_profile extends CI_Model
 {
 
@@ -10,22 +11,25 @@ Class user_profile extends CI_Model
     }
 
     //Function to get roles from database
-    function get_user_roles($cond = NULL, $limit = NULL, $flag = NULL)
+    function get_user_roles($cond = null, $limit = null, $flag = null)
     {
-        if ($flag == "true")
+        if ($flag == "true") {
             $this->db->select('id');
-        else
+        } else {
             $this->db->select('id,role');
+        }
 
         $this->db->from('user_roles');
 
-        if ($cond != NULL)
+        if ($cond != null) {
             $where = "(status='y' AND " . $cond . ")";
-        else
+        } else {
             $where = "(status='y')";
+        }
 
-        if ($limit != NULL)
+        if ($limit != null) {
             $this->db->limit($limit);
+        }
 
         $this->db->where($where);
         $this->db->order_by("role");
@@ -48,8 +52,6 @@ Class user_profile extends CI_Model
             }
 
 
-
-
             return $output;
         }
     }
@@ -66,17 +68,19 @@ Class user_profile extends CI_Model
         $user_exists_role = [];
         $session_user_id = $this->session->userdata('user')->id;
         $data = [];
-        if ($flag == "roles")
+        if ($flag == "roles") {
             $this->db->select('roleId');
-        else if ($flag == "all")
+        } else if ($flag == "all") {
             $this->db->select('role');
-        else
+        } else {
             $this->db->select('id,roleId');
+        }
 
         $this->db->from('user_roles_details');
 
-        if ($flag == "all")
+        if ($flag == "all") {
             $this->db->join('user_roles', 'user_roles.id = user_roles_details.roleId');
+        }
 
 
         $where = "(userId='" . $session_user_id . "')";
@@ -114,9 +118,11 @@ Class user_profile extends CI_Model
 
         //admin set default roles
         $user_def_db_roles = $this->get_user_roles("is_default='y'", "", "true");
-        if (is_array(($user_def_db_roles)))
+        if (is_array(($user_def_db_roles))) {
             $f_array = array_merge($roles, $user_def_db_roles);
-        else $f_array = $role;
+        } else {
+            $f_array = $role;
+        }
         if (count($user_def_db_roles) > 0) {
             $roles = array_unique($f_array);
         }
@@ -150,7 +156,7 @@ Class user_profile extends CI_Model
         }
 
         $data_update = [
-            'role_added' => 'y'
+            'role_added' => 'y',
         ];
         $this->db->where('id', $session_user_id);
         $this->db->update('users', $data_update);
@@ -201,7 +207,7 @@ Class user_profile extends CI_Model
     }
 
     //Function to get user details...
-    function get_user_details($profileLink = NULL, $cond = NULL, $flag = NULL)
+    function get_user_details($profileLink = null, $cond = null, $flag = null)
     {
         //echo "a".$profileLink;
         /*Get id*/
@@ -227,7 +233,20 @@ Class user_profile extends CI_Model
     }
 
     /*update_profile*/
-    function update_profile($fname, $lname, $country, $website, $description, $mm, $dd, $yy, $image, $folder_name, $state, $city, $company_name, $company_name2)
+    function update_profile($fname,
+                            $lname,
+                            $country,
+                            $website,
+                            $description,
+                            $mm,
+                            $dd,
+                            $yy,
+                            $image,
+                            $folder_name,
+                            $state,
+                            $city,
+                            $company_name,
+                            $company_name2)
     {
 
         //$description = ereg_replace( "\n",'|', $description);
@@ -249,7 +268,7 @@ Class user_profile extends CI_Model
             'stateId' => $this->db->escape_str($state),
             'cityId' => $this->db->escape_str($city),
             'company_name' => $this->db->escape_str($company_name),
-            'company_name2' => $this->db->escape_str($company_name2)
+            'company_name2' => $this->db->escape_str($company_name2),
         ];
         $where = "(id ='" . $this->sess_uid . "' )";
         $this->db->where($where);
@@ -305,7 +324,7 @@ else
 
             $data = [
                 'dir' => $folder_name,
-                'name' => $image
+                'name' => $image,
             ];
             $where = "(id ='" . $row["id"] . "' )";
             $this->db->where($where);
@@ -315,7 +334,7 @@ else
                 'detailId' => $this->sess_uid,
                 'dir' => $folder_name,
                 'name' => $image,
-                'type' => 'pc'
+                'type' => 'pc',
             ];
             $this->db->insert('photos', $data_u_photo);
         }
@@ -325,29 +344,33 @@ else
 
 
     /*Listened songs*/
-    function fetch_listened_tracks($cond = NULL, $limit = NULL, $orderby = NULL, $counter = NULL)
+    function fetch_listened_tracks($cond = null, $limit = null, $orderby = null, $counter = null)
     {
         $this->load->model('commonfn');
 
         $output = [];
 
-        if ($cond != NULL)
+        if ($cond != null) {
             $cond = " WHERE tt.status = 'y' AND tt.userId = u.id AND pl.trackId = tt.id AND " . $cond . "";
-        else
+        } else {
             $cond = " WHERE tt.status = 'y' AND tt.userId = u.id AND pl.trackId = tt.id";
+        }
 
-        if ($limit != NULL)
+        if ($limit != null) {
             $limit = " LIMIT " . $limit . " ";
+        }
 
-        if ($orderby != NULL)
+        if ($orderby != null) {
             $orderby = "ORDER BY pl.id DESC," . $orderby;
-        else
+        } else {
             $orderby = "ORDER BY pl.id DESC";
+        }
 
         $query = $this->db->query("SELECT tt.id,tt.title,tt.perLink,u.profileLink,u.firstname as artist_name,u.lastname FROM tracks as tt,users as u,playinglog as  pl " . $cond . " " . $orderby . " " . $limit . " ");
 
-        if ($counter != NULL)
+        if ($counter != null) {
             return $query->num_rows();
+        }
 
         //echo print_query();
         foreach ($query->result_array() as $row) {
@@ -368,42 +391,48 @@ else
     /*Listened songs ends*/
 
     /*Feeds Uploaded songs and comments*/
-    function fetch_feeds($cond = NULL, $limit = NULL, $orderby = NULL, $counter = NULL, $startlimit = NULL)
+    function fetch_feeds($cond = null, $limit = null, $orderby = null, $counter = null, $startlimit = null)
     {
         $this->load->model('commonfn');
 
         $output = [];
 
-        if ($cond != NULL)
+        if ($cond != null) {
             $cond = " WHERE tt.status = 'y' AND u.id = tt.userId AND " . $cond . "";
-        else
+        } else {
             $cond = " WHERE tt.status = 'y' AND u.id = tt.userId";
+        }
         //$limit = 6;
-        if ($limit != NULL)
+        if ($limit != null) {
             $limit = " LIMIT " . $limit . " ";
+        }
 
-        if ($orderby != NULL)
+        if ($orderby != null) {
             $orderby = "ORDER BY tt.id DESC," . $orderby;
-        else
+        } else {
             $orderby = "ORDER BY tt.id DESC";
+        }
 
         $query = $this->db->query("SELECT tt.id,tt.title,tt.timelength,tt.perLink,u.profileLink,u.firstname as artist_name,u.lastname FROM tracks as tt,users as u " . $cond . " " . $orderby . " " . $limit . " ");
         //print $this -> db ->last_query();exit;
-        if ($counter != NULL)
+        if ($counter != null) {
             return $query->num_rows();
+        }
         //echo print_query();
         $i = 1;
-        if ($startlimit != NULL)
+        if ($startlimit != null) {
             $i = $startlimit + 1;
+        }
 
         foreach ($query->result_array() as $row) {
             $row["tab_image"] = $this->commonfn->get_photo('t', $row["id"]);
             $row["index"] = $i;
 
-            if ($i % 2 != 0)
+            if ($i % 2 != 0) {
                 $row["gray_bg"] = "gray-bg";
-            else
+            } else {
                 $row["gray_bg"] = "";
+            }
 
             //$row["song_name"] = $row["title"];
             $row["song_name"] = character_limiter($row["title"], 20, $end_char = '&#8230;');
@@ -425,42 +454,48 @@ else
     /*feeds ends*/
 
     /*Uploaded songs*/
-    function fetch_uploaded_tracks($cond = NULL, $limit = NULL, $orderby = NULL, $counter = NULL, $startlimit = NULL)
+    function fetch_uploaded_tracks($cond = null, $limit = null, $orderby = null, $counter = null, $startlimit = null)
     {
         $this->load->model('commonfn');
 
         $output = [];
 
-        if ($cond != NULL)
+        if ($cond != null) {
             $cond = " WHERE tt.status = 'y' AND u.id = tt.userId AND tt.albumId = a.id AND " . $cond . "";
-        else
+        } else {
             $cond = " WHERE tt.status = 'y' AND u.id = tt.userId AND tt.albumId = a.id";
+        }
 
-        if ($limit != NULL)
+        if ($limit != null) {
             $limit = " LIMIT " . $limit . " ";
+        }
 
-        if ($orderby != NULL)
+        if ($orderby != null) {
             $orderby = "ORDER BY tt.id DESC," . $orderby;
-        else
+        } else {
             $orderby = "ORDER BY tt.id DESC";
+        }
 
         $query = $this->db->query("SELECT tt.id,tt.title,tt.timelength,tt.perLink,u.profileLink,u.firstname as artist_name,u.lastname,a.name as album_nm FROM tracks as tt,users as u,albums as a " . $cond . " " . $orderby . " " . $limit . " ");
 
-        if ($counter != NULL)
+        if ($counter != null) {
             return $query->num_rows();
+        }
         //echo print_query();
         $i = 1;
-        if ($startlimit != NULL)
+        if ($startlimit != null) {
             $i = $startlimit + 1;
+        }
 
         foreach ($query->result_array() as $row) {
             $row["tab_image"] = $this->commonfn->get_photo('t', $row["id"]);
             $row["index"] = $i;
 
-            if ($i % 2 != 0)
+            if ($i % 2 != 0) {
                 $row["gray_bg"] = "gray-bg";
-            else
+            } else {
                 $row["gray_bg"] = "";
+            }
 
             //$row["song_name"] = $row["title"];
             $row["song_name"] = character_limiter($row["title"], 20, $end_char = '&#8230;');
@@ -483,38 +518,43 @@ else
 
 
     /*albums*/
-    function fetch_albums($cond = NULL, $limit = NULL, $orderby = NULL, $counter = NULL)
+    function fetch_albums($cond = null, $limit = null, $orderby = null, $counter = null)
     {
         $this->load->model('commonfn');
 
         $output = [];
 
-        if ($cond != NULL)
+        if ($cond != null) {
             $cond = " WHERE a.status = 'y' AND " . $cond . "";
-        else
+        } else {
             $cond = " WHERE a.status = 'y'";
+        }
 
-        if ($limit != NULL)
+        if ($limit != null) {
             $limit = " LIMIT " . $limit . " ";
+        }
 
-        if ($orderby != NULL)
+        if ($orderby != null) {
             $orderby = "ORDER BY a.id DESC," . $orderby;
-        else
+        } else {
             $orderby = "ORDER BY a.id DESC";
+        }
 
         $query = $this->db->query("SELECT a.name,a.id FROM albums as a " . $cond . " " . $orderby . " " . $limit . " ");
 
-        if ($counter != NULL)
+        if ($counter != null) {
             return $query->num_rows();
+        }
         //echo print_query();
         $i = 1;
         foreach ($query->result_array() as $row) {
             $row["tab_image"] = $this->commonfn->get_photo('a', $row["id"], IMG_235, IMG_235);
             $row["i"] = $i;
-            if ($i % 2 != 0)
+            if ($i % 2 != 0) {
                 $row["gray_bg"] = "gray-bg";
-            else
+            } else {
                 $row["gray_bg"] = "";
+            }
 
             $row["tab_name"] = $row["name"];
             $row["tab_waveform"] = img_url() . "wave1.png";
@@ -527,30 +567,34 @@ else
     /*albums ends*/
 
     /*Followers*/
-    function fetch_followers($cond = NULL, $limit = NULL, $orderby = NULL, $counter = NULL)
+    function fetch_followers($cond = null, $limit = null, $orderby = null, $counter = null)
     {
         $this->load->model('commonfn');
 
         $output = [];
 
-        if ($cond != NULL)
+        if ($cond != null) {
             $cond = " WHERE  u.status = 'y' AND fl.fromId = u.id AND " . $cond . "";
-        else
+        } else {
             $cond = " WHERE u.status = 'y' AND fl.fromId = u.id";
+        }
 
-        if ($limit != NULL)
+        if ($limit != null) {
             $limit = " LIMIT " . $limit . " ";
+        }
 
-        if ($orderby != NULL)
+        if ($orderby != null) {
             $orderby = "ORDER BY fl.id DESC," . $orderby;
-        else
+        } else {
             $orderby = "ORDER BY fl.id DESC";
+        }
 
         $query = $this->db->query("SELECT u.firstname,u.id,u.lastname,u.username,u.profileLink FROM users as u,followinglog as fl " . $cond . " " . $orderby . " " . $limit . " ");
         //print_query();
 
-        if ($counter != NULL)
+        if ($counter != null) {
             return $query->num_rows();
+        }
 
         foreach ($query->result_array() as $row) {
             $row["tab_image"] = $this->commonfn->get_photo('p', $row["id"]);
@@ -570,29 +614,33 @@ else
     /*followers ends*/
 
     /*Followings*/
-    function fetch_followings($cond = NULL, $limit = NULL, $orderby = NULL, $counter = NULL)
+    function fetch_followings($cond = null, $limit = null, $orderby = null, $counter = null)
     {
         $this->load->model('commonfn');
 
         $output = [];
 
-        if ($cond != NULL)
+        if ($cond != null) {
             $cond = " WHERE  u.status = 'y' AND fl.toId = u.id AND " . $cond . "";
-        else
+        } else {
             $cond = " WHERE u.status = 'y' AND fl.toId = u.id";
+        }
 
-        if ($limit != NULL)
+        if ($limit != null) {
             $limit = " LIMIT " . $limit . " ";
+        }
 
-        if ($orderby != NULL)
+        if ($orderby != null) {
             $orderby = "ORDER BY fl.id DESC," . $orderby;
-        else
+        } else {
             $orderby = "ORDER BY fl.id DESC";
+        }
 
         $query = $this->db->query("SELECT u.firstname,u.id,u.lastname,u.username,u.profileLink FROM users as u,followinglog as fl " . $cond . " " . $orderby . " " . $limit . " ");
 
-        if ($counter != NULL)
+        if ($counter != null) {
             return $query->num_rows();
+        }
 
         foreach ($query->result_array() as $row) {
 
@@ -613,38 +661,44 @@ else
     /*Followings ends*/
 
     /*Popular songs*/
-    function fetch_popular_tracks($cond = NULL, $limit = NULL, $orderby = NULL, $counter = NULL, $startlimit = NULL)
+    function fetch_popular_tracks($cond = null, $limit = null, $orderby = null, $counter = null, $startlimit = null)
     {
         $output = [];
 
-        if ($cond != NULL)
+        if ($cond != null) {
             $cond = " WHERE tt.status = 'y' AND tt.albumId = a.id AND " . $cond . "";
-        else
+        } else {
             $cond = " WHERE tt.status = 'y' AND tt.albumId = a.id";
+        }
 
-        if ($limit != NULL || $limit != "")
+        if ($limit != null || $limit != "") {
             $limit = " LIMIT " . $limit . " ";
+        }
 
-        if ($orderby != NULL)
+        if ($orderby != null) {
             $orderby = "ORDER BY tt.plays DESC," . $orderby;
-        else
+        } else {
             $orderby = "ORDER BY tt.plays DESC";
+        }
 
         $query = $this->db->query("SELECT tt.id,tt.title,tt.timelength,a.name as album FROM tracks as tt,albums as a " . $cond . " " . $orderby . " " . $limit . " ");
 
-        if ($counter != NULL)
+        if ($counter != null) {
             return $query->num_rows();
+        }
 
         //echo print_query();
         $i = 1;
-        if ($startlimit != NULL)
+        if ($startlimit != null) {
             $i = $startlimit + 1;
+        }
         foreach ($query->result_array() as $row) {
             $row["i"] = $i;
-            if ($i % 2 != 0)
+            if ($i % 2 != 0) {
                 $row["gray_bg"] = "gray-bg";
-            else
+            } else {
                 $row["gray_bg"] = "";
+            }
             $row["index"] = $i;
             //$row["song_name"] = $row["title"];
             $row["song_name"] = character_limiter($row["title"], 20, $end_char = '&#8230;');
@@ -660,23 +714,26 @@ else
 
 
     //Function to get all playlist of loggedin user
-    function get_my_playlists($cond = NULL, $limit = NULL, $orderby = NULL, $userid = null)
+    function get_my_playlists($cond = null, $limit = null, $orderby = null, $userid = null)
     {
         $this->load->model('commonfn');
         $output = [];
         $userid = ($userid != null) ? $userid : $this->sess_id;
-        if ($cond != NULL)
+        if ($cond != null) {
             $cond = " WHERE pl.status = 'y' AND userId = '" . $userid . "' AND" . $cond . "";
-        else
+        } else {
             $cond = " WHERE pl.status = 'y' AND userId = '" . $userid . "'";
+        }
 
-        if ($limit != NULL)
+        if ($limit != null) {
             $limit = " LIMIT " . $limit . " ";
+        }
 
-        if ($orderby != NULL)
+        if ($orderby != null) {
             $orderby = "ORDER BY " . $orderby;
-        else
+        } else {
             $orderby = "ORDER BY pl.id DESC";
+        }
 
         $query = $this->db->query("SELECT pl.id,pl.name,pl.perLink,pl.like,(SELECT COUNT(id) FROM playlist_detail WHERE playlist_id = pl.id AND userId = '" . $this->sess_id . "') AS tot_songs FROM playlist as pl " . $cond . " " . $orderby . " " . $limit . " ");
         //echo print_query();
@@ -693,14 +750,14 @@ else
         return $output;
     }
 
-    function invite_friends($userid = NULL, $post = NULL, $email = NULL)
+    function invite_friends($userid = null, $post = null, $email = null)
     {
         $this->load->model("admin/invite_model");
-        $userId = ($userid != NULL) ? $userid : $this->sess_uid;
-        $email = ($email != NULL) ? $email : $this->session->userdata('user')->email;
+        $userId = ($userid != null) ? $userid : $this->sess_uid;
+        $email = ($email != null) ? $email : $this->session->userdata('user')->email;
         $return_type = $this->invite_model->insert_invite("user", $email, $userId);
         $response = [];
-        $msg = NULL;
+        $msg = null;
         if (!empty($return_type) && count($return_type) > 0) {
             if (!empty($return_type)) {
                 $msg = "Your Friends invited successfully.";
