@@ -3,7 +3,9 @@
             [secGenresList]="secondGenres"
             [trackTypesList]="typeList"
             [moodsList]="moodList"
-            [licensesList]="licensesList"></track-edit>
+            [typePrice]="typePriceLicense"
+            [licensesList]="licensesList"
+            [openSwitch]="openSwitch"></track-edit>
 <!--<div (click)="getTrackById(1)">test</div>-->
 <section class="upload-audio">
   <app-track *ngFor="let track of trackList"

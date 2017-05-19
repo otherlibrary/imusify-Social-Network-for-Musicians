@@ -1,10 +1,10 @@
 import {Component, Input, OnChanges, OnInit} from '@angular/core';
-import {UploadService} from '../upload.service';
+import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import 'rxjs/add/operator/switchMap';
-import {FormArray, FormBuilder, FormGroup, Validators} from "@angular/forms";
-import {Genre, IMood} from "../../interfases";
+import {IGenre, IMood, IUploadFileData} from "../../interfases";
 import {IMyOptions} from "mydatepicker";
-import {IUploadFileData} from "app/interfases/upload/IUploadFileData";
+
+import {UploadService} from '../upload.service';
 import {HelpersService} from "../../shared/services/helpers.service";
 import {SharedService} from "../../shared/shared.service";
 
@@ -72,15 +72,15 @@ export class EditComponent implements OnInit, OnChanges {
   public uploadTrackImg: any;
   public currentDate: Object;
   public isSubmit: boolean = false;
-  //TODO set track type
-  private _typePrice: string = 'mp3';
   public prefixLicId: string = 'lic_id_';
 
-  @Input() genresList: Genre[];
-  @Input() secGenresList: Genre[];
+  @Input() genresList: IGenre[];
+  @Input() secGenresList: IGenre[];
   @Input() trackTypesList: any[];
   @Input() moodsList: IMood[];
   @Input() licensesList: any[];
+  @Input() typePrice: string;
+  @Input() openSwitch: boolean;
 
   public myDatePickerOptions: IMyOptions = {
     dateFormat: 'dd.mm.yyyy'
@@ -115,7 +115,7 @@ export class EditComponent implements OnInit, OnChanges {
    * @private
    */
   private _stringifyImage(imageData: any) {
-    if(imageData.file) {
+    if (imageData.file) {
       return imageData.file.hasOwnProperty('format') ? `data:${imageData.file.format};base64,${base64ArrayBuffer(imageData.file.data)}` : null;
     } else {
       return null;
@@ -149,7 +149,7 @@ export class EditComponent implements OnInit, OnChanges {
       copyright: [this.uploadTrackInfo.copyright, [
         Validators.required
       ]],
-      second_genre_id: this.uploadTrackInfo.genre_id,
+      second_genre_id: this.uploadTrackInfo.secondary_genre_id,
       pick_moods: this.uploadTrackInfo.pick_moods_id,
       type_artist: this.uploadTrackInfo.type_artist,
       is_public: this.uploadTrackInfo.is_public
@@ -169,24 +169,28 @@ export class EditComponent implements OnInit, OnChanges {
     this.onValueChange();
   }
 
-  constructor(
-    private _uploadService: UploadService,
-    private _helpersService: HelpersService,
-    private _sharedService: SharedService,
-    private fb: FormBuilder
-  ) {}
+  constructor(private _uploadService: UploadService,
+              private _helpersService: HelpersService,
+              private _sharedService: SharedService,
+              private fb: FormBuilder) {
+  }
 
   ngOnInit() {
-    this.buildForm();
     //if date none, set current date
     let date = new Date();
-    this.currentDate = {
-      date: {
-        year: date.getFullYear(),
-        month: date.getMonth() + 1,
-        day: date.getDate()
-      }
-    };
+    this.currentDate = this._uploadService.uploadTrackInfo.release_date || {
+        date: {
+          year: date.getFullYear(),
+          month: date.getMonth() + 1,
+          day: date.getDate()
+        }
+      };
+    this.buildForm();
+
+    //open all switch if click to edit track
+    if(this.openSwitch) {
+      this.toggleAllSwitch();
+    }
   }
 
   /**
@@ -243,6 +247,7 @@ export class EditComponent implements OnInit, OnChanges {
       console.log(err);
     })
   }
+
   /**
    * submit form
    * @param event
@@ -259,8 +264,8 @@ export class EditComponent implements OnInit, OnChanges {
     let formData = this._helpersService.toStringParam((resultForm));
 
     this._uploadService.uploadTrackDetails(formData).subscribe(res => {
-      if(res.hasOwnProperty('track_id')) {
-        if(res.track_id != 0) {
+      if (res.hasOwnProperty('track_id')) {
+        if (res.track_id != 0) {
           this._sharedService.notificationSubject.next({
             title: 'Save file',
             msg: 'Success save',
@@ -268,6 +273,42 @@ export class EditComponent implements OnInit, OnChanges {
           });
           //upload image
           this.submitImage(res.track_id);
+          this.isSubmit = false;
+        } else {
+          this._sharedService.notificationSubject.next({
+            title: 'Save file',
+            msg: 'Error save',
+            type: 'error'
+          });
+        }
+      } else {
+        this._sharedService.notificationSubject.next({
+          title: 'Save file',
+          msg: 'Error save',
+          type: 'error'
+        });
+      }
+    });
+  }
+
+  public anSubmitEdit(event) {
+    event.preventDefault();
+    this.isSubmit = true;
+    //save track info
+    let resultFormJSON = JSON.stringify(this.uploadTrackForm.value);
+    let release_date = this.uploadTrackForm.value.release_date;
+    let resultForm = JSON.parse(resultFormJSON);
+    resultForm.release_date = JSON.stringify(release_date);
+    let formData = this._helpersService.toStringParam((resultForm));
+
+    this._uploadService.saveEditTrack(formData).subscribe(res => {
+      if (res.hasOwnProperty('track_id')) {
+        if (res.track_id != 0) {
+          this._sharedService.notificationSubject.next({
+            title: 'Save file',
+            msg: 'Success save',
+            type: 'success'
+          });
           this.isSubmit = false;
         } else {
           this._sharedService.notificationSubject.next({
@@ -305,6 +346,7 @@ export class EditComponent implements OnInit, OnChanges {
   }
 
   public currentTab: number = 1;
+
   public toggleTabs(tab) {
     this.currentTab = tab;
   }
@@ -318,8 +360,8 @@ export class EditComponent implements OnInit, OnChanges {
   private _licenseFilterUpdate(type: string, val?: boolean) {
     const _cacheObj: Object = {};
     this.licensesList.map(item => {
-      if(item.lic_type == type) {
-        _cacheObj['lic_id_' + item.id] = val ? item[this._typePrice] : null;
+      if (item.lic_type == type) {
+        _cacheObj['lic_id_' + item.id] = val ? item[this.typePrice] : null;
       }
     });
     this.uploadTrackForm.patchValue(_cacheObj);
@@ -330,14 +372,16 @@ export class EditComponent implements OnInit, OnChanges {
    * @type {boolean}
    */
   public saleIsOpen: boolean = false;
+
   private _switchSaleValue(flag) {
-    if(!flag) {
+    if (!flag) {
       this._licenseFilterUpdate('s', false)
     } else {
       this.neverSaleIsOpen = false;
       this._licenseFilterUpdate('s', true);
     }
   }
+
   public switchSale() {
     this.saleIsOpen = !this.saleIsOpen;
     this._switchSaleValue(this.saleIsOpen);
@@ -348,15 +392,18 @@ export class EditComponent implements OnInit, OnChanges {
    * @type {boolean}
    */
   public licensingIsOpen: boolean = false;
+
   private _switchLicensingValue(flag) {
-    if(!flag) {
+    if (!flag) {
       this._licenseFilterUpdate('l', false);
     } else {
       this.neverSaleIsOpen = false;
       this._licenseFilterUpdate('l', true);
     }
   }
+
   public switchLicensing() {
+    console.log(this.licensingIsOpen);
     this.licensingIsOpen = !this.licensingIsOpen;
     this._switchLicensingValue(this.licensingIsOpen);
   }
@@ -366,14 +413,16 @@ export class EditComponent implements OnInit, OnChanges {
    * @type {boolean}
    */
   public licensingEIsOpen: boolean = false;
+
   private _switchLicensingEValue(flag) {
-    if(!flag) {
+    if (!flag) {
       this._licenseFilterUpdate('el', false);
     } else {
       this.neverSaleIsOpen = false;
       this._licenseFilterUpdate('el', true);
     }
   }
+
   public switchELicensing() {
     this.licensingEIsOpen = !this.licensingEIsOpen;
     this._switchLicensingEValue(this.licensingEIsOpen);
@@ -384,9 +433,10 @@ export class EditComponent implements OnInit, OnChanges {
    * @type {boolean}
    */
   public noneProfitIsOpen: boolean = false;
+
   public switchNoneProfit() {
     this.noneProfitIsOpen = !this.noneProfitIsOpen;
-    if(!this.noneProfitIsOpen) {
+    if (!this.noneProfitIsOpen) {
       this._licenseFilterUpdate('np', false);
     } else {
       this._licenseFilterUpdate('np', true);
@@ -394,9 +444,20 @@ export class EditComponent implements OnInit, OnChanges {
   }
 
   /**
+   * all switchers open
+   */
+  public toggleAllSwitch() {
+    this.switchSale();
+    this.switchLicensing();
+    this.switchELicensing();
+    this.switchNoneProfit();
+  }
+
+  /**
    * never sale switch
    */
   public neverSaleIsOpen: boolean = false;
+
   public switchNeverSale() {
     this.neverSaleIsOpen = !this.neverSaleIsOpen;
     this.saleIsOpen = false;
@@ -416,12 +477,14 @@ export class EditComponent implements OnInit, OnChanges {
    */
   public priceStatusCheck: boolean = false;
   public priceReady: boolean = false;
+
   public toggleCheck() {
     this.priceStatusCheck = !this.priceStatusCheck;
     this.priceReady = false;
   }
+
   public togglePrice() {
-    if(this.priceStatusCheck) {
+    if (this.priceStatusCheck) {
       this.priceReady = !this.priceReady;
     }
   }

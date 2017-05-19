@@ -4260,7 +4260,7 @@ initUpload:function(){
             jqXHR[$r]=data.submit(); 
 
             jQuery("#sec_genner"+$r).select2({
-                placeholder: "Select a Genre",
+                placeholder: "Select a IGenre",
                 allowClear: true
             });
             jQuery("#sound_like"+$r).select2({
@@ -4579,7 +4579,7 @@ $("body").on("click",'.delete',function(e){
         $(".album_form").fadeIn(function(){
             my.scrollElem($("#main").find(".mcs_container"),"#albumform");
             jQuery("#sec_tags").select2({
-                placeholder: "Select a secondary Genre",
+                placeholder: "Select a secondary IGenre",
                 allowClear: true
             });
         });
@@ -4792,7 +4792,7 @@ $("body").on("click",'.delete',function(e){
         $('select.common').customSelect();  
         
         jQuery("#modal_sec_tags").select2({
-            placeholder: "Select a Genre",
+            placeholder: "Select a IGenre",
             allowClear: true
         });
 
@@ -4856,7 +4856,7 @@ $("body").on("click",'.delete',function(e){
 
         $('select.common').customSelect();                          
         jQuery("#sec_genner").select2({
-            placeholder: "Select a Genre",
+            placeholder: "Select a IGenre",
             allowClear: true
         }); 
         jQuery("#sound_like").select2({

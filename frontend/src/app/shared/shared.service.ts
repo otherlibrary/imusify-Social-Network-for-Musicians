@@ -3,6 +3,8 @@ import {Observable, Subject} from "rxjs";
 import {environment} from "../../environments/environment";
 import {ITracksData} from "../interfases";
 import {ApiService} from "app/shared/services/api.service";
+import {Http} from "@angular/http";
+import {contentHeaders} from "../common/headers";
 
 @Injectable()
 export class SharedService {
@@ -20,7 +22,7 @@ export class SharedService {
   public setPlaylistSubject: Subject<Object> = new Subject<Object>();
 
 
-  constructor(private _apiService: ApiService) {
+  constructor(private _apiService: ApiService, private http: Http) {
   }
 
   getMusic(): Observable<ITracksData> {
@@ -29,5 +31,13 @@ export class SharedService {
 
   getTrackLink(url) {
     return this._apiService.get('/data_api?url=' + url)
+  }
+
+  getUserRoles() {
+    return this._apiService.post(environment.getUserRoles, environment.creds);
+  }
+
+  setUserRoles(roles: string[]) {
+    return this._apiService.post(environment.getUserRoles, environment.creds);
   }
 }
