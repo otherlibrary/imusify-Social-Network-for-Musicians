@@ -139,4 +139,29 @@ class trackupload_api extends REST_Controller
             $this->response($result, 200);
         }
     }
+
+    /**
+     * Delete specified track and all related info
+     * [POST /api/track-delete]
+     */
+    public function delete_track_post()
+    {
+        $this->load->library('TrackDataService');
+
+        $this->form_validation->set_rules('track_id', 'track_id', 'trim|required|xss_clean|integer');
+        if ($this->form_validation->run() == false) {
+            $response = [
+                'errors' => $this->validation_errors(),
+            ];
+            $this->response($response, 200);
+        }
+
+        $result = null;
+        $userData = $this->session->userdata('user');
+        if (!empty($userData->id)) {
+            $result = $this->trackdataservice->deleteTrack($this->post('track_id'), $userData->id);
+        }
+
+        $this->response($result, 200);
+    }
 }
