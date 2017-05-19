@@ -42,7 +42,7 @@ const APP_ROUTES: Routes = [
     canActivateChild: [AuthAllSuccessGuard]
   },
   {
-    path: 'profile',
+    path: 'profile/:id',
     loadChildren: 'app/profile/profile.module#ProfileModule',
     canActivate: [AuthGuard]
   },

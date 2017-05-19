@@ -5,7 +5,7 @@ export const environment = {
   assets: '/assets/angular/',
   login: '/api/login',
   signup: '/api/signup',
-  setUserRoles: '/api/userrolesapi',
+  setUserRoles: '/api/user/set-roles',
   getUserRoles: '/api/roles',
   ulogout: '/ulogout',
   checkAuth: '/api/user/check-auth',

@@ -330,6 +330,12 @@ $url_6: url(/assets/css/img/player/queue.svg);
   border-radius: 100%;
   overflow: hidden;
 }
+.waveform--hidden {
+  visibility: hidden;
+  position: absolute;
+  left: -9999em;
+  width: 960px;
+}
 .btn {
   position: relative;
   display: inline-flex;

@@ -18,7 +18,7 @@
     </div>
     <!--<a href="#" (click)="logOut()">LOGOUT</a>-->
     <div class="profile" *ngIf="loggedin">
-      <a class="prof-link" href="#" routerLink="/profile">
+      <a class="prof-link" href="#" [routerLink]="['/profile', profileData.username]">
         <div class="img-box">
           <img class="prof-img"
                *ngIf="loggedin"
@@ -158,5 +158,6 @@
   <app-audio-player></app-audio-player>
   <router-outlet></router-outlet>
 </div>
+<div id="waveform2" class="waveform--hidden"></div>
 
 

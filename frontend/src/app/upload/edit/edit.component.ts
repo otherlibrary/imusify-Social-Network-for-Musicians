@@ -258,6 +258,8 @@ export class EditComponent implements OnInit {
     event.preventDefault();
     this.isSubmit = true;
     this.uploadTrackForm.controls['waveform'].setValue(this._uploadService.uploadTrackInfo.waveform);
+    console.log(this._uploadService.uploadTrackInfo.waveform);
+    console.log(this.uploadTrackForm.controls['waveform']);
     //save track info
     let resultFormJSON = JSON.stringify(this.uploadTrackForm.value);
     let release_date = this.uploadTrackForm.value.release_date;
