@@ -5,7 +5,7 @@ class setup extends MY_Controller {
 	function __construct()
 	{
 		parent::__construct("","front");
-		$this->load->model('user_profile');	
+		$this->load->model('user_profile');
 		//echo $this->is_logged_in();		
 	}
 
@@ -15,7 +15,7 @@ class setup extends MY_Controller {
 		$this->load->helper('url');
 		$cm=$this->config->item('meta_keyword').',def,';
 		$this->config->set_item('meta_keyword',$cm);
-		
+
 		$m[]=array("img_url"=>img_url()."vedio-img1.jpg","wave_img"=>img_url().'hover-wave-img.png',"profile_img"=>img_url().'profile-img.png');
 		$m[]=array("img_url"=>img_url()."vedio-img2.jpg","wave_img"=>img_url().'hover-wave-img.png',"profile_img"=>img_url().'profile-img.png');
 		$m[]=array("img_url"=>img_url()."img3.jpg","wave_img"=>img_url().'hover-wave-img.png',"profile_img"=>img_url().'profile-img.png');
@@ -61,12 +61,12 @@ class setup extends MY_Controller {
 					array_push($new_array,$roles);
 				}
 		
-		$data = array(	
+		$data = array(
 			'news'=>$m,	
 			'roles' => 	$new_array,
 			'u_db_roles' => 	$user_selected_array	
 		);
-		
+
 		$template_arry['MainPanel']="main.html";
 		$template_arry['leftPanel']="left_panel.html";
 		$template_arry['popUpContent']="setup/role.html";

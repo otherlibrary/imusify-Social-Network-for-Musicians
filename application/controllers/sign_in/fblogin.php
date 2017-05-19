@@ -17,17 +17,17 @@ class fblogin extends my_controller {
             'appId' => '668742323232861',
             'secret' => 'c6203a89f59ec798239b8ebdd02271f5',
         ));
-		
+
 		$user = $this->facebook->getUser();
         //print_r($user);
         if ($user) {
             try {
 				//print 'b try';
 				//print_r($user);
-				
+
                 $data['user_profile'] = $this->facebook->api('/me');
 				//print_r($data['user_profile']);
-				
+
 				//print $data['user_profile']["email"];
 				$fb_status = $this->ilogin->user_exist_check($data['user_profile']["email"]);
 				

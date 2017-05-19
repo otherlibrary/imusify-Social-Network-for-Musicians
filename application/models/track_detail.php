@@ -655,6 +655,7 @@ class track_detail extends CI_Model
         $licence_list = $this->db->query($licence_list)->result_array();
 
         $track = $this->db->query($track)->result_array();
+
         $secondary_genres = $this->db->query($secondary_genres)->result_array();
         $moods = $this->db->query($moods)->result_array();
         $licenses = $this->db->query($licenses)->result_array();
