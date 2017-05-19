@@ -26,12 +26,8 @@ class TrackDataService
      * @param double      $trackuploadbpm
      * @param int         $track_buyable_types
      * @param int         $track_buyable_current_type
-     * @param string      $usage_type
      * @param int         $track_type
      * @param string|null $track_musician_type
-     * @param null        $sale_available
-     * @param null        $licence_available
-     * @param null        $nonprofit_available
      * @param string|null $waveform
      * @return int
      */
@@ -54,12 +50,8 @@ class TrackDataService
         $trackuploadbpm,
         $track_buyable_types,
         $track_buyable_current_type,
-        $usage_type,
         $track_type,
         $track_musician_type = 'm',
-        $sale_available = null,
-        $licence_available = null,
-        $nonprofit_available = null,
         $waveform = null
     )
     {
@@ -82,7 +74,6 @@ class TrackDataService
             'trackuploadbpm' => $trackuploadbpm,
             'track_buyable_types' => $track_buyable_types,
             'track_buyable_current_type' => $track_buyable_current_type,
-            'usage_type' => $usage_type,
             'createdDate' => date('Y-m-d H:i:s'),
             'track_type' => $track_type,
             'track_musician_type' => $track_musician_type,
@@ -92,24 +83,12 @@ class TrackDataService
             'shares' => 0,
             'comments' => 0,
             'price' => 0,
+            'is_sellable' => 'n',
+            'license' => 'n',
+            'track_nonprofit_avail' => 'n',
             'waveRunningDate' => date('Y-m-d H:i:s'),
             'waveCompletedDate' => date('Y-m-d H:i:s'),
         ];
-
-        $trackData['is_sellable'] = 'n';
-        if ($sale_available != null) {
-            $trackData['is_sellable'] = $sale_available;
-        }
-
-        $trackData['license'] = 'n';
-        if ($licence_available != null) {
-            $trackData['license'] = $licence_available;
-        }
-
-        $trackData['track_nonprofit_avail'] = 'n';
-        if ($nonprofit_available != null) {
-            $trackData['track_nonprofit_avail'] = $nonprofit_available;
-        }
 
         if (!empty($waveform)) {
             $trackData['waveform'] = '[' . $waveform . ']';
@@ -259,17 +238,53 @@ class TrackDataService
      */
     public function createLicensesFromPost($trackId, $postData)
     {
-        $query = $this->ci->db->query('SELECT id FROM track_licence_types WHERE status = \'y\'');
+        $trackData = [];
+        $usageType = '';
+        $query = $this->ci->db->query('SELECT * FROM track_licence_types WHERE status = \'y\'');
         foreach ($query->result_array() as $lic) {
-            if (!empty($postData['lic_id_' . $lic['id']]) && $postData['lic_id_' . $lic['id']] != 'null') {
-                $insertData = [
-                    'trackId' => $trackId,
-                    'licenceId' => $lic['id'],
-                    'licencePrice' => $postData['lic_id_' . $lic['id']],
-                    'createdDate' => date('Y-m-d H:i:s'),
-                ];
-                $this->ci->db->insert('track_licence_price_details', $insertData);
+            if (empty($postData['lic_id_' . $lic['id']])) {
+                continue;
             }
+            if ($postData['lic_id_' . $lic['id']] == 'null') {
+                continue;
+            }
+            $insertData = [
+                'trackId' => $trackId,
+                'licenceId' => $lic['id'],
+                'licencePrice' => $postData['lic_id_' . $lic['id']],
+                'createdDate' => date('Y-m-d H:i:s'),
+            ];
+            $this->ci->db->insert('track_licence_price_details', $insertData);
+
+            switch ($lic['lic_type']) {
+                case 's':
+                    if (empty($trackData['is_sellable'])) {
+                        $trackData['is_sellable'] = 'y';
+                        $usageType .= getvalfromtbl("id", "buy_usage_types", "type = 's'", "single") . ",";
+                    }
+                    break;
+                case 'l':
+                case 'el':
+                    if (empty($trackData['license'])) {
+                        $trackData['license'] = 'y';
+                        $usageType .= getvalfromtbl("id", "buy_usage_types", "type = 'l'", "single") . ",";
+                    }
+                    break;
+                case 'np':
+                    if (empty($trackData['track_nonprofit_avail'])) {
+                        $trackData['track_nonprofit_avail'] = 'y';
+                        $usageType .= getvalfromtbl("id", "buy_usage_types", "type = 'np'", "single") . ",";
+                    }
+                    break;
+            }
+        }
+        if ($usageType != null) {
+            $usageType = rtrim($usageType, ",");
+            $trackData['usage_type'] = $usageType;
+        }
+        if (!empty($trackData)) {
+            $this->ci->db->where('id', $trackId);
+            $this->ci->db->update('tracks', $trackData);
         }
     }
 
