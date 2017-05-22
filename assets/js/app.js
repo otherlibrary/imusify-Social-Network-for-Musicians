@@ -3060,7 +3060,7 @@ initMenuLinks:function(){
   switch(page_url){
     case "home":
     case "music":
-    case "instrumental":
+    case "beats":
     case "license":
     pagename="[data-role='home']";
     break;

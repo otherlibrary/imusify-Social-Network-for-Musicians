@@ -1,0 +1,5 @@
+<div class="masonry">
+  <home-record class="feed-box masonry__item" *ngFor="let record of records"
+               [record]="record"
+               (onPlay)="playPlaylist($event)"></home-record>
+</div>

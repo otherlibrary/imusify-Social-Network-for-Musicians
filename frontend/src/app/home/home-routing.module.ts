@@ -10,7 +10,7 @@ import {StaticLegalComponent} from "./static/static-legal/static-legal.component
 import {StaticVideoComponent} from "./static/static-video/static-video.component";
 import {StaticTermsComponent} from "./static/static-terms/static-terms.component";
 import {ArticlesComponent} from "./articles/articles.component";
-import {InstrumentalComponent} from "./instrumental/instrumental.component";
+import {BeatsComponent} from "./beats/beats.component";
 import {LicenceComponent} from "./licence/licence.component";
 import {HomeResolverService} from "./home-resolver.service";
 
@@ -67,8 +67,8 @@ const routes: Routes = [
         component: ArticlesComponent
       },
       {
-        path: 'instrumental',
-        component: InstrumentalComponent
+        path: 'beats',
+        component: BeatsComponent
       },
       {
         path: 'licence',
