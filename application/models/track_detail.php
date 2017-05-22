@@ -674,6 +674,7 @@ class track_detail extends CI_Model
                              lic_type
                          FROM track_licence_types 
                          WHERE status = \'y\'  ';
+
         $licence_list = $this->db->query($licence_list)->result_array();
 
         $track = $this->db->query($track)->result_array();
@@ -681,10 +682,13 @@ class track_detail extends CI_Model
         $secondary_genres = $this->db->query($secondary_genres)->result_array();
         $moods = $this->db->query($moods)->result_array();
         $licenses = $this->db->query($licenses)->result_array();
+        $image = getvalfromtbl('*', 'photos', "detailId=$trackId AND dir='track/'");
 
 
         if (!empty($track[0])) {
-
+            if(!empty($image)) {
+                $track[0]['image'] = '/assets/upload/track/' . $image['name'];
+            }
             $res_secondary_genres = [];
             foreach ($secondary_genres as $secondary_genre) {
                 $res_secondary_genres[] = $secondary_genre["genreId"];
