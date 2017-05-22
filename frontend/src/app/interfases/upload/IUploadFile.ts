@@ -6,7 +6,7 @@ export interface UploadFile {
   lastModifiedDate: Date;
   name: string;
   size: number;
-  type: string;
+  type: 'mp3';
   progress: UploadProgress;
   response?: any;
 }

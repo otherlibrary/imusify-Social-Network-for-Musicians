@@ -104,10 +104,13 @@ export class UploadComponent implements OnInit {
           data: {track_id: this.fileId}
         };
         this.uploadInput.emit(event);
+
       }
     } else if (output.type === 'addedToQueue') {
       this.fileId = output.file.id;
       this.files.push(output.file);
+      //if mime file
+
     } else if (output.type === 'uploading') {
       const index = this.files.findIndex(file => file.id === output.file.id);
       this.files[index] = output.file;
@@ -121,7 +124,6 @@ export class UploadComponent implements OnInit {
       this.dragOver = false;
     } else if (output.type === 'done') {
       let file = this.files[this.files.length - 1];
-
       if (file.response.hasOwnProperty('upload_data')) {
         this._uploadService.uploadTrackInfo.file_name = file.response.upload_data.file_name;
         this._uploadService.uploadTrackInfo.title = this._cutNameExtension(file.name);

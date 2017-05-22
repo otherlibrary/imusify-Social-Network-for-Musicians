@@ -21,7 +21,7 @@ export class AllNewsComponent implements OnInit {
   constructor(
     private _sharedService: SharedService,
     private _helpersService: HelpersService,
-    private _route: ActivatedRoute
+    private _route: ActivatedRoute,
   ) {}
 
   ngOnInit() {
