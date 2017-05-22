@@ -39,8 +39,16 @@ class user_api extends REST_Controller
         $this->response($result, 200);
     }
 
-    public function get_info()
+    /**
+     * @param int $userId
+     * [GET api/user/get-info/{id}]
+     */
+    public function get_info_get($userId)
     {
+        $this->load->library('UserService');
 
+        $result = $this->userservice->getUserInfo($userId);
+
+        echo json_encode($result);
     }
 }
