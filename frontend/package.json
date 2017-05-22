@@ -8,7 +8,7 @@
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e",
-    "build": "ng build -prod --output-hashing=none --deploy-url=/assets/angular/"
+    "build": "ng build -prod -sm --output-hashing=none --deploy-url=/assets/angular/"
   },
   "private": true,
   "dependencies": {

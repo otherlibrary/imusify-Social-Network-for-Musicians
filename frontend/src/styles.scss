@@ -408,8 +408,8 @@ button:disabled {
     
     .feed-bg {
       img {
-        -webkit-filter: saturate(0);
-        filter: saturate(0);
+        -webkit-filter: saturate(0.3);
+        filter: saturate(0.3);
         transition: all 0.5s cubic-bezier(0.39, 0.575, 0.565, 1);
       }
     }

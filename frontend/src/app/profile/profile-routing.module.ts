@@ -3,6 +3,7 @@ import {Routes, RouterModule} from '@angular/router';
 import {ProfileComponent} from "./profile.component";
 import {OnlyMeComponent} from "./only-me/only-me.component";
 import {PopularComponent} from "./popupar/popular.component";
+import {ProfileResolverService} from "./profile-resolver.service";
 
 const routes: Routes = [
   {
@@ -28,7 +29,8 @@ const routes: Routes = [
 
 @NgModule({
   exports: [RouterModule],
-  imports: [RouterModule.forChild(routes)]
+  imports: [RouterModule.forChild(routes)],
+  providers: [ProfileResolverService]
 })
 export class ProfileRoutingModule {
 }
