@@ -81,6 +81,7 @@ export class EditComponent implements OnInit {
   @Input() licensesList: any[];
   @Input() typePrice: string;
   @Input() openSwitch: boolean;
+  @Input() editImage: string;
 
   public myDatePickerOptions: IMyOptions = {
     dateFormat: 'dd.mm.yyyy'
@@ -175,6 +176,7 @@ export class EditComponent implements OnInit {
   }
 
   ngOnInit() {
+
     //if date none, set current date
     let date = new Date();
     this.currentDate = this._uploadService.uploadTrackInfo.release_date || {
@@ -190,7 +192,8 @@ export class EditComponent implements OnInit {
       //clear all data track
       this._uploadService.clearUploadTrackInfo();
       this._uploadService.trackImage.file = null;
-
+      //if open edit load image
+      this.uploadTrackImg = this.editImage;
       //open all switch if click to edit track
       this.toggleAllSwitch();
     }

@@ -24,7 +24,7 @@ export class BeatsComponent implements OnInit {
       (data: { homeData: ITracksData }) => {
         this.musicData = data.homeData;
         this.records = this.musicData.records.filter((record: any) => {
-          return record.track_type == 'Beat';
+          return record.trackuploadType == '2';
         });
       }
     );

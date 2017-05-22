@@ -30,6 +30,7 @@ export class AudioComponent implements OnInit, OnDestroy {
   public typeList: IOption[];
   public moodList: IOption[];
   public licensesList: any[];
+  public editImage: string;
 
   constructor(
     private _uploadService: UploadService,
@@ -50,6 +51,7 @@ export class AudioComponent implements OnInit, OnDestroy {
         this.getLicensesList();
         this.getTrackList();
         this.getUploadDetails();
+        this.editImage = null;
       }
     });
   }
@@ -111,6 +113,7 @@ export class AudioComponent implements OnInit, OnDestroy {
       this._uploadService.uploadTrackInfo.type_artist = this.editTrack.track_musician_type;
       this._uploadService.uploadTrackInfo.secondary_genre_id = this.editTrack.secondary_genres;
       this._uploadService.uploadTrackInfo.pick_moods_id = this.editTrack.moods;
+      this.editImage = this.editTrack.image;
       this.licensesList = this.editTrack.licences;
 
       if(this.editTrack.track_musician_type === 'm') {

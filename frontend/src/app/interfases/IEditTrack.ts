@@ -16,4 +16,5 @@ export interface IEditTrack {
   track_musician_type: string;
   trackuploadType: string;
   typeArtist: string;
+  image?: string;
 }
