@@ -1,4 +1,6 @@
-<?php  if ( ! defined('BASEPATH')) exit('No direct script access allowed');
+<?php if (!defined('BASEPATH')) {
+    exit('No direct script access allowed');
+}
 /*
 | -------------------------------------------------------------------------
 | URI ROUTING
@@ -71,8 +73,7 @@ $route['api/change_password_api'] = "api/account_api/change_password/format/json
 $route['api/country'] = "api/vat_api/check_current_country/format/json";
 
 
-
-$route['api/unread'] = "api/unread_msgs_api/get_unread_conv/format/json"; 
+$route['api/unread'] = "api/unread_msgs_api/get_unread_conv/format/json";
 $route['api/users'] = "api/user_api/users/format/json";
 //$route['message'] = "api/message_api/message/format/json";
 $route['api/cp'] = "api/cp_api/cp/format/json";
@@ -88,9 +89,9 @@ $route['api/changeusercover'] = "api/user_profile_api/update_profile_cover/forma
 $route['api/invitefriends'] = "api/user_profile_api/invite_friends/format/json";
 $route['api/article_image_upload'] = "api/article_api/upload_image/format/json";
 $route['api/article_image_uploaded/(:num)'] = "api/article_api/article_images/id/$1/format/json";
-$route['api/signup'] = "api/signup_api/signup/format/json"; 
-$route['api/membershipcheck'] = "api/membership_api/check_current_plan/format/json"; 
-$route['api/cancelsubscription'] = "api/membership_api/cancel_plan/format/json"; 
+$route['api/signup'] = "api/signup_api/signup/format/json";
+$route['api/membershipcheck'] = "api/membership_api/check_current_plan/format/json";
+$route['api/cancelsubscription'] = "api/membership_api/cancel_plan/format/json";
 $route['api/uploadfiles'] = "api/upload_api/uploadfiles/format/json";
 
 
@@ -132,6 +133,7 @@ $route['api/licenses-list'] = 'new_api/common_api/licenses_list/format/json';
 $route['api/roles'] = 'new_api/common_api/roles/format/json';
 
 /* New Users API */
+$route['api/user/get-info'] = 'api/user_api/get_info/format/json';
 $route['api/user/check-auth'] = 'api/user_api/check_auth/format/json';
 $route['api/user/set-roles'] = 'new_api/user_api/set_roles/format/json';
 
@@ -152,8 +154,6 @@ $route['api/notification/list'] = "api/unread_msgs_api/notifications_list/format
 $route['api/new_artists'] = 'api/commonfn_api/new_artists/format/json';
 
 
-
-
 /*Gift couppon apply*/
 $route['api/apply_coupon_api'] = "api/coupon_api/apply_gift_coupon/format/json";
 $route['save_track'] = "api/uploadsave_api/save_track_db";
@@ -165,7 +165,7 @@ $route['playlist_delete'] = "api/commonfn_api/playlist_delete/format/json";
 $route['create_playlist'] = "api/playlist_api/playlist_create/format/json";
 $route['increase_track_counter'] = "api/commonfn_api/track_counter_increase/format/json";
 $route['savewaveform'] = "api/uploadsave_api/savewaveform/format/json";
-$route['fetch_ta_info'] = "api/uploadsave_api/fetch_uainfo/format/json"; 
+$route['fetch_ta_info'] = "api/uploadsave_api/fetch_uainfo/format/json";
 $route['ulogout'] = "api/logout/loggout/format/json";
 $route['msg_alloweduserlist'] = "api/message_api/msgalloweduserlist/format/json";
 
@@ -227,7 +227,7 @@ $route['following/(:num)'] = "following/following/index/$1";
 
 
 /* $route['api'] = "api/index"; */
- 
+
 
 $route['admin'] = "admin/login";
 $route['sign_up'] = "sign_up/sign_up";

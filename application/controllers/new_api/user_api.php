@@ -38,4 +38,9 @@ class user_api extends REST_Controller
 
         $this->response($result, 200);
     }
+
+    public function get_info()
+    {
+
+    }
 }
