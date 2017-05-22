@@ -1,3 +1,7 @@
-<p>
-  articles works!
-</p>
+<div class="masonry">
+  <ng-template ngFor let-article [ngForOf]="articles">
+    <div class="feed-box masonry__item">
+      <app-home-article [article]="article"></app-home-article>
+    </div>
+  </ng-template>
+</div>

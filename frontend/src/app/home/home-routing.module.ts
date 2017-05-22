@@ -12,14 +12,16 @@ import {StaticTermsComponent} from "./static/static-terms/static-terms.component
 import {ArticlesComponent} from "./articles/articles.component";
 import {InstrumentalComponent} from "./instrumental/instrumental.component";
 import {LicenceComponent} from "./licence/licence.component";
-import {NewsComponent} from "../components/news/news.component";
-import {AuthGuard} from "../common/auth.guard";
+import {HomeResolverService} from "./home-resolver.service";
 
 
 const routes: Routes = [
   {
     path: '',
     component: HomeComponent,
+    resolve: {
+      homeData: HomeResolverService
+    },
     children: [
       {
         path: '',
@@ -28,6 +30,10 @@ const routes: Routes = [
       {
         path: 'following',
         component: FollowingComponent
+      },
+      {
+        path: 'music',
+        component: MusicComponent
       },
       {
         path: 'static',
@@ -57,10 +63,6 @@ const routes: Routes = [
         ]
       },
       {
-        path: 'music',
-        component: MusicComponent
-      },
-      {
         path: 'articles',
         component: ArticlesComponent
       },
@@ -78,7 +80,8 @@ const routes: Routes = [
 
 @NgModule({
   exports: [RouterModule],
-  imports: [RouterModule.forChild(routes)]
+  imports: [RouterModule.forChild(routes)],
+  providers: [HomeResolverService]
 })
 export class HomeRoutingModule {
 }

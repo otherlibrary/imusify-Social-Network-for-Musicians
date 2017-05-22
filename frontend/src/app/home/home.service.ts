@@ -13,10 +13,6 @@ export class HomeService {
     return this._apiService.post('/', environment.creds);
   }
 
-  getMusic(): Observable<ITracksData> {
-    return this._apiService.post(environment.musicList, environment.creds);
-  }
-
   /**
    * follow link
    * @param data

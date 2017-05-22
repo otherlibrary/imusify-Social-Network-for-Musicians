@@ -1,9 +1,9 @@
 import {Component, OnInit} from '@angular/core';
 import {HomeService} from "../home.service";
-import {EmitterService} from "../../shared/services/emitter.service";
 import {SharedService} from "../../shared/shared.service";
 import {IRecord, ITracksData} from "../../interfases";
-import {Observable} from "rxjs/Observable";
+import {ActivatedRoute} from "@angular/router";
+import {IArticle} from "../../interfases/IArticle";
 
 @Component({
   selector: 'app-music',
@@ -18,12 +18,20 @@ export class MusicComponent implements OnInit {
   public records: IRecord[];
   private isPlayPlaylist: boolean = false;
 
-  constructor(private _homeService: HomeService, private _sharedService: SharedService) {
-  }
+  constructor(
+    private _sharedService: SharedService,
+    private _route: ActivatedRoute
+  ) {}
 
   ngOnInit() {
-    console.log('musik init');
-    this.getMusic()
+    this._route.parent.data.subscribe(
+      (data: { homeData: ITracksData }) => {
+        this.musicData = data.homeData;
+        this.records = this.musicData.records.filter((record: any) => {
+          return record.is_track;
+        });
+      }
+    );
   }
 
   playPlaylist() {
@@ -46,19 +54,5 @@ export class MusicComponent implements OnInit {
 
   sharedRecord(link) {
     this.sharedUrl = link;
-  }
-
-  /**
-   * get music data
-   */
-  getMusic(): void {
-    EmitterService.get('TOGGLE_PRELOADER').emit(true);
-    this._homeService.getMusic().subscribe((data: ITracksData) => {
-      this.musicData = data;
-      this.records = this.musicData.records;
-
-      EmitterService.get('GET_PROFILE').emit(data);
-      EmitterService.get('TOGGLE_PRELOADER').emit(false);
-    });
   }
 }

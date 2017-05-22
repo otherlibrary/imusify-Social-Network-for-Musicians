@@ -5,6 +5,7 @@ import {IRecord, ITracksData} from "../../interfases";
 import {SharedService} from "../../shared/shared.service";
 import {HelpersService} from "../../shared/services/helpers.service";
 import {IArticle} from "../../interfases/IArticle";
+import {ActivatedRoute} from "@angular/router";
 
 @Component({
   selector: 'app-all-news',
@@ -18,29 +19,26 @@ export class AllNewsComponent implements OnInit {
   private isPlayPlaylist: boolean = false;
 
   constructor(
-    private _homeService: HomeService,
     private _sharedService: SharedService,
-    private _helpersService: HelpersService
+    private _helpersService: HelpersService,
+    private _route: ActivatedRoute
   ) {}
 
   ngOnInit() {
-    this.getAllNews();
-  }
-
-  getAllNews() {
-    EmitterService.get('TOGGLE_PRELOADER').emit(true);
-    this._homeService.getAllNews().subscribe(data => {
-      this.homeData = data;
-      let len = data.records.length;
-      data.records.map((item: any, index) => {
-        this.records.push(item);
-        if(item.is_article) {
-          let random = this._helpersService.getRandomInt(0, len);
-          this._helpersService.move(this.records, index, random);
-        }
-      });
-      EmitterService.get('TOGGLE_PRELOADER').emit(false);
-    });
+    // get cache all news
+    this._route.data.subscribe(
+      (data: { homeData: ITracksData }) => {
+        this.homeData = data.homeData;
+        let len = this.homeData.records.length;
+        this.homeData.records.map((item: any, index) => {
+          this.records.push(item);
+          if(item.is_article) {
+            let random = this._helpersService.getRandomInt(0, len);
+            this._helpersService.move(this.records, index, random);
+          }
+        });
+      }
+    );
   }
 
   playPlaylist() {

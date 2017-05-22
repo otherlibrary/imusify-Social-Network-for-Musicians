@@ -30,5 +30,7 @@ export interface IRecord {
   wave?: string
   waveform?: string
   likes?: string
-  tags?: string[]
+  tags?: string[],
+  is_article?: boolean;
+  is_track?: boolean;
 }

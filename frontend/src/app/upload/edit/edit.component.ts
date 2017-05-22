@@ -245,8 +245,19 @@ export class EditComponent implements OnInit {
     });
     this._uploadService.uploadImageTrack(req).subscribe(res => {
       this._uploadService.editPopupSubject.next(false);
+
+      this._sharedService.notificationSubject.next({
+        title: 'Save image',
+        msg: 'Success save',
+        type: 'success'
+      });
     }, err => {
       console.log(err);
+      this._sharedService.notificationSubject.next({
+        title: 'Save image',
+        msg: 'Error save',
+        type: 'error'
+      });
     })
   }
 
@@ -258,8 +269,6 @@ export class EditComponent implements OnInit {
     event.preventDefault();
     this.isSubmit = true;
     this.uploadTrackForm.controls['waveform'].setValue(this._uploadService.uploadTrackInfo.waveform);
-    console.log(this._uploadService.uploadTrackInfo.waveform);
-    console.log(this.uploadTrackForm.controls['waveform']);
     //save track info
     let resultFormJSON = JSON.stringify(this.uploadTrackForm.value);
     let release_date = this.uploadTrackForm.value.release_date;
@@ -307,11 +316,17 @@ export class EditComponent implements OnInit {
 
     this._uploadService.saveEditTrack(formData).subscribe(res => {
       this.isSubmit = false;
+
       this._sharedService.notificationSubject.next({
         title: 'Save file',
         msg: 'Success save',
         type: 'success'
       });
+      if(this.uploadTrackImg) {
+        this.submitImage(res.track_id);
+      }
+      //close popup
+      this._uploadService.editPopupSubject.next(false);
     }, err => {
       console.log(err);
     });
