@@ -216,7 +216,7 @@ class UploadService
     }
 
     /**
-     * @param int $userId
+     * @param int    $userId
      * @param string $data
      * @return bool
      */
