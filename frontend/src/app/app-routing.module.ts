@@ -14,7 +14,7 @@ import {SoungDetailComponent} from "./components/soung-detail/soung-detail.compo
 import {AccountComponent} from "./components/account/account.component";
 import {ChangePassComponent} from "./components/change-pass/change-pass.component";
 import {StripeComponent} from "./components/stripe/stripe.component";
-import {EditProfileComponent} from "./profile/edit-profile/edit-profile.component";
+
 import {RolesComponent} from "./components/roles/roles.component";
 import {MembershipComponent} from "./components/membership/membership.component";
 import {InviteFriendsComponent} from "./components/invite-friends/invite-friends.component";
@@ -23,6 +23,7 @@ import {MessagesComponent} from "./components/messages/messages.component";
 import {ArtistProfileComponent} from "./components/artist-profile/artist-profile.component";
 import {NewsComponent} from "./components/news/news.component";
 import {AuthAllSuccessGuard} from "./common/auth-all-success.guard";
+import {EditProfileComponent} from "./components/edit-profile/edit-profile.component";
 
 const APP_ROUTES: Routes = [
   {

@@ -3,7 +3,8 @@ import {Router} from "@angular/router";
 import {FormGroup, FormBuilder, Validators} from "@angular/forms";
 import {IProfileEdit} from "../../interfases/profile/IProfileEdit";
 import {IMyOptions} from "mydatepicker";
-import {ProfileService} from "../profile.service";
+import {ProfileService} from "../../profile/profile.service";
+import {IOption} from "ng-select";
 
 @Component({
   selector: 'app-edit-profile',
@@ -30,7 +31,7 @@ export class EditProfileComponent implements OnInit {
     }
   };
 
-  public counryList: string[];
+  public countryList: IOption;
 
   constructor(
     private _router: Router,
@@ -106,7 +107,7 @@ export class EditProfileComponent implements OnInit {
 
   getCountryList() {
     this._profileService.getCountryList().subscribe(country => {
-      console.log(country);
+      this.countryList = country;
     });
   }
 

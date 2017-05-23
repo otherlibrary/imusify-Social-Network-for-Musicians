@@ -3,11 +3,9 @@ import {OnlyMeComponent} from "./only-me/only-me.component";
 import {PopularComponent} from "./popupar/popular.component";
 
 export const profileComponents = [
-    ProfileComponent,
-    PopularComponent,
-    OnlyMeComponent
+  ProfileComponent,
+  PopularComponent,
+  OnlyMeComponent
 ];
 
-export const exportsProfileComponents = [
-
-];
+export const exportsProfileComponents = [];
