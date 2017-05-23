@@ -215,7 +215,7 @@ class UploadService
 
     public function uploadUserImage($userId, $input)
     {
-        $uploadPath = asset_path() . 'upload/media/' . $userData->id . '/';
+        $uploadPath = asset_path() . 'upload/users/';
 
         $uploadConfig = [
             'upload_path' => $uploadPath,
