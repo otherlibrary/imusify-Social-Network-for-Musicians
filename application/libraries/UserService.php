@@ -99,6 +99,7 @@ class UserService
      */
     public function getUserInfoForEdit($userId)
     {
+        $this->ci->load->model('commonfn');
         $userData = getvalfromtbl('firstname,lastname,weburl,countryId,stateId,cityId,description,dob_d,dob_m,dob_y', 'users', 'id = ' . $userId);
         if (!empty($userData)) {
             $userData['birthdate'] = $userData['dob_d'] . '.' . $userData['dob_m'] . '.' . $userData['dob_y'];
@@ -116,17 +117,18 @@ class UserService
     }
 
     /**
-     * @param int $userId
+     * @param int    $userId
      * @param string $firstname
      * @param string $lastname
      * @param string $weburl
-     * @param int $countryId
-     * @param int $stateId
-     * @param int $cityId
+     * @param int    $countryId
+     * @param int    $stateId
+     * @param int    $cityId
      * @param string $description
-     * @param int $dob_d
-     * @param int $dob_m
-     * @param int $dob_y
+     * @param int    $dob_d
+     * @param int    $dob_m
+     * @param int    $dob_y
+     * @return int
      */
     public function editUserInfo(
         $userId,
@@ -153,9 +155,12 @@ class UserService
             'dob_d' => $dob_d,
             'dob_m' => $dob_m,
             'dob_y' => $dob_y,
+            'updated' => date('Y-m-d H:i:s'),
         ];
 
         $this->ci->db->where('id', $userId);
         $this->ci->db->update('users', $userData);
+
+        return $this->ci->db->affected_rows();
     }
 }

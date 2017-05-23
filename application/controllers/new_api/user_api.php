@@ -71,10 +71,12 @@ class user_api extends REST_Controller
     public function edit_info_post()
     {
         $this->load->library('UserService');
+        $this->load->library('UploadService');
 
         $date = explode('.', $this->post('birthdate'));
+        $userId = $this->post('user_id');
         $this->userservice->editUserInfo(
-            $this->post('user_id'),
+            $userId,
             $this->post('firstname'),
             $this->post('lastname'),
             $this->post('weburl'),
@@ -82,9 +84,13 @@ class user_api extends REST_Controller
             $this->post('stateId'),
             $this->post('cityId'),
             $this->post('description'),
-            $this->post($date[0]),
-            $this->post($date[1]),
-            $this->post($date[2])
+            $date[0],
+            $date[1],
+            $date[2]
         );
+
+        $this->uploadservice->uploadUserImage($userId, 'image');
+
+        $this->response('uspeh', 200);
     }
 }
