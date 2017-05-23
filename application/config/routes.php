@@ -134,6 +134,7 @@ $route['api/roles'] = 'new_api/common_api/roles/format/json';
 
 /* New Users API */
 $route['api/user/get-info/(:num)'] = 'new_api/user_api/get_info/$1/format/json';
+$route['api/user/get-info-for-edit/(:num)'] = 'new_api/user_api/get_info_for_edit/$1/format/json';
 $route['api/user/check-auth'] = 'api/user_api/check_auth/format/json';
 $route['api/user/set-roles'] = 'new_api/user_api/set_roles/format/json';
 
@@ -176,8 +177,10 @@ $route['upload_details'] = "api/commonfn_api/upload_list/format/json";
 $route['usersong_json'] = "api/commonfn_api/get_usertracks_json/format/json";
 $route['album_json'] = "api/commonfn_api/get_album_json/format/json";
 $route['playlist_json'] = "api/commonfn_api/get_playlist_json/format/json";
+$route['country_list'] = 'api/commonfn_api/get_country_list/format/json';
 $route['state_list'] = "api/commonfn_api/statelist/format/json";
 $route['city_list'] = "api/commonfn_api/citylist/format/json";
+$route['location_name/(:num)'] = 'api/commonfn_api/get_location_name/$1/format/json';
 $route['search'] = "api/commonfn_api/search_records/format/json";
 $route['exp_search'] = "api/commonfn_api/exp_search_records/format/json";
 $route['explore_search_tags'] = "api/commonfn_api/explore_tags_search/format/json";
