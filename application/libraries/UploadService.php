@@ -121,7 +121,7 @@ class UploadService
                 $data = $this->getUploadResult();
                 $filename = $data['file_name'];
 
-                if (!empty($this->insertPhotoToDb($filename, $trackId))) {
+                if (!empty($this->insertPhotoToDb($filename, $trackId, 'track/', 't'))) {
                     $result = [
                         'file_path' => $data['full_path'],
                     ];
@@ -142,7 +142,7 @@ class UploadService
             $file = $this->createImageFromString($data, $filepath);
 
             if (!empty($file)) {
-                if (!empty($this->insertPhotoToDb($fileName, $trackId))) {
+                if (!empty($this->insertPhotoToDb($fileName, $trackId, 'track/', 't'))) {
                     $result = [
                         'file_path' => $filepath,
                     ];
@@ -188,23 +188,25 @@ class UploadService
     }
 
     /**
-     * @param string  $filename
-     * @param integer $trackId
+     * @param string $filename
+     * @param int    $detailId
+     * @param string $dir
+     * @param string $type
      * @return int
      */
-    public function insertPhotoToDb($filename, $trackId)
+    public function insertPhotoToDb($filename, $detailId, $dir, $type = 't')
     {
-        $currentPhoto = getvalfromtbl('*', 'photos', "detailId=$trackId and dir='track/'");
+        $currentPhoto = getvalfromtbl('*', 'photos', "detailId=$detailId and type='$type'");
 
         if (!empty($currentPhoto)) {
             $this->ci->db->update('photos', ['name' => $filename], 'id=' . $currentPhoto['id']);
-            unlink(asset_upload_path() . 'track/' . $currentPhoto['name']);
+            unlink(asset_upload_path() . $dir . $currentPhoto['name']);
         } else {
             $insertData = [
-                'detailId' => $trackId,
-                'dir' => 'track/',
+                'detailId' => $detailId,
+                'dir' => $dir,
                 'name' => $filename,
-                'type' => 't',
+                'type' => $type,
                 'default_pic' => 'y',
             ];
             $this->ci->db->insert('photos', $insertData);
@@ -213,39 +215,31 @@ class UploadService
         return $this->ci->db->affected_rows();
     }
 
+    /**
+     * @param int $userId
+     * @param string $input
+     * @return bool
+     */
     public function uploadUserImage($userId, $input)
     {
         $uploadPath = asset_path() . 'upload/users/';
 
         $uploadConfig = [
             'upload_path' => $uploadPath,
-            'max_size' => $availSpace,
-            'allowed_types' => 'mp3|mp2|ogg|aac|amr|wma|aiff|wav|flac|alac',
+            'max_size' => 5 * 1024,
+            'allowed_types' => 'jpg|jpeg|png',
         ];
 
         $this->fixUploadPath($uploadPath);
-        if (!$this->uploadFile('file', $uploadConfig)) {
-            $error = [
-                'error' => $this->getUploadErrors(),
-            ];
 
-            return $error;
-        } else {
-            $data = [
-                'upload_data' => $this->getUploadResult(),
-            ];
+        $result = $this->uploadFile($input, $uploadConfig);
 
-            $spaceData = $this->ci->space_model->getUserCommonSpace($userData->id);
-            if (!empty($spaceData)) {
-                $this->ci->space_model->updateUserSpace(
-                    $userData->id,
-                    $spaceData['used_space'] + intval(($data['upload_data']['file_size'] * 1024))
-                );
-            }
-
-            return $data;
+        if ($result) {
+            $data = $this->getUploadResult();
+            $filename = $data['file_name'];
+            $this->insertPhotoToDb($filename, $userId, 'users/', 'p');
         }
 
-
+        return $result;
     }
 }
