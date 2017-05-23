@@ -85,7 +85,7 @@
               <my-date-picker class="custom_picker valid_style"
                               name="birthDate" id="birthDate"
                               [options]="myDatePickerOptions"
-                              [(ngModel)]="currentDate"
+                              [(ngModel)]="editProfileForm.controls.birthdate.value"
                               formControlName="birthdate"></my-date-picker>
               <label for="birthDate">Date of Birth</label>
             </div>

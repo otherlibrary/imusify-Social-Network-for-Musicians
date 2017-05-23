@@ -5,7 +5,6 @@ import {IProfileEdit} from "../../interfases/profile/IProfileEdit";
 import {IMyOptions} from "mydatepicker";
 import {ProfileService} from "../../profile/profile.service";
 import {IOption} from "ng-select";
-import {HelpersService} from "../../shared/services/helpers.service";
 
 @Component({
   selector: 'app-edit-profile',
