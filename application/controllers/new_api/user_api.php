@@ -91,6 +91,6 @@ class user_api extends REST_Controller
 
         $this->uploadservice->uploadUserImage($userId, 'image');
 
-        $this->response('uspeh', 200);
+        $this->response(['status' => 'success'], 200);
     }
 }
