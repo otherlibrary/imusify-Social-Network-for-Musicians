@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnDestroy, OnInit} from '@angular/core';
 import {ActivatedRoute} from "@angular/router";
 import {ProfileService} from "./profile.service";
 import {IProfile} from "../interfases/profile/IProfile";
@@ -8,7 +8,7 @@ import {IProfile} from "../interfases/profile/IProfile";
   templateUrl: 'profile.component.html',
   styleUrls: ['profile.component.scss']
 })
-export class ProfileComponent implements OnInit {
+export class ProfileComponent implements OnInit, OnDestroy {
   public username: string;
   private sub: any;
 
@@ -19,14 +19,11 @@ export class ProfileComponent implements OnInit {
   }
 
   ngOnInit() {
-    // this._route.data.subscribe(
-    //   (data: { profileData: IProfile }) => {
-    //     console.log(data);
-    //   }
-    // );
     this.sub = this._route.params.subscribe(params => {
       this.username = params['id'];
-      this._profileService.getProfileData(this.username).subscribe(data => console.log(data))
+      this._profileService.getProfileData(this.username).subscribe((data: IProfile) => {
+        console.log(data);
+      })
     });
   }
 

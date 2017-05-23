@@ -3,8 +3,6 @@ import {Observable, Subject} from "rxjs";
 import {environment} from "../../environments/environment";
 import {ITracksData} from "../interfases";
 import {ApiService} from "app/shared/services/api.service";
-import {Http} from "@angular/http";
-import {contentHeaders} from "../common/headers";
 
 @Injectable()
 export class SharedService {
@@ -12,9 +10,11 @@ export class SharedService {
   //Subject audio player
   public playPlayerTrackSubject: Subject<Object> = new Subject<Object>();
   public pausePlayerTrackSubject: Subject<Object> = new Subject<Object>();
+
   //Subject track
   public playTrackSubject: Subject<Object> = new Subject<Object>();
   public pauseTrackSubject: Subject<Object> = new Subject<Object>();
+
   //Notification
   public notificationSubject: Subject<Object> = new Subject<Object>();
 
@@ -22,8 +22,7 @@ export class SharedService {
   public setPlaylistSubject: Subject<Object> = new Subject<Object>();
 
 
-  constructor(private _apiService: ApiService, private http: Http) {
-  }
+  constructor(private _apiService: ApiService) {}
 
   getMusic(): Observable<ITracksData> {
     return this._apiService.post('/', environment.creds);
@@ -38,8 +37,6 @@ export class SharedService {
   }
 
   setUserRoles(roles) {
-    let formData = new FormData();
-    formData.append('user_roles[]', roles);
-    return this._apiService.post(environment.setUserRoles, formData);
+    return this._apiService.post(environment.setUserRoles, roles);
   }
 }

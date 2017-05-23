@@ -27,6 +27,9 @@ export class RolesComponent implements OnInit {
     this._router.navigate([{outlets: {popup: null}}]);
   }
 
+  /**
+   * get user roles
+   */
   getUserRoles() {
     this._sharedService.getUserRoles().subscribe((data: any) => {
       this.roles = data.roles;
@@ -42,14 +45,35 @@ export class RolesComponent implements OnInit {
     }
   }
 
+  /**
+   * save user roles
+   */
   saveUserRoles() {
-    // this.userRoles.map((roleId: string) => {
-    //
-    // });
-    this._sharedService.setUserRoles(this.userRoles).subscribe(res => {
-      console.log(res);
+    let param = '';
+    this.userRoles.map(item => {
+      param += this._helperService.toStringParam({"user_roles[]": item}) + '&';
+    });
+
+    this._sharedService.setUserRoles(param).subscribe(res => {
+      if(res.status === 'success') {
+        this._sharedService.notificationSubject.next({
+          title: 'Set Roles',
+          msg: res.msg,
+          type: 'success'
+        });
+      } else if(res.status === 'error') {
+        this._sharedService.notificationSubject.next({
+          title: 'Set Roles',
+          msg: res.msg,
+          type: 'error'
+        });
+      }
     }, err => {
-      console.log(err);
+      this._sharedService.notificationSubject.next({
+        title: 'Set Roles',
+        msg: err.message,
+        type: 'error'
+      });
     });
   }
 

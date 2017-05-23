@@ -22,5 +22,6 @@ export const environment = {
   licensesList: '/api/licenses-list',
   browse: '/browse',
   browseNewSongs:  '/browse/new-songs',
-  browsePopularArtist: '/browse/popular-artist'
+  browsePopularArtist: '/browse/popular-artist',
+  getProfile: '/api/user/get-info/'
 };
