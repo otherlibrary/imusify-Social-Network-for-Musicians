@@ -18,7 +18,8 @@ export class EditProfileComponent implements OnInit, OnDestroy {
   public myDatePickerOptions: IMyOptions = {
     dateFormat: 'dd.mm.yyyy'
   };
-  public currentDate: string = null;
+  public currentDate: Object = null;
+
   public formErrors = {
     "firstname": "",
     "lastname": ""
@@ -91,6 +92,14 @@ export class EditProfileComponent implements OnInit, OnDestroy {
   public getEditProfile(userId) {
     this._profileService.getEditProfile(userId).subscribe((data: IProfileEdit) => {
       this.profileData = data;
+      let arrBirthdate = this.profileData.birthdate.split('.');
+      this.currentDate = {
+        date: {
+          year: arrBirthdate[2],
+          month: arrBirthdate[1],
+          day: arrBirthdate[0]
+        }
+    };
       this.buildForm();
     })
   }
