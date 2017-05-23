@@ -99,6 +99,7 @@ class UserService
      */
     public function getUserInfoForEdit($userId)
     {
+        $this->ci->load->model('commonfn');
         $userData = getvalfromtbl('firstname,lastname,weburl,countryId,stateId,cityId,description,dob_d,dob_m,dob_y', 'users', 'id = ' . $userId);
         if (!empty($userData)) {
             $userData['birthdate'] = $userData['dob_d'] . '.' . $userData['dob_m'] . '.' . $userData['dob_y'];
