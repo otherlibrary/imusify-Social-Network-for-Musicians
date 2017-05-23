@@ -3,18 +3,23 @@ import {ApiService} from "../shared/services/api.service";
 import {environment} from "../../environments/environment";
 import {IProfile, IProfileEdit} from "../interfases";
 import {Observable} from "rxjs/Observable";
+import {IOption} from "ng-select";
 
 @Injectable()
 export class ProfileService {
 
   constructor(private _apiService: ApiService) {}
 
-  getCountryList() {
+  getCountryList(): Observable<IOption[]> {
     return this._apiService.get(environment.countryList);
   }
 
-  getStateList(countryId) {
+  getStateList(countryId: string): Observable<IOption[] > {
     return this._apiService.get(environment.stateList + countryId);
+  }
+
+  getCityList(stateId: string): Observable<IOption[] > {
+    return this._apiService.get(environment.cityList + stateId);
   }
 
   getProfileData(userId: string): Observable<IProfile> {

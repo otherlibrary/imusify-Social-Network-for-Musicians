@@ -107,7 +107,7 @@ const APP_ROUTES: Routes = [
     canActivate: [AuthGuard]
   },
   {
-    path: 'edit-profile',
+    path: 'edit-profile/:id',
     component: EditProfileComponent,
     outlet: 'popup',
     canActivate: [AuthGuard]

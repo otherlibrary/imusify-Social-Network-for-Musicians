@@ -1,5 +1,5 @@
-import {Component, OnInit} from '@angular/core';
-import {Router} from "@angular/router";
+import {Component, OnDestroy, OnInit} from '@angular/core';
+import {ActivatedRoute, Router} from "@angular/router";
 import {FormGroup, FormBuilder, Validators} from "@angular/forms";
 import {IProfileEdit} from "../../interfases/profile/IProfileEdit";
 import {IMyOptions} from "mydatepicker";
@@ -11,7 +11,7 @@ import {IOption} from "ng-select";
   templateUrl: './edit-profile.component.html',
   styleUrls: ['./edit-profile.component.scss']
 })
-export class EditProfileComponent implements OnInit {
+export class EditProfileComponent implements OnInit, OnDestroy {
   public editProfileForm: FormGroup;
   public profileData: IProfileEdit;
   public myDatePickerOptions: IMyOptions = {
@@ -31,20 +31,34 @@ export class EditProfileComponent implements OnInit {
     }
   };
 
-  public countryList: IOption;
-  public stateList: IOption;
+  public countryList: IOption[];
+  public stateList: IOption[];
+  public cityList: IOption[];
+  private sub: any;
 
   constructor(
     private _router: Router,
     private fb: FormBuilder,
-    private _profileService: ProfileService
+    private _profileService: ProfileService,
+    private _route: ActivatedRoute,
   ) {}
 
   ngOnInit() {
+    this.sub = this._route.params.subscribe(params => {
+      this.getEditProfile(params.id);
+    });
+
     this.getCountryList();
     this.buildForm();
   }
 
+  ngOnDestroy() {
+    this.sub.unsubscribe();
+  }
+
+  /**
+   * build form edit Profile
+   */
   buildForm() {
     // get init group
     this.profileData = {
@@ -74,6 +88,18 @@ export class EditProfileComponent implements OnInit {
       birthdate: this.profileData.birthdate,
       image: this.profileData.image
     });
+
+    this.editProfileForm.valueChanges
+      .subscribe(data => {
+        this.onValueChange(data);
+      });
+    this.onValueChange();
+  }
+
+  public getEditProfile(userId) {
+    this._profileService.getEditProfile(userId).subscribe((data: IProfileEdit) => {
+      this.profileData = data;
+    })
   }
 
   /**
@@ -106,18 +132,38 @@ export class EditProfileComponent implements OnInit {
     console.log(event);
   };
 
+  /**
+   * get list of country
+   */
   public getCountryList() {
-    this._profileService.getCountryList().subscribe(country => {
+    this._profileService.getCountryList().subscribe((country: IOption[]) => {
       this.countryList = country;
     });
   }
-  
+
+  /**
+   * select country id
+   * @param event
+   */
   public selectCountry(event) {
-    this._profileService.getStateList(event.value).subscribe(stateList => {
-      console.log(stateList);
+    this._profileService.getStateList(event.value).subscribe((stateList: IOption[]) => {
+      this.stateList = stateList;
     });
   }
 
+  /**
+   * select state id
+   * @param event
+   */
+  public selectState(event) {
+    this._profileService.getCityList(event.value).subscribe((cityList: IOption[]) => {
+      this.cityList = cityList;
+    });
+  }
+
+  /**
+   * close popup edit profile
+   */
   closePopup() {
     this._router.navigate([{outlets: {popup: null}}]);
   }

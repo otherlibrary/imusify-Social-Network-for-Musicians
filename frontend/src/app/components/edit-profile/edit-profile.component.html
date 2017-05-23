@@ -4,17 +4,21 @@
   <div class="popup-scroll popup_animate_inner">
     <div class="popup-inner">
 
-      <div class="edit-block">
+      <form class="edit-block"
+            [formGroup]="editProfileForm"
+            (ngSubmit)="onSubmit($event)">
+
         <div class="title">Edit your profile</div>
         <div class="edit-inner">
           <div class="user-img">
-            <img src="https://media.licdn.com/mpr/mpr/shrinknp_200_200/p/5/005/0af/0fb/0a56dc9.jpg" alt="">
-            <input type="file" name="userImg" id="userImg"/>
+            <img [src]="editProfileForm.controls.image.value" alt="">
+            <input type="file"
+                   name="userImg"
+                   id="userImg"
+                   formControlName="image"/>
             <label for="userImg" class="img-upload">Upload image</label>
           </div>
-          <form class="edit-form"
-                [formGroup]="editProfileForm"
-                (ngSubmit)="onSubmit($event)">
+          <div class="edit-form">
             <div class="inp-block">
               <input type="text"
                      name="firstName"
@@ -56,25 +60,20 @@
                          class="custom_select"
                          [options]="stateList"
                          [multiple]="false"
-                         [highlightColor]="'#242526'">
+                         [highlightColor]="'#242526'"
+                         (selected)="selectState($event)">
               </ng-select>
               <label class="select2-label" for="selectState">Select State</label>
             </div>
             <div class="inp-block">
-              <select data-placeholder="Please select city" name="selectCity" id="selectCity">
-                <option></option>
-                <option value="AB">Abbeville</option>
-                <option value="AD">Adamsville</option>
-                <option value="AK">Akron</option>
-                <option value="AL">Alabaster</option>
-                <option value="AN">Andalusia</option>
-                <option value="AR">Arab</option>
-                <option value="AS">Ashford</option>
-                <option value="AT">Athens</option>
-                <option value="AU">Auburn</option>
-                <option value="AV">Avon</option>
-              </select>
-              <label class="select2-label" for="selectState">Select City</label>
+              <ng-select formControlName="cityId"
+                         id="selectCity"
+                         class="custom_select"
+                         [options]="cityList"
+                         [multiple]="false"
+                         [highlightColor]="'#242526'">
+              </ng-select>
+              <label class="select2-label" for="selectCity">Select City</label>
             </div>
             <div class="inp-block big">
               <textarea name="description"
@@ -93,12 +92,12 @@
             </div>
             <div class="inp-block sbmt">
               <div class="sbm-block">
-                <button type="submit">Save Settings</button>
+                <button type="submit" [disabled]="!editProfileForm.valid">Save Settings</button>
               </div>
             </div>
-          </form>
+          </div>
         </div>
-      </div>
+      </form>
     </div>
   </div>
 </div>
