@@ -212,4 +212,40 @@ class UploadService
 
         return $this->ci->db->affected_rows();
     }
+
+    public function uploadUserImage($userId, $input)
+    {
+        $uploadPath = asset_path() . 'upload/media/' . $userData->id . '/';
+
+        $uploadConfig = [
+            'upload_path' => $uploadPath,
+            'max_size' => $availSpace,
+            'allowed_types' => 'mp3|mp2|ogg|aac|amr|wma|aiff|wav|flac|alac',
+        ];
+
+        $this->fixUploadPath($uploadPath);
+        if (!$this->uploadFile('file', $uploadConfig)) {
+            $error = [
+                'error' => $this->getUploadErrors(),
+            ];
+
+            return $error;
+        } else {
+            $data = [
+                'upload_data' => $this->getUploadResult(),
+            ];
+
+            $spaceData = $this->ci->space_model->getUserCommonSpace($userData->id);
+            if (!empty($spaceData)) {
+                $this->ci->space_model->updateUserSpace(
+                    $userData->id,
+                    $spaceData['used_space'] + intval(($data['upload_data']['file_size'] * 1024))
+                );
+            }
+
+            return $data;
+        }
+
+
+    }
 }

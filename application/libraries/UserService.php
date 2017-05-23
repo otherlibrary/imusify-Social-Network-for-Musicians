@@ -105,6 +105,7 @@ class UserService
             unset($userData['dob_d']);
             unset($userData['dob_m']);
             unset($userData['dob_y']);
+            $userData['image'] = $this->ci->commonfn->get_photo('p', $userId);
 
             return $userData;
         }
@@ -112,5 +113,49 @@ class UserService
         return [
             'error' => 'Cannot find specified user',
         ];
+    }
+
+    /**
+     * @param int $userId
+     * @param string $firstname
+     * @param string $lastname
+     * @param string $weburl
+     * @param int $countryId
+     * @param int $stateId
+     * @param int $cityId
+     * @param string $description
+     * @param int $dob_d
+     * @param int $dob_m
+     * @param int $dob_y
+     */
+    public function editUserInfo(
+        $userId,
+        $firstname,
+        $lastname,
+        $weburl,
+        $countryId,
+        $stateId,
+        $cityId,
+        $description,
+        $dob_d,
+        $dob_m,
+        $dob_y
+    )
+    {
+        $userData = [
+            'firstname' => $firstname,
+            'lastname' => $lastname,
+            'weburl' => $weburl,
+            'countryId' => $countryId,
+            'stateId' => $stateId,
+            'cityId' => $cityId,
+            'description' => $description,
+            'dob_d' => $dob_d,
+            'dob_m' => $dob_m,
+            'dob_y' => $dob_y,
+        ];
+
+        $this->ci->db->where('id', $userId);
+        $this->ci->db->update('users', $userData);
     }
 }

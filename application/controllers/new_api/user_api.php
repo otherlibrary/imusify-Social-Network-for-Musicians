@@ -41,7 +41,7 @@ class user_api extends REST_Controller
 
     /**
      * @param int $userId
-     * [GET api/user/get-info/{id}]
+     * [GET /api/user/get-info/{id}]
      */
     public function get_info_get($userId)
     {
@@ -54,7 +54,7 @@ class user_api extends REST_Controller
 
     /**
      * @param int $userId
-     * [GET api/user/get-info-for-edit/{id}]
+     * [GET /api/user/get-info-for-edit/{id}]
      */
     public function get_info_for_edit_get($userId)
     {
@@ -63,5 +63,28 @@ class user_api extends REST_Controller
         $result = $this->userservice->getUserInfoForEdit($userId);
 
         echo json_encode($result);
+    }
+
+    /**
+     * [POST /api/user/edit-info]
+     */
+    public function edit_info_post()
+    {
+        $this->load->library('UserService');
+
+        $date = explode('.', $this->post('birthdate'));
+        $this->userservice->editUserInfo(
+            $this->post('user_id'),
+            $this->post('firstname'),
+            $this->post('lastname'),
+            $this->post('weburl'),
+            $this->post('countryId'),
+            $this->post('stateId'),
+            $this->post('cityId'),
+            $this->post('description'),
+            $this->post($date[0]),
+            $this->post($date[1]),
+            $this->post($date[2])
+        );
     }
 }
