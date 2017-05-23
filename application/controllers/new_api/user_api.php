@@ -89,7 +89,7 @@ class user_api extends REST_Controller
             $date[2]
         );
 
-        $this->uploadservice->uploadUserImage($userId, 'image');
+        $this->uploadservice->uploadUserImage($userId, $this->post('image'));
 
         $this->response(['status' => 'success'], 200);
     }

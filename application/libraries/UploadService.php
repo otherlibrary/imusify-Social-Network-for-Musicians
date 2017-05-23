@@ -217,29 +217,25 @@ class UploadService
 
     /**
      * @param int $userId
-     * @param string $input
+     * @param string $data
      * @return bool
      */
-    public function uploadUserImage($userId, $input)
+    public function uploadUserImage($userId, $data)
     {
         $uploadPath = asset_path() . 'upload/users/';
-
-        $uploadConfig = [
-            'upload_path' => $uploadPath,
-            'max_size' => 5 * 1024,
-            'allowed_types' => 'jpg|jpeg|png',
-        ];
-
         $this->fixUploadPath($uploadPath);
 
-        $result = $this->uploadFile($input, $uploadConfig);
+        $extension = $this->getImgExtensionFromString($data);
+        $fileName = md5(time()) . mt_rand() . $extension;
+        $filepath = $uploadPath . $fileName;
+        $file = $this->createImageFromString($data, $filepath);
 
-        if ($result) {
-            $data = $this->getUploadResult();
-            $filename = $data['file_name'];
-            $this->insertPhotoToDb($filename, $userId, 'users/', 'p');
+        if (!empty($file)) {
+            if (!empty($this->insertPhotoToDb($fileName, $userId, 'users/', 'p'))) {
+                return true;
+            }
         }
 
-        return $result;
+        return false;
     }
 }
