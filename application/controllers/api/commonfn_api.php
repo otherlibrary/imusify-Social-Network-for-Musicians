@@ -1,6 +1,6 @@
 <?php defined('BASEPATH') OR exit('No direct script access allowed');
 
-require APPPATH.'/libraries/REST_Controller.php';
+require APPPATH . '/libraries/REST_Controller.php';
 
 class Commonfn_Api extends REST_Controller
 {
@@ -68,8 +68,10 @@ class Commonfn_Api extends REST_Controller
         $refreshpanel = ($this->post('refreshpanel') != "") ? $this->post('refreshpanel') : null;
         //must log in
         if ($to_id > 0 && !empty ($this->sess_id)) {
-            if ($this->sess_id == $to_id) return $this->response(['error' => 'Follow unsuccessfull Can not follow yourself'], 404);
-            $response = $this->commonfn->follow($to_id, NULL, $refreshpanel);
+            if ($this->sess_id == $to_id) {
+                return $this->response(['error' => 'Follow unsuccessfull Can not follow yourself'], 404);
+            }
+            $response = $this->commonfn->follow($to_id, null, $refreshpanel);
             /*print_r($response);*/
             if ($response != "") {
                 if (isset ($response["status"])) {
@@ -108,8 +110,11 @@ class Commonfn_Api extends REST_Controller
                 $this->response("", 404);
             }
         } else {
-            if (empty($this->sess_id)) $this->response(['error' => 'Please log in Follow unsuccessfull.'], 404);
-            else $this->response(['error' => 'Please try again Follow unsuccessfull.'], 404);
+            if (empty($this->sess_id)) {
+                $this->response(['error' => 'Please log in Follow unsuccessfull.'], 404);
+            } else {
+                $this->response(['error' => 'Please try again Follow unsuccessfull.'], 404);
+            }
         }
 
     }
@@ -164,8 +169,11 @@ class Commonfn_Api extends REST_Controller
                 $this->response("", 404);
             }
         } else {
-            if (empty($this->sess_id)) $this->response(['error' => 'Please log in Follow unsuccessfull.'], 404);
-            else $this->response(['error' => 'Please try again follow unsuccessfull.'], 404);
+            if (empty($this->sess_id)) {
+                $this->response(['error' => 'Please log in Follow unsuccessfull.'], 404);
+            } else {
+                $this->response(['error' => 'Please try again follow unsuccessfull.'], 404);
+            }
         }
     }
 
@@ -202,7 +210,15 @@ class Commonfn_Api extends REST_Controller
             $this->response(['error' => 'Please try again track like unsuccessfull.'], 404);
         }
     }
+
     /*Unlike track ends*/
+
+    public function get_country_list_get()
+    {
+        $result = $this->commonfn->get_countries();
+
+        $this->response($result);
+    }
 
 
     /*Get state list of user*/
@@ -236,6 +252,16 @@ class Commonfn_Api extends REST_Controller
                 $this->response("", 404);
             }
         }
+    }
+
+    /**
+     * @param int $id
+     */
+    public function get_location_name_get($id)
+    {
+        $name = getvalfromtbl('name', 'location', 'location_id = ' . $id, 'single');
+
+        echo json_encode($name);
     }
 
     //function for creating album
@@ -294,8 +320,8 @@ class Commonfn_Api extends REST_Controller
 
 
         $album_row = $this->commonfn->insert_album('', $searcharray['album_title'], $searcharray['album_desc'], $searcharray['rdate_mm'],
-            $searcharray['rdate_dd'], $searcharray['rdate_yy'], $searcharray['album_label'], $searcharray['genre'], "", "", $searcharray['sec_tags'],
-            $flag, $id, $searcharray['album_avail_for_sale'], $searcharray['album_fully_avail'], $searcharray['album_price']);
+                                                   $searcharray['rdate_dd'], $searcharray['rdate_yy'], $searcharray['album_label'], $searcharray['genre'], "", "", $searcharray['sec_tags'],
+                                                   $flag, $id, $searcharray['album_avail_for_sale'], $searcharray['album_fully_avail'], $searcharray['album_price']);
 
         if ($album_row) {
             $us_ar["success"] = "success";
@@ -410,8 +436,9 @@ class Commonfn_Api extends REST_Controller
     {
         $userId = $this->post("userId");
 
-        if ($userId <= 0)
+        if ($userId <= 0) {
             $userId = "27";
+        }
 
         if ($userId > 0) {
             $response = $this->commonfn->get_user_info_json($userId);
@@ -432,8 +459,9 @@ class Commonfn_Api extends REST_Controller
     {
         $trackId = $this->post("trackId");
 
-        if ($trackId <= 0)
+        if ($trackId <= 0) {
             $trackId = "2";
+        }
 
         if ($trackId > 0) {
             $response = $this->commonfn->get_track_info_json($trackId);
@@ -454,8 +482,9 @@ class Commonfn_Api extends REST_Controller
     function get_usertracks_json_get()
     {
         $trackId = $this->post("userId");
-        if ($userId <= 0)
+        if ($userId <= 0) {
             $userId = "27";
+        }
 
         if ($userId > 0) {
             $response = $this->commonfn->get_usertracks_info_json($userId);
@@ -475,10 +504,12 @@ class Commonfn_Api extends REST_Controller
     function initial_playlist_json_get()
     {
         $type = $this->get("type");
-        if (empty($type)) $type = 'home';
+        if (empty($type)) {
+            $type = 'home';
+        }
         switch ($type) {
             case 'home':
-                $response = $this->home_modal->get_overview("", $this->rec_to_dis, NULL, NULL, NULL, 373, 373, '', '', 38, 38);
+                $response = $this->home_modal->get_overview("", $this->rec_to_dis, null, null, null, 373, 373, '', '', 38, 38);
                 break;
             case 'browse':
                 $start_limit = 0;
@@ -489,7 +520,7 @@ class Commonfn_Api extends REST_Controller
                 $response = $this->playlist_model->get_playlists($playlistLink, $profileLink);
                 break;
             case 'favorite':
-                $response = $this->liked_model->fetch_user_liked_tracks(NULL, NULL, 2);
+                $response = $this->liked_model->fetch_user_liked_tracks(null, null, 2);
                 break;
             default:
                 //track detail
@@ -508,7 +539,9 @@ class Commonfn_Api extends REST_Controller
         }
 
 
-        if (is_array(($response))) $response = array_slice($response, 0, 10);
+        if (is_array(($response))) {
+            $response = array_slice($response, 0, 10);
+        }
         //dump($response);
         if ($response) {
             $us_ar["success"] = "success";
@@ -523,8 +556,9 @@ class Commonfn_Api extends REST_Controller
     function get_playlist_json_get()
     {
         $playlistId = $this->post("playlistId");
-        if ($playlistId <= 0)
+        if ($playlistId <= 0) {
             $playlistId = "6";
+        }
 
         if ($playlistId > 0) {
             $response = $this->commonfn->get_playlist_info_json($playlistId);
@@ -545,8 +579,9 @@ class Commonfn_Api extends REST_Controller
     function get_album_json_get()
     {
         $albumId = $this->post("albumId");
-        if ($albumId <= 0)
+        if ($albumId <= 0) {
             $albumId = "1";
+        }
 
         if ($albumId > 0) {
             $response = $this->commonfn->get_album_info_json($albumId);
@@ -593,7 +628,9 @@ class Commonfn_Api extends REST_Controller
             }
 
 
-        } else $this->response("", 404);
+        } else {
+            $this->response("", 404);
+        }
 
     }
 
@@ -622,7 +659,7 @@ class Commonfn_Api extends REST_Controller
         $this->load->model('search');
         $keyword = $this->post("keyword");
 
-        if ($keyword != "" || $keyword != NULL) {
+        if ($keyword != "" || $keyword != null) {
             $response = $this->search->search_records($keyword);
             //dump($response);
             if ($response) {
@@ -806,20 +843,22 @@ class Commonfn_Api extends REST_Controller
                 if ($extra == "subgenre") {
                     //echo "type = 's' AND id NOT IN (".$search_params["subgenre_explore_list"].") AND parentId = '".$search_params["genre_explore_list"]."'";
 
-                    if ($search_params["subgenre_explore_list"] != "")
+                    if ($search_params["subgenre_explore_list"] != "") {
                         $us_ar["explore_genres"] = $this->commonfn->get_genre("type = 's' AND id NOT IN (" . $search_params["subgenre_explore_list"] . ") AND parentId = '" . $search_params["genre_explore_list"] . "'");
-                    else
+                    } else {
                         $us_ar["explore_genres"] = $this->commonfn->get_genre("type = 's' AND parentId = '" . $search_params["genre_explore_list"] . "'");
+                    }
                 }
 
-                if ($extra == "allgenre")
+                if ($extra == "allgenre") {
                     $us_ar["explore_genres"] = $this->commonfn->get_genre("type = 'p'");
+                }
 
                 //$us_ar["msg"] = "";
             }
             $this->response($us_ar, 200);
 
-        } else if ($condition == "" || $condition == NULL) {
+        } else if ($condition == "" || $condition == null) {
 
             $response = $this->browse_recommended->fetch_popular_tracks("", 10);
 
