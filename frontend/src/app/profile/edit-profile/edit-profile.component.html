@@ -12,17 +12,31 @@
             <input type="file" name="userImg" id="userImg"/>
             <label for="userImg" class="img-upload">Upload image</label>
           </div>
-          <form method="post" class="edit-form" action="profile.html">
+          <form class="edit-form"
+                [formGroup]="editProfileForm"
+                (ngSubmit)="onSubmit($event)">
             <div class="inp-block">
-              <input type="text" name="firstName" id="userFirstName" placeholder="David"/>
+              <input type="text"
+                     name="firstName"
+                     id="userFirstName"
+                     placeholder="David"
+                     formControlName="firstname"/>
               <label for="userFirstName">First Name</label>
             </div>
             <div class="inp-block">
-              <input type="text" name="lastName" id="userLastName" placeholder="Walters"/>
+              <input type="text"
+                     name="lastName"
+                     id="userLastName"
+                     placeholder="Walters"
+                     formControlName="lastname"/>
               <label for="userLastName">Last Name</label>
             </div>
             <div class="inp-block">
-              <input type="text" name="webLink" id="websiteLink" placeholder="www.imusify.com"/>
+              <input type="text"
+                     name="webLink"
+                     id="websiteLink"
+                     placeholder="www.imusify.com"
+                     formControlName="weburl"/>
               <label for="websiteLink">Website Link</label>
             </div>
             <div class="inp-block">
@@ -92,11 +106,18 @@
               <label class="select2-label" for="selectState">Select City</label>
             </div>
             <div class="inp-block big">
-              <textarea name="description" id="description" placeholder="some text here"></textarea>
+              <textarea name="description"
+                        id="description"
+                        placeholder="some text here"
+                        formControlName="description"></textarea>
               <label for="description">Description</label>
             </div>
             <div class="inp-block medium">
-              <input type="text" value="" name="birthDate" id="birthDate" data-type="datepicker">
+              <my-date-picker class="custom_picker valid_style"
+                              name="birthDate" id="birthDate"
+                              [options]="myDatePickerOptions"
+                              [(ngModel)]="currentDate"
+                              formControlName="birthdate"></my-date-picker>
               <label for="birthDate">Date of Birth</label>
             </div>
             <div class="inp-block sbmt">

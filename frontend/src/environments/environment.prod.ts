@@ -23,5 +23,7 @@ export const environment = {
   browse: '/browse',
   browseNewSongs:  '/browse/new-songs',
   browsePopularArtist: '/browse/popular-artist',
-  getProfile: '/api/user/get-info/'
+  getProfile: '/api/user/get-info/',
+  editProfile: '/api/user/get-info-for-edit/',
+  countryList: '/country_list'
 };

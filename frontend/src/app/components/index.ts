@@ -8,7 +8,7 @@ import {SoungDetailComponent} from "./soung-detail/soung-detail.component";
 import {AccountComponent} from "./account/account.component";
 import {ChangePassComponent} from "./change-pass/change-pass.component";
 import {StripeComponent} from "./stripe/stripe.component";
-import {EditProfileComponent} from "./edit-profile/edit-profile.component";
+import {EditProfileComponent} from "../profile/edit-profile/edit-profile.component";
 import {RolesComponent} from "./roles/roles.component";
 import {MembershipComponent} from "./membership/membership.component";
 import {InviteFriendsComponent} from "./invite-friends/invite-friends.component";

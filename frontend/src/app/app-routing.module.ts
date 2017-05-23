@@ -14,7 +14,7 @@ import {SoungDetailComponent} from "./components/soung-detail/soung-detail.compo
 import {AccountComponent} from "./components/account/account.component";
 import {ChangePassComponent} from "./components/change-pass/change-pass.component";
 import {StripeComponent} from "./components/stripe/stripe.component";
-import {EditProfileComponent} from "./components/edit-profile/edit-profile.component";
+import {EditProfileComponent} from "./profile/edit-profile/edit-profile.component";
 import {RolesComponent} from "./components/roles/roles.component";
 import {MembershipComponent} from "./components/membership/membership.component";
 import {InviteFriendsComponent} from "./components/invite-friends/invite-friends.component";

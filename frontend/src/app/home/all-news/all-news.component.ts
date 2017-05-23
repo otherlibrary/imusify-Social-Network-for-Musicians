@@ -30,8 +30,10 @@ export class AllNewsComponent implements OnInit {
       (data: { homeData: ITracksData }) => {
         this.homeData = data.homeData;
         let len = this.homeData.records.length;
+
         this.homeData.records.map((item: any, index) => {
           this.records.push(item);
+
           if(item.is_article) {
             let random = this._helpersService.getRandomInt(0, len);
             this._helpersService.move(this.records, index, random);

@@ -14,3 +14,4 @@ export * from './IMood';
 export * from './IToastOption';
 export * from './IArticle';
 export * from './profile/IProfile';
+export * from './profile/IProfileEdit';
