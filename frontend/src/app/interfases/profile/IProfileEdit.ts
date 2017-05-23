@@ -7,5 +7,5 @@ export interface IProfileEdit {
   cityId: string;
   description: string;
   birthdate: string;
-  image: string;
+  image: any;
 }

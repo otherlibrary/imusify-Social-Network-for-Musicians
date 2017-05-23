@@ -4,11 +4,13 @@ import {environment} from "../../environments/environment";
 import {IProfile, IProfileEdit} from "../interfases";
 import {Observable} from "rxjs/Observable";
 import {IOption} from "ng-select";
+import {FormGroup} from "@angular/forms";
+import {HelpersService} from "../shared/services/helpers.service";
 
 @Injectable()
 export class ProfileService {
 
-  constructor(private _apiService: ApiService) {}
+  constructor(private _apiService: ApiService, private _helperService: HelpersService) {}
 
   getCountryList(): Observable<IOption[]> {
     return this._apiService.get(environment.countryList);
@@ -27,10 +29,11 @@ export class ProfileService {
   }
 
   getEditProfile(userId: string): Observable<IProfileEdit> {
-    return this._apiService.get(environment.editProfile + userId);
+    return this._apiService.get(environment.editProfileInfo + userId);
   }
 
-  editProfile() {
-
+  updateProfileInfo(formElement): Observable<any> {
+    const formData = this._helperService.toStringParam(formElement);
+    return this._apiService.post(environment.updateProfileInfo, formData);
   }
 }

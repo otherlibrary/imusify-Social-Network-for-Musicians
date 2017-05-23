@@ -5,6 +5,7 @@ import {IProfileEdit} from "../../interfases/profile/IProfileEdit";
 import {IMyOptions} from "mydatepicker";
 import {ProfileService} from "../../profile/profile.service";
 import {IOption} from "ng-select";
+import {HelpersService} from "../../shared/services/helpers.service";
 
 @Component({
   selector: 'app-edit-profile',
@@ -35,21 +36,20 @@ export class EditProfileComponent implements OnInit, OnDestroy {
   public stateList: IOption[];
   public cityList: IOption[];
   private sub: any;
+  public submitted: boolean = false;
 
   constructor(
     private _router: Router,
     private fb: FormBuilder,
     private _profileService: ProfileService,
-    private _route: ActivatedRoute,
+    private _route: ActivatedRoute
   ) {}
 
   ngOnInit() {
     this.sub = this._route.params.subscribe(params => {
       this.getEditProfile(params.id);
+      this.getCountryList();
     });
-
-    this.getCountryList();
-    this.buildForm();
   }
 
   ngOnDestroy() {
@@ -59,20 +59,7 @@ export class EditProfileComponent implements OnInit, OnDestroy {
   /**
    * build form edit Profile
    */
-  buildForm() {
-    // get init group
-    this.profileData = {
-      firstname: '',
-      lastname: '',
-      weburl: '',
-      countryId: '',
-      stateId: '',
-      cityId: '',
-      description: '',
-      birthdate: '',
-      image: ''
-    };
-
+  public buildForm() {
     this.editProfileForm = this.fb.group({
       firstname: [this.profileData.firstname, [
         Validators.required
@@ -86,7 +73,7 @@ export class EditProfileComponent implements OnInit, OnDestroy {
       cityId: this.profileData.cityId,
       description: this.profileData.description,
       birthdate: this.profileData.birthdate,
-      image: this.profileData.image
+      image: ''
     });
 
     this.editProfileForm.valueChanges
@@ -96,10 +83,30 @@ export class EditProfileComponent implements OnInit, OnDestroy {
     this.onValueChange();
   }
 
+  /**
+   * get all info of profile
+   * @param userId
+   */
   public getEditProfile(userId) {
     this._profileService.getEditProfile(userId).subscribe((data: IProfileEdit) => {
       this.profileData = data;
+      this.buildForm();
     })
+  }
+
+  /**
+   * change profile image
+   * @param event
+   */
+  changeImage(event) {
+    let reader = new FileReader();
+    reader.onload = (e:any) => {
+      this.profileData.image = e.target.result;
+      this.editProfileForm.patchValue({
+        image: e.target.result
+      });
+    };
+    reader.readAsDataURL(event.target.files[0]);
   }
 
   /**
@@ -129,7 +136,11 @@ export class EditProfileComponent implements OnInit, OnDestroy {
    * @param event
    */
   public onSubmit(event) {
-    console.log(event);
+    this.submitted = true;
+    event.preventDefault();
+    this._profileService.updateProfileInfo(this.editProfileForm.value).subscribe(data => {
+      console.log(data);
+    });
   };
 
   /**
@@ -166,5 +177,9 @@ export class EditProfileComponent implements OnInit, OnDestroy {
    */
   closePopup() {
     this._router.navigate([{outlets: {popup: null}}]);
+  }
+
+  test() {
+    console.log(this.editProfileForm.value);
   }
 }

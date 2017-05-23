@@ -24,7 +24,8 @@ export const environment = {
   browseNewSongs:  '/browse/new-songs',
   browsePopularArtist: '/browse/popular-artist',
   getProfile: '/api/user/get-info/',
-  editProfile: '/api/user/get-info-for-edit/',
+  editProfileInfo: '/api/user/get-info-for-edit/',
+  updateProfileInfo: '/api/user/edit-info',
   countryList: '/country_list',
   stateList: '/state_list?country_id=',
   cityList: 'city_list?state_id='
