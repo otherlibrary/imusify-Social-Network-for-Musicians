@@ -67,15 +67,16 @@ class UserService
      */
     public function getUserInfo($userId)
     {
+        $this->ci->load->model('commonfn');
         $userData = $this->ci->session->userdata('user');
         $currentUserId = $userData->id;
         $result = [];
         $user = getvalfromtbl('*', 'users', 'id = ' . $userId);
         if (!empty($user)) {
-            if (!empty($image = getvalfromtbl('*', 'photos', "detailId = $userId and dir = 'users/'"))) {
-                $result['user_image'] = '/assets/upload/users/' . $image['name'];
-            }
-            $result['user_image'] = null;
+            //if (!empty($image = getvalfromtbl('*', 'photos', "detailId = $userId and dir = 'users/'"))) {
+            //    $result['user_image'] = '/assets/upload/users/' . $image['name'];
+            //}
+            $result['user_image'] = $this->ci->commonfn->get_photo('p', $userId);
             $result['user_type'] = $user['member_plan'] == 'a' ? 'artist' : 'user';
             $result['firstname'] = $user['firstname'];
             $result['lastname'] = $user['lastname'];
