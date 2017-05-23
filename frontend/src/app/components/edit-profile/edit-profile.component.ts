@@ -32,6 +32,7 @@ export class EditProfileComponent implements OnInit {
   };
 
   public countryList: IOption;
+  public stateList: IOption;
 
   constructor(
     private _router: Router,
@@ -105,9 +106,15 @@ export class EditProfileComponent implements OnInit {
     console.log(event);
   };
 
-  getCountryList() {
+  public getCountryList() {
     this._profileService.getCountryList().subscribe(country => {
       this.countryList = country;
+    });
+  }
+  
+  public selectCountry(event) {
+    this._profileService.getStateList(event.value).subscribe(stateList => {
+      console.log(stateList);
     });
   }
 

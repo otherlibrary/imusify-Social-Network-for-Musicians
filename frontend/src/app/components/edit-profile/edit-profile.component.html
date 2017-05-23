@@ -45,26 +45,19 @@
                          class="custom_select"
                          [options]="countryList"
                          [multiple]="false"
-                         [highlightColor]="'#242526'">
+                         [highlightColor]="'#242526'"
+                         (selected)="selectCountry($event)">
               </ng-select>
               <label class="select2-label" for="selectCountry">Select Country</label>
             </div>
             <div class="inp-block">
-              <select data-placeholder="Please select state" name="selectState" id="selectState">
-                <option></option>
-                <option value="AL">Alabama</option>
-                <option value="AK">Alaska</option>
-                <option value="AZ">Arizona</option>
-                <option value="AR">Arkansas</option>
-                <option value="CA">California</option>
-                <option value="CO">Colorado</option>
-                <option value="CT">Connecticut</option>
-                <option value="DE">Delaware</option>
-                <option value="DC">District Of Columbia</option>
-                <option value="FL">Florida</option>
-                <option value="GA">Georgia</option>
-                <option value="HI">Hawaii</option>
-              </select>
+              <ng-select formControlName="stateId"
+                         id="selectState"
+                         class="custom_select"
+                         [options]="stateList"
+                         [multiple]="false"
+                         [highlightColor]="'#242526'">
+              </ng-select>
               <label class="select2-label" for="selectState">Select State</label>
             </div>
             <div class="inp-block">

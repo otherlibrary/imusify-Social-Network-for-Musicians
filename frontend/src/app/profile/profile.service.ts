@@ -13,6 +13,10 @@ export class ProfileService {
     return this._apiService.get(environment.countryList);
   }
 
+  getStateList(countryId) {
+    return this._apiService.get(environment.stateList + countryId);
+  }
+
   getProfileData(userId: string): Observable<IProfile> {
     return this._apiService.get(environment.getProfile + userId);
   }

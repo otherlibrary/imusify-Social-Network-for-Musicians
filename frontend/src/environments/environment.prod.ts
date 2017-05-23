@@ -25,5 +25,6 @@ export const environment = {
   browsePopularArtist: '/browse/popular-artist',
   getProfile: '/api/user/get-info/',
   editProfile: '/api/user/get-info-for-edit/',
-  countryList: '/country_list'
+  countryList: '/country_list',
+  stateList: '/state_list?country_id='
 };
