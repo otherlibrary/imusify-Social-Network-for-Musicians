@@ -5,7 +5,7 @@
     <div class="popup-inner">
 
       <div class="roles-block">
-        <div class="title" (click)="testRole()">What do you do?</div>
+        <div class="title">What do you do?</div>
         <div class="roles-inner">
           <form method="post" class="role-form" *ngIf="roles">
 
@@ -20,7 +20,15 @@
                 <span>{{role.role}}</span>
               </label>
             </div>
-
+            <div class="inp-block">
+              <label for="none" class="roles-label">
+                <input id="none"
+                       type="checkbox"
+                       [checked]="isClearAll" (change)="clearAllRoles()">
+                <i></i>
+                <span>None of the above, I just love music</span>
+              </label>
+            </div>
             <div class="inp-block">
               <div class="roles-sbm">
                 <button type="button" (click)="saveUserRoles()">Save</button>

@@ -12,6 +12,7 @@ import {HelpersService} from "../../shared/services/helpers.service";
 export class RolesComponent implements OnInit {
   public roles: IRole[];
   public userRoles: string[] = [];
+  public isClearAll: boolean = false;
 
   constructor(
     private _router: Router,
@@ -37,6 +38,7 @@ export class RolesComponent implements OnInit {
   }
 
   toggleRole(role: IRole): void {
+    this.isClearAll = false;
     role.selected = !role.selected;
     if(role.selected) {
       this.userRoles.push(role.id);
@@ -77,7 +79,13 @@ export class RolesComponent implements OnInit {
     });
   }
 
-  testRole() {
-    console.log(this.userRoles);
+  clearAllRoles() {
+    if(!this.isClearAll) {
+      this.roles.filter(role => {
+        role.selected = false;
+      });
+      this.userRoles = [];
+      this.isClearAll = true;
+    }
   }
 }
