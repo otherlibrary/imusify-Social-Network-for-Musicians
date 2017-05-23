@@ -14,6 +14,7 @@ import {IOption} from "ng-select";
 export class EditProfileComponent implements OnInit, OnDestroy {
   public editProfileForm: FormGroup;
   public profileData: IProfileEdit;
+  public userId: string;
   public myDatePickerOptions: IMyOptions = {
     dateFormat: 'dd.mm.yyyy'
   };
@@ -37,16 +38,16 @@ export class EditProfileComponent implements OnInit, OnDestroy {
   private sub: any;
   public submitted: boolean = false;
 
-  constructor(
-    private _router: Router,
-    private fb: FormBuilder,
-    private _profileService: ProfileService,
-    private _route: ActivatedRoute
-  ) {}
+  constructor(private _router: Router,
+              private fb: FormBuilder,
+              private _profileService: ProfileService,
+              private _route: ActivatedRoute) {
+  }
 
   ngOnInit() {
     this.sub = this._route.params.subscribe(params => {
-      this.getEditProfile(params.id);
+      this.userId = params.id;
+      this.getEditProfile(this.userId);
       this.getCountryList();
     });
   }
@@ -60,6 +61,7 @@ export class EditProfileComponent implements OnInit, OnDestroy {
    */
   public buildForm() {
     this.editProfileForm = this.fb.group({
+      user_id: this.userId,
       firstname: [this.profileData.firstname, [
         Validators.required
       ]],
@@ -99,7 +101,7 @@ export class EditProfileComponent implements OnInit, OnDestroy {
    */
   changeImage(event) {
     let reader = new FileReader();
-    reader.onload = (e:any) => {
+    reader.onload = (e: any) => {
       this.profileData.image = e.target.result;
       this.editProfileForm.patchValue({
         image: e.target.result
