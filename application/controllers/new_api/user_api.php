@@ -51,4 +51,17 @@ class user_api extends REST_Controller
 
         echo json_encode($result);
     }
+
+    /**
+     * @param int $userId
+     * [GET api/user/get-info-for-edit/{id}]
+     */
+    public function get_info_for_edit_get($userId)
+    {
+        $this->load->library('UserService');
+
+        $result = $this->userservice->getUserInfoForEdit($userId);
+
+        echo json_encode($result);
+    }
 }

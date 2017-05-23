@@ -73,9 +73,7 @@ class UserService
         $result = [];
         $user = getvalfromtbl('*', 'users', 'id = ' . $userId);
         if (!empty($user)) {
-            //if (!empty($image = getvalfromtbl('*', 'photos', "detailId = $userId and dir = 'users/'"))) {
-            //    $result['user_image'] = '/assets/upload/users/' . $image['name'];
-            //}
+
             $result['user_image'] = $this->ci->commonfn->get_photo('p', $userId);
             $result['user_type'] = $user['member_plan'] == 'a' ? 'artist' : 'user';
             $result['firstname'] = $user['firstname'];
@@ -93,5 +91,26 @@ class UserService
         }
 
         return $result;
+    }
+
+    /**
+     * @param int $userId
+     * @return array
+     */
+    public function getUserInfoForEdit($userId)
+    {
+        $userData = getvalfromtbl('firstname,lastname,weburl,countryId,stateId,cityId,description,dob_d,dob_m,dob_y', 'users', 'id = ' . $userId);
+        if (!empty($userData)) {
+            $userData['birthdate'] = $userData['dob_d'] . '.' . $userData['dob_m'] . '.' . $userData['dob_y'];
+            unset($userData['dob_d']);
+            unset($userData['dob_m']);
+            unset($userData['dob_y']);
+
+            return $userData;
+        }
+
+        return [
+            'error' => 'Cannot find specified user',
+        ];
     }
 }

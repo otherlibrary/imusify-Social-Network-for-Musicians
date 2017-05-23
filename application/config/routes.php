@@ -134,6 +134,7 @@ $route['api/roles'] = 'new_api/common_api/roles/format/json';
 
 /* New Users API */
 $route['api/user/get-info/(:num)'] = 'new_api/user_api/get_info/$1/format/json';
+$route['api/user/get-info-for-edit/(:num)'] = 'new_api/user_api/get_info_for_edit/$1/format/json';
 $route['api/user/check-auth'] = 'api/user_api/check_auth/format/json';
 $route['api/user/set-roles'] = 'new_api/user_api/set_roles/format/json';
 
