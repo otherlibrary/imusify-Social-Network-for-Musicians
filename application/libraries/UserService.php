@@ -8,6 +8,26 @@ class UserService
     }
 
     /**
+     * @param int $userId
+     * @return array|null
+     */
+    public function getUserRoles($userId)
+    {
+        $query = $this->ci->db->query("SELECT r.role FROM user_roles_details ur
+                                LEFT JOIN user_roles r ON r.id = ur.roleId
+                              WHERE ur.userId = $userId");
+
+        $result = [];
+        foreach ($query->result_array() as $role) {
+            if (!empty($role['role'])) {
+                $result[] = $role['role'];
+            }
+        }
+
+        return $result;
+    }
+
+    /**
      * Deletes all roles for specified user
      * @param int $userId
      * @return int|null
@@ -55,6 +75,7 @@ class UserService
             if (!empty($image = getvalfromtbl('*', 'photos', "detailId = $userId and dir = 'users/'"))) {
                 $result['user_image'] = '/assets/upload/users/' . $image['name'];
             }
+            $result['user_image'] = null;
             $result['user_type'] = $user['member_plan'] == 'a' ? 'artist' : 'user';
             $result['firstname'] = $user['firstname'];
             $result['lastname'] = $user['lastname'];
@@ -68,26 +89,6 @@ class UserService
             $result['loggedIn'] = $result['my_profile'];
             $result['user_roles_ar'] = $this->getUserRoles($userId);
             $result['playlists'] = []; // todo
-        }
-
-        return $result;
-    }
-
-    /**
-     * @param int $userId
-     * @return array|null
-     */
-    public function getUserRoles($userId)
-    {
-        $query = $this->ci->db->query("SELECT r.role FROM user_roles_details ur
-                                LEFT JOIN user_roles r ON r.id = ur.roleId
-                              WHERE ur.userId = $userId");
-
-        $result = [];
-        foreach ($query->result_array() as $role) {
-            if (!empty($role['role'])) {
-                $result[] = $role['role'];
-            }
         }
 
         return $result;
