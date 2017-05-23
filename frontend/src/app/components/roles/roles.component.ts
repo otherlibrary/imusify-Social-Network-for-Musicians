@@ -37,6 +37,10 @@ export class RolesComponent implements OnInit {
     })
   }
 
+  /**
+   * set role selected (true/false)
+   * @param role
+   */
   toggleRole(role: IRole): void {
     this.isClearAll = false;
     role.selected = !role.selected;
@@ -79,6 +83,9 @@ export class RolesComponent implements OnInit {
     });
   }
 
+  /**
+   * set all roles
+   */
   clearAllRoles() {
     if(!this.isClearAll) {
       this.roles.filter(role => {

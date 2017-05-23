@@ -18,7 +18,7 @@
     </div>
     <!--<a href="#" (click)="logOut()">LOGOUT</a>-->
     <div class="profile" *ngIf="loggedin">
-      <a class="prof-link" href="#" [routerLink]="['/profile', profileData.username]">
+      <a class="prof-link" href="#" [routerLink]="['/profile', profileData.id]">
         <div class="img-box">
           <img class="prof-img"
                *ngIf="loggedin"

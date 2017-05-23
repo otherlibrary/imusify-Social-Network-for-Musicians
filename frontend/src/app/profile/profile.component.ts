@@ -9,7 +9,7 @@ import {IProfile} from "../interfases/profile/IProfile";
   styleUrls: ['profile.component.scss']
 })
 export class ProfileComponent implements OnInit, OnDestroy {
-  public username: string;
+  public profile: IProfile;
   private sub: any;
 
   constructor(
@@ -20,9 +20,8 @@ export class ProfileComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.sub = this._route.params.subscribe(params => {
-      this.username = params['id'];
-      this._profileService.getProfileData(this.username).subscribe((data: IProfile) => {
-        console.log(data);
+      this._profileService.getProfileData(params['id']).subscribe((data: IProfile) => {
+        this.profile  = data;
       })
     });
   }

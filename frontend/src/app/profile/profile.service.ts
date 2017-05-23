@@ -7,10 +7,10 @@ import {Observable} from "rxjs/Observable";
 @Injectable()
 export class ProfileService {
 
-  constructor(private _apiService: ApiService) { }
+  constructor(private _apiService: ApiService) {}
 
-  getProfileData(userName: string): Observable<IProfile> {
-    return this._apiService.post(environment.getProfile + userName, environment.creds);
+  getProfileData(userId: string): Observable<IProfile> {
+    return this._apiService.get(environment.getProfile + userId);
   }
 
 }
