@@ -571,7 +571,7 @@ Class commonfn extends CI_Model
         $this->db->query("SET NAMES 'utf8'");
         $this->db->query("SET CHARACTER SET 'utf8'");
 
-        $this->db->select('location_id,name');
+        $this->db->select('location_id as value,name as label');
         $this->db->from('location');
 
         if ($cond != null) {
