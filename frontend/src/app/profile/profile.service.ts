@@ -33,6 +33,8 @@ export class ProfileService {
   }
 
   updateProfileInfo(formElement): Observable<any> {
+    const dateStr = JSON.stringify(formElement.birthdate);
+    formElement.birthdate = dateStr;
     const formData = this._helperService.toStringParam(formElement);
     return this._apiService.post(environment.updateProfileInfo, formData);
   }
