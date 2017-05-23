@@ -73,24 +73,29 @@ class user_api extends REST_Controller
         $this->load->library('UserService');
         $this->load->library('UploadService');
 
-        $date = explode('.', $this->post('birthdate'));
+        $date = json_decode($this->post('birthdate'));
+        $userData = $this->session->userdata('user');
         $userId = $this->post('user_id');
-        $this->userservice->editUserInfo(
-            $userId,
-            $this->post('firstname'),
-            $this->post('lastname'),
-            $this->post('weburl'),
-            $this->post('countryId'),
-            $this->post('stateId'),
-            $this->post('cityId'),
-            $this->post('description'),
-            $date[0],
-            $date[1],
-            $date[2]
-        );
+        if($userData->id == $userId && $userId) {
+            $this->userservice->editUserInfo(
+                $userId,
+                $this->post('firstname'),
+                $this->post('lastname'),
+                $this->post('weburl'),
+                $this->post('countryId'),
+                $this->post('stateId'),
+                $this->post('cityId'),
+                $this->post('description'),
+                $date->date->day,
+                $date->date->month,
+                $date->date->year
+            );
 
-        $this->uploadservice->uploadUserImage($userId, $this->post('image'));
+            $this->uploadservice->uploadUserImage($userId, $_POST['image']);
 
-        $this->response(['status' => 'success'], 200);
+            $this->response(['status' => 'success'], 200);
+        } else {
+            $this->response(['status' => 'error', 'msg' => 'You can modify only your profile.']);
+        }
     }
 }
