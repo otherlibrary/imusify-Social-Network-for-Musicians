@@ -23,7 +23,7 @@ export class AppComponent implements OnInit, OnDestroy {
 
   private _cleanSubscriber: any;
   private _notificationSubscriber: any;
-
+  private _loginSub: any;
 
   constructor(
     private _authService: AuthService,
@@ -56,6 +56,7 @@ export class AppComponent implements OnInit, OnDestroy {
   ngOnDestroy() {
     this._cleanSubscriber.unsubscribe();
     this._notificationSubscriber.unsubscribe();
+    this._loginSub.unsubscribe();
   }
 
   /**
@@ -87,7 +88,8 @@ export class AppComponent implements OnInit, OnDestroy {
    */
   getProfile() {
     // обработчик если заходим первый раз через логин
-    EmitterService.get('LOGIN').subscribe(data => {
+    this._loginSub = this._sharedService.loginSubject.subscribe((data: any) => {
+      localStorage.setItem('auth_data', JSON.stringify(data));
       this.profileData = this._authService.profileData = data;
       this.loggedin = this._authService.loggedin = data.loggedin;
     });

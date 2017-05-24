@@ -143,8 +143,8 @@ export class EmailComponent implements OnInit {
     }
     let dataStr = this.helpers.toStringParam(data);
     this._userService.signUp(dataStr).subscribe(data => {
-      EmitterService.get('LOGIN').emit(data);
 
+      this._sharedService.loginSubject.next(data);
       // сохраняем дание пользователя в localStorge
       localStorage.setItem('auth_data', JSON.stringify(data));
 

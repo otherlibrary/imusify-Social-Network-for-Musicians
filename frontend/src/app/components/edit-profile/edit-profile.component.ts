@@ -5,6 +5,7 @@ import {IProfileEdit} from "../../interfases/profile/IProfileEdit";
 import {IMyOptions} from "mydatepicker";
 import {ProfileService} from "../../profile/profile.service";
 import {IOption} from "ng-select";
+import {SharedService} from "app/shared";
 
 @Component({
   selector: 'app-edit-profile',
@@ -41,6 +42,7 @@ export class EditProfileComponent implements OnInit, OnDestroy {
 
   constructor(private _router: Router,
               private fb: FormBuilder,
+              private _sharedService: SharedService,
               private _profileService: ProfileService,
               private _route: ActivatedRoute) {
   }
@@ -62,20 +64,20 @@ export class EditProfileComponent implements OnInit, OnDestroy {
    */
   public buildForm() {
     this.editProfileForm = this.fb.group({
-      user_id: this.userId,
+      user_id: [this.userId],
       firstname: [this.profileData.firstname, [
         Validators.required
       ]],
       lastname: [this.profileData.lastname, [
         Validators.required
       ]],
-      weburl: this.profileData.weburl,
-      countryId: this.profileData.countryId,
-      stateId: this.profileData.stateId,
-      cityId: this.profileData.cityId,
-      description: this.profileData.description,
-      birthdate: this.profileData.birthdate,
-      image: ''
+      weburl: [this.profileData.weburl],
+      countryId: [this.profileData.countryId],
+      stateId: [this.profileData.stateId],
+      cityId: [this.profileData.cityId],
+      description: [this.profileData.description],
+      birthdate: [this.profileData.birthdate],
+      image: ['']
     });
 
     this.editProfileForm.valueChanges
@@ -92,6 +94,7 @@ export class EditProfileComponent implements OnInit, OnDestroy {
   public getEditProfile(userId) {
     this._profileService.getEditProfile(userId).subscribe((data: IProfileEdit) => {
       this.profileData = data;
+      //set date default
       let arrBirthdate = this.profileData.birthdate.split('.');
       this.currentDate = {
         date: {
@@ -99,7 +102,7 @@ export class EditProfileComponent implements OnInit, OnDestroy {
           month: arrBirthdate[1],
           day: arrBirthdate[0]
         }
-    };
+      };
       this.buildForm();
     })
   }
@@ -148,8 +151,46 @@ export class EditProfileComponent implements OnInit, OnDestroy {
   public onSubmit(event) {
     this.submitted = true;
     event.preventDefault();
-    this._profileService.updateProfileInfo(this.editProfileForm.value).subscribe(data => {
-      console.log(data);
+    this._profileService.updateProfileInfo(this.editProfileForm.value).subscribe(res => {
+      if(res.status === 'success') {
+        this._sharedService.loginSubject.next({
+          artist: false,
+          avail_space: "-2542706390",
+          braintreecustId: "",
+          country: "DE",
+          country_name: "Germany",
+          email: "admin@imusify.com",
+          eu: true,
+          firstname: "wwwwww",
+          id: "2",
+          lastname: "wwwwww",
+          loggedin: true,
+          never_sell: "n",
+          password: "21232f297a57a5a743894a0e4a801fc3",
+          profileImage: "http://imusify.loc/assets/images/user-profile-img.jpg",
+          profileLink: "wwwwww",
+          role_added: "n",
+          username: "wwwwww",
+          usertype: "a"
+        });
+        this._sharedService.notificationSubject.next({
+          title: 'Save Profile',
+          msg: 'Success save',
+          type: 'success'
+        });
+      } else {
+        this._sharedService.notificationSubject.next({
+          title: 'Save Profile',
+          msg: 'Error save',
+          type: 'error'
+        });
+      }
+    }, err => {
+      this._sharedService.notificationSubject.next({
+        title: 'Save Profile',
+        msg: 'Error save',
+        type: 'error'
+      });
     });
   };
 

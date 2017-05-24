@@ -1,11 +1,11 @@
-<div class="popup popup_animate" *ngIf="licensesList">
+<div class="popup popup_animate">
   <button class="popup-close" (click)="closePopup()" type="button">Close</button>
   <div class="popup-bg"></div>
   <div class="popup-scroll popup_animate_inner">
     <div class="popup-inner">
       <form [formGroup]="uploadTrackForm"
             (ngSubmit)="onSubmit($event)">
-        <div class="edit-track-block">
+        <div class="edit-track-block" *ngIf="licensesList">
           <div class="title">Edit track</div>
           <div class="song title">{{uploadTrackForm.controls.title.value}}</div>
         </div>

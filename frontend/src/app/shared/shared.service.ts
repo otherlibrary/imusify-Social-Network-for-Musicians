@@ -7,6 +7,9 @@ import {ApiService} from "app/shared/services/api.service";
 @Injectable()
 export class SharedService {
   public host: string;
+  //login
+  public loginSubject: Subject<Object> = new Subject<Object>();
+
   //Subject audio player
   public playPlayerTrackSubject: Subject<Object> = new Subject<Object>();
   public pausePlayerTrackSubject: Subject<Object> = new Subject<Object>();

@@ -131,13 +131,13 @@ export class EditComponent implements OnInit {
     this.uploadTrackImg = this._stringifyImage(this._uploadService.trackImage);
 
     const initGroup = {
-      filename: this.uploadTrackInfo.file_name,
-      track_id: this.uploadTrackInfo.track_id,
+      filename: [this.uploadTrackInfo.file_name],
+      track_id: [this.uploadTrackInfo.track_id],
       waveform: null,
       title: [this.uploadTrackInfo.title, [
         Validators.required
       ]],
-      desc: this.uploadTrackInfo.desc,
+      desc: [this.uploadTrackInfo.desc],
       release_date: [this.uploadTrackInfo.release_date, [
         Validators.required
       ]],
@@ -150,10 +150,10 @@ export class EditComponent implements OnInit {
       copyright: [this.uploadTrackInfo.copyright, [
         Validators.required
       ]],
-      second_genre_id: this.uploadTrackInfo.secondary_genre_id,
-      pick_moods: this.uploadTrackInfo.pick_moods_id,
-      type_artist: this.uploadTrackInfo.type_artist,
-      is_public: this.uploadTrackInfo.is_public
+      second_genre_id: [this.uploadTrackInfo.secondary_genre_id],
+      pick_moods: [this.uploadTrackInfo.pick_moods_id],
+      type_artist: [this.uploadTrackInfo.type_artist],
+      is_public: [this.uploadTrackInfo.is_public]
     };
     //move licenses to formGroup
     this.licensesList.map(item => {
@@ -176,7 +176,6 @@ export class EditComponent implements OnInit {
   }
 
   ngOnInit() {
-
     //if date none, set current date
     let date = new Date();
     this.currentDate = this._uploadService.uploadTrackInfo.release_date || {
@@ -186,6 +185,7 @@ export class EditComponent implements OnInit {
           day: date.getDate()
         }
       };
+
     this.buildForm();
 
     if (this.openSwitch) {

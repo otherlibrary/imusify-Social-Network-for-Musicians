@@ -78,13 +78,13 @@ export class LoginComponent implements OnInit {
         }
     }
 
-    // TODO опрацювати помилки по всьому сайту
     login() {
         EmitterService.get('TOGGLE_PRELOADER').emit(true);
         this._authService.login(this.userLoginForm.value).subscribe(data => {
-            EmitterService.get('LOGIN').emit(data);
+            this._sharedService.loginSubject.next(data);
             localStorage.setItem('auth_data', JSON.stringify(data));
             this._router.navigate([{outlets: {popup: null}}]);
+
             EmitterService.get('TOGGLE_PRELOADER').emit(false);
             this._sharedService.notificationSubject.next({
                 title: 'Sign in',
