@@ -93,7 +93,9 @@ class user_api extends REST_Controller
 
             $this->uploadservice->uploadUserImage($userId, $_POST['image']);
 
-            $this->response(['status' => 'success'], 200);
+            $response = $this->userservice->getUserInfoAfterEdit($userId);
+
+            $this->response($response, 200);
         } else {
             $this->response(['status' => 'error', 'msg' => 'You can modify only your profile.']);
         }
