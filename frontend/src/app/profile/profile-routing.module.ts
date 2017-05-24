@@ -11,21 +11,9 @@ const routes: Routes = [
   {
     path: "",
     component: ProfileComponent,
-    children: [
-      {
-        path: "",
-        redirectTo: "only-me",
-        pathMatch: "full"
-      },
-      {
-        path: "only-me",
-        component: OnlyMeComponent
-      },
-      {
-        path: "popular",
-        component: PopularComponent
-      }
-    ]
+    resolve: {
+      profileData: ProfileResolverService
+    },
   }
 ];
 
