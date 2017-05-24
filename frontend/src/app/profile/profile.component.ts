@@ -10,24 +10,21 @@ import {IProfile} from "../interfases/profile/IProfile";
 })
 export class ProfileComponent implements OnInit, OnDestroy {
   public profile: IProfile;
-  private sub: any;
 
   constructor(
-    private _route: ActivatedRoute,
-    private _profileService: ProfileService
+    private _route: ActivatedRoute
   ) {
   }
 
   ngOnInit() {
-    this.sub = this._route.params.subscribe(params => {
-      this._profileService.getProfileData(params['id']).subscribe((data: IProfile) => {
-        this.profile  = data;
-      })
-    });
+    this._route.data.subscribe(
+      (data: { profileData: IProfile }) => {
+        this.profile = data.profileData;
+      }
+    );
   }
 
   ngOnDestroy() {
-    this.sub.unsubscribe();
   }
 
 }
