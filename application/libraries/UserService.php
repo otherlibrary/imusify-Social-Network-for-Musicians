@@ -163,4 +163,35 @@ class UserService
 
         return $this->ci->db->affected_rows();
     }
+
+    public function getUserInfoAfterEdit($userId)
+    {
+        $this->ci->load->model('commonfn');
+
+        $result = [];
+
+        $userData = getvalfromtbl('*', 'users', 'id = ' . $userId);
+        $sessionUserData = $this->ci->session->userdata('user');
+
+        if (!empty($userData)) {
+            $country = getvalfromtbl('name, shortname', 'location', 'location_id = ' . $userData['countryId']);
+
+            $result['id'] = $userData['id'];
+            $result['email'] = $userData['email'];
+            $result['username'] = $userData['username'];
+            $result['firstname'] = $userData['firstname'];
+            $result['lastname'] = $userData['lastname'];
+            $result['profileImage'] = $this->ci->commonfn->get_photo('p', $userId);
+            $result['loggedIn'] = $sessionUserData->id > 0;
+            $result['artist'] = $userData['member_plan'] == 'a';
+            $result['country'] = '';
+            $result['country_name'] = '';
+            if (!empty($country)) {
+                $result['country'] = $country['shortname'];
+                $result['country_name'] = $country['name'];
+            }
+        }
+
+        return $result;
+    }
 }
