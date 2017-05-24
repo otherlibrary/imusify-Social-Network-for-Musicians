@@ -1,16 +1,22 @@
 import {NgModule} from '@angular/core';
 import {CommonModule} from '@angular/common';
-
 import {PreloaderComponent} from './index';
 import {AudioPlayerComponent} from "./audio-player/audio-player.component";
 import {pipes} from "../pipes/index";
 import {directives, exportDirectives} from "../directives/index";
-import {SwiperModule} from "angular2-useful-swiper";
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {SelectModule} from "ng-select";
 import {MyDatePickerModule} from "mydatepicker";
 import {ToastyModule} from "ng2-toasty";
 import { TrackListComponent } from './track-list/track-list.component';
+import { SwiperModule } from 'ngx-swiper-wrapper';
+import { SwiperConfigInterface } from 'ngx-swiper-wrapper';
+
+const SWIPER_CONFIG: SwiperConfigInterface = {
+  direction: 'horizontal',
+  slidesPerView: 'auto',
+  keyboardControl: true
+};
 
 @NgModule({
   imports: [
@@ -38,6 +44,7 @@ import { TrackListComponent } from './track-list/track-list.component';
     SelectModule,
     MyDatePickerModule,
     ToastyModule,
+    SwiperModule,
     ...exportDirectives
   ],
   providers: []

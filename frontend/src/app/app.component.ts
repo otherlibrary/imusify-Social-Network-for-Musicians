@@ -89,8 +89,9 @@ export class AppComponent implements OnInit, OnDestroy {
   getProfile() {
     // обработчик если заходим первый раз через логин
     this._loginSub = this._sharedService.loginSubject.subscribe((data: any) => {
-      localStorage.setItem('auth_data', JSON.stringify(data));
+      console.log(data);
       this.profileData = this._authService.profileData = data;
+
       this.loggedin = this._authService.loggedin = data.loggedin;
     });
 

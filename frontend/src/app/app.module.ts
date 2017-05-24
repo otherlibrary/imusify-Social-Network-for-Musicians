@@ -12,17 +12,16 @@ import {
   LocalStorageService,
   SharedModule
 } from './shared';
-import {ProfileService} from "./profile/profile.service";
 
 import {
   AuthGuard,
   AuthAllSuccessGuard
 } from './common';
 
-
 import {AppComponent} from './app.component';
 import {components} from './components/index';
 import {routing} from './app-routing.module';
+import {ProfileService} from "./profile/profile.service";
 
 @NgModule({
   declarations: [
