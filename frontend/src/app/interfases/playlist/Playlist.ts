@@ -9,7 +9,9 @@ export class Playlist {
               public share: string,
               public status: string,
               public updatedDate: string,
-              public userId: string,) {
+              public userId: string,
+              public tracks: string,
+              public followers: string) {
   }
 }
 

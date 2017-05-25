@@ -1,7 +1,8 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnInit, ViewChild} from '@angular/core';
 import {Observable} from "rxjs";
 import {Router} from "@angular/router";
 import {Playlist} from "../../interfases/playlist/Playlist";
+import {SwiperConfigInterface, SwiperDirective} from "ngx-swiper-wrapper";
 
 @Component({
   selector: 'app-playlist',
@@ -10,6 +11,16 @@ import {Playlist} from "../../interfases/playlist/Playlist";
 })
 export class PlaylistComponent implements OnInit {
   public isShow: boolean = false;
+
+  public swiperConfig: SwiperConfigInterface = {
+    slidesPerView: 2,
+    centeredSlides: true,
+    spaceBetween: 0,
+    initialSlide: 1,
+    nextButton: '.wrap-playlist .swiper-button-next',
+    prevButton: '.wrap-playlist .swiper-button-prev',
+  };
+  @ViewChild(SwiperDirective) swiperView: SwiperDirective;
 
   constructor(private _router: Router) {
   }
