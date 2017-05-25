@@ -208,6 +208,8 @@ class UploadService
                 'name' => $filename,
                 'type' => $type,
                 'default_pic' => 'y',
+                'domain' => '',
+                'o_name' => '',
             ];
             $this->ci->db->insert('photos', $insertData);
         }
