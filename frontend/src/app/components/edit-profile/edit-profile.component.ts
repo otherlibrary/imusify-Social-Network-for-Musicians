@@ -152,39 +152,19 @@ export class EditProfileComponent implements OnInit, OnDestroy {
     this.submitted = true;
     event.preventDefault();
     this._profileService.updateProfileInfo(this.editProfileForm.value).subscribe(res => {
-      if(res.status === 'success') {
-        this._sharedService.loginSubject.next({
-          artist: false,
-          avail_space: "-2542706390",
-          braintreecustId: "",
-          country: "DE",
-          country_name: "Germany",
-          email: "admin@imusify.com",
-          eu: true,
-          firstname: "wwwwww",
-          id: "2",
-          lastname: "wwwwww",
-          loggedin: true,
-          never_sell: "n",
-          password: "21232f297a57a5a743894a0e4a801fc3",
-          profileImage: "http://imusify.loc/assets/images/user-profile-img.jpg",
-          profileLink: "wwwwww",
-          role_added: "n",
-          username: "wwwwww",
-          usertype: "a"
-        });
-        this._sharedService.notificationSubject.next({
-          title: 'Save Profile',
-          msg: 'Success save',
-          type: 'success'
-        });
-      } else {
-        this._sharedService.notificationSubject.next({
-          title: 'Save Profile',
-          msg: 'Error save',
-          type: 'error'
-        });
+      //update local storage user data
+      let userData = JSON.parse(localStorage.getItem('auth_data'));
+      for(let key in res) {
+        if(res.hasOwnProperty(key)) {
+          userData[key] = res[key];
+        }
       }
+      this._sharedService.loginSubject.next(userData);
+      this._sharedService.notificationSubject.next({
+        title: 'Save Profile',
+        msg: 'Success save',
+        type: 'success'
+      });
     }, err => {
       this._sharedService.notificationSubject.next({
         title: 'Save Profile',

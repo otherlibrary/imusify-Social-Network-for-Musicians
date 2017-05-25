@@ -3,6 +3,7 @@ import {ActivatedRouteSnapshot, Resolve, RouterStateSnapshot} from "@angular/rou
 import {HomeService} from "./home.service";
 import {Observable} from "rxjs/Observable";
 import {ITracksData} from "../interfases";
+import {EmitterService} from "../shared/services/emitter.service";
 
 @Injectable()
 export class HomeResolverService implements Resolve<ITracksData> {
@@ -12,6 +13,7 @@ export class HomeResolverService implements Resolve<ITracksData> {
   ) {}
 
   resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<ITracksData> {
+    EmitterService.get('TOGGLE_PRELOADER').emit(true);
     return this._homeService.getAllNews();
   }
 

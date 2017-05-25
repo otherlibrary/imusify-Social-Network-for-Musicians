@@ -39,6 +39,7 @@ export class AllNewsComponent implements OnInit {
             this._helpersService.move(this.records, index, random);
           }
         });
+        EmitterService.get('TOGGLE_PRELOADER').emit(false);
       }
     );
   }

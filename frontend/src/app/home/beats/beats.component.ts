@@ -3,6 +3,7 @@ import {ActivatedRoute} from "@angular/router";
 import {ITracksData} from "../../interfases/ITracksData";
 import {IRecord} from "../../interfases/IRecord";
 import {SharedService} from "../../shared/shared.service";
+import {EmitterService} from "../../shared/services/emitter.service";
 
 @Component({
   selector: 'app-beats',
@@ -26,6 +27,7 @@ export class BeatsComponent implements OnInit {
         this.records = this.musicData.records.filter((record: any) => {
           return record.trackuploadType == '2';
         });
+        EmitterService.get('TOGGLE_PRELOADER').emit(false);
       }
     );
   }

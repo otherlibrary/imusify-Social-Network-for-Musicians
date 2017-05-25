@@ -4,6 +4,7 @@ import {SharedService} from "../../shared/shared.service";
 import {IRecord, ITracksData} from "../../interfases";
 import {ActivatedRoute} from "@angular/router";
 import {IArticle} from "../../interfases/IArticle";
+import {EmitterService} from "../../shared/services/emitter.service";
 
 @Component({
   selector: 'app-music',
@@ -30,6 +31,7 @@ export class MusicComponent implements OnInit {
         this.records = this.musicData.records.filter((record: any) => {
           return record.is_track;
         });
+        EmitterService.get('TOGGLE_PRELOADER').emit(false);
       }
     );
   }

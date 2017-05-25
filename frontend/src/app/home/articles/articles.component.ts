@@ -1,6 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {ActivatedRoute} from "@angular/router";
 import {ITracksData} from "../../interfases/ITracksData";
+import {EmitterService} from "../../shared/services/emitter.service";
 
 @Component({
     selector: 'app-articles',
@@ -21,6 +22,7 @@ export class ArticlesComponent implements OnInit {
               this.articles = this.homeData.records.filter((article: any) => {
                   return article.is_article;
               });
+              EmitterService.get('TOGGLE_PRELOADER').emit(false);
           }
         );
     }
