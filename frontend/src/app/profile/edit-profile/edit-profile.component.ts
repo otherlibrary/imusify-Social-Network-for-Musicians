@@ -157,10 +157,14 @@ export class EditProfileComponent implements OnInit, OnDestroy {
       let userData = JSON.parse(localStorage.getItem('auth_data'));
       for(let key in res) {
         if(res.hasOwnProperty(key)) {
+          console.log(key);
           userData[key] = res[key];
         }
       }
+      localStorage.setItem('auth_data', JSON.stringify(userData));
+
       this._sharedService.loginSubject.next(userData);
+
       this._sharedService.notificationSubject.next({
         title: 'Save Profile',
         msg: 'Success save',
