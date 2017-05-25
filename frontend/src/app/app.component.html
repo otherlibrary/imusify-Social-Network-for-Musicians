@@ -67,7 +67,7 @@
                 </li>
                 <li>
                   <a href="#"
-                     [routerLink]="['/', {outlets: {'popup': ['edit-profile', profileData.id]}}]">
+                     [routerLink]="['/profile/' + profileData.id, {outlets: {'profile': ['edit']}}]">
                     <span>Edit Profile</span>
                   </a>
                 </li>

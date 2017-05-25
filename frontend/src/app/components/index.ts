@@ -15,7 +15,6 @@ import {NotificationsComponent} from "./notifications/notifications.component";
 import {MessagesComponent} from "./messages/messages.component";
 import {ArtistProfileComponent} from "./artist-profile/artist-profile.component";
 import {NewsComponent} from "./news/news.component";
-import {EditProfileComponent} from "./edit-profile/edit-profile.component";
 
 export const components = [
   NotFoundComponent,
@@ -28,7 +27,6 @@ export const components = [
   AccountComponent,
   ChangePassComponent,
   StripeComponent,
-  EditProfileComponent,
   RolesComponent,
   MembershipComponent,
   InviteFriendsComponent,

@@ -3,7 +3,6 @@ import {ProfileRoutingModule} from "./profile-routing.module";
 import {SharedModule} from "../shared/shared.module";
 import {profileComponents} from "./index";
 import {ProfileService} from "./profile.service";
-import { ProfileUserComponent } from './profile-user/profile-user.component';
 
 @NgModule({
   imports: [
@@ -11,8 +10,7 @@ import { ProfileUserComponent } from './profile-user/profile-user.component';
     ProfileRoutingModule
   ],
   declarations: [
-    ...profileComponents,
-    ProfileUserComponent
+    ...profileComponents
   ],
   providers: [
     ProfileService
