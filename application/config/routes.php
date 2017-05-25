@@ -125,7 +125,7 @@ $route['api/track-details/track_by_id/(:num)'] = 'new_api/trackdetails_api/track
 $route['api/track-upload/upload-track-file'] = 'new_api/trackupload_api/upload_track/format/json';
 $route['api/track-upload/upload-track-info'] = 'new_api/trackupload_api/upload_track_data/format/json';
 $route['api/track-upload/upload-track-img'] = 'new_api/trackupload_api/upload_track_img/format/json';
-$route['api/track-delete'] = 'new_api/trackupload_api/delete_track_post/format/json';
+$route['api/track-delete'] = 'new_api/trackupload_api/delete_track/format/json';
 
 $route['api/track-edit/edit-track-info'] = 'new_api/trackedit_api/edit_track_info/format/json';
 
