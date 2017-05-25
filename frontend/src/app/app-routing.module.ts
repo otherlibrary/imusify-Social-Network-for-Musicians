@@ -43,7 +43,7 @@ const APP_ROUTES: Routes = [
     canActivateChild: [AuthAllSuccessGuard]
   },
   {
-    path: 'profile/:id',
+    path: 'profile',
     loadChildren: 'app/profile/profile.module#ProfileModule',
     canActivate: [AuthGuard]
   },
@@ -103,12 +103,6 @@ const APP_ROUTES: Routes = [
   {
     path: 'favorites',
     component: FavoritesComponent,
-    outlet: 'popup',
-    canActivate: [AuthGuard]
-  },
-  {
-    path: 'edit-profile/:id',
-    component: EditProfileComponent,
     outlet: 'popup',
     canActivate: [AuthGuard]
   },

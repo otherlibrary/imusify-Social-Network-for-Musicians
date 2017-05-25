@@ -1,11 +1,12 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
-import {ActivatedRoute, Router} from "@angular/router";
+import {ActivatedRoute, NavigationEnd, Router} from "@angular/router";
 import {FormGroup, FormBuilder, Validators} from "@angular/forms";
 import {IProfileEdit} from "../../interfases/profile/IProfileEdit";
 import {IMyOptions} from "mydatepicker";
-import {ProfileService} from "../../profile/profile.service";
+
 import {IOption} from "ng-select";
 import {SharedService} from "app/shared";
+import {ProfileService} from "../profile.service";
 
 @Component({
   selector: 'app-edit-profile',
@@ -48,7 +49,7 @@ export class EditProfileComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
-    this.sub = this._route.params.subscribe(params => {
+    this.sub = this._route.parent.params.subscribe(params => {
       this.userId = params.id;
       this.getEditProfile(this.userId);
       this.getCountryList();
@@ -165,6 +166,7 @@ export class EditProfileComponent implements OnInit, OnDestroy {
         msg: 'Success save',
         type: 'success'
       });
+      this._router.navigate(['profile/' + this.userId]);
     }, err => {
       this._sharedService.notificationSubject.next({
         title: 'Save Profile',
@@ -207,7 +209,7 @@ export class EditProfileComponent implements OnInit, OnDestroy {
    * close popup edit profile
    */
   closePopup() {
-    this._router.navigate([{outlets: {popup: null}}]);
+    this._router.navigate(['profile/' + this.userId]);
   }
 
   test() {

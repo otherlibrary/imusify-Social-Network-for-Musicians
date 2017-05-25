@@ -21,7 +21,6 @@ import {
 import {AppComponent} from './app.component';
 import {components} from './components/index';
 import {routing} from './app-routing.module';
-import {ProfileService} from "./profile/profile.service";
 
 @NgModule({
   declarations: [
@@ -43,8 +42,7 @@ import {ProfileService} from "./profile/profile.service";
     EmitterService,
     SharedService,
     ApiService,
-    LocalStorageService,
-    ProfileService
+    LocalStorageService
   ],
   bootstrap: [AppComponent]
 })
