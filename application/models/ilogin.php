@@ -42,7 +42,7 @@ Class ilogin extends CI_Model
         //var_dump($this->db->last_query());exit;
         if ($query->num_rows() == 1) {
             $user = $query->row();
-            $temp_uimg = $this->commonfn->get_photo('p', $user->id, 64, 64);
+            $temp_uimg = $this->commonfn->get_photo('p', $user->id);
             //$temp_array = explode("/",$temp);
             //$temp_uimg = end($temp_array);
             $user->profileImage = $temp_uimg;

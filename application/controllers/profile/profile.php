@@ -374,7 +374,7 @@ class Profile extends MY_Controller
         $listen_active_class = isset($listen_active_class) ? $listen_active_class : "";
 
         $this->load->model('commonfn');
-        $profile_image = $this->commonfn->get_photo('p', $profile_link_uid, 157, 157);
+        $profile_image = $this->commonfn->get_photo('p', $profile_link_uid);
         $profile_cover_image = $this->commonfn->get_photo('pc', $profile_link_uid);
         //echo $profile_image;exit;
 

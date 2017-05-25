@@ -132,8 +132,8 @@ Class home_modal extends CI_Model
         foreach ($query->result_array() as $row) {
             //var_dump($row);exit;
 
-            $row["track_image"] = $this->commonfn->get_photo('t', $row["id"], $width, $height);
-            $row["user_image"] = $this->commonfn->get_photo('p', $row["uid"], $uwidth, $uheight);
+            $row["track_image"] = $this->commonfn->get_photo('t', $row["id"]);
+            $row["user_image"] = $this->commonfn->get_photo('p', $row["uid"]);
             //$row["main_title"] = character_limiter($row["title"], 40,$end_char = '&#8230;');
             $row["main_title"] = character_limiter($row["title"], 35, $end_char = '');
 
@@ -196,7 +196,7 @@ Class home_modal extends CI_Model
         }
 
         foreach ($query2->result_array() as $row) {
-            $row["article_image"] = $this->commonfn->get_photo('art', $row["id"], 371, 371);
+            $row["article_image"] = $this->commonfn->get_photo('art', $row["id"]);
             $row["is_article"] = true;
             $output[] = $row;
         }

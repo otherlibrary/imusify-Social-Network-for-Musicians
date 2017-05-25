@@ -54,7 +54,7 @@ Class following_model extends CI_Model
 
 			foreach ($query->result_array() as $row)
 			{
-				$row["profile_img_url"] = $this->commonfn->get_photo("p",$row["uidd"],$user_profile_img_h,$user_profile_img_w);
+				$row["profile_img_url"] = $this->commonfn->get_photo("p",$row["uidd"]);
 				$row["feed_ago"] = timeago($row["feedcdate"]);
 				$row["feedimage"] = $row["feedimage"];
 				$row["feedtitle"] = html_entity_decode($row["feedtitle"]);
@@ -96,7 +96,7 @@ Class following_model extends CI_Model
 				if($row["feedtype"] == "internal_image")
 				{
 					$imagefeed = true;
-					$row["feedimage"] = $this->commonfn->get_photo("fi",$row["id"],57,57);
+					$row["feedimage"] = $this->commonfn->get_photo("fi",$row["id"]);
 				}
 				$row["audiofeed"] = $audiofeed;
 				$row["videofeed"] = $videofeed;
@@ -156,7 +156,7 @@ Class following_model extends CI_Model
 		{
 			foreach ($query->result_array() as $row)
 			{
-				$row["user_profile_img"] = $this->commonfn->get_photo("p",$row["userId"],57,57);
+				$row["user_profile_img"] = $this->commonfn->get_photo("p",$row["userId"]);
 				$row["commentator_name"] = $row["username"];
 				$row["time_ago"] = timeago($row["createdDate"]);
 				$row["total_comments"] = $totalcommetnsRows;
@@ -197,7 +197,7 @@ Class following_model extends CI_Model
 				$output["comment"] = $comment;
 				$output["id"] = $commentId;
 				$output["commentator_name"] = $user_details["username"];
-				$output["user_img_url"] = $this->commonfn->get_photo("p",$user_details["id"],57,57);
+				$output["user_img_url"] = $this->commonfn->get_photo("p",$user_details["id"]);
 				$comments_ar = array('feedlogId'=>$feedlogId,'limit'=>'5');
 				$output["feed_comments"] = $this->get_feed_comments($comments_ar);	
 			}else{
@@ -257,7 +257,7 @@ Class following_model extends CI_Model
 		$query = $this->db->query($query_build);
 		foreach ($query->result_array() as $row)
 		{
-			$row["follw_user_image"] = $this->commonfn->get_photo("p",$user_details["id"],57,57);
+			$row["follw_user_image"] = $this->commonfn->get_photo("p",$user_details["id"]);
 			$output[] = $row;
 		}
 		return $output;

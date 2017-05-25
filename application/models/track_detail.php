@@ -26,7 +26,7 @@ class track_detail extends CI_Model
         //change to use track thumbnail small version
         $row["cover_image"] = $this->commonfn->get_photo('t', $row["id"]);
         //$row["cover_image"] = $this->commonfn->get_photo('t',$row["id"]);//tc track cover t track
-        $row["artist_profile_pic"] = $this->commonfn->get_photo('p', $row["userId"], IMG_66, IMG_66);
+        $row["artist_profile_pic"] = $this->commonfn->get_photo('p', $row["userId"]);
         $row["no_of_followers"] = $this->user_profile->fetch_followers("fl.toId = '" . $row["userId"] . "'", "", "", "counter");
         $row["no_of_songs"] = $this->user_profile->fetch_uploaded_tracks("tt.userId = '" . $row["userId"] . "'", "", "", "counter");
         $row["no_of_albums"] = $this->user_profile->fetch_albums("a.userId = '" . $row["userId"] . "'", "", "", "counter");
@@ -252,7 +252,7 @@ class track_detail extends CI_Model
 
         //echo print_query();
         foreach ($query->result_array() as $row) {
-            $row["user_pic"] = $this->commonfn->get_photo('p', $row["uid"], IMG_156, IMG_156);
+            $row["user_pic"] = $this->commonfn->get_photo('p', $row["uid"]);
             $row["user_name"] = $row["firstname"] . " " . $row["lastname"];
             $row["timeago"] = timeago($row["createdDate"]);
             $row["link"] = base_url() . $row["profileLink"];
@@ -303,7 +303,7 @@ class track_detail extends CI_Model
 
         //echo print_query();
         foreach ($query->result_array() as $row) {
-            $row["user_pic"] = $this->commonfn->get_photo('p', $row["id"], IMG_156, IMG_156);
+            $row["user_pic"] = $this->commonfn->get_photo('p', $row["id"]);
             $row["link"] = base_url() . $row["profileLink"];
             $row["user_waveform"] = img_url() . "small-wave-img.png";
             $row["row_id"] = "row" . $row["id"];
@@ -358,7 +358,7 @@ class track_detail extends CI_Model
 
         //echo print_query();
         foreach ($query->result_array() as $row) {
-            $row["track_pic"] = $this->commonfn->get_photo('t', $row["tid"], IMG_41, IMG_41);
+            $row["track_pic"] = $this->commonfn->get_photo('t', $row["tid"]);
             $row["user_name"] = $row["firstname"] . " " . $row["lastname"];
             $row["trackLink"] = base_url() . $row["profileLink"] . "/" . $row["perLink"];
             $row["profileLink"] = base_url() . $row["profileLink"];

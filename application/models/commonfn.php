@@ -379,7 +379,7 @@ Class commonfn extends CI_Model
         $query = $this->db->query("SELECT a.id,a.name,a.release_mm as arelease_mm,a.release_dd as arelease_dd,a.release_yy as arelease_yy,a.id as aid,(SELECT genre from genre where genre.id = a.genre) AS album_genre_name,(SELECT COUNT(albumId) FROM tracks where tracks.albumId = a.id) AS total_albums_songs,(SELECT profileLink from users where id = a.userId) AS userperlink FROM albums as a  WHERE a.id = '" . $album_id . "' LIMIT 1");
 
         $row = $query->row_array();
-        $albumrow["track_image"] = $this->commonfn->get_photo('a', $row["id"], $width, $height);
+        $albumrow["track_image"] = $this->commonfn->get_photo('a', $row["id"]);
         $albumrow["editid"] = $row["id"];
         $albumrow["edittype"] = "a";
         $albumrow["main_title"] = $row["name"];

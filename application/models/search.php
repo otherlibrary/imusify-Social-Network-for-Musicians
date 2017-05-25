@@ -38,7 +38,7 @@ Class search extends CI_Model
 		{
 			foreach ($query->result_array() as $row)
 			{
-				$row["artist_pic"] = $this->commonfn->get_photo('p',$row["id"],200,200);
+				$row["artist_pic"] = $this->commonfn->get_photo('p',$row["id"]);
 				$row["link"] = base_url().$row["profileLink"];
 
 				$output[] = $row;
@@ -102,7 +102,7 @@ Class search extends CI_Model
 		{
 			foreach ($query_pl->result_array() as $row_pl)
 			{
-				$row_pl["playlist_pic"] = $this->commonfn->get_photo('pl',$row_pl["id"],200,200);
+				$row_pl["playlist_pic"] = $this->commonfn->get_photo('pl',$row_pl["id"]);
 				
 				$row_pl["link"] = base_url()."sets/".$row_pl["perLink"];
 

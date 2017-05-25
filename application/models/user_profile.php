@@ -374,7 +374,7 @@ else
 
         //echo print_query();
         foreach ($query->result_array() as $row) {
-            $row["tab_image"] = $this->commonfn->get_photo('t', $row["id"], IMG_235, IMG_235);
+            $row["tab_image"] = $this->commonfn->get_photo('t', $row["id"]);
             //$row["tab_name"] = $row["title"];
             $row["tab_name"] = character_limiter($row["title"], 20, $end_char = '&#8230;');
             //$row["tab_waveform"] = img_url()."wave1.png";
@@ -548,7 +548,7 @@ else
         //echo print_query();
         $i = 1;
         foreach ($query->result_array() as $row) {
-            $row["tab_image"] = $this->commonfn->get_photo('a', $row["id"], IMG_235, IMG_235);
+            $row["tab_image"] = $this->commonfn->get_photo('a', $row["id"]);
             $row["i"] = $i;
             if ($i % 2 != 0) {
                 $row["gray_bg"] = "gray-bg";

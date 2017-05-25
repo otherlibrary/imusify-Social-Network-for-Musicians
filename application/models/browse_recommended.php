@@ -160,8 +160,8 @@ Class browse_recommended extends CI_Model
         }
 
         foreach ($query->result_array() as $row) {
-            $row["track_image"] = $this->commonfn->get_photo('t', $row["id"], $width, $height);
-            $row["user_image"] = $this->commonfn->get_photo('p', $row["uid"], $uwidth, $uheight);
+            $row["track_image"] = $this->commonfn->get_photo('t', $row["id"]);
+            $row["user_image"] = $this->commonfn->get_photo('p', $row["uid"]);
             $row["main_title"] = character_limiter($row["title"], 20, $end_char = '...');
             $row["artist_mini_name"] = character_limiter($row["artist_name"], 20, $end_char = '...');
             $row["i"] = $i;
@@ -241,8 +241,8 @@ Class browse_recommended extends CI_Model
         }
 
         foreach ($query->result_array() as $row) {
-            $row["track_image"] = $this->commonfn->get_photo('t', $row["id"], $width, $height);
-            $row["user_image"] = $this->commonfn->get_photo('p', $row["uid"], $uwidth, $uheight);
+            $row["track_image"] = $this->commonfn->get_photo('t', $row["id"]);
+            $row["user_image"] = $this->commonfn->get_photo('p', $row["uid"]);
             $row["main_title"] = character_limiter($row["title"], 20, $end_char = '...');
             $row["artist_mini_name"] = character_limiter($row["artist_name"], 20, $end_char = '...');
             $row["featured"] = ($row["featured"] == 'y' ? true : false);
@@ -322,7 +322,7 @@ Class browse_recommended extends CI_Model
         //echo print_query();
         $i = 1;
         foreach ($query->result_array() as $row) {
-            $row["user_img"] = $this->commonfn->get_photo('p', $row["id"], $cons, $cons);
+            $row["user_img"] = $this->commonfn->get_photo('p', $row["id"]);
             $row["artist_name"] = $row["firstname"] . " " . $row["lastname"];
 
             $row["i"] = $i;
@@ -384,7 +384,7 @@ Class browse_recommended extends CI_Model
         //echo print_query();
         $i = 1;
         foreach ($query->result_array() as $row) {
-            $row["user_img"] = $this->commonfn->get_photo('p', $row["id"], IMG_156, IMG_156);
+            $row["user_img"] = $this->commonfn->get_photo('p', $row["id"]);
             $row["artist_name"] = $row["firstname"] . " " . $row["lastname"];
             //$row["waveform_img"] = img_url() . "wave1.png";
             $row["link"] = base_url() . $row["profileLink"];
@@ -425,7 +425,7 @@ Class browse_recommended extends CI_Model
             return $query->num_rows();
         }
         foreach ($query->result_array() as $row) {
-            $row["user_img"] = $this->commonfn->get_photo('pl', $row["id"], IMG_176, IMG_176);
+            $row["user_img"] = $this->commonfn->get_photo('pl', $row["id"]);
             $row["artist_name"] = $row["name"];
             //$row["waveform_img"] = img_url() . "wave1.png";
 
@@ -468,7 +468,7 @@ Class browse_recommended extends CI_Model
             return $query->num_rows();
         }
         foreach ($query->result_array() as $row) {
-            $row["user_img"] = $this->commonfn->get_photo('pl', $row["id"], IMG_176, IMG_176);
+            $row["user_img"] = $this->commonfn->get_photo('pl', $row["id"]);
             $row["artist_name"] = $row["name"];
             //$row["waveform_img"] = img_url() . "wave1.png";
 

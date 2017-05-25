@@ -24,7 +24,7 @@ Class about_model extends CI_Model
 		{
 			foreach ($query->result_array() as $row)
 			{
-				$row["photo"] = $this->commonfn->get_photo("ab",$row["id"],166,166);
+				$row["photo"] = $this->commonfn->get_photo("ab",$row["id"]);
 				if($row["type"] == "t")
 				{
 					$team_array[] = $row;

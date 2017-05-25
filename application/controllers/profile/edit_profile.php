@@ -56,7 +56,7 @@ class edit_profile extends MY_Controller {
 		}
 		
 		
-		$image =  $this->commonfn->get_photo('p',$user_db_details["id"],"157","157");
+		$image =  $this->commonfn->get_photo('p',$user_db_details["id"]);
 
                 
                 

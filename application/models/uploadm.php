@@ -953,7 +953,7 @@ Class uploadm extends CI_Model
         $j = 0;
         foreach ($query->result_array() as $row) {
             if ($temps == null) {
-                $albumrow[$i]["track_image"] = $this->commonfn->get_photo('a', $row["id"], $width, $height);
+                $albumrow[$i]["track_image"] = $this->commonfn->get_photo('a', $row["id"]);
                 $albumrow[$i]["editid"] = $row["id"];
                 $albumrow[$i]["edittype"] = "a";
                 $albumrow[$i]["main_title"] = $row["name"];
@@ -989,7 +989,7 @@ Class uploadm extends CI_Model
                 } else {
                     $i++;
                     $j = 0;
-                    $albumrow[$i]["track_image"] = $this->commonfn->get_photo('a', $row["id"], IMG_222, IMG_222);
+                    $albumrow[$i]["track_image"] = $this->commonfn->get_photo('a', $row["id"]);
                     $albumrow[$i]["editid"] = $row["id"];
                     $albumrow[$i]["edittype"] = "a";
                     $albumrow[$i]["main_title"] = $row["name"];

@@ -41,8 +41,8 @@ Class Article_model extends CI_Model
 				}
 				$row["createdDate"] = date('d F Y',strtotime($row["createdDate"]));
 				$row["article_title"] = $row['title'];
-				$row["article_photo"] = $this->commonfn->get_photo("art",$row["id"],$width,$height);
-				$row["article_main_photo"] = $this->commonfn->get_photo("art",$row["id"],816,437);
+				$row["article_photo"] = $this->commonfn->get_photo("art",$row["id"]);
+				$row["article_main_photo"] = $this->commonfn->get_photo("art",$row["id"]);
 				$row["similar_article_url"] = base_url()."article/".$row["perLink"];
 
 				$output[] = $row;
