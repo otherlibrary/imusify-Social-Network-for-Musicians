@@ -22,7 +22,7 @@ if (!function_exists('get_template_content')) {
             }
 
             if (isset($CI->session->userdata('user')->id) && $CI->session->userdata('user')->id > 0) {
-                $temp_uimg = $CI->commonfn->get_photo('p', $CI->session->userdata('user')->id, 64, 64);
+                $temp_uimg = $CI->commonfn->get_photo('p', $CI->session->userdata('user')->id);
                 /*$temp_array = explode("/",$temp);
                 $temp_uimg = end($temp_array);*/
             }
