@@ -400,9 +400,9 @@ class TrackDataService
                 $this->ci->db->delete('photos', ['detailId' => $trackId, 'dir' => 'track/']);
             }
 
-            $this->load->model('space_model');
-            $userCurrentSpace = $this->space_model->getUserCommonSpace($userId);
-            $this->space_model->updateUserSpace($userId, $userCurrentSpace['used_space'] - $trackInfo['filesize']);
+            $this->ci->load->model('space_model');
+            $userCurrentSpace = $this->ci->space_model->getUserCommonSpace($userId);
+            $this->ci->space_model->updateUserSpace($userId, $userCurrentSpace['used_space'] - $trackInfo['filesize']);
 
             $result = [
                 'status' => 'success',

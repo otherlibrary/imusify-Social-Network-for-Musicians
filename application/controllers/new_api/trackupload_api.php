@@ -148,7 +148,7 @@ class trackupload_api extends REST_Controller
     {
         $this->load->library('TrackDataService');
 
-        $this->form_validation->set_rules('track_id', 'track_id', 'trim|required|xss_clean|integer');
+        $this->form_validation->set_rules('trackId', 'trackId', 'trim|required|xss_clean|integer');
         if ($this->form_validation->run() == false) {
             $response = [
                 'errors' => $this->validation_errors(),
@@ -159,7 +159,7 @@ class trackupload_api extends REST_Controller
         $result = null;
         $userData = $this->session->userdata('user');
         if (!empty($userData->id)) {
-            $result = $this->trackdataservice->deleteTrack($this->post('track_id'), $userData->id);
+            $result = $this->trackdataservice->deleteTrack($this->post('trackId'), $userData->id);
         }
 
         $this->response($result, 200);
