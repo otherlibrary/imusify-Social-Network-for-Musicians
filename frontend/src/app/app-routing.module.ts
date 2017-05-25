@@ -23,7 +23,6 @@ import {MessagesComponent} from "./components/messages/messages.component";
 import {ArtistProfileComponent} from "./components/artist-profile/artist-profile.component";
 import {NewsComponent} from "./components/news/news.component";
 import {AuthAllSuccessGuard} from "./common/auth-all-success.guard";
-import {EditProfileComponent} from "./components/edit-profile/edit-profile.component";
 
 const APP_ROUTES: Routes = [
   {
