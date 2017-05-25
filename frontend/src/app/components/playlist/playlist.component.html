@@ -4,80 +4,24 @@
     <button class="popup-close" type="button" (click)="closePlaylist()">close</button>
     <div class="tit-playlist">
       <span>Your Playlist</span>
-      <button type="button" class="tit-btn-plst"><i></i><span>Add new playlist</span></button>
+      <button type="button" class="tit-btn-plst" (click)="goToSlideIndex(3)"><i></i><span>Add new playlist</span></button>
     </div>
     <div class="inner">
-      <div class="wrap-playlist">
+      <div class="wrap-playlist" *ngIf="playlist">
         <div class="swiper-container" [swiper]="swiperConfig">
           <div class="swiper-wrapper">
-            <div class="swiper-slide">
+            <div class="swiper-slide" *ngFor="let item of playlist">
               <div class="img">
-                <img src="/assets/images/feed-boxes/featured-track-bg.jpg" alt=""/>
+                <img [src]="item.playlistImage" alt=""/>
                 <div class="vinyl">
                   <button class="box-btn play" title="play"></button>
                 </div>
               </div>
-              <div class="name">Untitled Groove</div>
+              <div class="name">{{item.name}}</div>
               <span class="tulip-ico"></span>
               <ul class="info">
-                <li>127 Tracks</li>
-                <li>89 Followers</li>
-              </ul>
-            </div>
-            <div class="swiper-slide">
-              <div class="img">
-                <img src="/assets/images/profile/vinil-face1.jpg" alt=""/>
-                <div class="vinyl">
-                  <button class="box-btn play" title="play"></button>
-                </div>
-              </div>
-              <div class="name">Untitled Groove</div>
-              <span class="tulip-ico"></span>
-              <ul class="info">
-                <li>127 Tracks</li>
-                <li>89 Followers</li>
-              </ul>
-            </div>
-            <div class="swiper-slide">
-              <div class="img">
-                <img src="/assets/images/feed-boxes/2.jpg" alt=""/>
-                <div class="vinyl">
-                  <button class="box-btn play" title="play"></button>
-                </div>
-              </div>
-              <div class="name">Untitled Groove</div>
-              <span class="tulip-ico"></span>
-              <ul class="info">
-                <li>127 Tracks</li>
-                <li>89 Followers</li>
-              </ul>
-            </div>
-            <div class="swiper-slide">
-              <div class="img">
-                <img src="/assets/images/feed-boxes/3.jpg" alt=""/>
-                <div class="vinyl">
-                  <button class="box-btn play" title="play"></button>
-                </div>
-              </div>
-              <div class="name">Untitled Groove</div>
-              <span class="tulip-ico"></span>
-              <ul class="info">
-                <li>127 Tracks</li>
-                <li>89 Followers</li>
-              </ul>
-            </div>
-            <div class="swiper-slide">
-              <div class="img">
-                <img src="/assets/images/feed-boxes/4.jpg" alt=""/>
-                <div class="vinyl">
-                  <button class="box-btn play" title="play"></button>
-                </div>
-              </div>
-              <div class="name">Untitled Groove</div>
-              <span class="tulip-ico"></span>
-              <ul class="info">
-                <li>127 Tracks</li>
-                <li>89 Followers</li>
+                <li>{{item.tracks}} Tracks</li>
+                <li>{{item.followers}} Followers</li>
               </ul>
             </div>
           </div>
@@ -85,11 +29,11 @@
         <div class="swiper-button-next"></div>
         <div class="swiper-button-prev"></div>
       </div>
-      <div class="icons-wrap">
+      <div class="icons-wrap" *ngIf="currentPlaylist">
         <a href="#" class="note-link settings-ico" title="settings"></a>
         <i class="sep"></i>
         <a href="#" class="note-link ghost-ico" title="notification"></a>
-        <span class="ico-right">1.487 Likes</span>
+        <span class="ico-right">{{currentPlaylist.like}} Likes</span>
       </div>
 
       <div class="song-flex-table playlist">
