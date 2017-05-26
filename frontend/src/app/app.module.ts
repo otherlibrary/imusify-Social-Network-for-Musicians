@@ -3,6 +3,7 @@ import {BrowserModule} from '@angular/platform-browser';
 import {HttpModule} from '@angular/http';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {UserModule} from './user/user.module';
+import { FacebookModule } from 'ngx-facebook';
 
 import {
   HelpersService,
@@ -33,7 +34,8 @@ import {routing} from './app-routing.module';
     HttpModule,
     UserModule,
     routing,
-    BrowserAnimationsModule
+    BrowserAnimationsModule,
+    FacebookModule.forRoot()
   ],
   providers: [
     HelpersService,

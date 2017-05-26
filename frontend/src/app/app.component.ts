@@ -6,6 +6,8 @@ import {IToastOption} from "./interfases";
 import {ToastData, ToastOptions, ToastyService} from "ng2-toasty";
 import {SharedService} from "./shared/shared.service";
 import {IUser} from "./interfases/IUser";
+import {FacebookService, InitParams, LoginResponse} from "ngx-facebook";
+declare const IN;
 
 @Component({
   selector: 'body',
@@ -29,7 +31,16 @@ export class AppComponent implements OnInit, OnDestroy {
     private _authService: AuthService,
     private _toastyService: ToastyService,
     private _sharedService: SharedService,
-    private _router: Router) {
+    private _router: Router,
+    private fb: FacebookService
+  ) {
+    let initParams: InitParams = {
+      appId      : '1864594077197946',
+      cookie     : true,
+      xfbml      : true,
+      version    : 'v2.8'
+    };
+    fb.init(initParams);
   }
 
   ngOnInit() {
@@ -60,7 +71,7 @@ export class AppComponent implements OnInit, OnDestroy {
   }
 
   /**
-   *
+   * user logout
    * @returns {boolean}
    */
   logOut() {
@@ -72,9 +83,18 @@ export class AppComponent implements OnInit, OnDestroy {
     });
     return false;
   }
+  logOutFb() {
+    this.fb.logout().then(() => console.log('Logged out!'));
+  }
+  logOutLD() {
+    // IN.User.logout((res) => {
+    //   console.log('linkedin', res);
+    // });
+  }
+
 
   /**
-   * Очищает даные пользователя на клиенте
+   * clean localStorage & authService
    */
   cleanProfile() {
     this.profileData = this._authService.profileData = null;
@@ -84,7 +104,7 @@ export class AppComponent implements OnInit, OnDestroy {
   }
 
   /**
-   * Обработка данных пользователя
+   * get profile Data
    */
   getProfile() {
     // обработчик если заходим первый раз через логин
@@ -105,6 +125,10 @@ export class AppComponent implements OnInit, OnDestroy {
     });
   }
 
+  /**
+   * notification
+   * @param option
+   */
   addToast(option: IToastOption) {
     let toastOptions: ToastOptions = {
       title: option.title,
