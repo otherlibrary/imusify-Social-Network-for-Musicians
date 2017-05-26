@@ -3,6 +3,8 @@ import {DomSanitizer} from "@angular/platform-browser";
 import {SharedService} from "../../shared/shared.service";
 import {IRecord} from "../../interfases/IRecord";
 import {Subscription} from "rxjs/Subscription";
+import {PlayerService} from "../../player/player.service";
+import {IRecordEvent} from "../../interfases/IRecordEvent";
 
 @Component({
   selector: 'home-record',
@@ -12,37 +14,33 @@ import {Subscription} from "rxjs/Subscription";
 export class RecordComponent implements OnInit, OnDestroy {
   @Output() onfollow: EventEmitter<any> = new EventEmitter();
   @Output() onsahred: EventEmitter<any> = new EventEmitter();
-  @Output() onNext: EventEmitter<any> = new EventEmitter();
-  @Output() onPlay: EventEmitter<any> = new EventEmitter();
 
   @Input() record: IRecord;
-  @Input() isArticle: boolean;
 
   public isPlayed: boolean;
-  private pausePlayerTrackSubscription: Subscription;
-  private playPlayerTrackSubscription: Subscription;
+  private playerEventSubscription: Subscription;
 
-  constructor(
-    private sanitizer: DomSanitizer,
-    private _sharedService: SharedService
-  ) {}
+  constructor(private sanitizer: DomSanitizer,
+              public _playerService: PlayerService) {
+  }
 
   ngOnInit() {
-    //pause track
-    this.pausePlayerTrackSubscription = this._sharedService.pausePlayerTrackSubject.subscribe((record: IRecord) => {
-      if(record.id === this.record.id) {
-        this.isPlayed = false;
-      }
-    });
-    //play track
-    this.playPlayerTrackSubscription = this._sharedService.playPlayerTrackSubject.subscribe((record: IRecord) => {
-      this.isPlayed = record.id === this.record.id;
-    });
+    //play/pause
+    this.playerEventSubscription = this._playerService.playerOutputSubject
+      .subscribe((res: IRecordEvent) => {
+        if (res.type === 'play') {
+          this.isPlayed = res.record.id === this.record.id;
+        }
+        if (res.type === 'pause') {
+          if (res.record.id === this.record.id) {
+            this.isPlayed = false;
+          }
+        }
+      });
   }
 
   ngOnDestroy() {
-    this.pausePlayerTrackSubscription.unsubscribe();
-    this.playPlayerTrackSubscription.unsubscribe();
+    this.playerEventSubscription.unsubscribe();
   }
 
   getWave() {
@@ -64,16 +62,18 @@ export class RecordComponent implements OnInit, OnDestroy {
     this.onsahred.emit(this.record.trackLink);
   }
 
-  playRecord(record): void {
-      this._sharedService.playTrackSubject.next(record);
-      this.isPlayed = true;
-      this.onNext.emit(record);
-      this.onPlay.emit(record);
+  playRecord(): void {
+    this._playerService.playInputSubject.next({
+      type: 'play',
+      record: this.record
+    });
   }
 
-  pauseRecord(record): void {
-    this._sharedService.pauseTrackSubject.next(record);
-    this.isPlayed = false;
+  pauseRecord(): void {
+    this._playerService.playInputSubject.next({
+      type: 'pause',
+      record: this.record
+    });
   }
 
 }

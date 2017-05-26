@@ -9,8 +9,8 @@ export class TimeFormatPipe implements PipeTransform {
     if (!value) {
       return "00:00";
     }
-    var minutes = Math.floor(value / 60);
-    var seconds = Math.ceil(value) % 60;
+    let minutes = Math.floor(value / 60);
+    let seconds = Math.ceil(value) % 60;
 
     return (minutes < 10 ? '0' : '')
       + minutes

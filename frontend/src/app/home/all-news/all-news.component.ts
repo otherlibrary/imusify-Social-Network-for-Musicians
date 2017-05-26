@@ -6,6 +6,8 @@ import {SharedService} from "../../shared/shared.service";
 import {HelpersService} from "../../shared/services/helpers.service";
 import {IArticle} from "../../interfases/IArticle";
 import {ActivatedRoute} from "@angular/router";
+import * as _ from 'lodash';
+import {PlayerService} from "../../player/player.service";
 
 @Component({
   selector: 'app-all-news',
@@ -22,6 +24,8 @@ export class AllNewsComponent implements OnInit {
     private _sharedService: SharedService,
     private _helpersService: HelpersService,
     private _route: ActivatedRoute,
+    private _homeService: HomeService,
+    private _playerService: PlayerService
   ) {}
 
   ngOnInit() {
@@ -44,10 +48,11 @@ export class AllNewsComponent implements OnInit {
     );
   }
 
-  playPlaylist() {
+  playPlaylist(record: IRecord) {
+    this._playerService.playInputSubject.next(record);
     if(!this.isPlayPlaylist) {
       console.log('set playlist');
-      this._sharedService.setPlaylistSubject.next(this.records);
+      //this._sharedService.setPlaylistSubject.next(this.records);
       this.isPlayPlaylist = true;
     }
   }

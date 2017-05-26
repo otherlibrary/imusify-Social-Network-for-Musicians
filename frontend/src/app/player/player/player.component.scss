@@ -8,8 +8,6 @@
     cursor: pointer;
   }
 }
-
-
 #player .big-block .btn-play,
 #player .big-block .btn-pause {
   width: 56px;
@@ -242,20 +240,16 @@ input[type=range]:focus::-ms-fill-upper {
   
   .range-vol {
     position: absolute;
-    top: -80%;
-    left: 23%;
-    width: 60px;
+    top: -8px;
+    left: 17px;
+    width: 0;
     opacity: 0;
-    max-width: 0;
-    transform: rotate(-90deg);
-    transition: max-width 0.2s linear;
-    transform-origin: left;
+    transition: width 0.2s linear;
   }
   &:hover {
     .range-vol {
       width: 60px;
       opacity: 1;
-      max-width: 60px;
     }
   }
 }

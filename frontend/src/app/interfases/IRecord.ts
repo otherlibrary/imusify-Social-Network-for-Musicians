@@ -9,6 +9,8 @@ export interface IRecord {
   i?: number
   id: string
   isPublic: string
+  is_track?: boolean
+  is_article?: boolean
   lastname: string
   username?: string
   main_title: string
@@ -30,7 +32,5 @@ export interface IRecord {
   wave?: string
   waveform?: string
   likes?: string
-  tags?: string[],
-  is_article?: boolean;
-  is_track?: boolean;
+  tags?: string[]
 }
