@@ -109,6 +109,14 @@ export class LoginComponent implements OnInit {
       .catch(e => console.error('Error logging in'));
   }
 
+  loginLD() {
+    IN.User.authorize(function(){
+      IN.API.Raw().url('/people/~?format=json').method('GET').result(function(res){
+        console.log(res);
+      });
+    }, this);
+  }
+
   closePopup() {
     this._router.navigate([{outlets: {popup: null}}]);
   }

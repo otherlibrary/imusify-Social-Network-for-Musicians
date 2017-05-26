@@ -1,10 +1,11 @@
 <app-preloader [isVisible]="isVisible"></app-preloader>
 <ng2-toasty [position]="'top-right'"></ng2-toasty>
+<script type="in/Login">Hello</script>
 <div id="menu">
   <!--<div class="menu-bg"-->
   <!--style="background-image: url('assets/images/bigProfile.jpg');"></div>-->
   <header>
-    <a class="head-logo" href="index.html">Logo</a>
+    <a class="head-logo">Logo</a>
     <span class="head-info">SELL YOUR MUSIC</span>
   </header>
   <div class="menu-inn">
@@ -20,9 +21,8 @@
     <div class="profile" *ngIf="loggedin">
       <a class="prof-link" href="#" [routerLink]="['/profile', profileData.id]">
         <div class="img-box">
-          <img class="prof-img"
-               *ngIf="loggedin"
-               [src]="profileData.profileImage" alt="img"/>
+          <div class="img-res" [ngStyle]="{'background-image': 'url(' + profileData.profileImage + ')'}">
+          </div>
           <i><span class="prof-status online" data-status="current"></span></i>
           <span class="prof-status edit" data-status="edit"></span>
           <div class="prof-status-opt">

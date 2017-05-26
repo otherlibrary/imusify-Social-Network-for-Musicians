@@ -87,11 +87,10 @@ export class AppComponent implements OnInit, OnDestroy {
     this.fb.logout().then(() => console.log('Logged out!'));
   }
   logOutLD() {
-    // IN.User.logout((res) => {
-    //   console.log('linkedin', res);
-    // });
+    IN.User.logout((res) => {
+      console.log('linkedin', res);
+    });
   }
-
 
   /**
    * clean localStorage & authService
