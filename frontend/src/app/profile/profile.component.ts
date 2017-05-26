@@ -2,6 +2,7 @@ import {Component, OnDestroy, OnInit} from '@angular/core';
 import {ActivatedRoute} from "@angular/router";
 import {ProfileService} from "./profile.service";
 import {IProfile} from "../interfases/profile/IProfile";
+import {EmitterService} from "../shared/services/emitter.service";
 
 @Component({
   selector: 'app-profile',
@@ -27,6 +28,7 @@ export class ProfileComponent implements OnInit, OnDestroy {
           {title: 'Untitled Groove4', image: '/assets/images/feed-boxes/featured-track-bg.jpg', followers: "434", likes: "323", records: "545"},
           {title: 'Untitled Groove5', image: '/assets/images/profile/vinil-face1.jpg', followers: "10", likes: "121", records: "324"},
           ];
+        EmitterService.get('TOGGLE_PRELOADER').emit(false);
       }
     );
   }

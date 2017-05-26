@@ -8,15 +8,22 @@
   <meta name="description" content="">
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
-  <link rel="stylesheet" href="assets/angular/assets/css/styles.css">
-  <link rel="stylesheet" href="assets/angular/assets/css/app.css">
-  <script src="https://use.fontawesome.com/f48fd98fd2.js"></script>
+   <link rel="stylesheet" href="assets/angular/assets/css/styles.css">
+   <link rel="stylesheet" href="assets/angular/assets/css/app.css">
+   <link href="assets/angular/styles.bundle.css" rel="stylesheet"/>
+   <script type="text/javascript" src="https://connect.facebook.net/en_US/sdk.js"></script>
+   <script type="text/javascript" src="//platform.linkedin.com/in.js">
+     api_key: 77g8q8w9k9rif1
+     authorize: false
+   </script>
+</head>
+<body>
+    Loading...
 
-<link href="assets/angular/styles.bundle.css" rel="stylesheet"/></head>
-<body>Loading...
-<script type="text/javascript" src="/assets/angular/inline.bundle.js"></script>
-<script type="text/javascript" src="/assets/angular/polyfills.bundle.js">
-</script><script type="text/javascript" src="/assets/angular/scripts.bundle.js"></script>
-<script type="text/javascript" src="/assets/angular/vendor.bundle.js"></script>
-<script type="text/javascript" src="/assets/angular/main.bundle.js"></script></body>
+    <script type="text/javascript" src="/assets/angular/inline.bundle.js"></script>
+    <script type="text/javascript" src="/assets/angular/polyfills.bundle.js"></script>
+    <script type="text/javascript" src="/assets/angular/scripts.bundle.js"></script>
+    <script type="text/javascript" src="/assets/angular/vendor.bundle.js"></script>
+    <script type="text/javascript" src="/assets/angular/main.bundle.js"></script>
+</body>
 </html>

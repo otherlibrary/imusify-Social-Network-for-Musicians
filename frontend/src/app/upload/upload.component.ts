@@ -29,6 +29,8 @@ export class UploadComponent implements OnInit {
   public uploadInput: EventEmitter<UploadInput>;
   public dragOver: boolean;
   private host: {};
+  private _mimeTypes = ['mp3', 'waw'];
+  private _isFileTypeCorrect: boolean = false;
 
   private _cutNameExtension(name: string): string {
     return name.match(/(.*)\.[^.]+$/)[1];
@@ -68,11 +70,29 @@ export class UploadComponent implements OnInit {
     }
   }
 
+  private _hasIsType(type): boolean {
+    return this._mimeTypes.some(function(arrVal: string) {
+      return type === arrVal;
+    })
+  }
+
   public getTagsFile(e) {
     this._uploadService.clearUploadTrackInfo();
 
     let files = e.target.files;
     let file = files[files.length - 1];
+    //validator mime file
+    this._isFileTypeCorrect =  this._hasIsType(file.type.split('/')[1]);
+
+    if(!this._isFileTypeCorrect) {
+      this._sharedService.notificationSubject.next({
+        title: 'Error upload file',
+        msg: 'Invalid file type',
+        type: 'error'
+      });
+    }
+    // end: validator mime file
+
     let fileURL = URL.createObjectURL(file);
     this._uploadService.wavesurfer.empty();
     this._uploadService.wavesurfer.load(fileURL);
@@ -103,17 +123,21 @@ export class UploadComponent implements OnInit {
           method: 'POST',
           data: {track_id: this.fileId}
         };
-        this.uploadInput.emit(event);
 
+        if(this._isFileTypeCorrect) {
+          this.uploadInput.emit(event);
+        }
       }
     } else if (output.type === 'addedToQueue') {
-      this.fileId = output.file.id;
-      this.files.push(output.file);
-      //if mime file
-
+      if(this._isFileTypeCorrect) {
+        this.fileId = output.file.id;
+        this.files.push(output.file);
+      }
     } else if (output.type === 'uploading') {
-      const index = this.files.findIndex(file => file.id === output.file.id);
-      this.files[index] = output.file;
+      if(this._isFileTypeCorrect) {
+        const index = this.files.findIndex(file => file.id === output.file.id);
+        this.files[index] = output.file;
+      }
     } else if (output.type === 'removed') {
       this.files = this.files.filter((file: UploadFile) => file !== output.file);
     } else if (output.type === 'dragOver') {
@@ -168,7 +192,8 @@ export class UploadComponent implements OnInit {
   }
 
   public cancelUpload(id: string): void {
-    this.uploadInput.emit({type: 'cancel', id: id});
+    console.log('cancel');
+    this.uploadInput.emit({type: 'cancelAll', id: id});
   }
 
 }
