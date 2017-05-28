@@ -16,7 +16,8 @@
     <button class="action-btn basket" title="add"></button>
     <div class="td-id">
       <span>{{index + 1}}</span>
-      <button class="box-btn play" title="play" (click)="playRecord(record)"></button>
+      <!--<button class="box-btn play" title="play" (click)="playRecord(record)"></button>-->
+      <ng-content></ng-content>
     </div>
   </div>
   <div class="td">{{record.title}}</div>

@@ -1,5 +1,4 @@
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
-import {SharedService} from "app/shared/shared.service";
 import {IRecord} from "../../interfases";
 
 @Component({
@@ -16,13 +15,9 @@ export class TrackItemComponent implements OnInit {
   @Output() onfollow: EventEmitter<any> = new EventEmitter();
   @Output() onsahred: EventEmitter<any> = new EventEmitter();
 
-  constructor(private _sharedService: SharedService) { }
+  constructor() {}
 
   ngOnInit() {
-  }
-
-  playRecord(record): void {
-    this._sharedService.playTrackSubject.next(record);
   }
 
   toShared(): void {

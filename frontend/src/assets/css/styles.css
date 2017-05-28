@@ -13723,13 +13723,13 @@ ul li {
   margin: auto;
 }
 
-.feed-box .box-btn.play:after {
+.box-btn.play:after {
   left: 4px;
   background: url("img/feed-boxes/play.svg") 50% 50% no-repeat;
   background-size: contain;
 }
 
-.feed-box .box-btn.pause:after {
+.box-btn.pause:after {
   background: url("img/feed-boxes/pause-button.svg") 50% 50% no-repeat;
   background-size: contain;
 }

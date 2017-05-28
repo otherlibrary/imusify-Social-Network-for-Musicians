@@ -10,7 +10,11 @@
       <div class="th ico-like"></div>
     </div>
     <div class="tbody" *ngIf="records">
-      <track-item-line *ngFor="let record of records, let i = index" [record]="record" [index]="i"></track-item-line>
+      <track-item-line *ngFor="let record of records, let i = index"
+                       [record]="record"
+                       [index]="i">
+        <app-play-pause [record]="record"></app-play-pause>
+      </track-item-line>
     </div>
   </div>
 </div>

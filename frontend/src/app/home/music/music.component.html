@@ -2,7 +2,9 @@
   <home-record class="feed-box masonry__item" *ngFor="let record of records"
                [record]="record"
                (onfollow)="addFollow($event)"
-               (onsahred)="sharedRecord($event)" (onPlay)="playPlaylist($event)"></home-record>
+               (onsahred)="sharedRecord($event)">
+    <app-play-pause [record]="record"></app-play-pause>
+  </home-record>
 </div>
 <div [hidden]="!sharedUrl" class="shared_popup">
   <div class="popup-close" (click)="sharedUrl = null"></div>
