@@ -404,7 +404,13 @@ $url_6: url(/assets/css/img/player/queue.svg);
 button:disabled {
   background: #ccc !important;
 }
-
+.feed-box .feed-bg img {
+  margin: 0;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+}
 .masonry {
   -moz-column-gap: 4px;
   -webkit-column-gap: 4px;
