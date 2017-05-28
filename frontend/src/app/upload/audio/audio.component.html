@@ -12,5 +12,7 @@
   <app-track *ngFor="let track of trackList"
              [record]="track"
              (onEdit)="getTrackById($event)"
-             (onRemove)="removeTrack($event)"></app-track>
+             (onRemove)="removeTrack($event)">
+    <app-play-pause [record]="track"></app-play-pause>
+  </app-track>
 </section>

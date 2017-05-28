@@ -10,13 +10,9 @@ import {SharedService} from "../../shared/shared.service";
 export class ArtistItemComponent implements OnInit {
   @Input() artist: IArtist;
 
-  constructor(private _SharedService: SharedService) { }
+  constructor() { }
 
   ngOnInit() {
-  }
-
-  playRecord(record): void {
-    this._SharedService.playTrackSubject.next(record);
   }
 
 }

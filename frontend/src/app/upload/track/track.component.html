@@ -1,60 +1,52 @@
 <article class="upload-audio-item">
-    <div class="upload-img">
-        <div class="img-container">
-            <img [src]="record.track_image" alt="">
-        </div>
-        <!--<button class="audio-btn play" title="play"></button>-->
-        <button class="audio-btn play"
-                title="play"
-                *ngIf="!isPlayed"
-                (click)="playRecord(record)"></button>
-        <button class="audio-btn pause"
-                title="pause"
-                *ngIf="isPlayed"
-                (click)="pauseRecord(record)"></button>
+  <div class="upload-img">
+    <div class="img-container">
+      <img [src]="record.track_image" alt="">
     </div>
-    <div class="audio-content">
-        <div class="song-info-head">
-            <div class="left-part">
-                <div class="song-info-title">Track info</div>
-                <span class="song-added">Added on {{record.createdDate}}</span>
-            </div>
-            <div class="right-part">
-                <button type="button" class="song-options edit" (click)="editTrack(record.id)">edit</button>
-                <i class="sep" style="top:0;"></i>
-                <button type="button" class="song-options remove" (click)="removeTrack(record)">remove</button>
-            </div>
-        </div>
-        <div class="song-info-content">
-            <div class="row-data">
-                <div class="row-head left">{{record.main_title}}</div>
-                {{record.title}}
-            </div>
-            <div class="row-data">
-                <div class="row-head ico-time"></div>
-                {{record.timelength}}
-            </div>
-            <div class="row-data">
-                <div class="row-head">plays</div>
-                {{record.plays}}
-            </div>
-            <div class="row-data">
-                <div class="row-head">likes</div>
-                {{record.likes}}
-            </div>
-            <div class="row-data">
-                <div class="row-head">comments</div>
-                {{record.comments}}
-            </div>
-            <div class="row-data">
-                <div class="row-head">shares</div>
-                {{record.shares}}
-            </div>
-        </div>
-        <div class="song-tags">
-            <div class="tags-title" [hidden]="!record.tags">Tags</div>
-            <a class="song-tag" href="#">{{record.genre}}</a>
-            <a class="song-tag" href="#" *ngFor="let tag of record.tags">{{tag}}</a>
-        </div>
+    <ng-content></ng-content>
+  </div>
+  <div class="audio-content">
+    <div class="song-info-head">
+      <div class="left-part">
+        <div class="song-info-title">Track info</div>
+        <span class="song-added">Added on {{record.createdDate}}</span>
+      </div>
+      <div class="right-part">
+        <button type="button" class="song-options edit" (click)="editTrack(record.id)">edit</button>
+        <i class="sep" style="top:0;"></i>
+        <button type="button" class="song-options remove" (click)="removeTrack(record)">remove</button>
+      </div>
     </div>
+    <div class="song-info-content">
+      <div class="row-data">
+        <div class="row-head left">{{record.main_title}}</div>
+        {{record.title}}
+      </div>
+      <div class="row-data">
+        <div class="row-head ico-time"></div>
+        {{record.timelength}}
+      </div>
+      <div class="row-data">
+        <div class="row-head">plays</div>
+        {{record.plays}}
+      </div>
+      <div class="row-data">
+        <div class="row-head">likes</div>
+        {{record.likes}}
+      </div>
+      <div class="row-data">
+        <div class="row-head">comments</div>
+        {{record.comments}}
+      </div>
+      <div class="row-data">
+        <div class="row-head">shares</div>
+        {{record.shares}}
+      </div>
+    </div>
+    <div class="song-tags">
+      <div class="tags-title" [hidden]="!record.tags">Tags</div>
+      <a class="song-tag" href="#">{{record.genre}}</a>
+      <a class="song-tag" href="#" *ngFor="let tag of record.tags">{{tag}}</a>
+    </div>
+  </div>
 </article>
