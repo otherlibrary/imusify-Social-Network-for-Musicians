@@ -1,4 +1,4 @@
-import {Component, NgZone, OnInit} from '@angular/core';
+import {Component, Input, NgZone, OnInit} from '@angular/core';
 import {PlayerService} from "../player.service";
 import {IRecord} from "../../interfases/IRecord";
 import {IRecordEvent} from "../../interfases/IRecordEvent";
@@ -11,11 +11,18 @@ declare const WaveSurfer: any;
   styleUrls: ['./player.component.scss']
 })
 
-
+/**
+ * Input Subject: playInputSubject
+ * @param Object: type: string, record: IRecord
+ *  type: play | pause
+ *
+ *  Input Subject: playerOutputSubject
+ *  @param Object: type: string, record: IRecord
+ *  type: play | pause | ready | finish
+ */
 export class PlayerComponent implements OnInit {
   public records: IRecord[];
   public isReady: boolean;
-  public autoPlay: boolean;
   public currentTrack: IRecord;
   public lastPlayedTrack: IRecord;
   public isPlay: boolean;
@@ -30,6 +37,8 @@ export class PlayerComponent implements OnInit {
 
   public isBig: boolean = false;
   public isQueue: boolean;
+
+  @Input() public autoPlay: boolean;
 
   constructor(private _playerService: PlayerService, public zone: NgZone) {
   }
@@ -67,13 +76,15 @@ export class PlayerComponent implements OnInit {
       height: 70,
       progressColor: '#c23a48',
       cursorColor: '#fff',
-      barWidth: 1.5
+      barWidth: 2
     });
 
     const wavesurfer = this._playerService.wavesurfer;
+    this.currentVol = wavesurfer.getVolume() || 1;
 
     wavesurfer.on('ready', () => {
       console.log('ready');
+      wavesurfer.setVolume(this.currentVol);
       this.isReady = true;
       if(this.autoPlay) {
         this._playerService.wavesurfer.play();
@@ -94,7 +105,6 @@ export class PlayerComponent implements OnInit {
     });
 
     wavesurfer.on('finish', () => {
-      console.log('finish');
       if(this.isTrackRepeated) {
         this.repeatTrack();
       } else if(this.isShuffleOn) {

@@ -2,12 +2,14 @@
   left: 0;
 }
 .timeline {
-  transform: translateY(20%);
+  transform: translateY(17%);
   cursor: pointer;
   * {
     cursor: pointer;
   }
 }
+
+
 #player .big-block .btn-play,
 #player .big-block .btn-pause {
   width: 56px;
@@ -240,16 +242,20 @@ input[type=range]:focus::-ms-fill-upper {
   
   .range-vol {
     position: absolute;
-    top: -8px;
-    left: 17px;
-    width: 0;
+    top: -80%;
+    left: 23%;
+    width: 60px;
     opacity: 0;
-    transition: width 0.2s linear;
+    max-width: 0;
+    transform: rotate(-90deg);
+    transition: max-width 0.2s linear;
+    transform-origin: left;
   }
   &:hover {
     .range-vol {
       width: 60px;
       opacity: 1;
+      max-width: 60px;
     }
   }
 }

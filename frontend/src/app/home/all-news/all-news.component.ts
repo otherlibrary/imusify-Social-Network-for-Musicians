@@ -4,9 +4,7 @@ import {EmitterService} from "../../shared/services/emitter.service";
 import {IRecord, ITracksData} from "../../interfases";
 import {SharedService} from "../../shared/shared.service";
 import {HelpersService} from "../../shared/services/helpers.service";
-import {IArticle} from "../../interfases/IArticle";
 import {ActivatedRoute} from "@angular/router";
-import * as _ from 'lodash';
 import {PlayerService} from "../../player/player.service";
 
 @Component({
@@ -21,10 +19,8 @@ export class AllNewsComponent implements OnInit {
   private isPlayPlaylist: boolean = false;
 
   constructor(
-    private _sharedService: SharedService,
     private _helpersService: HelpersService,
     private _route: ActivatedRoute,
-    private _homeService: HomeService,
     private _playerService: PlayerService
   ) {}
 
