@@ -8,12 +8,7 @@ import {MyDatePickerModule} from "mydatepicker";
 import {ToastyModule} from "ng2-toasty";
 import { SwiperModule } from 'ngx-swiper-wrapper';
 import { SwiperConfigInterface } from 'ngx-swiper-wrapper';
-
-const SWIPER_CONFIG: SwiperConfigInterface = {
-  direction: 'horizontal',
-  slidesPerView: 'auto',
-  keyboardControl: true
-};
+import {PlayerModule} from "../player/player.module";
 
 @NgModule({
   imports: [
@@ -23,7 +18,8 @@ const SWIPER_CONFIG: SwiperConfigInterface = {
     ReactiveFormsModule,
     SelectModule,
     MyDatePickerModule,
-    ToastyModule.forRoot()
+    ToastyModule.forRoot(),
+    PlayerModule
   ],
   declarations: [
     ...directives,
@@ -38,6 +34,7 @@ const SWIPER_CONFIG: SwiperConfigInterface = {
     MyDatePickerModule,
     ToastyModule,
     SwiperModule,
+    PlayerModule,
     ...exportDirectives
   ],
   providers: []

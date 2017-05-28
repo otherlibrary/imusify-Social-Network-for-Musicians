@@ -36,7 +36,6 @@ import {routing} from './app-routing.module';
     BrowserModule,
     HttpModule,
     UserModule,
-    PlayerModule,
     routing,
     BrowserAnimationsModule,
     FacebookModule.forRoot()

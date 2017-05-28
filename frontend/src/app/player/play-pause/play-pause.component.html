@@ -1,0 +1,8 @@
+<button class="box-btn play"
+        title="play"
+        *ngIf="!isPlayed"
+        (click)="playRecord(record)"></button>
+<button class="box-btn pause"
+        title="pause"
+        *ngIf="isPlayed"
+        (click)="pauseRecord(record)"></button>

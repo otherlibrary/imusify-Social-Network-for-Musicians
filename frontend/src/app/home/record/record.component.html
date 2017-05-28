@@ -8,16 +8,7 @@
     <div [hidden]="!record.featured" class="feed-top">
       <div class="featured-track">Featured track</div>
     </div>
-
-    <button class="box-btn play"
-            title="play"
-            *ngIf="!isPlayed"
-            (click)="playRecord(record)"></button>
-    <button class="box-btn pause"
-            title="pause"
-            *ngIf="isPlayed"
-            (click)="pauseRecord(record)"></button>
-
+    <ng-content></ng-content>
     <div class="feed-bottom">
       <div class="track-info">
         <a href="#" class="subtitle">{{record.username}}</a>
@@ -32,7 +23,7 @@
           <button class="action-btn add" (click)="toFollow()" title="add">add</button>
         </div>
         <div class="sound-wave">
-          <span *ngIf="record.wave" [style.background-image]="getWave()"></span>
+          <span></span>
           <i class="duration">{{record.timelength}}</i>
         </div>
       </div>
