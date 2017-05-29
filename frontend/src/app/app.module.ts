@@ -4,7 +4,6 @@ import {HttpModule} from '@angular/http';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {UserModule} from './user/user.module';
 import { FacebookModule } from 'ngx-facebook';
-import {PlayerModule} from "./player/player.module";
 
 import {
   HelpersService,

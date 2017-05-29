@@ -84,7 +84,6 @@ export class PlayerComponent implements OnInit {
 
     wavesurfer.on('ready', () => {
       console.log('ready');
-      wavesurfer.setVolume(this.currentVol);
       this.isReady = true;
       if(this.autoPlay) {
         this._playerService.wavesurfer.play();
@@ -94,6 +93,7 @@ export class PlayerComponent implements OnInit {
 
     wavesurfer.on('play', () => {
       console.log('play');
+      wavesurfer.setVolume(this.currentVol);
       this._playerService.playerOutputSubject.next({type: 'play', record: this.currentTrack});
       this.isPlay = this.isPlaying();
     });
@@ -147,7 +147,7 @@ export class PlayerComponent implements OnInit {
     this._playerService.getTrackLink(record.trackLink).subscribe(track => {
       this.streamTrack = track.stream_url + '?nor=1';
       this._playerService.wavesurfer
-        .load(this.streamTrack, JSON.parse(this.currentTrack.waveform), 'auto');
+        .load(this.streamTrack, JSON.parse(this.currentTrack.waveform));
       this.durationTime = track.duration;
     });
   }

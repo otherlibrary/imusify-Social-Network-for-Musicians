@@ -3,11 +3,12 @@ import { CommonModule } from '@angular/common';
 import {exportsPlayerComponents, playerComponents} from "./index";
 import {TimeFormatPipe} from "./pipes/time-format.pipe";
 import {AudioSliderDirective} from "../directives/audio-slider.directive";
-import { PlayPauseComponent } from './play-pause/play-pause.component';
+import {SwiperModule} from "ngx-swiper-wrapper";
 
 @NgModule({
   imports: [
-    CommonModule
+    CommonModule,
+    SwiperModule
   ],
   declarations: [
     ...playerComponents,

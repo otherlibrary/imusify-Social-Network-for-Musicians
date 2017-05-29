@@ -9,14 +9,10 @@
   <!--Normal & Hover-->
   <div class="big-block">
     <div class="big-top">
-      <div class="big-block__img"
-           *ngFor="let record of records"
-           [class.active]="record.id == currentTrack.id">
-        <a href="#" class="top-one">
-            <span class="bg_img"
-                  [ngStyle]="{'background-image': 'url(' + record.track_image + ')'}"></span>
-        </a>
-      </div>
+      <app-player-slider [records]="records"
+                      [currentTrack]="currentTrack"
+                      [isPlay]="isPlay">
+      </app-player-slider>
     </div>
     <div class="big-bot">
       <div class="track-info">
@@ -25,9 +21,9 @@
                [src]="currentTrack.track_image"
                alt="imagTrack"/>
         </div>
-        <div class="info-right">
-          <a class="title" href="#"><span>Border</span></a>
-          <a class="subtitle" href="#"><span>Come Again</span></a>
+        <div class="info-right" *ngIf="currentTrack">
+          <a class="title" href="#"><span>{{currentTrack.artist_name}}</span></a>
+          <a class="subtitle" href="#"><span>{{currentTrack.title}}</span></a>
         </div>
       </div>
       <div class="controls">
@@ -52,19 +48,21 @@
       </div>
     </div>
   </div>
-  <div *ngIf="currentTrack" class="player-bg"
+
+  <div class="block-player" *ngIf="!isReady || !currentTrack"></div>
+  <div class="player-bg" *ngIf="currentTrack"
        [ngStyle]="{'background-image': 'url(' + currentTrack.track_image + ')'}">
   </div>
   <div class="player-inner">
     <div class="track-info" *ngIf="currentTrack">
       <div class="info-left">
-        <img [src]="currentTrack.track_image" alt=""/>
+        <img *ngIf="isReady" [src]="currentTrack.track_image" alt=""/>
       </div>
       <div class="info-right">
         <a class="title"
-           href="#"><span>{{currentTrack.artist_name}}</span></a>
+           href="#" *ngIf="isReady"><span>{{currentTrack.artist_name}}</span></a>
         <a class="subtitle"
-           href="#"><span>{{currentTrack.title}}</span></a>
+           href="#" *ngIf="isReady"><span>{{currentTrack.title}}</span></a>
       </div>
     </div>
     <div class="player-center">
@@ -89,10 +87,10 @@
                 (click)="playNextTrack()"></button>
       </div>
 
-      <div class="play-time">
-        <span class="time-passed">{{currentTime | timeFormat}}</span>
+      <div class="play-time" [hidden]="!isReady">
+        <span class="time-passed" *ngIf="isReady">{{currentTime | timeFormat}}</span>
         <div id="waveform" class="timeline"></div>
-        <span class="duration">{{durationTime}}</span>
+        <span class="duration" *ngIf="isReady">{{durationTime}}</span>
       </div>
 
       <div class="play-type">

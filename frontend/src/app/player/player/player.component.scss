@@ -1,6 +1,16 @@
 #player {
   left: 0;
 }
+.block-player {
+  display: block;
+  position: absolute;
+  background: transparent;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 9999;
+}
 .timeline {
   transform: translateY(17%);
   cursor: pointer;

@@ -7,7 +7,6 @@ import {SelectModule} from "ng-select";
 import {MyDatePickerModule} from "mydatepicker";
 import {ToastyModule} from "ng2-toasty";
 import { SwiperModule } from 'ngx-swiper-wrapper';
-import { SwiperConfigInterface } from 'ngx-swiper-wrapper';
 import {PlayerModule} from "../player/player.module";
 
 @NgModule({

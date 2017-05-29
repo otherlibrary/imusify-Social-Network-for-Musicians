@@ -1,0 +1,7 @@
+<div class="swiper-container" [swiper]="swiperConfig">
+  <div class="swiper-wrapper">
+    <div class="swiper-slide" *ngFor="let record of records">
+      <div class="img" [ngStyle]="{'background-image': 'url(' + record.track_image || '/assets/images/track-img.jpg' + ')'}"></div>
+    </div>
+  </div>
+</div>
