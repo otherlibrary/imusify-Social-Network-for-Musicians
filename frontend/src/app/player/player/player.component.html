@@ -49,7 +49,7 @@
     </div>
   </div>
 
-  <div class="block-player" *ngIf="!isReady || !currentTrack"></div>
+  <div class="block-player" *ngIf="!isPlay"></div>
   <div class="player-bg" *ngIf="currentTrack"
        [ngStyle]="{'background-image': 'url(' + currentTrack.track_image + ')'}">
   </div>

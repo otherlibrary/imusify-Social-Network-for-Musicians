@@ -143,6 +143,7 @@ export class PlayerComponent implements OnInit {
    */
   public setCurrentPlayedTrack(record: IRecord): void {
     this.isReady = false;
+    this.isPlay = this.isPlaying();
     this.currentTrack = record;
     this._playerService.getTrackLink(record.trackLink).subscribe(track => {
       this.streamTrack = track.stream_url + '?nor=1';
