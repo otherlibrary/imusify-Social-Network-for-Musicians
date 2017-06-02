@@ -42,6 +42,25 @@
 
 $route['default_controller'] = "home";
 $route['404_override'] = 'home';
+
+
+/*
+ *
+ * API ROUTES by IgorKo
+ *
+ * */
+
+$route['api/v2/playlist/(:num)/show'] = 'new_api/Playlist/show/$1';
+$route['api/v2/playlist/(:num)/update'] = "new_api/Playlist/update/$1";
+$route['api/v2/playlist/(:num)/delete'] = "new_api/Playlist/delete/$1";
+$route['api/v2/playlist/list'] = 'new_api/Playlist/list';
+$route['api/v2/playlist/create'] = "new_api/Playlist/create";
+
+/*
+ *
+ *
+ * */
+
 $route['music'] = "home/index/music";
 $route['instrumental'] = "home/index/instrumental";
 $route['license'] = "home/index/license";

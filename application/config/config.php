@@ -1,4 +1,6 @@
-<?php  if ( ! defined('BASEPATH')) exit('No direct script access allowed');
+<?php if ( ! defined('BASEPATH')) {
+    exit('No direct script access allowed');
+}
 
 /*
 |--------------------------------------------------------------------------
@@ -14,76 +16,172 @@
 | path to your installation.
 |
 */
-$config['base_url'] =  ((isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] == "on") ?  "https" : "http");
-$config['base_url'] .=  "://".$_SERVER['HTTP_HOST'];
-$config['base_url'] .=  str_replace(basename($_SERVER['SCRIPT_NAME']),"",$_SERVER['SCRIPT_NAME']);
+$config['base_url'] = ((isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] == "on") ? "https" : "http");
+$config['base_url'] .= "://" . $_SERVER['HTTP_HOST'];
+$config['base_url'] .= str_replace(basename($_SERVER['SCRIPT_NAME']), "", $_SERVER['SCRIPT_NAME']);
 
 //error_reporting(E_ALL);
 error_reporting(E_ALL & ~E_NOTICE & ~E_STRICT & ~E_DEPRECATED);
 
-define("SITE_ENV",'development');
+define("SITE_ENV", 'development');
 
-$curl=$_SERVER['REQUEST_URI'];
-$curl_arr=explode("/",$curl);
-$curl_arr=array_filter($curl_arr);
-$admin=false;
-if(!empty($curl_arr))
-{
-	if(in_array("admin",$curl_arr))
-	{
-			$admin=true;
-	}
+$curl     = $_SERVER['REQUEST_URI'];
+$curl_arr = explode("/", $curl);
+$curl_arr = array_filter($curl_arr);
+$admin    = false;
+if ( ! empty($curl_arr)) {
+    if (in_array("admin", $curl_arr)) {
+        $admin = true;
+    }
 }
 define('ADMIN_DIR', 'admin');
 
 // set default (and only) controller to admin if so
-if($admin==true)
-{
+if ($admin == true) {
 
-	define('ADMIN_PANEL', true);
-	
-	define('SITE_NM',"Imusify Admin");
-	
-	/*$config['asset_admin_js'] = array('jquery.validationEngine-en.js','jquery.validationEngine.js','croppic.min.js');
-	$config['asset_admin_css'] = array('validationEngine.jquery.css','croppic.css');*/
-	$config['asset_css'] = array('js/jquery-ui/css/no-theme/jquery-ui-1.10.3.custom.min.css');
-	$config['header_css'] = array('neon.css','custom.css','tagmanager.css'/*,'jquery.tagsinput.css'*/,'font-icons/entypo/css/entypo.css','font-icons/font-awesome/css/font-awesome.min.css','validationEngine.jquery.css','croppic.css');
-	$config['header_js']  = array('jquery-1.10.2.min.js','jquery.validate.min.js','gsap/main-gsap.js','jquery-ui/js/jquery-ui-1.10.3.minimal.min.js','bootstrap.min.js','jquery.validationEngine-en.js','jquery.validationEngine.js','croppic.min.js','tagmanager.js',/*'jquery.tagsinput.js',*/'joinable.js','resizeable.js','neon-api.js','bootstrap-switch.min.js','neon-chat.js','neon-custom.js','neon-demo.js','jquery.sparkline.min.js','jquery.dataTables.min.js','datatables/TableTools.min.js','dataTables.bootstrap.js','datatables/jquery.dataTables.columnFilter.js','datatables/lodash.min.js','datatables/responsive/js/datatables.responsive.js','select2/select2.min.js','jquery.multi-select.js');
-	
-	
-	$config['title']='Imusify';
-	$config['meta_title']=$config['title'];
-	$config['meta_description']='Political website, Liberal, progressive, blog, posts,';
-	$config['meta_keyword']='abc';
-	$config['content_type']='text/html; charset=utf-8';
-	$config['meta']=array();
-}
-else 
-{	
+    define('ADMIN_PANEL', true);
 
-	define('SITE_NM',"Imusify");
-	
-	//'jquery.effects.core.js','jquery.effects.slide.js'
-	define('ADMIN_PANEL', false);
-	$config['asset_css'] = array();
-	$config['header_css'] = array('bootstrap-switch.css','bootstrap.min.css','jquery.tagsinput.css','bootstrap-theme.min.css','jquery-ui.css','select2.css','enjoyhint.css','style.css','audioplayer.css','scrollbar.css','style_set.css','validationEngine.jquery.css','toastr.css','audio','tagmanager.css','croppic.css','ion.rangeSlider.css','ion.rangeSlider.skinHTML5.css','jquery-te-1.4.0.css');
-	
-	//$config['header_js']  = array('jquery-1.10.2.min.js','jquery-ui.min.js','jquery.form.js','croppic.min.js','jquery.history.js','jquery.tmpl.js','jquery.tagsinput.js','tmpload.js','bootstrap.min.js','bootstrap-editable.js','bootstrap-switch.js','select2/select2.min.js','jquery.scrollbar.min.js','audioplayer.dev.js','formdata.js','jsapi','imagesloaded.pkgd.js','masonry.pkgd.min.js','imusify.player.api.js','jquery.gallery.js','sc_js1.js','sc_js.js','ion.rangeSlider.js','sc-player.js','soundcloud.player.api.js','jquery.tooltipster.js','enjoyhint.js','pace.js','app.js','jquery.validationEngine-en.js','jquery.validationEngine.js','toastr.min.js','jquery.imagesloaded.js','jquery.customSelect.js','jquery.wookmark.js','html5.js','modernizr.custom.53451.js','jquery.ba-throttle-debounce.js','jquery.iframe-transport.js','jquery.fileupload.js','jquery.fileupload-process.js','typeahead.bundle.js','tagmanager.js','jquery.scrollTo.js','soundcloud-waveform.js','waveform.js');
-        $config['header_js']  = array('jquery-1.10.2.min.js','jquery-ui.min.js','jquery.form.js','croppic.min.js','jquery.history.js','jquery.tmpl.js','jquery.tagsinput.js','tmpload.js','bootstrap.min.js','bootstrap-editable.js','bootstrap-switch.js','select2/select2.min.js','jquery.scrollbar.min.js','audioplayer.dev.js','formdata.js','jsapi','imagesloaded.pkgd.js','masonry.pkgd.min.js','imusify.player.api.js','jquery.gallery.js','sc_js1.js','ion.rangeSlider.js','sc-player.js','soundcloud.player.api.js','jquery.tooltipster.js','enjoyhint.js','pace.js','app.js','jquery.validationEngine-en.js','jquery.validationEngine.js','toastr.min.js','jquery.imagesloaded.js','jquery.customSelect.js','jquery.wookmark.js','html5.js','modernizr.custom.53451.js','jquery.ba-throttle-debounce.js','jquery.iframe-transport.js','jquery.fileupload.js','jquery.fileupload-process.js','typeahead.bundle.js','tagmanager.js','jquery.scrollTo.js','waveform.js', 'id3-minimized.js', 'jquery-te-1.4.0.min.js');//remove soundclound-waveform.js, 'sc_js.js'
-	
-	$config['title']='Imusify';
-	$config['meta_title']=$config['title'];
-	$config['meta_description']='Political website, Liberal, progressive, blog, posts,';
-	$config['meta_keyword']='abc';
-	$config['content_type']='text/html; charset=utf-8';
-	$config['meta']=array();
+    define('SITE_NM', "Imusify Admin");
+
+    /*$config['asset_admin_js'] = array('jquery.validationEngine-en.js','jquery.validationEngine.js','croppic.min.js');
+    $config['asset_admin_css'] = array('validationEngine.jquery.css','croppic.css');*/
+    $config['asset_css']  = ['js/jquery-ui/css/no-theme/jquery-ui-1.10.3.custom.min.css'];
+    $config['header_css'] = [
+        'neon.css',
+        'custom.css',
+        'tagmanager.css'
+        /*,'jquery.tagsinput.css'*/,
+        'font-icons/entypo/css/entypo.css',
+        'font-icons/font-awesome/css/font-awesome.min.css',
+        'validationEngine.jquery.css',
+        'croppic.css',
+    ];
+    $config['header_js']  = [
+        'jquery-1.10.2.min.js',
+        'jquery.validate.min.js',
+        'gsap/main-gsap.js',
+        'jquery-ui/js/jquery-ui-1.10.3.minimal.min.js',
+        'bootstrap.min.js',
+        'jquery.validationEngine-en.js',
+        'jquery.validationEngine.js',
+        'croppic.min.js',
+        'tagmanager.js',
+        /*'jquery.tagsinput.js',*/
+        'joinable.js',
+        'resizeable.js',
+        'neon-api.js',
+        'bootstrap-switch.min.js',
+        'neon-chat.js',
+        'neon-custom.js',
+        'neon-demo.js',
+        'jquery.sparkline.min.js',
+        'jquery.dataTables.min.js',
+        'datatables/TableTools.min.js',
+        'dataTables.bootstrap.js',
+        'datatables/jquery.dataTables.columnFilter.js',
+        'datatables/lodash.min.js',
+        'datatables/responsive/js/datatables.responsive.js',
+        'select2/select2.min.js',
+        'jquery.multi-select.js',
+    ];
+
+    $config['title']            = 'Imusify';
+    $config['meta_title']       = $config['title'];
+    $config['meta_description'] = 'Political website, Liberal, progressive, blog, posts,';
+    $config['meta_keyword']     = 'abc';
+    $config['content_type']     = 'text/html; charset=utf-8';
+    $config['meta']             = [];
+} else {
+
+    define('SITE_NM', "Imusify");
+
+    //'jquery.effects.core.js','jquery.effects.slide.js'
+    define('ADMIN_PANEL', false);
+    $config['asset_css']  = [];
+    $config['header_css'] = [
+        'bootstrap-switch.css',
+        'bootstrap.min.css',
+        'jquery.tagsinput.css',
+        'bootstrap-theme.min.css',
+        'jquery-ui.css',
+        'select2.css',
+        'enjoyhint.css',
+        'style.css',
+        'audioplayer.css',
+        'scrollbar.css',
+        'style_set.css',
+        'validationEngine.jquery.css',
+        'toastr.css',
+        'audio',
+        'tagmanager.css',
+        'croppic.css',
+        'ion.rangeSlider.css',
+        'ion.rangeSlider.skinHTML5.css',
+        'jquery-te-1.4.0.css',
+    ];
+
+    //$config['header_js']  = array('jquery-1.10.2.min.js','jquery-ui.min.js','jquery.form.js','croppic.min.js','jquery.history.js','jquery.tmpl.js','jquery.tagsinput.js','tmpload.js','bootstrap.min.js','bootstrap-editable.js','bootstrap-switch.js','select2/select2.min.js','jquery.scrollbar.min.js','audioplayer.dev.js','formdata.js','jsapi','imagesloaded.pkgd.js','masonry.pkgd.min.js','imusify.player.api.js','jquery.gallery.js','sc_js1.js','sc_js.js','ion.rangeSlider.js','sc-player.js','soundcloud.player.api.js','jquery.tooltipster.js','enjoyhint.js','pace.js','app.js','jquery.validationEngine-en.js','jquery.validationEngine.js','toastr.min.js','jquery.imagesloaded.js','jquery.customSelect.js','jquery.wookmark.js','html5.js','modernizr.custom.53451.js','jquery.ba-throttle-debounce.js','jquery.iframe-transport.js','jquery.fileupload.js','jquery.fileupload-process.js','typeahead.bundle.js','tagmanager.js','jquery.scrollTo.js','soundcloud-waveform.js','waveform.js');
+    $config['header_js'] = [
+        'jquery-1.10.2.min.js',
+        'jquery-ui.min.js',
+        'jquery.form.js',
+        'croppic.min.js',
+        'jquery.history.js',
+        'jquery.tmpl.js',
+        'jquery.tagsinput.js',
+        'tmpload.js',
+        'bootstrap.min.js',
+        'bootstrap-editable.js',
+        'bootstrap-switch.js',
+        'select2/select2.min.js',
+        'jquery.scrollbar.min.js',
+        'audioplayer.dev.js',
+        'formdata.js',
+        'jsapi',
+        'imagesloaded.pkgd.js',
+        'masonry.pkgd.min.js',
+        'imusify.player.api.js',
+        'jquery.gallery.js',
+        'sc_js1.js',
+        'ion.rangeSlider.js',
+        'sc-player.js',
+        'soundcloud.player.api.js',
+        'jquery.tooltipster.js',
+        'enjoyhint.js',
+        'pace.js',
+        'app.js',
+        'jquery.validationEngine-en.js',
+        'jquery.validationEngine.js',
+        'toastr.min.js',
+        'jquery.imagesloaded.js',
+        'jquery.customSelect.js',
+        'jquery.wookmark.js',
+        'html5.js',
+        'modernizr.custom.53451.js',
+        'jquery.ba-throttle-debounce.js',
+        'jquery.iframe-transport.js',
+        'jquery.fileupload.js',
+        'jquery.fileupload-process.js',
+        'typeahead.bundle.js',
+        'tagmanager.js',
+        'jquery.scrollTo.js',
+        'waveform.js',
+        'id3-minimized.js',
+        'jquery-te-1.4.0.min.js',
+    ];//remove soundclound-waveform.js, 'sc_js.js'
+
+    $config['title']            = 'Imusify';
+    $config['meta_title']       = $config['title'];
+    $config['meta_description'] = 'Political website, Liberal, progressive, blog, posts,';
+    $config['meta_keyword']     = 'abc';
+    $config['content_type']     = 'text/html; charset=utf-8';
+    $config['meta']             = [];
 }
 
-if(isset($_POST['ajax']) && $_POST['ajax']==true){
-	$config['ajax']=true;
-}
-else{
-	$config['ajax']=false;
+if (isset($_POST['ajax']) && $_POST['ajax'] == true) {
+    $config['ajax'] = true;
+} else {
+    $config['ajax'] = false;
 }
 /*
 |--------------------------------------------------------------------------
@@ -113,7 +211,7 @@ $config['index_page'] = '';
 | 'ORIG_PATH_INFO'	Uses the ORIG_PATH_INFO
 |
 */
-$config['uri_protocol']	= 'AUTO';
+$config['uri_protocol'] = 'AUTO';
 
 /*
 |--------------------------------------------------------------------------
@@ -138,7 +236,7 @@ $config['url_suffix'] = '';
 | than english.
 |
 */
-$config['language']	= 'english';
+$config['language'] = 'english';
 
 /*
 |--------------------------------------------------------------------------
@@ -160,8 +258,7 @@ $config['charset'] = 'UTF-8';
 | setting this variable to TRUE (boolean).  See the user guide for details.
 |
 */
-$config['enable_hooks'] = FALSE;
-
+$config['enable_hooks'] = false;
 
 /*
 |--------------------------------------------------------------------------
@@ -176,7 +273,6 @@ $config['enable_hooks'] = FALSE;
 |
 */
 $config['subclass_prefix'] = 'MY_';
-
 
 /*
 |--------------------------------------------------------------------------
@@ -196,7 +292,6 @@ $config['subclass_prefix'] = 'MY_';
 |
 */
 $config['permitted_uri_chars'] = 'a-z 0-9~%.:_\-';
-
 
 /*
 |--------------------------------------------------------------------------
@@ -223,11 +318,11 @@ $config['permitted_uri_chars'] = 'a-z 0-9~%.:_\-';
 | use segment based URLs.
 |
 */
-$config['allow_get_array']		= TRUE;
-$config['enable_query_strings'] = FALSE;
-$config['controller_trigger']	= 'c';
-$config['function_trigger']		= 'm';
-$config['directory_trigger']	= 'd'; // experimental not currently in use
+$config['allow_get_array']      = true;
+$config['enable_query_strings'] = false;
+$config['controller_trigger']   = 'c';
+$config['function_trigger']     = 'm';
+$config['directory_trigger']    = 'd'; // experimental not currently in use
 
 /*
 |--------------------------------------------------------------------------
@@ -313,17 +408,15 @@ $config['encryption_key'] = 'L7VmiNIgofINb1O11sEJoESUnprs2x8x';
 | 'sess_time_to_update'		= how many seconds between CI refreshing Session Information
 |
 */
-$config['sess_cookie_name']		= 'ci_cookies';
-$config['sess_expiration']		= 0;
-$config['sess_expire_on_close']	= TRUE;
-$config['sess_encrypt_cookie']	= TRUE;
-$config['sess_use_database']	= TRUE;
-$config['sess_table_name']		= 'ci_sessions';
-$config['sess_match_ip']		= FALSE;
-$config['sess_match_useragent']	= TRUE;
-$config['sess_time_to_update']	= 604800;
-
-
+$config['sess_cookie_name']     = 'ci_cookies';
+$config['sess_expiration']      = 0;
+$config['sess_expire_on_close'] = true;
+$config['sess_encrypt_cookie']  = true;
+$config['sess_use_database']    = true;
+$config['sess_table_name']      = 'ci_sessions';
+$config['sess_match_ip']        = false;
+$config['sess_match_useragent'] = true;
+$config['sess_time_to_update']  = 604800;
 
 /*
 |--------------------------------------------------------------------------
@@ -335,9 +428,9 @@ $config['sess_time_to_update']	= 604800;
 | 'cookie_path'   =  Typically will be a forward slash
 |
 */
-$config['cookie_prefix']	= '';
-$config['cookie_domain']	= '';
-$config['cookie_path']		= '/';
+$config['cookie_prefix'] = '';
+$config['cookie_domain'] = '';
+$config['cookie_path']   = '/';
 
 /*
 |--------------------------------------------------------------------------
@@ -362,10 +455,10 @@ $config['global_xss_filtering'] = false;
 | 'csrf_cookie_name' = The cookie name
 | 'csrf_expire' = The number in seconds the token should expire.
 */
-$config['csrf_protection'] = FALSE;
-$config['csrf_token_name'] = 'csrf_test_name';
+$config['csrf_protection']  = false;
+$config['csrf_token_name']  = 'csrf_test_name';
 $config['csrf_cookie_name'] = 'csrf_cookie_name';
-$config['csrf_expire'] = 7200;
+$config['csrf_expire']      = 7200;
 
 /*
 |--------------------------------------------------------------------------
@@ -384,7 +477,7 @@ $config['csrf_expire'] = 7200;
 | by the output class.  Do not 'echo' any values with compression enabled.
 |
 */
-$config['compress_output'] = FALSE;
+$config['compress_output'] = false;
 
 /*
 |--------------------------------------------------------------------------
@@ -399,7 +492,6 @@ $config['compress_output'] = FALSE;
 */
 $config['time_reference'] = 'local';
 
-
 /*
 |--------------------------------------------------------------------------
 | Rewrite PHP Short Tags
@@ -410,10 +502,10 @@ $config['time_reference'] = 'local';
 | in your view files.  Options are TRUE or FALSE (boolean)
 |
 */
-$config['rewrite_short_tags'] = FALSE;
+$config['rewrite_short_tags'] = false;
 
-$config['max_width']    = '2048';
-$config['max_height']   = '2048';
+$config['max_width']  = '2048';
+$config['max_height'] = '2048';
 /*
 |--------------------------------------------------------------------------
 | Reverse Proxy IPs
