@@ -7,6 +7,7 @@ import {IMyOptions} from "mydatepicker";
 import {UploadService} from '../upload.service';
 import {HelpersService} from "../../shared/services/helpers.service";
 import {SharedService} from "../../shared/shared.service";
+import * as _ from "lodash";
 
 function base64ArrayBuffer(arrayBuffer) {
   let base64 = '';
@@ -195,7 +196,8 @@ export class EditComponent implements OnInit {
       //if open edit load image
       this.uploadTrackImg = this.editImage;
       //open all switch if click to edit track
-      this.toggleAllSwitch();
+      //this.toggleAllSwitch();
+      this.toggleAllSwitchSome();
     }
   }
 
@@ -451,6 +453,29 @@ export class EditComponent implements OnInit {
     this.switchLicensing();
     this.switchELicensing();
     this.switchNoneProfit();
+  }
+
+  public toggleAllSwitchSome() {
+    const self = this;
+    let saleOnce = _.bind(_.once(self.switchSale), self);
+    let licensingOnce = _.bind(_.once(self.switchLicensing), self);
+    let eLicensingOnce = _.bind(_.once(self.switchELicensing), self);
+    let noneProfitOnce = _.bind(_.once(self.switchNoneProfit), self);
+
+    this.licensesList.map((item: any) => {
+      if(item.lic_type === 's' && item.licencePrice !== null) {
+        saleOnce();
+      }
+      if(item.lic_type === 'l' && item.licencePrice !== null) {
+        licensingOnce();
+      }
+      if(item.lic_type === 'el' && item.licencePrice !== null) {
+        eLicensingOnce();
+      }
+      if(item.lic_type === 'np' && item.licencePrice !== null) {
+        noneProfitOnce();
+      }
+    });
   }
 
   /**

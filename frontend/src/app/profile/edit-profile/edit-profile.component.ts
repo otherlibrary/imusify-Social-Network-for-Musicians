@@ -1,5 +1,5 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
-import {ActivatedRoute, NavigationEnd, Router} from "@angular/router";
+import {ActivatedRoute, Router} from "@angular/router";
 import {FormGroup, FormBuilder, Validators} from "@angular/forms";
 import {IProfileEdit} from "../../interfases/profile/IProfileEdit";
 import {IMyOptions} from "mydatepicker";
