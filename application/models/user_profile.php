@@ -2,7 +2,6 @@
 
 Class user_profile extends CI_Model
 {
-
     function __construct()
     {
         // Call the Model constructor
@@ -11,109 +10,17 @@ Class user_profile extends CI_Model
     }
 
     //Function to get roles from database
-    function get_user_roles($cond = null, $limit = null, $flag = null)
-    {
-        if ($flag == "true") {
-            $this->db->select('id');
-        } else {
-            $this->db->select('id,role');
-        }
-
-        $this->db->from('user_roles');
-
-        if ($cond != null) {
-            $where = "(status='y' AND " . $cond . ")";
-        } else {
-            $where = "(status='y')";
-        }
-
-        if ($limit != null) {
-            $this->db->limit($limit);
-        }
-
-        $this->db->where($where);
-        $this->db->order_by("role");
-        $query = $this->db->get();
-        //print $this -> db ->last_query();
-        if ($query->num_rows() > 0) {
-
-            if ($flag == "true") {
-                //$user_exists_role = $query->result_array();
-                $data = $query->result_array();
-                //print_r($data);
-                foreach ($data as $row1) {
-                    $output[] = $row1["id"];
-                }
-            } else {
-
-                foreach ($query->result_array() as $row) {
-                    $output[] = $row;
-                }
-            }
-
-
-            return $output;
-        }
-    }
 
     function udiffCompare($a, $b)
     {
         return $a['roleId'] - $b['roleId'];
     }
 
-    /*Fetch db records*/
-    function user_db_roles($flag = "default")
-    {
-
-        $user_exists_role = [];
-        $session_user_id = $this->session->userdata('user')->id;
-        $data = [];
-        if ($flag == "roles") {
-            $this->db->select('roleId');
-        } else if ($flag == "all") {
-            $this->db->select('role');
-        } else {
-            $this->db->select('id,roleId');
-        }
-
-        $this->db->from('user_roles_details');
-
-        if ($flag == "all") {
-            $this->db->join('user_roles', 'user_roles.id = user_roles_details.roleId');
-        }
-
-
-        $where = "(userId='" . $session_user_id . "')";
-        $this->db->where($where);
-        $query = $this->db->get();
-        if ($query->num_rows() > 0) {
-            if ($flag == "roles") {
-                //$user_exists_role = $query->result_array();
-                $data = $query->result_array();
-                //print_r($data);
-                foreach ($data as $row) {
-                    $user_exists_role[] = $row["roleId"];
-                }
-            } else if ($flag == "all") {
-                foreach ($query->result_array() as $row) {
-                    $user_exists_role[] = $row["role"];
-                }
-            } else {
-                foreach ($query->result_array() as $row) {
-                    $user_exists_role[] = $row;
-                }
-            }
-        }
-
-        return $user_exists_role;
-    }
-
-    /*Modal save user roles...*/
     function insert_roles($roles)
     {
-        $session_user_id = $this->session->userdata('user')->id;
-        $i = 0;
-        $data = [];
+        $session_user_id  = $this->session->userdata('user')->id;
+        $i                = 0;
+        $data             = [];
         $user_exists_role = $this->user_db_roles("roles");
 
         //admin set default roles
@@ -127,11 +34,11 @@ Class user_profile extends CI_Model
             $roles = array_unique($f_array);
         }
         $post_count = count($roles);
-        $db_count = count($user_exists_role);
+        $db_count   = count($user_exists_role);
         if ($db_count > 0) {
             $diff = array_diff($user_exists_role, $roles);
             /*dump($user_exists_role);*/
-            if (!empty($diff)) {
+            if ( ! empty($diff)) {
                 $this->db->where('userId', $session_user_id);
                 $this->db->where_in('roleId', $diff);
                 $this->db->delete('user_roles_details');
@@ -143,13 +50,13 @@ Class user_profile extends CI_Model
         dump($user_exists_role);*/
         $diff1 = array_diff($roles, $user_exists_role);
         /*var_dump($diff1);*/
-        if (!empty($diff1)) {
+        if ( ! empty($diff1)) {
             foreach ($diff1 as $roles1) {
                 //$arr[$i] = $roles;
-                $data[$i]["userId"] = $session_user_id;
-                $data[$i]["roleId"] = $roles1;
-                $data[$i]["createdDate"] = date('d:m:Y H:m:s');
-                $data[$i]["ipAddress"] = get_client_ip();
+                $data[ $i ]["userId"]      = $session_user_id;
+                $data[ $i ]["roleId"]      = $roles1;
+                $data[ $i ]["createdDate"] = date('d:m:Y H:m:s');
+                $data[ $i ]["ipAddress"]   = get_client_ip();
                 $i++;
             };
             $this->db->insert_batch('user_roles_details', $data);
@@ -160,7 +67,6 @@ Class user_profile extends CI_Model
         ];
         $this->db->where('id', $session_user_id);
         $this->db->update('users', $data_update);
-
 
         //check role of user: artist or normal user
 //                $user_id = $user->id;
@@ -206,10 +112,97 @@ Class user_profile extends CI_Model
         return "Success";
     }
 
+    /*Fetch db records*/
+
+    function user_db_roles($flag = "default")
+    {
+
+        $user_exists_role = [];
+        $session_user_id  = $this->session->userdata('user')->id;
+        $data             = [];
+        if ($flag == "roles") {
+            $this->db->select('roleId');
+        } else if ($flag == "all") {
+            $this->db->select('role');
+        } else {
+            $this->db->select('id,roleId');
+        }
+
+        $this->db->from('user_roles_details');
+
+        if ($flag == "all") {
+            $this->db->join('user_roles', 'user_roles.id = user_roles_details.roleId');
+        }
+
+        $where = "(userId='" . $session_user_id . "')";
+        $this->db->where($where);
+        $query = $this->db->get();
+        if ($query->num_rows() > 0) {
+            if ($flag == "roles") {
+                //$user_exists_role = $query->result_array();
+                $data = $query->result_array();
+                //print_r($data);
+                foreach ($data as $row) {
+                    $user_exists_role[] = $row["roleId"];
+                }
+            } else if ($flag == "all") {
+                foreach ($query->result_array() as $row) {
+                    $user_exists_role[] = $row["role"];
+                }
+            } else {
+                foreach ($query->result_array() as $row) {
+                    $user_exists_role[] = $row;
+                }
+            }
+        }
+
+        return $user_exists_role;
+    }
+
+    /*Modal save user roles...*/
+
+    function get_user_roles($cond = null, $limit = null, $flag = null)
+    {
+        if ($flag == "true") {
+            $this->db->select('id');
+        } else {
+            $this->db->select('id,role');
+        }
+
+        $this->db->from('user_roles');
+
+        if ($cond != null) {
+            $where = "(status='y' AND " . $cond . ")";
+        } else {
+            $where = "(status='y')";
+        }
+
+        if ($limit != null) {
+            $this->db->limit($limit);
+        }
+
+        $this->db->where($where);
+        $this->db->order_by("role");
+        $query = $this->db->get();
+        //print $this -> db ->last_query();
+
+        $output = [];
+        if ($query->num_rows() > 0) {
+            if ($flag == "true") {
+                foreach ($query->result_array() as $row) {
+                    $output[] = $row["id"];
+                }
+            } else {
+                $output = $query->result_array();
+            }
+        }
+        return $output;
+    }
+
     //Function to get user details...
+
     function get_user_details($profileLink = null, $cond = null, $flag = null)
     {
-        //echo "a".$profileLink;
         /*Get id*/
         $this->db->select('id');
         $this->db->from('users');
@@ -217,7 +210,7 @@ Class user_profile extends CI_Model
         $this->db->where($where);
         $query = $this->db->get();
         if ($query->num_rows() > 0) {
-            $data = $query->row();
+            $data   = $query->row();
             $userid = $data->id;
         } else {
             return "usernotexist";
@@ -225,29 +218,30 @@ Class user_profile extends CI_Model
         //echo $this->db->last_query();
         $query = $this->db->query("select u.company_name,u.company_name2,u.id,u.countryId, u.cityId, u.stateId, u.gender,u.firstname,u.lastname,u.username,u.description,u.dob_m,u.dob_d,u.dob_y,u.weburl,(SELECT COUNT(id) from followinglog where toId = '" . $userid . "') as followers, (SELECT COUNT(id) from followinglog where fromId = '" . $userid . "') as following,(SELECT COUNT(id) from tracks where userId = '" . $userid . "') as tracks,(SELECT COUNT(id) from albums where userId = '" . $userid . "') as albums,(SELECT name from location where location.location_id = u.countryId) as countryName,(SELECT name from location where location.location_id = u.cityId) as cityName from users as u where profileLink = '" . $profileLink . "'");
 
-        $user_roles_ar = $this->user_db_roles("all");
-        $row = $query->result_array();
+        $user_roles_ar           = $this->user_db_roles("all");
+        $row                     = $query->result_array();
         $row[0]["user_roles_ar"] = $user_roles_ar;
 
         return $row[0];
     }
 
     /*update_profile*/
-    function update_profile($fname,
-                            $lname,
-                            $country,
-                            $website,
-                            $description,
-                            $mm,
-                            $dd,
-                            $yy,
-                            $image,
-                            $folder_name,
-                            $state,
-                            $city,
-                            $company_name,
-                            $company_name2)
-    {
+    function update_profile(
+        $fname,
+        $lname,
+        $country,
+        $website,
+        $description,
+        $mm,
+        $dd,
+        $yy,
+        $image,
+        $folder_name,
+        $state,
+        $city,
+        $company_name,
+        $company_name2
+    ) {
 
         //$description = ereg_replace( "\n",'|', $description);
         //echo ($description);
@@ -255,19 +249,19 @@ Class user_profile extends CI_Model
         //$description = nl2br($description);
         $description = htmlentities($description, ENT_QUOTES);
 
-        $data = [
-            'firstname' => $this->db->escape_str($fname),
-            'lastname' => $this->db->escape_str($lname),
-            'description' => $description,
-            'updated' => date('Y-m-d H:i:s'),
-            'dob_m' => $this->db->escape_str($mm),
-            'dob_d' => $this->db->escape_str($dd),
-            'dob_y' => $this->db->escape_str($yy),
-            'weburl' => $this->db->escape_str($website),
-            'countryId' => $this->db->escape_str($country),
-            'stateId' => $this->db->escape_str($state),
-            'cityId' => $this->db->escape_str($city),
-            'company_name' => $this->db->escape_str($company_name),
+        $data  = [
+            'firstname'     => $this->db->escape_str($fname),
+            'lastname'      => $this->db->escape_str($lname),
+            'description'   => $description,
+            'updated'       => date('Y-m-d H:i:s'),
+            'dob_m'         => $this->db->escape_str($mm),
+            'dob_d'         => $this->db->escape_str($dd),
+            'dob_y'         => $this->db->escape_str($yy),
+            'weburl'        => $this->db->escape_str($website),
+            'countryId'     => $this->db->escape_str($country),
+            'stateId'       => $this->db->escape_str($state),
+            'cityId'        => $this->db->escape_str($city),
+            'company_name'  => $this->db->escape_str($company_name),
             'company_name2' => $this->db->escape_str($company_name2),
         ];
         $where = "(id ='" . $this->sess_uid . "' )";
@@ -306,7 +300,6 @@ else
         */
 
         return "success";
-
     }
 
     /*Update cover photo*/
@@ -322,8 +315,8 @@ else
             $row = getvalfromtbl("*", "photos", " type='pc' AND detailId = '" . $this->sess_uid . "'");
             unlink(asset_path() . $row["dir"] . "/" . $row["name"]);
 
-            $data = [
-                'dir' => $folder_name,
+            $data  = [
+                'dir'  => $folder_name,
                 'name' => $image,
             ];
             $where = "(id ='" . $row["id"] . "' )";
@@ -332,16 +325,15 @@ else
         } else {
             $data_u_photo = [
                 'detailId' => $this->sess_uid,
-                'dir' => $folder_name,
-                'name' => $image,
-                'type' => 'pc',
+                'dir'      => $folder_name,
+                'name'     => $image,
+                'type'     => 'pc',
             ];
             $this->db->insert('photos', $data_u_photo);
         }
 
         return "success";
     }
-
 
     /*Listened songs*/
     function fetch_listened_tracks($cond = null, $limit = null, $orderby = null, $counter = null)
@@ -379,11 +371,10 @@ else
             $row["tab_name"] = character_limiter($row["title"], 20, $end_char = '&#8230;');
             //$row["tab_waveform"] = img_url()."wave1.png";
             $row["tab_waveform"] = base_url() . "waveform/" . $row["profileLink"] . "/" . $row["perLink"] . ".json";
-            $row["link"] = base_url() . $row["profileLink"] . "/" . $row["perLink"];
-            $row["role"] = "trackdetail";
+            $row["link"]         = base_url() . $row["profileLink"] . "/" . $row["perLink"];
+            $row["role"]         = "trackdetail";
 
             $output[] = $row;
-
         }
 
         return $output;
@@ -426,7 +417,7 @@ else
 
         foreach ($query->result_array() as $row) {
             $row["tab_image"] = $this->commonfn->get_photo('t', $row["id"]);
-            $row["index"] = $i;
+            $row["index"]     = $i;
 
             if ($i % 2 != 0) {
                 $row["gray_bg"] = "gray-bg";
@@ -437,7 +428,7 @@ else
             //$row["song_name"] = $row["title"];
             $row["song_name"] = character_limiter($row["title"], 20, $end_char = '&#8230;');
 
-            $row["album_name"] = $row["album_nm"];
+            $row["album_name"]  = $row["album_nm"];
             $row["song_length"] = $row["timelength"];
 
             $row["role"] = "trackdetail";
@@ -489,7 +480,7 @@ else
 
         foreach ($query->result_array() as $row) {
             $row["tab_image"] = $this->commonfn->get_photo('t', $row["id"]);
-            $row["index"] = $i;
+            $row["index"]     = $i;
 
             if ($i % 2 != 0) {
                 $row["gray_bg"] = "gray-bg";
@@ -500,7 +491,7 @@ else
             //$row["song_name"] = $row["title"];
             $row["song_name"] = character_limiter($row["title"], 20, $end_char = '&#8230;');
 
-            $row["album_name"] = $row["album_nm"];
+            $row["album_name"]  = $row["album_nm"];
             $row["song_length"] = $row["timelength"];
 
             $row["role"] = "trackdetail";
@@ -515,7 +506,6 @@ else
         return $output;
     }
     /*uploaded songs ends*/
-
 
     /*albums*/
     function fetch_albums($cond = null, $limit = null, $orderby = null, $counter = null)
@@ -549,16 +539,16 @@ else
         $i = 1;
         foreach ($query->result_array() as $row) {
             $row["tab_image"] = $this->commonfn->get_photo('a', $row["id"]);
-            $row["i"] = $i;
+            $row["i"]         = $i;
             if ($i % 2 != 0) {
                 $row["gray_bg"] = "gray-bg";
             } else {
                 $row["gray_bg"] = "";
             }
 
-            $row["tab_name"] = $row["name"];
+            $row["tab_name"]     = $row["name"];
             $row["tab_waveform"] = img_url() . "wave1.png";
-            $output[] = $row;
+            $output[]            = $row;
             $i++;
         }
 
@@ -597,16 +587,14 @@ else
         }
 
         foreach ($query->result_array() as $row) {
-            $row["tab_image"] = $this->commonfn->get_photo('p', $row["id"]);
-            $row["tab_name"] = $row["username"];
+            $row["tab_image"]    = $this->commonfn->get_photo('p', $row["id"]);
+            $row["tab_name"]     = $row["username"];
             $row["tab_waveform"] = img_url() . "wave1.png";
 
             $row["link"] = base_url() . $row["profileLink"];
             $row["role"] = "profile";
 
-
             $output[] = $row;
-
         }
 
         return $output;
@@ -644,16 +632,15 @@ else
 
         foreach ($query->result_array() as $row) {
 
-            $row["tab_image"] = $this->commonfn->get_photo('p', $row["id"]);
-            $row["tab_name"] = $row["username"];
-            $row["total_songs"] = "";
+            $row["tab_image"]    = $this->commonfn->get_photo('p', $row["id"]);
+            $row["tab_name"]     = $row["username"];
+            $row["total_songs"]  = "";
             $row["tab_waveform"] = img_url() . "wave1.png";
 
             $row["link"] = base_url() . $row["profileLink"];
             $row["role"] = "profile";
 
             $output[] = $row;
-
         }
 
         return $output;
@@ -701,17 +688,16 @@ else
             }
             $row["index"] = $i;
             //$row["song_name"] = $row["title"];
-            $row["song_name"] = character_limiter($row["title"], 20, $end_char = '&#8230;');
-            $row["album_name"] = $row["album"];
-            $row["waveform"] = img_url() . "wave1.png";
+            $row["song_name"]   = character_limiter($row["title"], 20, $end_char = '&#8230;');
+            $row["album_name"]  = $row["album"];
+            $row["waveform"]    = img_url() . "wave1.png";
             $row["song_length"] = $row["timelength"];
-            $output[] = $row;
+            $output[]           = $row;
             $i++;
         }
 
         return $output;
     }
-
 
     //Function to get all playlist of loggedin user
     function get_my_playlists($cond = null, $limit = null, $orderby = null, $userid = null)
@@ -739,8 +725,8 @@ else
         //echo print_query();
         foreach ($query->result_array() as $row) {
             $row["song_cover_image"] = $this->commonfn->get_photo('pl', $row["id"]);
-            $row["pl_likes"] = $row["like"];
-            $row["pl_songs"] = $row["tot_songs"];
+            $row["pl_likes"]         = $row["like"];
+            $row["pl_songs"]         = $row["tot_songs"];
 
             $row["link"] = base_url() . $this->session->userdata('user')->profileLink . "/sets/" . $row["perLink"];
 
@@ -753,13 +739,13 @@ else
     function invite_friends($userid = null, $post = null, $email = null)
     {
         $this->load->model("admin/invite_model");
-        $userId = ($userid != null) ? $userid : $this->sess_uid;
-        $email = ($email != null) ? $email : $this->session->userdata('user')->email;
+        $userId      = ($userid != null) ? $userid : $this->sess_uid;
+        $email       = ($email != null) ? $email : $this->session->userdata('user')->email;
         $return_type = $this->invite_model->insert_invite("user", $email, $userId);
-        $response = [];
-        $msg = null;
-        if (!empty($return_type) && count($return_type) > 0) {
-            if (!empty($return_type)) {
+        $response    = [];
+        $msg         = null;
+        if ( ! empty($return_type) && count($return_type) > 0) {
+            if ( ! empty($return_type)) {
                 $msg = "Your Friends invited successfully.";
                 //var_dump($return_type);exit;
 //				foreach ($return_type as $key => $value) {
@@ -767,12 +753,12 @@ else
 //				}
             }
             $response["status"] = "success";
-            $response["msg"] = $msg;
+            $response["msg"]    = $msg;
 
             return $response;
         } else {
             $response["status"] = "success";
-            $response["msg"] = "Your Friends invited successfully.";
+            $response["msg"]    = "Your Friends invited successfully.";
 
             return $response;
         }
@@ -781,19 +767,19 @@ else
     // TODO edit output to needed format
     public function fetchNewArtists()
     {
-        $sql = "SELECT u.*
+        $sql    = "SELECT u.*
                 FROM users u
                   LEFT JOIN tracks t ON t.userId = u.id
                   LEFT JOIN likelog ll ON ll.trackId = t.id
                 ORDER BY COUNT(ll.id) DESC, u.created
                 ";
-        $query = $this->db->query($sql);
+        $query  = $this->db->query($sql);
         $result = $query->result_array();
 
         $output = [];
         foreach ($result as $row) {
             $output[] = [
-                'id' => $row['id'],
+                'id'   => $row['id'],
                 'name' => $row['username'],
             ];
         }
