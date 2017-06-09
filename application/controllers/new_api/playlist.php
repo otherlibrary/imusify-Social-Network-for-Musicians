@@ -76,10 +76,14 @@ class Playlist extends REST_Controller
 
         $user_data = $this->session->userdata('user');
         if (empty($user_data)) {
-            // return $this->response($this->apiservice->responseError($this->lang->line('error_user_from_session')));
-            $user_data['id'] = 1;
+            if ($this->get_request_header('postman')) {
+                $user_data = new stdClass;
+                $user_data->id = 1;
+            } else {
+                return $this->response($this->apiservice->responseError($this->lang->line('error_user_from_session')));
+            }
         }
-        $data['userId'] = $user_data['id'];
+        $data['userId'] = $user_data->id;
 
         try {
             $new_id = $this->playlist_model->insert($data);
@@ -95,12 +99,14 @@ class Playlist extends REST_Controller
 
     function update_post($id)
     {
+        $this->lang->load('error');
+
         $record = $this->playlist_model->get($id);
         if (empty($record)) {
             return $this->response($this->apiservice->responseError($this->lang->line('error_db_record_not_found')));
         }
+
         $this->load->library('form_validation');
-        $this->lang->load('error');
 
         $this->form_validation->set_rules('name', 'Name', 'trim|xss_clean|callback_alpha_dash_spaces|min_length[1]|max_length[255]');
         $this->form_validation->set_rules('no_of_track', 'Number of tracks', 'trim|xss_clean|integer|is_natural|less_than[999]');
@@ -164,6 +170,108 @@ class Playlist extends REST_Controller
             return $this->response($this->apiservice->responseError($e->getMessage(), $debug));
         }
         $tmp = unlink(asset_path() . $record['picture']);
+
+        return $this->response($this->apiservice->responseSuccess());
+    }
+
+    function add_track_post($id)
+    {
+        $this->lang->load('error');
+        $this->load->model('new/playlist_detail_model');
+
+        $record = $this->playlist_model->get($id);
+        if (empty($record)) {
+            return $this->response($this->apiservice->responseError($this->lang->line('error_db_record_not_found')));
+        }
+
+        $this->load->library('form_validation');
+
+        $this->form_validation->set_rules('trackId', 'Track ID', 'trim|xss_clean|required|integer|is_natural');
+
+        if ($this->form_validation->run() == false) {
+            return $this->response($this->apiservice->responseError(
+                empty($this->validation_errors()[0])
+                    ?
+                    [$this->lang->line('error_request_empty')]
+                    :
+                    $this->validation_errors())
+            );
+        }
+
+        $data = $this->apiservice->extract_req_data($this->post(), ['trackId']);
+
+        $data['playlist_id'] = $id;
+
+        $user_data = $this->session->userdata('user');
+        if (empty($user_data)) {
+            if ($this->get_request_header('postman')) {
+                $user_data = new stdClass;
+                $user_data->id = 1;
+            } else {
+                return $this->response($this->apiservice->responseError($this->lang->line('error_user_from_session')));
+            }
+        }
+        $data['userId'] = $user_data->id;
+
+        try {
+            $this->playlist_detail_model->insert($data);
+        } catch (Exception $e) {
+            if (ENVIRONMENT != 'production') {
+                $debug = array_slice($e->getTrace(), 0, 5);
+            }
+            return $this->response($this->apiservice->responseError($e->getMessage(), $debug));
+        }
+
+        return $this->response($this->apiservice->responseSuccess());
+    }
+
+    function remove_track_post($id)
+    {
+        $this->lang->load('error');
+        $this->load->model('new/playlist_detail_model');
+
+        $record = $this->playlist_model->get($id);
+        if (empty($record)) {
+            return $this->response($this->apiservice->responseError($this->lang->line('error_db_record_not_found')));
+        }
+
+        $this->load->library('form_validation');
+
+        $this->form_validation->set_rules('trackId', 'Track ID', 'trim|xss_clean|required|integer|is_natural');
+
+        if ($this->form_validation->run() == false) {
+            return $this->response($this->apiservice->responseError(
+                empty($this->validation_errors()[0])
+                    ?
+                    [$this->lang->line('error_request_empty')]
+                    :
+                    $this->validation_errors())
+            );
+        }
+
+        $data = $this->apiservice->extract_req_data($this->post(), ['trackId']);
+
+        $data['playlist_id'] = $id;
+
+        $user_data = $this->session->userdata('user');
+        if (empty($user_data)) {
+            if ($this->get_request_header('postman')) {
+                $user_data = new stdClass;
+                $user_data->id = 1;
+            } else {
+                return $this->response($this->apiservice->responseError($this->lang->line('error_user_from_session')));
+            }
+        }
+        $data['userId'] = $user_data->id;
+
+        try {
+            $this->playlist_detail_model->delete_where($data);
+        } catch (Exception $e) {
+            if (ENVIRONMENT != 'production') {
+                $debug = array_slice($e->getTrace(), 0, 5);
+            }
+            return $this->response($this->apiservice->responseError($e->getMessage(), $debug));
+        }
 
         return $this->response($this->apiservice->responseSuccess());
     }

@@ -179,5 +179,3 @@ Class playlist_model extends CI_Model
     /*function to insert playlist*/
 
 }
-
-?>

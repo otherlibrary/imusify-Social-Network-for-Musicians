@@ -50,11 +50,13 @@ $route['404_override'] = 'home';
  *
  * */
 
-$route['api/v2/playlist/(:num)/show'] = 'new_api/Playlist/show/$1';
-$route['api/v2/playlist/(:num)/update'] = "new_api/Playlist/update/$1";
-$route['api/v2/playlist/(:num)/delete'] = "new_api/Playlist/delete/$1";
-$route['api/v2/playlist/list'] = 'new_api/Playlist/list';
-$route['api/v2/playlist/create'] = "new_api/Playlist/create";
+$route['api/v2/playlist/(:num)/show'] = 'new_api/playlist/show/$1';
+$route['api/v2/playlist/(:num)/update'] = "new_api/playlist/update/$1";
+$route['api/v2/playlist/(:num)/delete'] = "new_api/playlist/delete/$1";
+$route['api/v2/playlist/(:num)/add_track'] = "new_api/playlist/add_track/$1";
+$route['api/v2/playlist/(:num)/remove_track'] = "new_api/playlist/remove_track/$1";
+$route['api/v2/playlist/list'] = 'new_api/playlist/list';
+$route['api/v2/playlist/create'] = "new_api/playlist/create";
 
 /*
  *
