@@ -109,7 +109,6 @@ class Playlist extends REST_Controller
         $this->load->library('form_validation');
 
         $this->form_validation->set_rules('name', 'Name', 'trim|xss_clean|callback_alpha_dash_spaces|min_length[1]|max_length[255]');
-        $this->form_validation->set_rules('no_of_track', 'Number of tracks', 'trim|xss_clean|integer|is_natural|less_than[999]');
         $this->form_validation->set_rules('status', 'Status', 'trim|xss_clean|integer|is_natural_no_zero|less_than[3]');
         $this->form_validation->set_rules('plays', 'Number of plays', 'trim|xss_clean|integer|is_natural');
         $this->form_validation->set_rules('likes', 'Likes', 'trim|xss_clean|integer|is_natural');
@@ -122,7 +121,7 @@ class Playlist extends REST_Controller
             return $this->response($this->apiservice->responseError(empty($this->validation_errors()[0]) ? [$this->lang->line('error_request_empty')] : $this->validation_errors()));
         }
 
-        $data = $this->apiservice->extract_req_data($this->post(), ['name', 'no_of_track', 'status', 'plays', 'like', 'share', 'comments']);
+        $data = $this->apiservice->extract_req_data($this->post(), ['name', 'status', 'plays', 'like', 'share', 'comments']);
 
         if (isset($_FILES['picture']) && is_uploaded_file($_FILES['picture']['tmp_name'])) {
             $filename = uniqid() . '.' . pathinfo($_FILES['picture']['name'], PATHINFO_EXTENSION);
@@ -215,6 +214,7 @@ class Playlist extends REST_Controller
 
         try {
             $this->playlist_detail_model->insert($data);
+            $this->playlist_model->incr_no_of_track($id);
         } catch (Exception $e) {
             if (ENVIRONMENT != 'production') {
                 $debug = array_slice($e->getTrace(), 0, 5);
@@ -266,6 +266,7 @@ class Playlist extends REST_Controller
 
         try {
             $this->playlist_detail_model->delete_where($data);
+            $this->playlist_model->decr_no_of_track($id);
         } catch (Exception $e) {
             if (ENVIRONMENT != 'production') {
                 $debug = array_slice($e->getTrace(), 0, 5);
