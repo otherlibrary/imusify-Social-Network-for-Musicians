@@ -51,7 +51,7 @@ Class ilogin extends CI_Model
             //check role of user: artist or normal user
             $user_id = $user->id;
             //get all roles ID if available
-            $this->db->select('ud.roleId, ur.type, ur.role');
+            $this->db->select('ud.roleId, ur.role');
             $this->db->from('user_roles_details as ud');
 //                        $where = "userId='".$user_id."'";                         
 //                        $this->db->where($where);
