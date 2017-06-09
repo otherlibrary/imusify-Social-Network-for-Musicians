@@ -1,7 +1,15 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 
-class MY_Controller extends CI_Controller {
+require(APPPATH . '/libraries/REST_Controller.php');
 
+class MY_Controller extends REST_Controller {
+
+    public $result = [
+        'error'   => false,
+        'message' => 'Success',
+        'data'    => [],
+        'debug'   => [],
+    ];
 	public $user_sess;
 	public function __construct($module = NULL,$check = "")
 	{
@@ -127,5 +135,20 @@ class MY_Controller extends CI_Controller {
 		}
 	}
 
+    public function responseSuccess($data = [])
+    {
+        $this->result['data'] = $data;
+
+        return $this->response($this->result);
+    }
+
+    public function responseError($message = 'Oops! Error!', $debug_data = [])
+    {
+        $this->result['error'] = true;
+        $this->result['message'] = $message;
+        $this->result['debug'] = $debug_data;
+
+        return $this->response($this->result);
+    }
 	
 }
