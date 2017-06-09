@@ -1,15 +1,6 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 
-require(APPPATH . '/libraries/REST_Controller.php');
-
-class MY_Controller extends REST_Controller {
-
-    public $result = [
-        'error'   => false,
-        'message' => 'Success',
-        'data'    => [],
-        'debug'   => [],
-    ];
+class MY_Controller extends CI_Controller {
 
 	public $user_sess;
 
@@ -51,27 +42,6 @@ class MY_Controller extends REST_Controller {
 		//print_r($this->session->userdata);
 		//print_r($this->session->userdata('user')->usertype);
 	}
-
-    /**
-     * Custom validation rule
-     * because default CI alpha_dash rule not includes 'spaces' :(
-     * @param $str
-     *
-     * @return bool
-     */
-    function alpha_dash_spaces($str)
-    {
-        if (empty($str)) {
-            return true;
-        }
-        return ( ! preg_match("/^([-a-z_ ])+$/i", $str)) ? false : true;
-    }
-
-    function extract_req_data($req_data, $keys) {
-        return array_filter($req_data, function ($key) use ($keys){
-            return in_array($key, $keys);
-        }, ARRAY_FILTER_USE_KEY);
-    }
 
 	function is_logged_in($flag = "")
 	{	
@@ -157,21 +127,4 @@ class MY_Controller extends REST_Controller {
 			return false;
 		}
 	}
-
-    public function responseSuccess($data = [])
-    {
-        $this->result['data'] = $data;
-
-        return $this->response($this->result);
-    }
-
-    public function responseError($message = 'Oops! Error!', $debug_data = [])
-    {
-        $this->result['error'] = true;
-        $this->result['message'] = $message;
-        $this->result['debug'] = $debug_data;
-
-        return $this->response($this->result);
-    }
-	
 }

@@ -5,9 +5,9 @@
  */
 class Playlist_model extends MY_Model
 {
-    function get_all()
+    public function get_all()
     {
-        $query = $this->pdo->get('playlist');
+        $query = $this->db->get('playlist');
         return $query->result('array');
     }
 
@@ -16,7 +16,7 @@ class Playlist_model extends MY_Model
         return $this->db->get_where('playlist', ['id' => $id])->row_array();
     }
 
-    function insert($data)
+    public function insert($data)
     {
         $this->load->model('commonfn');
 
@@ -29,7 +29,7 @@ class Playlist_model extends MY_Model
         return $this->db->insert_id();
     }
 
-    function update($id, $data)
+    public function update($id, $data)
     {
         return $this->db->update('playlist', $data, ['id' => $id]);
     }
