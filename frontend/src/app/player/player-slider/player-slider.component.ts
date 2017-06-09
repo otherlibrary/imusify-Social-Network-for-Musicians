@@ -14,6 +14,7 @@ export class PlayerBigComponent implements OnInit, OnDestroy {
   @Input() currentTrack: IRecord;
   @Input() isPlay: boolean;
   private _slideSub: any;
+
   public swiperConfig: SwiperConfigInterface = {
     slidesPerView: 7,
     centeredSlides: true,
