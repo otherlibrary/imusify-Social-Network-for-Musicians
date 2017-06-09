@@ -7,13 +7,13 @@ class Playlist_model extends MY_Model
 {
     function get_all()
     {
-        $query = $this->db->get('playlist');
+        $query = $this->pdo->get('playlist');
         return $query->result('array');
     }
 
     public function get($id)
     {
-        return $this->db->get_where('playlist', ['id' => $id])->row();
+        return $this->db->get_where('playlist', ['id' => $id])->row_array();
     }
 
     function insert($data)
@@ -22,11 +22,11 @@ class Playlist_model extends MY_Model
 
         $data = array_merge($data, [
             'perLink'     => $this->commonfn->get_permalink($data['name'], "playlist", "perLink", "id"),
-            // 'createdDate' => date('Y-m-d H:i:s'),
-            // 'updatedDate' => date('Y-m-d H:i:s'),
         ]);
 
         $this->db->insert('playlist', $data);
+
+        return $this->db->insert_id();
     }
 
     function update($id, $data)

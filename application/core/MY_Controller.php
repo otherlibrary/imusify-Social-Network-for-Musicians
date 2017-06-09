@@ -10,7 +10,9 @@ class MY_Controller extends REST_Controller {
         'data'    => [],
         'debug'   => [],
     ];
+
 	public $user_sess;
+
 	public function __construct($module = NULL,$check = "")
 	{
 		parent::__construct();
@@ -49,7 +51,28 @@ class MY_Controller extends REST_Controller {
 		//print_r($this->session->userdata);
 		//print_r($this->session->userdata('user')->usertype);
 	}
-	
+
+    /**
+     * Custom validation rule
+     * because default CI alpha_dash rule not includes 'spaces' :(
+     * @param $str
+     *
+     * @return bool
+     */
+    function alpha_dash_spaces($str)
+    {
+        if (empty($str)) {
+            return true;
+        }
+        return ( ! preg_match("/^([-a-z_ ])+$/i", $str)) ? false : true;
+    }
+
+    function extract_req_data($req_data, $keys) {
+        return array_filter($req_data, function ($key) use ($keys){
+            return in_array($key, $keys);
+        }, ARRAY_FILTER_USE_KEY);
+    }
+
 	function is_logged_in($flag = "")
 	{	
 
