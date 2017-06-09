@@ -1,3 +1,109 @@
-<p>
-  playlist-inner works!
-</p>
+<div class="main_playlist">
+  <div id="playlist" [class.show]="isShow">
+    <div class="plst-top-bg" style="background-image: url('/assets/images/profile/vinil-face1.jpg');"></div>
+    <button class="popup-close" type="button" (click)="closePlaylist()">close</button>
+    <div class="tit-playlist">
+      <span>Your Playlist</span>
+      <button type="button" class="tit-btn-plst" (click)="goToSlideIndex(3)"><i></i><span>Add new playlist</span></button>
+    </div>
+    <div class="inner">
+      <div class="wrap-playlist" *ngIf="playlist">
+        <div class="swiper-container" [swiper]="swiperConfig">
+          <div class="swiper-wrapper">
+            <div class="swiper-slide" *ngFor="let item of playlist">
+              <div class="img">
+                <img [src]="item.playlistImage" alt=""/>
+                <div class="vinyl">
+                  <button class="box-btn play" title="play"></button>
+                </div>
+              </div>
+              <div class="name">{{item.name}}</div>
+              <!--<span class="tulip-ico"></span>-->
+              <ul class="info">
+                <li>{{item.tracks}} Tracks</li>
+                <li>{{item.followers}} Followers</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+        <div class="swiper-button-next"></div>
+        <div class="swiper-button-prev"></div>
+      </div>
+      <!--<div class="icons-wrap" *ngIf="currentPlaylist">-->
+      <!--<a href="#" class="note-link settings-ico" title="settings"></a>-->
+      <!--<i class="sep"></i>-->
+      <!--<a href="#" class="note-link ghost-ico" title="notification"></a>-->
+      <!--<span class="ico-right">{{currentPlaylist.like}} Likes</span>-->
+      <!--</div>-->
+
+      <div class="song-flex-table playlist">
+        <div class="thead">
+          <div class="th">#</div>
+          <div class="th">Track</div>
+          <div class="th">Artist</div>
+          <div class="th">Album</div>
+          <div class="th ico-time"></div>
+        </div>
+        <div class="tbody">
+          <div class="tr">
+            <div class="td td-id">
+              <span>1</span>
+              <button class="box-btn play" title="play"></button>
+            </div>
+            <div class="td">Not a Bad Thing</div>
+            <div class="td">Justin Timberlake</div>
+            <div class="td">Not a Bad Thing</div>
+            <div class="td">4:42</div>
+          </div>
+        </div>
+      </div>
+
+      <!--Mega toolip-->
+      <div class="m-toolip">
+        <!--Popular-->
+        <div class="m-toolip-item popular">
+          <p class="m-toolip-title">Popular</p>
+          <ul class="m-toolip-list">
+            <li class="popular-item"><a href="#">Untitled Groove</a></li>
+            <li class="popular-item"><a href="#">Best Playlist</a></li>
+            <li class="popular-item"><a href="#">Chill Out</a></li>
+            <li class="popular-item"><a href="#">Groove Days</a></li>
+            <li class="popular-item"><a href="#">R&B and Soul</a></li>
+            <li class="popular-item"><a href="#">Oldies But Goldies</a></li>
+            <li class="popular-item"><a href="#">Beautiful Morning Beautiful Morning</a></li>
+            <li class="popular-item"><a href="#">Goodnight Kiss</a></li>
+            <li class="popular-item"><a href="#">Chill Bill</a></li>
+            <li class="popular-item"><a href="#">Wake Up</a></li>
+          </ul>
+        </div>
+
+        <!--Alphabetical-->
+        <div class="m-toolip-item abc">
+          <p class="m-toolip-title">Alphabetical</p>
+          <ul class="m-toolip-list">
+            <li class="abc-item">
+              <p class="abc-character a">A</p>
+              <a href="#">Alice in Wonderland</a>
+              <a href="#">Atlantis’s Edge</a>
+            </li>
+            <li class="abc-item">
+              <p class="abc-character b">B</p>
+              <a href="#">Beautiful Morning </a>
+              <a href="#">Best Playlist</a>
+            </li>
+            <li class="abc-item">
+              <p class="abc-character c">C</p>
+              <a href="#">Chill Out</a>
+            </li>
+            <li class="abc-item">
+              <p class="abc-character d">D</p>
+              <a href="#">Desiigner</a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="playlist-after"></div>
+</div>
+

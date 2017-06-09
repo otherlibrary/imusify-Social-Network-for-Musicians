@@ -23,6 +23,7 @@ import {
 import {AppComponent} from './app.component';
 import {components} from './components/index';
 import {routing} from './app-routing.module';
+import {PlaylistModule} from "./playlist/playlist.module";
 
 
 @NgModule({
@@ -37,7 +38,8 @@ import {routing} from './app-routing.module';
     UserModule,
     routing,
     BrowserAnimationsModule,
-    FacebookModule.forRoot()
+    FacebookModule.forRoot(),
+    PlaylistModule
   ],
   providers: [
     HelpersService,

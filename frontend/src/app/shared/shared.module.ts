@@ -8,7 +8,6 @@ import {MyDatePickerModule} from "mydatepicker";
 import {ToastyModule} from "ng2-toasty";
 import { SwiperModule } from 'ngx-swiper-wrapper';
 import {PlayerModule} from "../player/player.module";
-import {PlaylistModule} from "../playlist/playlist.module";
 
 @NgModule({
   imports: [
@@ -19,8 +18,7 @@ import {PlaylistModule} from "../playlist/playlist.module";
     SelectModule,
     MyDatePickerModule,
     ToastyModule.forRoot(),
-    PlayerModule,
-    PlaylistModule
+    PlayerModule
   ],
   declarations: [
     ...directives,
@@ -36,7 +34,6 @@ import {PlaylistModule} from "../playlist/playlist.module";
     ToastyModule,
     SwiperModule,
     PlayerModule,
-    PlaylistModule,
     ...exportDirectives
   ],
   providers: []
