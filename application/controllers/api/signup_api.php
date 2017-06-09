@@ -32,8 +32,18 @@ class signup_Api extends REST_Controller
 		else
 		{
 			//$this->load->view('formsuccess');			
-			$user = $this->signup->sign_up($this->post('fname'),$this->post('lname'),$this->post('uname'),$this->post('email'),$this->post('password'),$this->post('gender'),$this->post('mm'),$this->post('dd'),$this->post('yy'),$this->post('invitecode')
-                                ,$this->post());
+			$user = $this->signup->sign_up(
+			    $this->post('fname'),
+                $this->post('lname'),
+                $this->post('uname'),
+                $this->post('email'),
+                $this->post('password'),
+                $this->post('gender'),
+                $this->post('mm'),
+                $this->post('dd'),
+                $this->post('yy'),
+                $this->post('invitecode'),
+                $this->post());
 			/*var_dump($user);*/
 			if($user>0)
 			{	
