@@ -1,24 +1,26 @@
 <?php
+require(APPPATH . '/libraries/REST_Controller.php');
 
 /**
  * Created by igorko on 02.06.17.
  */
-class Playlist extends MY_Controller
+class Playlist extends REST_Controller
 {
     function __construct()
     {
         parent::__construct();
 
         $this->load->model('new/playlist_model');
+        $this->load->library('ApiService');
     }
 
     function list_get()
     {
         $result = $this->playlist_model->get_all();
         if ($result) {
-            $this->responseSuccess($result);
+            return $this->response($this->apiservice->responseSuccess($result));
         } else {
-            $this->responseError();
+            return $this->response($this->apiservice->responseError());
         }
     }
 
@@ -26,9 +28,9 @@ class Playlist extends MY_Controller
     {
         $result = $this->playlist_model->get($id);
         if ($result) {
-            $this->responseSuccess($result);
+            return $this->response($this->apiservice->responseSuccess($result));
         } else {
-            $this->responseError();
+            return $this->response($this->apiservice->responseError());
         }
     }
 
@@ -41,7 +43,13 @@ class Playlist extends MY_Controller
         $this->form_validation->set_message('alpha_dash_spaces', 'The %s field may only contain letters, digits, dash and underscore.');
 
         if ($this->form_validation->run() == false) {
-            $this->responseError(empty($this->validation_errors()[0]) ? [$this->lang->line('error_request_empty')] : $this->validation_errors());
+            return $this->response($this->apiservice->responseError(
+                empty($this->validation_errors()[0])
+                    ?
+                    [$this->lang->line('error_request_empty')]
+                    :
+                    $this->validation_errors())
+            );
         }
 
         $data = [
@@ -61,14 +69,14 @@ class Playlist extends MY_Controller
                 'max_width'     => "1024",
             ]);
             if ( ! $this->upload->do_upload('picture')) {
-                $this->responseError($this->upload->display_errors(null, null));
+                return $this->response($this->apiservice->responseError($this->upload->display_errors(null, null)));
             }
             $data['picture'] = $upload_path . '/' . $filename;
         }
 
         $user_data = $this->session->userdata('user');
         if (empty($user_data)) {
-            // $this->responseError($this->lang->line('error_user_from_session'));
+            // return $this->response($this->apiservice->responseError($this->lang->line('error_user_from_session')));
             $user_data['id'] = 1;
         }
         $data['userId'] = $user_data['id'];
@@ -79,17 +87,17 @@ class Playlist extends MY_Controller
             if (ENVIRONMENT != 'production') {
                 $debug = array_slice($e->getTrace(), 0, 5);
             }
-            $this->responseError($e->getMessage(), $debug);
+            return $this->response($this->apiservice->responseError($e->getMessage(), $debug));
         }
 
-        $this->responseSuccess(['id' => $new_id]);
+        return $this->response($this->apiservice->responseSuccess(['id' => $new_id]));
     }
 
     function update_post($id)
     {
         $record = $this->playlist_model->get($id);
         if (empty($record)) {
-            $this->responseError($this->lang->line('error_db_record_not_found'));
+            return $this->response($this->apiservice->responseError($this->lang->line('error_db_record_not_found')));
         }
         $this->load->library('form_validation');
         $this->lang->load('error');
@@ -98,17 +106,17 @@ class Playlist extends MY_Controller
         $this->form_validation->set_rules('no_of_track', 'Number of tracks', 'trim|xss_clean|integer|is_natural|less_than[999]');
         $this->form_validation->set_rules('status', 'Status', 'trim|xss_clean|integer|is_natural_no_zero|less_than[3]');
         $this->form_validation->set_rules('plays', 'Number of plays', 'trim|xss_clean|integer|is_natural');
-        $this->form_validation->set_rules('like', 'Likes', 'trim|xss_clean|integer|is_natural');
-        $this->form_validation->set_rules('share', 'Shares', 'trim|xss_clean|integer|is_natural');
+        $this->form_validation->set_rules('likes', 'Likes', 'trim|xss_clean|integer|is_natural');
+        $this->form_validation->set_rules('shares', 'Shares', 'trim|xss_clean|integer|is_natural');
         $this->form_validation->set_rules('comments', 'Comments', 'trim|xss_clean|integer|is_natural');
 
         $this->form_validation->set_message('alpha_dash_spaces', 'The %s field may only contain letters, digits, dash and underscore.');
 
         if ($this->form_validation->run() == false) {
-            $this->responseError(empty($this->validation_errors()[0]) ? [$this->lang->line('error_request_empty')] : $this->validation_errors());
+            return $this->response($this->apiservice->responseError(empty($this->validation_errors()[0]) ? [$this->lang->line('error_request_empty')] : $this->validation_errors()));
         }
 
-        $data = $this->extract_req_data($this->post(), ['name', 'no_of_track', 'status', 'plays', 'like', 'share', 'comments']);
+        $data = $this->apiservice->extract_req_data($this->post(), ['name', 'no_of_track', 'status', 'plays', 'like', 'share', 'comments']);
 
         if (isset($_FILES['picture']) && is_uploaded_file($_FILES['picture']['tmp_name'])) {
             $filename = uniqid() . '.' . pathinfo($_FILES['picture']['name'], PATHINFO_EXTENSION);
@@ -122,7 +130,7 @@ class Playlist extends MY_Controller
                 'max_width'     => "1024",
             ]);
             if ( ! $this->upload->do_upload('picture')) {
-                $this->responseError($this->upload->display_errors(null, null));
+                return $this->response($this->apiservice->responseError($this->upload->display_errors(null, null)));
             }
             $data['picture'] = $upload_path . '/' . $filename;
             // delete old file
@@ -135,17 +143,17 @@ class Playlist extends MY_Controller
             if (ENVIRONMENT != 'production') {
                 $debug = array_slice($e->getTrace(), 0, 5);
             }
-            $this->responseError($e->getMessage(), $debug);
+            return $this->response($this->apiservice->responseError($e->getMessage(), $debug));
         }
 
-        $this->responseSuccess();
+        return $this->response($this->apiservice->responseSuccess());
     }
 
     function delete_post($id)
     {
         $record = $this->playlist_model->get($id);
         if (empty($record)) {
-            $this->responseError($this->lang->line('error_db_record_not_found'));
+            return $this->response($this->apiservice->responseError($this->lang->line('error_db_record_not_found')));
         }
         try {
             $this->playlist_model->delete($id);
@@ -153,10 +161,10 @@ class Playlist extends MY_Controller
             if (ENVIRONMENT != 'production') {
                 $debug = array_slice($e->getTrace(), 0, 5);
             }
-            $this->responseError($e->getMessage(), $debug);
+            return $this->response($this->apiservice->responseError($e->getMessage(), $debug));
         }
         $tmp = unlink(asset_path() . $record['picture']);
 
-        $this->responseSuccess();
+        return $this->response($this->apiservice->responseSuccess());
     }
 }
