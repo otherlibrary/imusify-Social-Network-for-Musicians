@@ -21,7 +21,7 @@ class Playlist_model extends MY_Model
         $this->load->model('commonfn');
 
         $data = array_merge($data, [
-            'perLink'     => $this->commonfn->get_permalink($data['name'], "playlist", "perLink", "id"),
+            'perLink' => $this->commonfn->get_permalink($data['name'], "playlist", "perLink", "id"),
         ]);
 
         $this->db->insert('playlist', $data);
@@ -37,5 +37,19 @@ class Playlist_model extends MY_Model
     public function delete($id)
     {
         return $this->db->delete('playlist', ['id' => $id]);
+    }
+
+    public function incr_no_of_track($id)
+    {
+        $this->db->set('no_of_track', '`no_of_track` + 1', false);
+        $this->db->where('id', $id);
+        return $this->db->update('playlist');
+    }
+
+    public function decr_no_of_track($id)
+    {
+        $this->db->set('no_of_track', '`no_of_track` - 1', false);
+        $this->db->where('id', $id);
+        return $this->db->update('playlist');
     }
 }
