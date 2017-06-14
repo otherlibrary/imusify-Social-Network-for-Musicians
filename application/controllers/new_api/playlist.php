@@ -204,7 +204,7 @@ class Playlist extends REST_Controller
 
         $user_data = $this->session->userdata('user');
         if (empty($user_data)) {
-            if ($this->get_request_header('postman')) {
+            if ($this->input->get_request_header('Postman')) {
                 $user_data = new stdClass;
                 $user_data->id = 1;
             } else {
