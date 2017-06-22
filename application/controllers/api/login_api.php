@@ -26,7 +26,7 @@ class Login_Api extends REST_Controller
 
     function login_post()
     {
-        $this->response('good', 200);
+        return $this->response('good', 200);
         if ($this->post('fp_code')) {
 
             $this->form_validation->set_rules('rst_password', 'Password', 'trim|required|xss_clean');
