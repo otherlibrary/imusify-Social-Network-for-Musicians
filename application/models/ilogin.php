@@ -91,7 +91,7 @@ Class ilogin extends CI_Model
             $user->country_name = $country_name;
             $user->eu = $euro;
 
-            return $user;
+
             if ($user->usertype == "a" || $user->usertype == "s") {
                 //admin account
                 $this->session->set_userdata(ADMIN_SESSION_NAME, $user);
