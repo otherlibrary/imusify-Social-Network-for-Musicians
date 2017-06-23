@@ -1,382 +1,408 @@
 /* You can add global styles to this file, and also import other style files */
-#menu {
-  z-index: 10;
-}
 
-.upload-inner {
-  .popup-inner {
-    display: block;
-    padding-left: 190px;
-  }
-}
+/* global */
+@import './scss/normalize';
+@import './scss/fonts';
+@import './scss/vars';
+@import './scss/mixins';
 
-.img-res {
-  display: block;
-  height: 100%;
-  width: 100%;
-  background-repeat: no-repeat;
-  background-position: 50% 50%;
-  background-size: cover;
-}
 
-.soc-login {
-  cursor: pointer;
-}
+/* global */
+@import './scss/global';
+@import './scss/menu';
+@import './scss/playlist';
+@import './scss/notifications';
+@import './scss/messaging';
+@import './scss/favorites';
 
-.prof-notes .prof-note:hover {
-  .popover {
-    transform: scale(1);
-    opacity: 1;
-    top: 100%;
-  }
-  
-  .note-link {
-    opacity: .8;
-  }
-}
+/* pages */
+@import './scss/home';
+@import './scss/follow';
+@import './scss/profile';
+@import './scss/artist-profile/artist-profile';
+@import './scss/upload/upload';
+@import './scss/checkout/checkout';
+@import './scss/song-detail/song-detail';
+@import './scss/browse';
+@import './scss/about';
+@import './scss/news';
+@import './scss/popup';
+@import './scss/popovers';
+@import './scss/signs';
+@import './scss/edit-track';
+@import './scss/account';
+@import './scss/navigation';
+@import './scss/gui';
 
+//popups
+@import './scss/edit-profile';
+@import './scss/invite-friends';
+@import './scss/membership';
+@import './scss/roles';
+@import './scss/email-join';
+@import './scss/search-popup';
+
+@import './scss/_app';
+
+/* ==========================================================================
+   Variables
+   ========================================================================== */
 //colors
 $color_mine_shaft_approx: #2e2e2e;
 $color_log_cabin_approx: #252321;
 $white: #fff;
 
 //urls
-$url_0: url(/assets/css/img/player/backward.svg);
-$url_1: url(/assets/css/img/feed-boxes/play.svg);
-$url_2: url(/assets/css/img/feed-boxes/pause-button.svg);
-$url_3: url(/assets/css/img/player/forward.svg);
-$url_4: url(/assets/css/img/player/shuffle.svg);
-$url_5: url(/assets/css/img/player/repeat.svg);
-$url_6: url(/assets/css/img/player/queue.svg);
+$url_0: url(./assets/img/player/backward.svg);
+$url_1: url(./assets/img/feed-boxes/play.svg);
+$url_2: url(./assets/img/feed-boxes/pause-button.svg);
+$url_3: url(./assets/img/player/forward.svg);
+$url_4: url(./assets/img/player/shuffle.svg);
+$url_5: url(./assets/img/player/repeat.svg);
+$url_6: url(./assets/img/player/queue.svg);
+
+
+#menu {
+    z-index: 10;
+}
+
+.upload-inner {
+    .popup-inner {
+        display: block;
+        padding-left: 190px;
+    }
+}
+
+.img-res {
+    display: block;
+    height: 100%;
+    width: 100%;
+    background-repeat: no-repeat;
+    background-position: 50% 50%;
+    background-size: cover;
+}
+
+.soc-login {
+    cursor: pointer;
+}
+
+.prof-notes .prof-note:hover {
+    .popover {
+        transform: scale(1);
+        opacity: 1;
+        top: 100%;
+    }
+    
+    .note-link {
+        opacity: .8;
+    }
+}
+
 
 //@extend-elements
 //original selectors
 //#player .ctrl-btn:before, #player .ctrl-btn:after
 %extend_1 {
-  content: "";
-  position: absolute;
-  display: block;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  margin: auto;
-  transition: opacity .15s ease-in-out;
+    content: "";
+    position: absolute;
+    display: block;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    margin: auto;
+    transition: opacity .15s ease-in-out;
 }
 
 //original selectors
 //#player .btn-play, #player .btn-pause
 %extend_2 {
-  width: 34px;
-  height: 34px;
-  overflow: hidden;
+    width: 34px;
+    height: 34px;
+    overflow: hidden;
 }
 
 #player {
-  position: absolute;
-  display: block;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  height: 44px;
-  padding: 0 20px;
-  z-index: 9;
-  border-top: 1px solid $color_mine_shaft_approx;
-  background-color: $color_log_cabin_approx;
-  transition: all 0.35s cubic-bezier(0.39, 0.575, 0.565, 1);
-  &.big {
-    padding-top: 300px;
-    .player-inner {
-      opacity: 1;
-      .controls {
-        opacity: 0;
-        transition: opacity 0.2s cubic-bezier(0.39, 0.575, 0.565, 1);
-      }
-      .track-info {
-        opacity: 0;
-        transition: opacity 0.2s cubic-bezier(0.39, 0.575, 0.565, 1);
-      }
-      .btn-plus:before {
-        //Instead of the line below you could use @include transform($scale, $rotate, $transx, $transy, $skewx, $skewy, $originx, $originy)
-        transform: rotate(-135deg);
-      }
-    }
-    .big-bot {
-      .controls {
-        opacity: 1;
-        transition: opacity 0.25s cubic-bezier(0.39, 0.575, 0.565, 1);
-      }
-      .track-info {
-        opacity: 1;
-        transition: opacity 0.25s cubic-bezier(0.39, 0.575, 0.565, 1);
-      }
+    position: absolute;
+    display: block;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    height: 44px;
+    padding: 0 20px;
+    z-index: 9;
+    border-top: 1px solid $color_mine_shaft_approx;
+    background-color: $color_log_cabin_approx;
+    transition: all 0.35s cubic-bezier(0.39, 0.575, 0.565, 1);
+    &.big {
+        padding-top: 300px;
+        .player-inner {
+            opacity: 1;
+            .controls {
+                opacity: 0;
+                transition: opacity 0.2s cubic-bezier(0.39, 0.575, 0.565, 1);
+            }
+            .track-info {
+                opacity: 0;
+                transition: opacity 0.2s cubic-bezier(0.39, 0.575, 0.565, 1);
+            }
+            .btn-plus:before {
+                //Instead of the line below you could use @include transform($scale, $rotate, $transx, $transy, $skewx, $skewy, $originx, $originy)
+                transform: rotate(-135deg);
+            }
+        }
+        .big-bot {
+            .controls {
+                opacity: 1;
+                transition: opacity 0.25s cubic-bezier(0.39, 0.575, 0.565, 1);
+            }
+            .track-info {
+                opacity: 1;
+                transition: opacity 0.25s cubic-bezier(0.39, 0.575, 0.565, 1);
+            }
+        }
+        .big-block {
+            opacity: 1;
+            transform: scale(1);
+            bottom: 44px;
+            transition: transform 0s linear, opacity 0.4s cubic-bezier(0.39, 0.575, 0.565, 1) 0.1s, bottom 0.25s cubic-bezier(0.39, 0.575, 0.565, 1) 0.1s;
+        }
     }
     .big-block {
-      opacity: 1;
-      transform: scale(1);
-      bottom: 44px;
-      transition: transform 0s linear, opacity 0.4s cubic-bezier(0.39, 0.575, 0.565, 1) 0.1s, bottom 0.25s cubic-bezier(0.39, 0.575, 0.565, 1) 0.1s;
+        .btn-backwards {
+            width: 28px;
+            height: 20px;
+            margin-right: 15px;
+        }
+        .btn-forward {
+            width: 28px;
+            height: 20px;
+            margin-left: 15px;
+        }
+        .btn-play {
+            width: 56px;
+            height: 56px;
+            &:after {
+                width: 24px;
+                height: 24px;
+            }
+        }
     }
-  }
-  .big-block {
+    .ctrl-btn {
+        position: relative;
+        display: inline-block;
+        vertical-align: middle;
+        &:before {
+            @extend %extend_1;
+            opacity: .4;
+        }
+        &:after {
+            @extend %extend_1;
+            opacity: .4;
+            background-repeat: no-repeat;
+            background-position: 50% 50%;
+            background-size: contain;
+        }
+        &:hover {
+            &:before {
+                opacity: .8;
+            }
+            &:after {
+                opacity: .8;
+            }
+        }
+        &:active {
+            &:before {
+                opacity: 1;
+            }
+            &:after {
+                opacity: 1;
+            }
+        }
+        &.active {
+            &:before {
+                opacity: 1;
+            }
+            &:after {
+                opacity: 1;
+            }
+        }
+    }
     .btn-backwards {
-      width: 28px;
-      height: 20px;
-      margin-right: 15px;
-    }
-    .btn-forward {
-      width: 28px;
-      height: 20px;
-      margin-left: 15px;
+        width: 18px;
+        height: 13px;
+        margin-right: 5px;
+        &:after {
+            background-image: $url_0;
+        }
     }
     .btn-play {
-      width: 56px;
-      height: 56px;
-      &:after {
-        width: 24px;
-        height: 24px;
-      }
+        @extend %extend_2;
+        &:before {
+            border: 2px solid $white;
+            border-radius: 50%;
+        }
+        &:after {
+            width: 18px;
+            height: 18px;
+            left: 4px;
+            background-image: $url_1;
+        }
     }
-  }
-  .ctrl-btn {
-    position: relative;
-    display: inline-block;
-    vertical-align: middle;
-    &:before {
-      @extend %extend_1;
-      opacity: .4;
+    .btn-pause {
+        @extend %extend_2;
+        &:before {
+            border: 2px solid $white;
+            border-radius: 50%;
+        }
+        &:after {
+            width: 18px;
+            height: 18px;
+            background-image: $url_2;
+        }
     }
-    &:after {
-      @extend %extend_1;
-      opacity: .4;
-      background-repeat: no-repeat;
-      background-position: 50% 50%;
-      background-size: contain;
+    .btn-forward {
+        width: 18px;
+        height: 13px;
+        margin-left: 5px;
+        &:after {
+            background-image: $url_3;
+        }
     }
-    &:hover {
-      &:before {
-        opacity: .8;
-      }
-      &:after {
-        opacity: .8;
-      }
+    .btn-shuffle {
+        width: 16px;
+        height: 40px;
+        &:after {
+            background-image: $url_4;
+        }
     }
-    &:active {
-      &:before {
-        opacity: 1;
-      }
-      &:after {
-        opacity: 1;
-      }
+    .btn-repeat {
+        width: 16px;
+        height: 40px;
+        margin: 2px 6px;
+        &:after {
+            background-image: $url_5;
+        }
     }
-    &.active {
-      &:before {
-        opacity: 1;
-      }
-      &:after {
-        opacity: 1;
-      }
+    .btn-queue {
+        width: 32px;
+        height: 32px;
+        margin: 8px 5px;
+        &:after {
+            width: 22px;
+            height: 18px;
+            background-image: $url_6;
+        }
+        &.active .btn-queue:after {
+            opacity: 1;
+        }
     }
-  }
-  .btn-backwards {
-    width: 18px;
-    height: 13px;
-    margin-right: 5px;
-    &:after {
-      background-image: $url_0;
+    .btn-plus {
+        width: 32px;
+        height: 32px;
+        margin: 8px 5px;
+        &:before {
+            content: ' +';
+            font-size: 30px;
+            line-height: 32px;
+            font-weight: 100;
+            transition: opacity 0.15s ease-in-out, transform 0.3s cubic-bezier(0.18, 0.89, 0.62, 1.4);
+        }
     }
-  }
-  .btn-play {
-    @extend %extend_2;
-    &:before {
-      border: 2px solid $white;
-      border-radius: 50%;
+    &:not(.big) {
+        padding-top: 0;
     }
-    &:after {
-      width: 18px;
-      height: 18px;
-      left: 4px;
-      background-image: $url_1;
-    }
-  }
-  .btn-pause {
-    @extend %extend_2;
-    &:before {
-      border: 2px solid $white;
-      border-radius: 50%;
-    }
-    &:after {
-      width: 18px;
-      height: 18px;
-      background-image: $url_2;
-    }
-  }
-  .btn-forward {
-    width: 18px;
-    height: 13px;
-    margin-left: 5px;
-    &:after {
-      background-image: $url_3;
-    }
-  }
-  .btn-shuffle {
-    width: 16px;
-    height: 40px;
-    &:after {
-      background-image: $url_4;
-    }
-  }
-  .btn-repeat {
-    width: 16px;
-    height: 40px;
-    margin: 2px 6px;
-    &:after {
-      background-image: $url_5;
-    }
-  }
-  .btn-queue {
-    width: 32px;
-    height: 32px;
-    margin: 8px 5px;
-    &:after {
-      width: 22px;
-      height: 18px;
-      background-image: $url_6;
-    }
-    &.active .btn-queue:after {
-      opacity: 1;
-    }
-  }
-  .btn-plus {
-    width: 32px;
-    height: 32px;
-    margin: 8px 5px;
-    &:before {
-      content: ' +';
-      font-size: 30px;
-      line-height: 32px;
-      font-weight: 100;
-      transition: opacity 0.15s ease-in-out, transform 0.3s cubic-bezier(0.18, 0.89, 0.62, 1.4);
-    }
-  }
-  &:not(.big) {
-    padding-top: 0;
-  }
 }
 
 .profile {
-  .img-box {
-    width: 64px;
-    height: 64px;
-    margin: 0 auto;
-    margin-bottom: 10px;
-    img {
-      display: block;
-      max-width: 100%;
-      max-height: 100%;
+    .img-box {
+        width: 64px;
+        height: 64px;
+        margin: 0 auto;
+        margin-bottom: 10px;
+        img {
+            display: block;
+            max-width: 100%;
+            max-height: 100%;
+        }
     }
-  }
 }
 .custom_picker {
-  .selection {
-    border: none !important;
-  }
-  .mydp {
-    .weekdaytitle,
-    .header,
-    .headerbtn,
-    .headerlabelbtn,
-    .headerbtncell,
-    .btnclear,
-    .btnpicker,
-    .headerbtn,
-    .headermonthtxt,
-    .headertodaybtn,
-    .headeryeartxt, .icon-mydptoday {
-      background-color: #333;
-      color: #fff;
+    .selection {
+        border: none !important;
     }
-    .caltable, .daycell, .weekdaytitle {
-      color: #fff;
+    .mydp {
+        .weekdaytitle,
+        .header,
+        .headerbtn,
+        .headerlabelbtn,
+        .headerbtncell,
+        .btnclear,
+        .btnpicker,
+        .headerbtn,
+        .headermonthtxt,
+        .headertodaybtn,
+        .headeryeartxt, .icon-mydptoday {
+            background-color: #333;
+            color: #fff;
+        }
+        .caltable, .daycell, .weekdaytitle {
+            color: #fff;
+        }
+        .caltable, .currmonth {
+            background-color: #000;
+        }
+        .nextmonth, .prevmonth {
+            color: darken(#fff, 50%);
+        }
     }
-    .caltable, .currmonth {
-      background-color: #000;
-    }
-    .nextmonth, .prevmonth {
-      color: darken(#fff, 50%);
-    }
-  }
 }
 .custom_select {
-  .ng-dirty.ng-invalid {
-    border: 1px solid #e7283a !important;
-  }
-  .below {
-    margin-bottom: 0;
-  }
-  input {
-    border: none !important;
-    padding: 0 !important;
-    margin-bottom: 0 !important;
-  }
-  > div > div.multiple > div.option {
-    background: #EA3F4F;
-    border-color: #EA3F4F;
-    color: #fff;
-    position: relative;
-    padding-right: 18px;
-    span.deselect-option {
-      color: #fff;
-      position: absolute;
-      right: 4px;
-      top: 2px;
-      &:hover {
-        color: darken(#fff, 10%);
-      }
+    .ng-dirty.ng-invalid {
+        border: 1px solid #e7283a !important;
     }
-  }
+    .below {
+        margin-bottom: 0;
+    }
+    input {
+        border: none !important;
+        padding: 0 !important;
+        margin-bottom: 0 !important;
+    }
+    > div > div.multiple > div.option {
+        background: #EA3F4F;
+        border-color: #EA3F4F;
+        color: #fff;
+        position: relative;
+        padding-right: 18px;
+        span.deselect-option {
+            color: #fff;
+            position: absolute;
+            right: 4px;
+            top: 2px;
+            &:hover {
+                color: darken(#fff, 10%);
+            }
+        }
+    }
 }
 .feed-box .feed-bg:before {
-  display: none !important;
+    display: none !important;
 }
 .roles-block .role-form .inp-block .roles-label span {
-  display: inline;
+    display: inline;
 }
 .profile .img-box {
-  border-radius: 100%;
-  overflow: hidden;
+    border-radius: 100%;
+    overflow: hidden;
 }
 .waveform--hidden {
-  visibility: hidden;
-  position: absolute;
-  left: -9999em;
-  width: 960px;
+    visibility: hidden;
+    position: absolute;
+    left: -9999em;
+    width: 960px;
 }
 .btn {
-  position: relative;
-  display: inline-flex;
-  vertical-align: middle;
-  width: auto;
-  height: 46px;
-  margin-top: 20px;
-  padding: 0 15px;
-  box-sizing: border-box;
-  background: #EA3F4F;
-  border-radius: 3px;
-  font-size: 12px;
-  letter-spacing: .05em;
-  color: #fff !important;
-  cursor: pointer;
-  text-align: center;
-  align-items: center;
-  justify-content: center;
-  
-  &:hover {
-    background: #e7283a;
-  }
-}
-.edit-track-form .sbm-block {
-  .btn {
     position: relative;
     display: inline-flex;
     vertical-align: middle;
@@ -396,131 +422,155 @@ $url_6: url(/assets/css/img/player/queue.svg);
     justify-content: center;
     
     &:hover {
-      background: #e7283a;
+        background: #e7283a;
     }
-  }
+}
+.edit-track-form .sbm-block {
+    .btn {
+        position: relative;
+        display: inline-flex;
+        vertical-align: middle;
+        width: auto;
+        height: 46px;
+        margin-top: 20px;
+        padding: 0 15px;
+        box-sizing: border-box;
+        background: #EA3F4F;
+        border-radius: 3px;
+        font-size: 12px;
+        letter-spacing: .05em;
+        color: #fff !important;
+        cursor: pointer;
+        text-align: center;
+        align-items: center;
+        justify-content: center;
+        
+        &:hover {
+            background: #e7283a;
+        }
+    }
 }
 
 button:disabled {
-  background: #ccc !important;
+    background: #ccc !important;
 }
 .feed-box .feed-bg img {
-  margin: 0;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
+    margin: 0;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
 }
 .masonry {
-  -moz-column-gap: 4px;
-  -webkit-column-gap: 4px;
-  column-gap: 4px;
-  margin-top: 150px;
-  
-  &__item {
-    display: block;
-    break-inside: avoid;
-    margin-bottom: 4px;
-    width: 100%;
-    box-sizing: border-box;
-    position: relative;
+    -moz-column-gap: 4px;
+    -webkit-column-gap: 4px;
+    column-gap: 4px;
+    margin-top: 150px;
     
-    .feed-bg {
-      img {
-        -webkit-filter: saturate(0.3);
-        filter: saturate(0.3);
-        transition: all 0.5s cubic-bezier(0.39, 0.575, 0.565, 1);
-      }
-    }
-    &:hover {
-      .feed-bg {
-        img {
-          -webkit-filter: none;
-          filter: none;
+    &__item {
+        display: block;
+        break-inside: avoid;
+        margin-bottom: 4px;
+        width: 100%;
+        box-sizing: border-box;
+        position: relative;
+        
+        .feed-bg {
+            img {
+                -webkit-filter: saturate(0.3);
+                filter: saturate(0.3);
+                transition: all 0.5s cubic-bezier(0.39, 0.575, 0.565, 1);
+            }
         }
-      }
+        &:hover {
+            .feed-bg {
+                img {
+                    -webkit-filter: none;
+                    filter: none;
+                }
+            }
+        }
+        //&:after {
+        //  content: '';
+        //  position: absolute;
+        //  display: block;
+        //  top: 0;
+        //  left: 0;
+        //  bottom: 0;
+        //  right: 0;
+        //  background: #000;
+        //  opacity: 0.65;
+        //  z-index: 0;
+        //  will-change: opacity;
+        //  transition: opacity 0.5s cubic-bezier(0.39, 0.575, 0.565, 1);
+        //}
+        //&:hover:after, &.active:after {
+        //  opacity: .25;
+        //}
     }
-    //&:after {
-    //  content: '';
-    //  position: absolute;
-    //  display: block;
-    //  top: 0;
-    //  left: 0;
-    //  bottom: 0;
-    //  right: 0;
-    //  background: #000;
-    //  opacity: 0.65;
-    //  z-index: 0;
-    //  will-change: opacity;
-    //  transition: opacity 0.5s cubic-bezier(0.39, 0.575, 0.565, 1);
-    //}
-    //&:hover:after, &.active:after {
-    //  opacity: .25;
-    //}
-  }
 }
 
 @media only screen and (min-width: 400px) {
-  .masonry {
-    -moz-column-count: 1;
-    -webkit-column-count: 1;
-    column-count: 1;
-  }
+    .masonry {
+        -moz-column-count: 1;
+        -webkit-column-count: 1;
+        column-count: 1;
+    }
 }
 
 @media only screen and (min-width: 700px) {
-  .masonry {
-    -moz-column-count: 2;
-    -webkit-column-count: 2;
-    column-count: 2;
-  }
+    .masonry {
+        -moz-column-count: 2;
+        -webkit-column-count: 2;
+        column-count: 2;
+    }
 }
 
 @media only screen and (min-width: 900px) {
-  .masonry {
-    -moz-column-count: 3;
-    -webkit-column-count: 3;
-    column-count: 3;
-  }
+    .masonry {
+        -moz-column-count: 3;
+        -webkit-column-count: 3;
+        column-count: 3;
+    }
 }
 
 @media only screen and (min-width: 1100px) {
-  .masonry {
-    -moz-column-count: 4;
-    -webkit-column-count: 4;
-    column-count: 4;
-  }
+    .masonry {
+        -moz-column-count: 4;
+        -webkit-column-count: 4;
+        column-count: 4;
+    }
 }
 .feed-box .action-btns,
 .feed-box:hover .action-btns .action-btn, .feed-box.active .action-btns .action-btn,
 .feed-box:hover .sound-wave, .feed-box.active .sound-wave {
-  transform: none !important;
+    transform: none !important;
 }
 
 .main {
-  padding-bottom: 40px;
+    padding-bottom: 40px;
 }
 
 .loader-spinner {
-  display: block;
-  border: 3px solid #f3f3f3;
-  border-top: 3px solid #c23a48;
-  border-radius: 50%;
-  width: 10px;
-  height: 10px;
-  animation: loader-spinner 2s linear infinite;
+    display: block;
+    border: 3px solid #f3f3f3;
+    border-top: 3px solid #c23a48;
+    border-radius: 50%;
+    width: 10px;
+    height: 10px;
+    animation: loader-spinner 2s linear infinite;
 }
 
 @keyframes loader-spinner {
-  0% { transform: rotate(0deg); }
-  100% { transform: rotate(360deg); }
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
 }
 
 .siema-wrappper {
-  &__slider {
-  
-  }
-  &__slide {
-  
-  }
+    &__slider {
+    
+    }
+    &__slide {
+    
+    }
 }

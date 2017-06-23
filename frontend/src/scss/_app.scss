@@ -1,0 +1,185 @@
+@keyframes popup {
+    to {
+        transform: scale(1);
+    }
+}
+@keyframes popup-inner {
+    to {
+        transform: perspective(1600px) scale(1) rotate3d(0, 1, 0, 0deg);
+        transform-origin: 50% 0;
+        opacity: 1;
+    }
+}
+
+/*.preloader {*/
+    /*position: fixed;*/
+    /*top: 0;*/
+    /*bottom: 0;*/
+    /*left: 0;*/
+    /*right: 0;*/
+    /*display: block;*/
+    /*z-index: 888;*/
+/*}*/
+.popup_animate {
+    animation-name: popup;
+    animation-fill-mode: both;
+}
+.popup .popup-bg {
+    opacity: .95;
+}
+.popup_animate_inner {
+    animation-name: popup-inner;
+    animation-duration: 0.35s;
+    animation-timing-function: cubic-bezier(0.25, 0.1, 0.6, 1.32);
+    animation-fill-mode: both;
+}
+input.ng-dirty.ng-invalid, textarea.ng-dirty.ng-invalid {
+    border: 1px solid #e7283a !important;
+}
+.valid_style.ng-dirty.ng-invalid {
+    border: 1px solid #e7283a !important;
+}
+.error_box {
+    margin-top: -15px;
+}
+
+.custom_select .below {
+    color: rgba(255, 255, 255, 0.6);
+    position: relative;
+    display: block;
+    width: 100%;
+    padding: 5px;
+    margin: 0 0 25px;
+    box-sizing: border-box;
+    background: none;
+    outline: none;
+    border: 1px solid rgba(255, 255, 255, 0.4);
+    border-radius: 4px;
+    transition: all .35s ease;
+    font-weight: 300;
+    font-size: 14px;
+    line-height: 20px;
+}
+.custom_select .filter {
+    display: none !important;
+}
+select-dropdown .selected {
+    background-color: #242526 !important;
+}
+.custom_select .options {
+    background-color: #000 !important;
+}
+.custom_select .value {
+    text-align: left;
+}
+ng-select.custom_select > div > div.single > div.toggle {
+    width: 8px;
+    font-size: 9px;
+}
+.custom_picker .selection {
+    margin-bottom: 0 !important;
+    font-size: 14px !important;
+    padding: 5px !important;
+    text-align: left !important;
+}
+.custom_picker {
+    display: block;
+    position: relative;
+    width: 100%;
+    box-sizing: border-box;
+    background: none;
+    outline: none;
+    border: 1px solid rgba(255, 255, 255, 0.4);
+    border-radius: 4px;
+    transition: all .35s ease;
+    font-weight: 300;
+    font-size: 14px;
+    /*padding: 3px;*/
+    color: #fff;
+}
+.custom_picker:hover, .custom_picker:focus {
+    border-color: #fff;
+}
+.custom_picker .mydp {
+    border: none;
+    display: block;
+}
+.custom_picker .mydp .selectiongroup {
+    position: relative;
+    width: 100%;
+    box-sizing: border-box;
+    background: none;
+    outline: none;
+    padding: 3px;
+}
+.custom_picker .mydp .btnclear, .mydp .btnpicker, .mydp .headertodaybtn {
+    background: transparent !important;
+    border-left-color: rgba(255, 255, 255, 0.4) !important;
+}
+.custom_picker .mydp .btnclear, .mydp .btnpicker, .mydp .headertodaybtn .icon {
+    color: rgba(255,255,255,0.4) !important;
+}
+
+.custom_picker:hover .mydp .btnclear, .custom_picker:focus .mydp .btnclear,
+.custom_picker:hover .mydp .btnpicker, .custom_picker:focus .mydp .btnpicker,
+.custom_picker:hover .mydp .headertodaybtn, .custom_picker:focus .mydp .headertodaybtn {
+    border-left-color: rgba(255, 255, 255, 1) !important;
+}
+
+.custom_picker:hover .mydp .btnclear, .custom_picker:focus .mydp .btnclear,
+.custom_picker:hover .mydp .btnpicker, .custom_picker:focus .mydp .btnpicker,
+.custom_picker:hover .mydp .headertodaybtn .icon, .custom_picker:focus .mydp .headertodaybtn .icon {
+    color: rgba(255,255,255,1) !important;
+}
+
+.feed-boxes-flex {
+    display: flex;
+    flex-wrap: wrap;
+    margin-top: 135px;
+}
+.feed-boxes-flex .feed-box {
+    flex: 1 1 342px;
+}
+.share_container {
+    font-size: 1rem;
+}
+
+@keyframes fade {
+    from {
+        opacity: 0;
+        top: 40%;
+    }
+    to {
+        opacity: 1;
+        top: 50%;
+    }
+}
+.shared_popup {
+    background: #121314;
+    position: fixed;
+    z-index: 9999;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    padding: 50px;
+    border-radius: 3px;
+    animation-name: fade;
+    animation-duration: 0.5s;
+    animation-fill-mode: both;
+}
+
+@media screen and (min-width: 720px) {
+    .shared_popup {
+        transform: translate(-34%, -50%);
+    }
+}
+@media screen and (min-width: 1024px) {
+    .shared_popup {
+        transform: translate(-20%, -50%);
+    }
+}
+
+.popup-close {
+    cursor: pointer;
+}
+

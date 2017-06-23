@@ -923,7 +923,7 @@ header {
   width: 100%;
   height: 38px;
   margin: 20px 0 6px;
-  background: url("img/menu/logo.svg") 50% 50% no-repeat;
+  background: url("./assets/img/menu/logo.svg") 50% 50% no-repeat;
   background-size: contain;
   font-size: 0;
 }
@@ -1110,7 +1110,7 @@ footer {
   height: 20px;
   box-sizing: border-box;
   opacity: .6;
-  background: url(img/buttons/upload-btn.svg) 50% 45% no-repeat;
+  background: url(./assets/img/buttons/upload-btn.svg) 50% 45% no-repeat;
   transform: rotate(180deg);
 }
 
@@ -1363,7 +1363,7 @@ footer {
     width: 20px;
     height: 0;
     padding-top: 80px;
-    background: url("img/menu/line.svg") no-repeat;
+    background: url("./assets/img/menu/line.svg") no-repeat;
     background-size: contain;
     border: none;
     overflow: hidden;
@@ -1612,7 +1612,7 @@ footer {
 #favorites .inner .icons-wrap .ghost-ico {
   height: 16px;
   margin-bottom: 3px;
-  background: url(img/playlist/ghost.svg) center no-repeat;
+  background: url(./assets/img/playlist/ghost.svg) center no-repeat;
   background-size: contain;
 }
 
@@ -1849,7 +1849,7 @@ footer {
   height: 20px;
   box-sizing: border-box;
   opacity: .6;
-  background: url(img/buttons/upload-btn.svg) 50% 45% no-repeat;
+  background: url(./assets/img/buttons/upload-btn.svg) 50% 45% no-repeat;
   transform: rotate(180deg);
 }
 
@@ -1891,7 +1891,7 @@ footer {
   bottom: 0;
   margin: auto;
   z-index: 0;
-  background: url("img/vinyl.png") 50% 50% no-repeat;
+  background: url("./assets/img/vinyl.png") 50% 50% no-repeat;
   background-size: contain;
   transition: transform .4s linear;
   transform: translate(33.3%, 0);
@@ -1931,12 +1931,12 @@ footer {
 
 .wrap-playlist .img .box-btn.play:after {
   left: 4px;
-  background: url("img/feed-boxes/play.svg") 50% 50% no-repeat;
+  background: url("./assets/img/feed-boxes/play.svg") 50% 50% no-repeat;
   background-size: contain;
 }
 
 .wrap-playlist .img .box-btn.pause:after {
-  background: url("img/feed-boxes/pause-button.svg") 50% 50% no-repeat;
+  background: url("./assets/img/feed-boxes/pause-button.svg") 50% 50% no-repeat;
   background-size: contain;
 }
 
@@ -2981,7 +2981,7 @@ footer {
   z-index: 3;
   box-sizing: border-box;
   border-radius: 4px;
-  background: #1e1e1f url("img/emoji.png") 50% 50% no-repeat;
+  background: #1e1e1f url("./assets/img/emoji.png") 50% 50% no-repeat;
   background-size: contain;
   box-shadow: 0 0 25px 5px rgba(0, 0, 0, 0.5);
   transform: scale(0);
@@ -3185,7 +3185,7 @@ footer {
     right: 13px;
     width: 8px;
     height: 8px;
-    background: url(img/buttons/upload-btn.svg) 50% 45% no-repeat;
+    background: url(./assets/img/buttons/upload-btn.svg) 50% 45% no-repeat;
     background-size: contain;
     opacity: .6;
     transform: rotate(180deg);
@@ -3548,7 +3548,7 @@ footer {
   bottom: 0;
   right: 0;
   margin: auto;
-  background: url("img/buttons/clip-ico.svg") 0 0 no-repeat;
+  background: url("./assets/img/buttons/clip-ico.svg") 0 0 no-repeat;
   background-size: contain;
   transition: transform .15s ease-in-out;
 }
@@ -3781,7 +3781,7 @@ footer {
 .foll-track {
   position: relative;
   padding: 10px 65px 14px 63px;
-  background: url("img/other-elements/bg-track-info.png") 50% 50% no-repeat;
+  background: url("./assets/img/other-elements/bg-track-info.png") 50% 50% no-repeat;
   background-size: cover;
   box-sizing: border-box;
 }
@@ -3817,12 +3817,12 @@ footer {
 
 .foll-track .box-btn.play:after {
   left: 4px;
-  background: url("img/feed-boxes/play.svg") 50% 50% no-repeat;
+  background: url("./assets/img/feed-boxes/play.svg") 50% 50% no-repeat;
   background-size: contain;
 }
 
 .foll-track .box-btn.pause:after {
-  background: url("img/feed-boxes/pause-button.svg") 50% 50% no-repeat;
+  background: url("./assets/img/feed-boxes/pause-button.svg") 50% 50% no-repeat;
   background-size: contain;
 }
 
@@ -3881,7 +3881,7 @@ footer {
   height: 100%;
   opacity: 1;
   transition: opacity .15s ease-in-out;
-  background: url("img/other-elements/waveform.svg") 0 100% repeat-x;
+  background: url("./assets/img/other-elements/waveform.svg") 0 100% repeat-x;
   background-size: auto 100%;
 }
 
@@ -4739,7 +4739,7 @@ body:not(.page-load) .profile-inner .prof-top-bg {
   bottom: 0;
   margin: auto;
   z-index: 0;
-  background: url("img/vinyl.png") 50% 50% no-repeat;
+  background: url("./assets/img/vinyl.png") 50% 50% no-repeat;
   background-size: contain;
   transition: transform .4s linear;
   transform: translate(33.3%, 0);
@@ -4779,12 +4779,12 @@ body:not(.page-load) .profile-inner .prof-top-bg {
 
 .profile-inner .top-playlist .img .box-btn.play:after {
   left: 4px;
-  background: url("img/feed-boxes/play.svg") 50% 50% no-repeat;
+  background: url("./assets/img/feed-boxes/play.svg") 50% 50% no-repeat;
   background-size: contain;
 }
 
 .profile-inner .top-playlist .img .box-btn.pause:after {
-  background: url("img/feed-boxes/pause-button.svg") 50% 50% no-repeat;
+  background: url("./assets/img/feed-boxes/pause-button.svg") 50% 50% no-repeat;
   background-size: contain;
 }
 
@@ -5134,7 +5134,7 @@ body:not(.page-load) .profile-inner .prof-top-bg {
 .follow-btns .action-btn.message:before {
   width: 17px;
   padding-right: 10px;
-  background: url(img/sign/contact.svg) 50% 50% no-repeat;
+  background: url(./assets/img/sign/contact.svg) 50% 50% no-repeat;
   background-size: contain;
   opacity: .6;
 }
@@ -5291,23 +5291,23 @@ body:not(.page-load) .profile-inner .prof-top-bg {
 }
 
 .uploads .upload-item .item-content.music::before {
-  background: url("img/upload/music.png") 50% no-repeat;
+  background: url("./assets/img/upload/music.png") 50% no-repeat;
 }
 
 .uploads .upload-item .item-content.video::before {
-  background: url("img/upload/video.png") 50% no-repeat;
+  background: url("./assets/img/upload/video.png") 50% no-repeat;
 }
 
 .uploads .upload-item .item-content.playlist::before {
-  background: url("img/upload/playlist.png") 50% no-repeat;
+  background: url("./assets/img/upload/playlist.png") 50% no-repeat;
 }
 
 .uploads .upload-item .item-content.album::before {
-  background: url("img/upload/album.png") 50% no-repeat;
+  background: url("./assets/img/upload/album.png") 50% no-repeat;
 }
 
 .uploads .upload-item .item-content.photos::before {
-  background: url("img/upload/photos.png") 50% no-repeat;
+  background: url("./assets/img/upload/photos.png") 50% no-repeat;
 }
 
 .uploads .upload-item input[type=file],
@@ -5380,7 +5380,7 @@ body:not(.page-load) .profile-inner .prof-top-bg {
 }
 
 .uploads .upload-item .import-btn.music::before {
-  background: url("img/upload/music-import.svg") 50% no-repeat;
+  background: url("./assets/img/upload/music-import.svg") 50% no-repeat;
 }
 
 .uploads .upload-item .import-btn.music:hover {
@@ -5397,7 +5397,7 @@ body:not(.page-load) .profile-inner .prof-top-bg {
 }
 
 .uploads .upload-item .import-btn.video::before {
-  background: url("img/upload/video-import.svg") 50% no-repeat;
+  background: url("./assets/img/upload/video-import.svg") 50% no-repeat;
 }
 
 .uploads .upload-item .import-btn.video:hover {
@@ -5518,12 +5518,12 @@ body:not(.page-load) .profile-inner .prof-top-bg {
 
 .upload-audio-item .audio-btn.play::after {
   left: 4px;
-  background: url("img/feed-boxes/play.svg") 50% 50% no-repeat;
+  background: url("./assets/img/feed-boxes/play.svg") 50% 50% no-repeat;
   background-size: contain;
 }
 
 .upload-audio-item .audio-btn.pause::after {
-  background: url('img/feed-boxes/pause-button.svg') 50% 50% no-repeat;
+  background: url('./assets/img/feed-boxes/pause-button.svg') 50% 50% no-repeat;
   background-size: contain;
 }
 
@@ -5666,7 +5666,7 @@ body:not(.page-load) .profile-inner .prof-top-bg {
   width: 100%;
   height: 18px;
   opacity: .6;
-  background: url("img/upload/time-ico.svg") 50% 50% no-repeat;
+  background: url("./assets/img/upload/time-ico.svg") 50% 50% no-repeat;
   background-size: contain;
 }
 
@@ -5971,13 +5971,13 @@ body:not(.page-load) .profile-inner .prof-top-bg {
 .check-track .box-btn.play:after,
 .song-dtl-track .box-btn.play:after {
   left: 4px;
-  background: url("img/feed-boxes/play.svg") 50% 50% no-repeat;
+  background: url("./assets/img/feed-boxes/play.svg") 50% 50% no-repeat;
   background-size: contain;
 }
 
 .check-track .box-btn.pause:after,
 .song-dtl-track .box-btn.pause:after {
-  background: url("img/feed-boxes/pause-button.svg") 50% 50% no-repeat;
+  background: url("./assets/img/feed-boxes/pause-button.svg") 50% 50% no-repeat;
   background-size: contain;
 }
 
@@ -6046,7 +6046,7 @@ body:not(.page-load) .profile-inner .prof-top-bg {
   height: 100%;
   opacity: 1;
   transition: opacity .15s ease-in-out;
-  background: url("img/other-elements/waveform.svg") 0 100% repeat-x;
+  background: url("./assets/img/other-elements/waveform.svg") 0 100% repeat-x;
   background-size: auto 100%;
 }
 
@@ -6538,7 +6538,7 @@ body:not(.page-load) .profile-inner .prof-top-bg {
   margin: auto;
   z-index: 2;
   left: 4px;
-  background: url("img/feed-boxes/play.svg") 50% 50% no-repeat;
+  background: url("./assets/img/feed-boxes/play.svg") 50% 50% no-repeat;
   background-size: contain;
   transition: transform .25s ease;
 }
@@ -6617,7 +6617,7 @@ body:not(.page-load) .profile-inner .prof-top-bg {
   bottom: 0;
   margin: auto;
   transition: opacity .15s ease-in-out;
-  background: url("img/song-lists/basket.svg") 50% 50% no-repeat;
+  background: url("./assets/img/song-lists/basket.svg") 50% 50% no-repeat;
 }
 
 .check-r-one .song-one .song-buy-btn:hover:before,
@@ -6737,21 +6737,21 @@ body:not(.page-load) .profile-inner .prof-top-bg {
 
 .song-dtl-prof-info .action-btns .action-btn.comment:before {
   width: 16px;
-  background: url(img/song-detail/comments.svg) 50% 50% no-repeat;
+  background: url(./assets/img/song-detail/comments.svg) 50% 50% no-repeat;
   background-size: contain;
   opacity: .5;
 }
 
 .song-dtl-prof-info .action-btns .action-btn.download:before {
   width: 16px;
-  background: url(img/song-detail/download.svg) 50% 50% no-repeat;
+  background: url(./assets/img/song-detail/download.svg) 50% 50% no-repeat;
   background-size: contain;
   opacity: .5;
 }
 
 .song-dtl-prof-info .action-btns .action-btn.playlist:before {
   width: 16px;
-  background: url(img/menu/ic-playlist.svg) 50% 50% no-repeat;
+  background: url(./assets/img/menu/ic-playlist.svg) 50% 50% no-repeat;
   background-size: contain;
   opacity: .5;
 }
@@ -6784,7 +6784,7 @@ body:not(.page-load) .profile-inner .prof-top-bg {
   top: -2px;
   bottom: 0;
   margin: auto;
-  background: url(img/feed-boxes/play.svg) 50% 50% no-repeat;
+  background: url(./assets/img/feed-boxes/play.svg) 50% 50% no-repeat;
   background-size: contain;
   opacity: .6;
 }
@@ -6940,7 +6940,7 @@ body:not(.page-load) .profile-inner .prof-top-bg {
 
 .song-dtl-left-bot .action-btn.message:before {
   width: 20px;
-  background: url(img/profile-icons/email.svg) 50% 50% no-repeat;
+  background: url(./assets/img/profile-icons/email.svg) 50% 50% no-repeat;
   background-size: contain;
   opacity: .4;
 }
@@ -6975,7 +6975,7 @@ body:not(.page-load) .profile-inner .prof-top-bg {
   left: 0;
   width: 20px;
   height: 20px;
-  background: url(img/song-detail/comments.svg) 50% 50% no-repeat;
+  background: url(./assets/img/song-detail/comments.svg) 50% 50% no-repeat;
   background-size: contain;
 }
 
@@ -7268,7 +7268,7 @@ body:not(.page-load) .profile-inner .prof-top-bg {
   width: 320px;
   height: 95px;
   margin: 0 auto 20px;
-  background: url("img/menu/logo.svg") 50% 50% no-repeat;
+  background: url("./assets/img/menu/logo.svg") 50% 50% no-repeat;
   background-size: contain;
   font-size: 0;
 }
@@ -7374,7 +7374,7 @@ body:not(.page-load) .profile-inner .prof-top-bg {
   height: 24px;
   margin: 15px auto 0;
   opacity: .4;
-  background: url("img/fb-ico.svg") 50% 50% no-repeat;
+  background: url("./assets/img/fb-ico.svg") 50% 50% no-repeat;
   background-size: contain;
   transition: opacity .218s ease-in-out;
 }
@@ -7421,7 +7421,7 @@ body:not(.page-load) .profile-inner .prof-top-bg {
   bottom: 0;
   margin: auto;
   z-index: 0;
-  background: url("img/bg-about-ico.svg") 50% 50% no-repeat;
+  background: url("./assets/img/bg-about-ico.svg") 50% 50% no-repeat;
   background-size: contain;
   opacity: .1;
   transition: opacity .2s ease;
@@ -7489,7 +7489,7 @@ body:not(.page-load) .profile-inner .prof-top-bg {
   bottom: 0;
   margin: auto;
   z-index: 0;
-  background: url("img/bg-about-ico.svg") 50% 50% no-repeat;
+  background: url("./assets/img/bg-about-ico.svg") 50% 50% no-repeat;
   background-size: contain;
   opacity: .1;
   transition: opacity .2s ease;
@@ -7779,19 +7779,19 @@ body:not(.page-load) .profile-inner .prof-top-bg {
 }
 
 .news-block .share-block .share-one.sh-fb {
-  background-image: url("img/share/fb-ico.svg");
+  background-image: url("./assets/img/share/fb-ico.svg");
 }
 
 .news-block .share-block .share-one.sh-tw {
-  background-image: url("img/share/tw-ico.svg");
+  background-image: url("./assets/img/share/tw-ico.svg");
 }
 
 .news-block .share-block .share-one.sh-gp {
-  background-image: url("img/share/gp-ico.svg");
+  background-image: url("./assets/img/share/gp-ico.svg");
 }
 
 .news-block .share-block .share-one.sh-in {
-  background-image: url("img/share/in-ico.svg");
+  background-image: url("./assets/img/share/in-ico.svg");
 }
 
 .news-block .share-block .share-one:hover:before {
@@ -8314,28 +8314,28 @@ body:not(.page-load) .profile-inner .prof-top-bg {
 .social-logins .soc-login.fb::before {
   left: 60%;
   width: 35%;
-  background: url("img/sign/facebook.svg") 0 30% no-repeat;
+  background: url("./assets/img/sign/facebook.svg") 0 30% no-repeat;
   background-size: contain;
 }
 
 .social-logins .soc-login.in::before {
   left: 31%;
   width: 38%;
-  background: url("img/sign/linkedin.svg") 0 30% no-repeat;
+  background: url("./assets/img/sign/linkedin.svg") 0 30% no-repeat;
   background-size: contain;
 }
 
 .social-logins .soc-login.sc::before {
   left: 13%;
   width: 73%;
-  background: url("img/sign/soundcloud.svg") 0 13% no-repeat;
+  background: url("./assets/img/sign/soundcloud.svg") 0 13% no-repeat;
   background-size: contain;
 }
 
 .social-logins .soc-login.em::before {
   left: 29%;
   width: 37%;
-  background: url("img/sign/contact-ico.svg") 0 37% no-repeat;
+  background: url("./assets/img/sign/contact-ico.svg") 0 37% no-repeat;
   background-size: contain;
 }
 
@@ -12745,7 +12745,7 @@ body:not(.page-load) .profile-inner .prof-top-bg {
   left: 15px;
   width: 10px;
   height: 10px;
-  background: url("img/edit-track/verify.svg") 50% 50% no-repeat;
+  background: url("./assets/img/edit-track/verify.svg") 50% 50% no-repeat;
   background-size: contain;
   opacity: 0;
   transition: all .2s ease-in-out;
@@ -12829,7 +12829,7 @@ body:not(.page-load) .profile-inner .prof-top-bg {
   right: 15px;
   width: 20px;
   height: 43px;
-  background: url("img/edit-track/edit.svg") 50% 50% no-repeat;
+  background: url("./assets/img/edit-track/edit.svg") 50% 50% no-repeat;
   background-size: contain;
   opacity: .6;
 }
@@ -12866,7 +12866,7 @@ body:not(.page-load) .profile-inner .prof-top-bg {
   right: 15px;
   width: 20px;
   height: 43px;
-  background: url(img/edit-track/ready.svg) 50% 50% no-repeat;
+  background: url(./assets/img/edit-track/ready.svg) 50% 50% no-repeat;
   background-size: contain;
   opacity: .6;
   z-index: 1;
@@ -13426,23 +13426,23 @@ body:not(.page-load) .profile-inner .prof-top-bg {
 }
 
 .menu-nav .nav-one i.ic-home {
-  background-image: url("img/menu/ic-home.svg");
+  background-image: url("./assets/img/menu/ic-home.svg");
 }
 
 .menu-nav .nav-one i.ic-browse {
-  background-image: url("img/menu/ic-browse.svg");
+  background-image: url("./assets/img/menu/ic-browse.svg");
 }
 
 .menu-nav .nav-one i.ic-playlist {
-  background-image: url("img/menu/ic-playlist.svg");
+  background-image: url("./assets/img/menu/ic-playlist.svg");
 }
 
 .menu-nav .nav-one i.ic-like {
-  background-image: url("img/menu/ic-fav.svg");
+  background-image: url("./assets/img/menu/ic-fav.svg");
 }
 
 .menu-nav .nav-one i.ic-upload {
-  background-image: url("img/menu/ic-upload.svg");
+  background-image: url("./assets/img/menu/ic-upload.svg");
 }
 
 .menu-nav .nav-one span {
@@ -13686,7 +13686,7 @@ ul li {
   width: 23px;
   height: 21px;
   margin: 5px 5px 0 0;
-  background: url("img/feed-boxes/star.svg") 50% 50% no-repeat;
+  background: url("./assets/img/feed-boxes/star.svg") 50% 50% no-repeat;
   background-size: contain;
 }
 
@@ -13725,12 +13725,12 @@ ul li {
 
 .box-btn.play:after {
   left: 4px;
-  background: url("img/feed-boxes/play.svg") 50% 50% no-repeat;
+  background: url("./assets/img/feed-boxes/play.svg") 50% 50% no-repeat;
   background-size: contain;
 }
 
 .box-btn.pause:after {
-  background: url("img/feed-boxes/pause-button.svg") 50% 50% no-repeat;
+  background: url("./assets/img/feed-boxes/pause-button.svg") 50% 50% no-repeat;
   background-size: contain;
 }
 
@@ -13881,17 +13881,17 @@ ul li {
 
 .feed-box .action-btn.like:before {
   width: 17px;
-  background: url("img/feed-boxes/like.svg") 50% 50% no-repeat;
+  background: url("./assets/img/feed-boxes/like.svg") 50% 50% no-repeat;
 }
 
 .feed-box .action-btn.share:before {
   width: 16px;
-  background: url("img/feed-boxes/share.svg") 50% 50% no-repeat;
+  background: url("./assets/img/feed-boxes/share.svg") 50% 50% no-repeat;
 }
 
 .feed-box .action-btn.add:before {
   width: 17px;
-  background: url("img/feed-boxes/add.svg") 50% 50% no-repeat;
+  background: url("./assets/img/feed-boxes/add.svg") 50% 50% no-repeat;
 }
 
 .feed-box .action-btn:hover {
@@ -13922,7 +13922,7 @@ ul li {
   height: 100%;
   opacity: .6;
   transition: opacity .15s ease-in-out;
-  background: url("img/feed-boxes/soundWawe_active.png") 0 100% no-repeat;
+  background: url("./assets/img/feed-boxes/soundWawe_active.png") 0 100% no-repeat;
   background-size: 100% 100%;
 }
 
@@ -14144,15 +14144,15 @@ ul li {
 }
 
 .note-link.email-ico {
-  background: url("img/profile-icons/email.svg") no-repeat center;
+  background: url("./assets/img/profile-icons/email.svg") no-repeat center;
 }
 
 .note-link.alert-ico {
-  background: url("img/profile-icons/alert.svg") no-repeat center;
+  background: url("./assets/img/profile-icons/alert.svg") no-repeat center;
 }
 
 .note-link.settings-ico {
-  background: url("img/profile-icons/settings.svg") no-repeat center;
+  background: url("./assets/img/profile-icons/settings.svg") no-repeat center;
 }
 
 .note-link.alert,
@@ -14336,7 +14336,7 @@ ul li {
   padding: 0;
   opacity: .6;
   z-index: 2;
-  background: url("img/search/search.svg") 50% 50% no-repeat;
+  background: url("./assets/img/search/search.svg") 50% 50% no-repeat;
   background-size: contain;
   font-size: 0;
 }
@@ -14848,7 +14848,7 @@ ul li {
   width: 100%;
   height: 43px;
   opacity: .6;
-  //background: url("img/player/sound-wave-active.png") 50% 100% no-repeat;
+  //background: url("./assets/img/player/sound-wave-active.png") 50% 100% no-repeat;
   background-size: 100% 27px;
   transition: opacity .15s ease-in-out;
 }
@@ -14926,7 +14926,7 @@ ul li {
     right: 25px;
     width: 20px;
     height: 20px;
-    background: url(img/profile-icons/settings.svg) center no-repeat;
+    background: url(./assets/img/profile-icons/settings.svg) center no-repeat;
     cursor: pointer;
     opacity: .6;
   }
@@ -15141,52 +15141,52 @@ ul li {
 
 .action-btn.like:before {
   width: 17px;
-  background: url("img/feed-boxes/like.svg") 50% 50% no-repeat;
+  background: url("./assets/img/feed-boxes/like.svg") 50% 50% no-repeat;
 }
 
 .action-btn.share:before {
   width: 16px;
-  background: url("img/feed-boxes/share.svg") 50% 50% no-repeat;
+  background: url("./assets/img/feed-boxes/share.svg") 50% 50% no-repeat;
 }
 
 .action-btn.add:before {
   width: 17px;
-  background: url("img/feed-boxes/add.svg") 50% 50% no-repeat;
+  background: url("./assets/img/feed-boxes/add.svg") 50% 50% no-repeat;
 }
 
 .action-btn.edit:before {
   width: 17px;
-  background: url("img/profile-icons/settings.svg") 50% 50% no-repeat;
+  background: url("./assets/img/profile-icons/settings.svg") 50% 50% no-repeat;
 }
 
 .action-btn.repost:before {
   width: 21px;
-  background: url("img/buttons/repost.svg") 50% 50% no-repeat;
+  background: url("./assets/img/buttons/repost.svg") 50% 50% no-repeat;
 }
 
 .action-btn.like.active:before {
-  background: url("img/buttons/like-active.svg") 50% 50% no-repeat;
+  background: url("./assets/img/buttons/like-active.svg") 50% 50% no-repeat;
   cursor: default;
 }
 
 .action-btn.share.active:before {
   width: 16px;
-  background: url("img/feed-boxes/share.svg") 50% 50% no-repeat;
+  background: url("./assets/img/feed-boxes/share.svg") 50% 50% no-repeat;
 }
 
 .action-btn.add.active:before {
   width: 17px;
-  background: url("img/feed-boxes/add.svg") 50% 50% no-repeat;
+  background: url("./assets/img/feed-boxes/add.svg") 50% 50% no-repeat;
 }
 
 .action-btn.edit.active:before {
   width: 17px;
-  background: url("img/profile-icons/settings.svg") 50% 50% no-repeat;
+  background: url("./assets/img/profile-icons/settings.svg") 50% 50% no-repeat;
 }
 
 .action-btn.repost.active:before {
   width: 21px;
-  background: url("img/buttons/repost.svg") 50% 50% no-repeat;
+  background: url("./assets/img/buttons/repost.svg") 50% 50% no-repeat;
 }
 
 .action-btn:hover {
@@ -15301,7 +15301,7 @@ ul li {
   width: 57px;
   height: 58px;
   border-radius: 50%;
-  background: url("img/buttons/people-img.png");
+  background: url("./assets/img/buttons/people-img.png");
 }
 
 .people .people-name {
@@ -15388,7 +15388,7 @@ ul li {
 }
 
 .upload-btn:before {
-  background: url("img/buttons/upload-btn.svg") 50% 45% no-repeat;
+  background: url("./assets/img/buttons/upload-btn.svg") 50% 45% no-repeat;
 }
 
 .upload-btn:after {
@@ -15703,7 +15703,7 @@ ul li {
 
 .song-flex-table .box-btn.play::after,
 .membership-table .box-btn.play::after {
-  background: url(img/feed-boxes/play.svg) 50% 50% no-repeat;
+  background: url(./assets/img/feed-boxes/play.svg) 50% 50% no-repeat;
   background-size: contain;
 }
 
@@ -15854,26 +15854,26 @@ ul li {
 .song-flex-table .action-btn.ellipses:before,
 .membership-table .action-btn.ellipses:before {
   width: 20px;
-  background: url("img/song-lists/ellipses.svg") 50% 50% no-repeat;
+  background: url("./assets/img/song-lists/ellipses.svg") 50% 50% no-repeat;
 }
 
 .song-flex-table .action-btn.basket:before,
 .membership-table .action-btn.basket:before {
   width: 23px;
   height: 23px;
-  background: url("img/song-lists/basket.svg") 50% 50% no-repeat;
+  background: url("./assets/img/song-lists/basket.svg") 50% 50% no-repeat;
 }
 
 .song-flex-table .ico-time,
 .membership-table .ico-time {
   height: 100%;
-  background: url("img/song-lists/time.svg") 50% 50% no-repeat;
+  background: url("./assets/img/song-lists/time.svg") 50% 50% no-repeat;
 }
 
 .song-flex-table .ico-like,
 .membership-table .ico-like {
   height: 100%;
-  background: url("img/buttons/like.svg") 50% 50% no-repeat;
+  background: url("./assets/img/buttons/like.svg") 50% 50% no-repeat;
   opacity: .2;
 }
 
@@ -15884,7 +15884,7 @@ ul li {
   vertical-align: top;
   width: 35px;
   height: 23px;
-  background: url("img/feed-boxes/wave-min.svg") 0 0 no-repeat;
+  background: url("./assets/img/feed-boxes/wave-min.svg") 0 0 no-repeat;
 }
 
 .song-flex-table .ico-wave:before,
@@ -15897,7 +15897,7 @@ ul li {
   height: 100%;
   width: 0;
   transition: all .25s ease;
-  background: url("img/feed-boxes/wave-min-h.svg") 0 0 no-repeat;
+  background: url("./assets/img/feed-boxes/wave-min-h.svg") 0 0 no-repeat;
 }
 
 .song-flex-table .ico-wave.wave-100:before,
@@ -16116,7 +16116,7 @@ ul li {
   vertical-align: top;
   width: 35px;
   height: 23px;
-  background: url("img/feed-boxes/wave-min.svg") 0 0 no-repeat;
+  background: url("./assets/img/feed-boxes/wave-min.svg") 0 0 no-repeat;
 }
 
 .ico-wave-min:before {
@@ -16128,7 +16128,7 @@ ul li {
   height: 100%;
   width: 0;
   transition: all .25s ease;
-  background: url("img/feed-boxes/wave-min-h.svg") 0 0 no-repeat;
+  background: url("./assets/img/feed-boxes/wave-min-h.svg") 0 0 no-repeat;
 }
 
 .ico-wave-min.w100:before {
@@ -16263,7 +16263,7 @@ ul li {
 .active.loop .vocals-btn::after,
 .vocals.active .loop-btn::after,
 .active.loop .loop-btn::after {
-  background: url("img/other-elements/filter-btn-on.svg") 50% no-repeat;
+  background: url("./assets/img/other-elements/filter-btn-on.svg") 50% no-repeat;
 }
 
 .vocals-title,
@@ -16313,7 +16313,7 @@ ul li {
   right: 5%;
   width: 30px;
   height: 30px;
-  background: url("img/other-elements/filter-btn-off.svg") 50% no-repeat;
+  background: url("./assets/img/other-elements/filter-btn-off.svg") 50% no-repeat;
 }
 
 .vocals-btn:active,
@@ -16328,7 +16328,7 @@ ul li {
 
 .vocals-btn:active::after,
 .loop-btn:active::after {
-  background: url("img/other-elements/filter-btn-on.svg") 50% no-repeat;
+  background: url("./assets/img/other-elements/filter-btn-on.svg") 50% no-repeat;
 }
 
 .loop {
@@ -16396,7 +16396,7 @@ ul li {
   right: 0;
   width: 42px;
   height: 42px;
-  background: url("img/other-elements/dropdown-arrow.svg") 50% no-repeat;
+  background: url("./assets/img/other-elements/dropdown-arrow.svg") 50% no-repeat;
   z-index: 10;
 }
 
@@ -16507,7 +16507,7 @@ ul li {
 }
 
 .toggleLabel .toggleElement i:after {
-  background: url("img/other-elements/filter-btn-off.svg") 50% 50% no-repeat;
+  background: url("./assets/img/other-elements/filter-btn-off.svg") 50% 50% no-repeat;
   transition: background .5s ease;
 }
 
@@ -16603,7 +16603,7 @@ ul li {
 .membership-block .toggleLabel textarea:checked+.toggleElement i:after,
 .toggleLabel .eJoin-block textarea:checked+.toggleElement i:after,
 .eJoin-block .toggleLabel textarea:checked+.toggleElement i:after {
-  background-image: url("img/other-elements/filter-btn-on.svg");
+  background-image: url("./assets/img/other-elements/filter-btn-on.svg");
 }
 
 .toggleLabel input:checked+.toggleElement b.toggle-on,
@@ -16770,7 +16770,7 @@ ul li {
   height: 40px;
   margin-left: -22px;
   z-index: 10;
-  background: url(img/other-elements/dropdown-arrow.svg) 50% no-repeat;
+  background: url(./assets/img/other-elements/dropdown-arrow.svg) 50% no-repeat;
   border: 1px solid transparent;
   opacity: .4;
 }
@@ -16802,7 +16802,7 @@ ul li {
   margin-left: -22px;
   z-index: 10;
   border: 1px solid transparent;
-  background: url(img/other-elements/dropdown-arrow.svg) 50% no-repeat;
+  background: url(./assets/img/other-elements/dropdown-arrow.svg) 50% no-repeat;
   transform: rotate(180deg);
 }
 
@@ -17858,7 +17858,7 @@ div.ui-slider-range.ui-widget-header {
   width: 80px;
   height: 80px;
   margin: auto;
-  background: url(img/profile-icons/email.svg) no-repeat;
+  background: url(./assets/img/profile-icons/email.svg) no-repeat;
   background-size: contain;
 }
 
@@ -18106,7 +18106,7 @@ div.ui-slider-range.ui-widget-header {
   left: 46%;
   width: 14px;
   height: 14px;
-  background: url("img/membership/checkmark.svg") 50% 50% no-repeat;
+  background: url("./assets/img/membership/checkmark.svg") 50% 50% no-repeat;
   background-size: contain;
   opacity: .8;
 }
@@ -18120,7 +18120,7 @@ div.ui-slider-range.ui-widget-header {
   left: 46.6%;
   width: 12px;
   height: 12px;
-  background: url(img/membership/delete.svg) 50% 50% no-repeat;
+  background: url(./assets/img/membership/delete.svg) 50% 50% no-repeat;
   background-size: contain;
 }
 
@@ -18149,7 +18149,7 @@ div.ui-slider-range.ui-widget-header {
   left: 20px;
   width: 24px;
   height: 24px;
-  background: url(img/membership/world.svg) 50% 50% no-repeat;
+  background: url(./assets/img/membership/world.svg) 50% 50% no-repeat;
   background-size: cover;
 }
 
@@ -18506,7 +18506,7 @@ div.ui-slider-range.ui-widget-header {
   width: 80px;
   height: 80px;
   margin: auto;
-  background: url(img/profile-icons/email.svg) no-repeat;
+  background: url(./assets/img/profile-icons/email.svg) no-repeat;
   background-size: contain;
 }
 
@@ -18869,7 +18869,7 @@ div.ui-slider-range.ui-widget-header {
   top: 0;
   right: -35%;
   z-index: 0;
-  background: url("img/vinyl.png") 50% 50% no-repeat;
+  background: url("./assets/img/vinyl.png") 50% 50% no-repeat;
   background-size: contain;
   transition: transform .4s linear;
   transform: translate(33.3%, 0);
@@ -18908,12 +18908,12 @@ div.ui-slider-range.ui-widget-header {
 
 #searchPopup .search-playlist .img .box-btn.play:after {
   left: 4px;
-  background: url("img/feed-boxes/play.svg") 50% 50% no-repeat;
+  background: url("./assets/img/feed-boxes/play.svg") 50% 50% no-repeat;
   background-size: contain;
 }
 
 #searchPopup .search-playlist .img .box-btn.pause:after {
-  background: url("img/feed-boxes/pause-button.svg") 50% 50% no-repeat;
+  background: url("./assets/img/feed-boxes/pause-button.svg") 50% 50% no-repeat;
   background-size: contain;
 }
 

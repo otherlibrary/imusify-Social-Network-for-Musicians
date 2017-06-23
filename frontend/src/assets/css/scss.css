@@ -658,7 +658,7 @@ header {
   width: 100%;
   height: 38px;
   margin: 20px 0 6px;
-  background: url("img/menu/logo.svg") 50% 50% no-repeat;
+  background: url("./assets/img/menu/logo.svg") 50% 50% no-repeat;
   background-size: contain;
   font-size: 0; }
 
@@ -807,7 +807,7 @@ footer {
       height: 20px;
       box-sizing: border-box;
       opacity: .6;
-      background: url(img/buttons/upload-btn.svg) 50% 45% no-repeat;
+      background: url(./assets/img/buttons/upload-btn.svg) 50% 45% no-repeat;
       transform: rotate(180deg); }
   .prof-status.online {
     background-color: #4fea3f; }
@@ -998,7 +998,7 @@ footer {
       width: 20px;
       height: 0;
       padding-top: 80px;
-      background: url("img/menu/line.svg") no-repeat;
+      background: url("./assets/img/menu/line.svg") no-repeat;
       background-size: contain;
       border: none;
       overflow: hidden;
@@ -1150,7 +1150,7 @@ footer {
       #playlist .inner .icons-wrap .ghost-ico, #notifications .inner .icons-wrap .ghost-ico, #messaging .inner .icons-wrap .ghost-ico, #favorites .inner .icons-wrap .ghost-ico {
         height: 16px;
         margin-bottom: 3px;
-        background: url(img/playlist/ghost.svg) center no-repeat;
+        background: url(./assets/img/playlist/ghost.svg) center no-repeat;
         background-size: contain; }
 
 .playlist-after {
@@ -1317,7 +1317,7 @@ footer {
         height: 20px;
         box-sizing: border-box;
         opacity: .6;
-        background: url(img/buttons/upload-btn.svg) 50% 45% no-repeat;
+        background: url(./assets/img/buttons/upload-btn.svg) 50% 45% no-repeat;
         transform: rotate(180deg); }
     .wrap-playlist .swiper-slide-active .info {
       opacity: .6;
@@ -1351,7 +1351,7 @@ footer {
       bottom: 0;
       margin: auto;
       z-index: 0;
-      background: url("img/vinyl.png") 50% 50% no-repeat;
+      background: url("./assets/img/vinyl.png") 50% 50% no-repeat;
       background-size: contain;
       transition: transform .4s linear;
       transform: translate(33.3%, 0);
@@ -1385,10 +1385,10 @@ footer {
         margin: auto; }
       .wrap-playlist .img .box-btn.play:after {
         left: 4px;
-        background: url("img/feed-boxes/play.svg") 50% 50% no-repeat;
+        background: url("./assets/img/feed-boxes/play.svg") 50% 50% no-repeat;
         background-size: contain; }
       .wrap-playlist .img .box-btn.pause:after {
-        background: url("img/feed-boxes/pause-button.svg") 50% 50% no-repeat;
+        background: url("./assets/img/feed-boxes/pause-button.svg") 50% 50% no-repeat;
         background-size: contain; }
       .wrap-playlist .img .box-btn:hover {
         border: 1px solid rgba(255, 255, 255, 0.6); }
@@ -2045,7 +2045,7 @@ footer {
       z-index: 3;
       box-sizing: border-box;
       border-radius: 4px;
-      background: #1e1e1f url("img/emoji.png") 50% 50% no-repeat;
+      background: #1e1e1f url("./assets/img/emoji.png") 50% 50% no-repeat;
       background-size: contain;
       box-shadow: 0 0 25px 5px rgba(0, 0, 0, 0.5);
       transform: scale(0);
@@ -2203,7 +2203,7 @@ footer {
       right: 13px;
       width: 8px;
       height: 8px;
-      background: url(img/buttons/upload-btn.svg) 50% 45% no-repeat;
+      background: url(./assets/img/buttons/upload-btn.svg) 50% 45% no-repeat;
       background-size: contain;
       opacity: .6;
       transform: rotate(180deg);
@@ -2466,7 +2466,7 @@ footer {
     bottom: 0;
     right: 0;
     margin: auto;
-    background: url("img/buttons/clip-ico.svg") 0 0 no-repeat;
+    background: url("./assets/img/buttons/clip-ico.svg") 0 0 no-repeat;
     background-size: contain;
     transition: transform .15s ease-in-out; }
   .btn.add-file:hover:after {
@@ -2646,7 +2646,7 @@ footer {
 .foll-track {
   position: relative;
   padding: 10px 65px 14px 63px;
-  background: url("img/other-elements/bg-track-info.png") 50% 50% no-repeat;
+  background: url("./assets/img/other-elements/bg-track-info.png") 50% 50% no-repeat;
   background-size: cover;
   box-sizing: border-box; }
   .foll-track .box-btn {
@@ -2676,10 +2676,10 @@ footer {
       margin: auto; }
     .foll-track .box-btn.play:after {
       left: 4px;
-      background: url("img/feed-boxes/play.svg") 50% 50% no-repeat;
+      background: url("./assets/img/feed-boxes/play.svg") 50% 50% no-repeat;
       background-size: contain; }
     .foll-track .box-btn.pause:after {
-      background: url("img/feed-boxes/pause-button.svg") 50% 50% no-repeat;
+      background: url("./assets/img/feed-boxes/pause-button.svg") 50% 50% no-repeat;
       background-size: contain; }
     .foll-track .box-btn:hover {
       border: 1px solid rgba(255, 255, 255, 0.8); }
@@ -2719,7 +2719,7 @@ footer {
         height: 100%;
         opacity: 1;
         transition: opacity .15s ease-in-out;
-        background: url("img/other-elements/waveform.svg") 0 100% repeat-x;
+        background: url("./assets/img/other-elements/waveform.svg") 0 100% repeat-x;
         background-size: auto 100%; }
     .foll-track .track-timeline .duration, .foll-track .track-timeline .price {
       position: absolute;
@@ -3356,7 +3356,7 @@ body:not(.page-load) .profile-inner .prof-top-bg {
         bottom: 0;
         margin: auto;
         z-index: 0;
-        background: url("img/vinyl.png") 50% 50% no-repeat;
+        background: url("./assets/img/vinyl.png") 50% 50% no-repeat;
         background-size: contain;
         transition: transform .4s linear;
         transform: translate(33.3%, 0);
@@ -3390,10 +3390,10 @@ body:not(.page-load) .profile-inner .prof-top-bg {
           margin: auto; }
         .profile-inner .top-playlist .img .box-btn.play:after {
           left: 4px;
-          background: url("img/feed-boxes/play.svg") 50% 50% no-repeat;
+          background: url("./assets/img/feed-boxes/play.svg") 50% 50% no-repeat;
           background-size: contain; }
         .profile-inner .top-playlist .img .box-btn.pause:after {
-          background: url("img/feed-boxes/pause-button.svg") 50% 50% no-repeat;
+          background: url("./assets/img/feed-boxes/pause-button.svg") 50% 50% no-repeat;
           background-size: contain; }
         .profile-inner .top-playlist .img .box-btn:hover {
           border: 1px solid rgba(255, 255, 255, 0.6); }
@@ -3653,7 +3653,7 @@ body:not(.page-load) .profile-inner .prof-top-bg {
   .follow-btns .action-btn.message:before {
     width: 17px;
     padding-right: 10px;
-    background: url(img/sign/contact.svg) 50% 50% no-repeat;
+    background: url(./assets/img/sign/contact.svg) 50% 50% no-repeat;
     background-size: contain;
     opacity: .6; }
 
@@ -3763,15 +3763,15 @@ body:not(.page-load) .profile-inner .prof-top-bg {
         width: 100px;
         height: 100px; }
       .uploads .upload-item .item-content.music::before {
-        background: url("img/upload/music.png") 50% no-repeat; }
+        background: url("./assets/img/upload/music.png") 50% no-repeat; }
       .uploads .upload-item .item-content.video::before {
-        background: url("img/upload/video.png") 50% no-repeat; }
+        background: url("./assets/img/upload/video.png") 50% no-repeat; }
       .uploads .upload-item .item-content.playlist::before {
-        background: url("img/upload/playlist.png") 50% no-repeat; }
+        background: url("./assets/img/upload/playlist.png") 50% no-repeat; }
       .uploads .upload-item .item-content.album::before {
-        background: url("img/upload/album.png") 50% no-repeat; }
+        background: url("./assets/img/upload/album.png") 50% no-repeat; }
       .uploads .upload-item .item-content.photos::before {
-        background: url("img/upload/photos.png") 50% no-repeat; }
+        background: url("./assets/img/upload/photos.png") 50% no-repeat; }
     .uploads .upload-item input[type=file], .uploads .upload-item .edit-block select[type=file], .edit-block .uploads .upload-item select[type=file], .uploads .upload-item .invite-block select[type=file], .invite-block .uploads .upload-item select[type=file], .uploads .upload-item .roles-block select[type=file], .roles-block .uploads .upload-item select[type=file], .uploads .upload-item .membership-block select[type=file], .membership-block .uploads .upload-item select[type=file], .uploads .upload-item .eJoin-block select[type=file], .eJoin-block .uploads .upload-item select[type=file], .uploads .upload-item .edit-block textarea[type=file], .edit-block .uploads .upload-item textarea[type=file], .uploads .upload-item .invite-block textarea[type=file], .invite-block .uploads .upload-item textarea[type=file], .uploads .upload-item .roles-block textarea[type=file], .roles-block .uploads .upload-item textarea[type=file], .uploads .upload-item .membership-block textarea[type=file], .membership-block .uploads .upload-item textarea[type=file], .uploads .upload-item .eJoin-block textarea[type=file], .eJoin-block .uploads .upload-item textarea[type=file] {
       display: none; }
     .uploads .upload-item .item-info {
@@ -3812,7 +3812,7 @@ body:not(.page-load) .profile-inner .prof-top-bg {
       .uploads .upload-item .import-btn.music {
         background-color: #f57126; }
         .uploads .upload-item .import-btn.music::before {
-          background: url("img/upload/music-import.svg") 50% no-repeat; }
+          background: url("./assets/img/upload/music-import.svg") 50% no-repeat; }
         .uploads .upload-item .import-btn.music:hover {
           color: #d9d9d9; }
         .uploads .upload-item .import-btn.music:active {
@@ -3821,7 +3821,7 @@ body:not(.page-load) .profile-inner .prof-top-bg {
         color: #d22222;
         background-color: #fff; }
         .uploads .upload-item .import-btn.video::before {
-          background: url("img/upload/video-import.svg") 50% no-repeat; }
+          background: url("./assets/img/upload/video-import.svg") 50% no-repeat; }
         .uploads .upload-item .import-btn.video:hover {
           color: #e14646; }
         .uploads .upload-item .import-btn.video:active {
@@ -3916,7 +3916,7 @@ body:not(.page-load) .profile-inner .prof-top-bg {
         margin: auto; }
       .upload-audio-item .audio-btn.play::after {
         left: 4px;
-        background: url("img/feed-boxes/play.svg") 50% 50% no-repeat;
+        background: url("./assets/img/feed-boxes/play.svg") 50% 50% no-repeat;
         background-size: contain; }
       .upload-audio-item .audio-btn:hover {
         border: 1px solid rgba(255, 255, 255, 0.6); }
@@ -4018,7 +4018,7 @@ body:not(.page-load) .profile-inner .prof-top-bg {
           width: 100%;
           height: 18px;
           opacity: .6;
-          background: url("img/upload/time-ico.svg") 50% 50% no-repeat;
+          background: url("./assets/img/upload/time-ico.svg") 50% 50% no-repeat;
           background-size: contain; }
   .audio-content .song-tags {
     position: relative;
@@ -4228,10 +4228,10 @@ body:not(.page-load) .profile-inner .prof-top-bg {
       margin: auto; }
     .check-track .box-btn.play:after, .song-dtl-track .box-btn.play:after {
       left: 4px;
-      background: url("img/feed-boxes/play.svg") 50% 50% no-repeat;
+      background: url("./assets/img/feed-boxes/play.svg") 50% 50% no-repeat;
       background-size: contain; }
     .check-track .box-btn.pause:after, .song-dtl-track .box-btn.pause:after {
-      background: url("img/feed-boxes/pause-button.svg") 50% 50% no-repeat;
+      background: url("./assets/img/feed-boxes/pause-button.svg") 50% 50% no-repeat;
       background-size: contain; }
     .check-track .box-btn:hover, .song-dtl-track .box-btn:hover {
       border: 1px solid rgba(255, 255, 255, 0.8); }
@@ -4271,7 +4271,7 @@ body:not(.page-load) .profile-inner .prof-top-bg {
         height: 100%;
         opacity: 1;
         transition: opacity .15s ease-in-out;
-        background: url("img/other-elements/waveform.svg") 0 100% repeat-x;
+        background: url("./assets/img/other-elements/waveform.svg") 0 100% repeat-x;
         background-size: auto 100%; }
     .check-track .track-timeline .duration, .song-dtl-track .track-timeline .duration, .check-track .track-timeline .price, .song-dtl-track .track-timeline .price {
       position: absolute;
@@ -4589,7 +4589,7 @@ body:not(.page-load) .profile-inner .prof-top-bg {
         margin: auto;
         z-index: 2;
         left: 4px;
-        background: url("img/feed-boxes/play.svg") 50% 50% no-repeat;
+        background: url("./assets/img/feed-boxes/play.svg") 50% 50% no-repeat;
         background-size: contain;
         transition: transform .25s ease; }
     .check-r-one .song-one:hover:before, .song-dtl-right .song-dtl-r-one .song-one:hover:before {
@@ -4644,7 +4644,7 @@ body:not(.page-load) .profile-inner .prof-top-bg {
         bottom: 0;
         margin: auto;
         transition: opacity .15s ease-in-out;
-        background: url("img/song-lists/basket.svg") 50% 50% no-repeat; }
+        background: url("./assets/img/song-lists/basket.svg") 50% 50% no-repeat; }
       .check-r-one .song-one .song-buy-btn:hover:before, .song-dtl-right .song-dtl-r-one .song-one .song-buy-btn:hover:before {
         opacity: .8; }
       .check-r-one .song-one .song-buy-btn:active:before, .song-dtl-right .song-dtl-r-one .song-one .song-buy-btn:active:before {
@@ -4718,17 +4718,17 @@ body:not(.page-load) .profile-inner .prof-top-bg {
   text-transform: capitalize; }
   .song-dtl-prof-info .action-btns .action-btn.comment:before {
     width: 16px;
-    background: url(img/song-detail/comments.svg) 50% 50% no-repeat;
+    background: url(./assets/img/song-detail/comments.svg) 50% 50% no-repeat;
     background-size: contain;
     opacity: .5; }
   .song-dtl-prof-info .action-btns .action-btn.download:before {
     width: 16px;
-    background: url(img/song-detail/download.svg) 50% 50% no-repeat;
+    background: url(./assets/img/song-detail/download.svg) 50% 50% no-repeat;
     background-size: contain;
     opacity: .5; }
   .song-dtl-prof-info .action-btns .action-btn.playlist:before {
     width: 16px;
-    background: url(img/menu/ic-playlist.svg) 50% 50% no-repeat;
+    background: url(./assets/img/menu/ic-playlist.svg) 50% 50% no-repeat;
     background-size: contain;
     opacity: .5; }
   .song-dtl-prof-info .action-btns .action-btn.play span {
@@ -4755,7 +4755,7 @@ body:not(.page-load) .profile-inner .prof-top-bg {
     top: -2px;
     bottom: 0;
     margin: auto;
-    background: url(img/feed-boxes/play.svg) 50% 50% no-repeat;
+    background: url(./assets/img/feed-boxes/play.svg) 50% 50% no-repeat;
     background-size: contain;
     opacity: .6; }
 
@@ -4870,7 +4870,7 @@ body:not(.page-load) .profile-inner .prof-top-bg {
     padding: 0 7px; }
     .song-dtl-left-bot .action-btn.message:before {
       width: 20px;
-      background: url(img/profile-icons/email.svg) 50% 50% no-repeat;
+      background: url(./assets/img/profile-icons/email.svg) 50% 50% no-repeat;
       background-size: contain;
       opacity: .4; }
   .song-dtl-left-bot .foll-submit {
@@ -4895,7 +4895,7 @@ body:not(.page-load) .profile-inner .prof-top-bg {
       left: 0;
       width: 20px;
       height: 20px;
-      background: url(img/song-detail/comments.svg) 50% 50% no-repeat;
+      background: url(./assets/img/song-detail/comments.svg) 50% 50% no-repeat;
       background-size: contain; }
   .song-dtl-left-bot .mess {
     padding-bottom: 10px;
@@ -5099,7 +5099,7 @@ body:not(.page-load) .profile-inner .prof-top-bg {
     width: 320px;
     height: 95px;
     margin: 0 auto 20px;
-    background: url("img/menu/logo.svg") 50% 50% no-repeat;
+    background: url("./assets/img/menu/logo.svg") 50% 50% no-repeat;
     background-size: contain;
     font-size: 0; }
   .about-block .logo-info {
@@ -5177,7 +5177,7 @@ body:not(.page-load) .profile-inner .prof-top-bg {
       height: 24px;
       margin: 15px auto 0;
       opacity: .4;
-      background: url("img/fb-ico.svg") 50% 50% no-repeat;
+      background: url("./assets/img/fb-ico.svg") 50% 50% no-repeat;
       background-size: contain;
       transition: opacity .218s ease-in-out; }
       .about-block .people-one .fb-link:hover {
@@ -5210,7 +5210,7 @@ body:not(.page-load) .profile-inner .prof-top-bg {
         bottom: 0;
         margin: auto;
         z-index: 0;
-        background: url("img/bg-about-ico.svg") 50% 50% no-repeat;
+        background: url("./assets/img/bg-about-ico.svg") 50% 50% no-repeat;
         background-size: contain;
         opacity: .1;
         transition: opacity .2s ease; }
@@ -5264,7 +5264,7 @@ body:not(.page-load) .profile-inner .prof-top-bg {
       bottom: 0;
       margin: auto;
       z-index: 0;
-      background: url("img/bg-about-ico.svg") 50% 50% no-repeat;
+      background: url("./assets/img/bg-about-ico.svg") 50% 50% no-repeat;
       background-size: contain;
       opacity: .1;
       transition: opacity .2s ease; }
@@ -5468,13 +5468,13 @@ body:not(.page-load) .profile-inner .prof-top-bg {
         border: 3px solid #fff;
         border-radius: 50%; }
       .news-block .share-block .share-one.sh-fb {
-        background-image: url("img/share/fb-ico.svg"); }
+        background-image: url("./assets/img/share/fb-ico.svg"); }
       .news-block .share-block .share-one.sh-tw {
-        background-image: url("img/share/tw-ico.svg"); }
+        background-image: url("./assets/img/share/tw-ico.svg"); }
       .news-block .share-block .share-one.sh-gp {
-        background-image: url("img/share/gp-ico.svg"); }
+        background-image: url("./assets/img/share/gp-ico.svg"); }
       .news-block .share-block .share-one.sh-in {
-        background-image: url("img/share/in-ico.svg"); }
+        background-image: url("./assets/img/share/in-ico.svg"); }
       .news-block .share-block .share-one:hover:before {
         opacity: .4; }
   .news-block .news-right {
@@ -5795,22 +5795,22 @@ body:not(.page-load) .profile-inner .prof-top-bg {
   .social-logins .soc-login.fb::before {
     left: 60%;
     width: 35%;
-    background: url("img/sign/facebook.svg") 0 30% no-repeat;
+    background: url("./assets/img/sign/facebook.svg") 0 30% no-repeat;
     background-size: contain; }
   .social-logins .soc-login.in::before {
     left: 31%;
     width: 38%;
-    background: url("img/sign/linkedin.svg") 0 30% no-repeat;
+    background: url("./assets/img/sign/linkedin.svg") 0 30% no-repeat;
     background-size: contain; }
   .social-logins .soc-login.sc::before {
     left: 13%;
     width: 73%;
-    background: url("img/sign/soundcloud.svg") 0 13% no-repeat;
+    background: url("./assets/img/sign/soundcloud.svg") 0 13% no-repeat;
     background-size: contain; }
   .social-logins .soc-login.em::before {
     left: 29%;
     width: 37%;
-    background: url("img/sign/contact-ico.svg") 0 37% no-repeat;
+    background: url("./assets/img/sign/contact-ico.svg") 0 37% no-repeat;
     background-size: contain; }
 
 .sign-form, .edit-block .edit-form, .invite-block .edit-form, .roles-block .edit-form, .membership-block .edit-form, .eJoin-block .edit-form, .edit-block .invite-form, .invite-block .invite-form, .roles-block .invite-form, .membership-block .invite-form, .eJoin-block .invite-form, .edit-block .role-form, .invite-block .role-form, .roles-block .role-form, .membership-block .role-form, .eJoin-block .role-form, .edit-block .eJoin-form, .invite-block .eJoin-form, .roles-block .eJoin-form, .membership-block .eJoin-form, .eJoin-block .eJoin-form {
@@ -6214,7 +6214,7 @@ body:not(.page-load) .profile-inner .prof-top-bg {
         left: 15px;
         width: 10px;
         height: 10px;
-        background: url("img/edit-track/verify.svg") 50% 50% no-repeat;
+        background: url("./assets/img/edit-track/verify.svg") 50% 50% no-repeat;
         background-size: contain;
         opacity: 0;
         transition: all .2s ease-in-out; }
@@ -6245,7 +6245,7 @@ body:not(.page-load) .profile-inner .prof-top-bg {
           right: 15px;
           width: 20px;
           height: 43px;
-          background: url("img/edit-track/edit.svg") 50% 50% no-repeat;
+          background: url("./assets/img/edit-track/edit.svg") 50% 50% no-repeat;
           background-size: contain;
           opacity: .6; }
         .edit-track-form .inp-block.price-opt .price-btn.hidden, .edit-track-form .inp-block.price-opt .hidden.hidden-price {
@@ -6267,7 +6267,7 @@ body:not(.page-load) .profile-inner .prof-top-bg {
         right: 15px;
         width: 20px;
         height: 43px;
-        background: url(img/edit-track/ready.svg) 50% 50% no-repeat;
+        background: url(./assets/img/edit-track/ready.svg) 50% 50% no-repeat;
         background-size: contain;
         opacity: .6;
         z-index: 1; }
@@ -6576,15 +6576,15 @@ body:not(.page-load) .profile-inner .prof-top-bg {
       background-repeat: no-repeat;
       background-size: contain; }
       .menu-nav .nav-one i.ic-home {
-        background-image: url("img/menu/ic-home.svg"); }
+        background-image: url("./assets/img/menu/ic-home.svg"); }
       .menu-nav .nav-one i.ic-browse {
-        background-image: url("img/menu/ic-browse.svg"); }
+        background-image: url("./assets/img/menu/ic-browse.svg"); }
       .menu-nav .nav-one i.ic-playlist {
-        background-image: url("img/menu/ic-playlist.svg"); }
+        background-image: url("./assets/img/menu/ic-playlist.svg"); }
       .menu-nav .nav-one i.ic-like {
-        background-image: url("img/menu/ic-fav.svg"); }
+        background-image: url("./assets/img/menu/ic-fav.svg"); }
       .menu-nav .nav-one i.ic-upload {
-        background-image: url("img/menu/ic-upload.svg"); }
+        background-image: url("./assets/img/menu/ic-upload.svg"); }
     .menu-nav .nav-one span {
       position: relative;
       display: inline-block;
@@ -6786,7 +6786,7 @@ body.page-load .feed-box {
     width: 23px;
     height: 21px;
     margin: 5px 5px 0 0;
-    background: url("img/feed-boxes/star.svg") 50% 50% no-repeat;
+    background: url("./assets/img/feed-boxes/star.svg") 50% 50% no-repeat;
     background-size: contain; }
   .feed-box .box-btn {
     position: absolute;
@@ -6819,10 +6819,10 @@ body.page-load .feed-box {
       margin: auto; }
     .feed-box .box-btn.play:after {
       left: 4px;
-      background: url("img/feed-boxes/play.svg") 50% 50% no-repeat;
+      background: url("./assets/img/feed-boxes/play.svg") 50% 50% no-repeat;
       background-size: contain; }
     .feed-box .box-btn.pause:after {
-      background: url("img/feed-boxes/pause-button.svg") 50% 50% no-repeat;
+      background: url("./assets/img/feed-boxes/pause-button.svg") 50% 50% no-repeat;
       background-size: contain; }
     .feed-box .box-btn:hover {
       border: 1px solid rgba(255, 255, 255, 0.6); }
@@ -6938,13 +6938,13 @@ body.page-load .feed-box {
       transition: opacity .15s ease-in-out; }
     .feed-box .action-btn.like:before {
       width: 17px;
-      background: url("img/feed-boxes/like.svg") 50% 50% no-repeat; }
+      background: url("./assets/img/feed-boxes/like.svg") 50% 50% no-repeat; }
     .feed-box .action-btn.share:before {
       width: 16px;
-      background: url("img/feed-boxes/share.svg") 50% 50% no-repeat; }
+      background: url("./assets/img/feed-boxes/share.svg") 50% 50% no-repeat; }
     .feed-box .action-btn.add:before {
       width: 17px;
-      background: url("img/feed-boxes/add.svg") 50% 50% no-repeat; }
+      background: url("./assets/img/feed-boxes/add.svg") 50% 50% no-repeat; }
     .feed-box .action-btn:hover {
       opacity: 1; }
     .feed-box .action-btn:active:before {
@@ -6967,7 +6967,7 @@ body.page-load .feed-box {
       height: 100%;
       opacity: .6;
       transition: opacity .15s ease-in-out;
-      background: url("img/feed-boxes/soundWawe_active.png") 0 100% no-repeat;
+      background: url("./assets/img/feed-boxes/soundWawe_active.png") 0 100% no-repeat;
       background-size: 100% 100%; }
     .feed-box .sound-wave .duration, .feed-box .sound-wave .price {
       position: relative;
@@ -7120,13 +7120,13 @@ body.page-load .feed-box {
     opacity: 1; }
 
 .note-link.email-ico {
-  background: url("img/profile-icons/email.svg") no-repeat center; }
+  background: url("./assets/img/profile-icons/email.svg") no-repeat center; }
 
 .note-link.alert-ico {
-  background: url("img/profile-icons/alert.svg") no-repeat center; }
+  background: url("./assets/img/profile-icons/alert.svg") no-repeat center; }
 
 .note-link.settings-ico {
-  background: url("img/profile-icons/settings.svg") no-repeat center; }
+  background: url("./assets/img/profile-icons/settings.svg") no-repeat center; }
 
 .note-link.alert, .note-link.active {
   position: relative;
@@ -7253,7 +7253,7 @@ body.page-load .feed-box {
     padding: 0;
     opacity: .6;
     z-index: 2;
-    background: url("img/search/search.svg") 50% 50% no-repeat;
+    background: url("./assets/img/search/search.svg") 50% 50% no-repeat;
     background-size: contain;
     font-size: 0; }
   .search-form input, .search-form .edit-block select, .edit-block .search-form select, .search-form .invite-block select, .invite-block .search-form select, .search-form .roles-block select, .roles-block .search-form select, .search-form .membership-block select, .membership-block .search-form select, .search-form .eJoin-block select, .eJoin-block .search-form select, .search-form .edit-block textarea, .edit-block .search-form textarea, .search-form .invite-block textarea, .invite-block .search-form textarea, .search-form .roles-block textarea, .roles-block .search-form textarea, .search-form .membership-block textarea, .membership-block .search-form textarea, .search-form .eJoin-block textarea, .eJoin-block .search-form textarea {
@@ -7394,7 +7394,7 @@ body.page-load .feed-box {
     height: 13px;
     margin-right: 5px; }
     #player .btn-backwards:after {
-      background-image: url("img/player/backward.svg"); }
+      background-image: url("./assets/img/player/backward.svg"); }
   #player .btn-play {
     width: 34px;
     height: 34px;
@@ -7406,28 +7406,28 @@ body.page-load .feed-box {
       width: 18px;
       height: 18px;
       left: 4px;
-      background-image: url("img/feed-boxes/play.svg"); }
+      background-image: url("./assets/img/feed-boxes/play.svg"); }
     #player .btn-play.pause:after {
       left: 0;
-      background-image: url("img/feed-boxes/pause-button.svg"); }
+      background-image: url("./assets/img/feed-boxes/pause-button.svg"); }
   #player .btn-forward {
     width: 18px;
     height: 13px;
     margin-left: 5px; }
     #player .btn-forward:after {
-      background-image: url("img/player/forward.svg"); }
+      background-image: url("./assets/img/player/forward.svg"); }
   #player .btn-shuffle {
     width: 16px;
     height: 40px;
     margin: 2px 6px; }
     #player .btn-shuffle:after {
-      background-image: url("img/player/shuffle.svg"); }
+      background-image: url("./assets/img/player/shuffle.svg"); }
   #player .btn-repeat {
     width: 16px;
     height: 40px;
     margin: 2px 6px; }
     #player .btn-repeat:after {
-      background-image: url("img/player/repeat.svg"); }
+      background-image: url("./assets/img/player/repeat.svg"); }
   #player .btn-queue {
     width: 32px;
     height: 32px;
@@ -7435,7 +7435,7 @@ body.page-load .feed-box {
     #player .btn-queue:after {
       width: 22px;
       height: 18px;
-      background-image: url("img/player/queue.svg"); }
+      background-image: url("./assets/img/player/queue.svg"); }
     #player .btn-queue.active .btn-queue:after {
       opacity: 1; }
   #player .btn-plus {
@@ -7701,7 +7701,7 @@ body.page-load .feed-box {
     width: 100%;
     height: 43px;
     opacity: .6;
-    background: url("img/player/sound-wave-active.png") 50% 100% no-repeat;
+    background: url("./assets/img/player/sound-wave-active.png") 50% 100% no-repeat;
     background-size: 100% 27px;
     transition: opacity .15s ease-in-out; }
     .player-inner .timeline:hover {
@@ -7761,7 +7761,7 @@ body.page-load .feed-box {
       right: 25px;
       width: 20px;
       height: 20px;
-      background: url(img/profile-icons/settings.svg) center no-repeat;
+      background: url(./assets/img/profile-icons/settings.svg) center no-repeat;
       cursor: pointer;
       opacity: .6; }
   #player .btn-queue {
@@ -7910,34 +7910,34 @@ body.page-load .feed-box {
     display: none; }
   .action-btn.like:before {
     width: 17px;
-    background: url("img/feed-boxes/like.svg") 50% 50% no-repeat; }
+    background: url("./assets/img/feed-boxes/like.svg") 50% 50% no-repeat; }
   .action-btn.share:before {
     width: 16px;
-    background: url("img/feed-boxes/share.svg") 50% 50% no-repeat; }
+    background: url("./assets/img/feed-boxes/share.svg") 50% 50% no-repeat; }
   .action-btn.add:before {
     width: 17px;
-    background: url("img/feed-boxes/add.svg") 50% 50% no-repeat; }
+    background: url("./assets/img/feed-boxes/add.svg") 50% 50% no-repeat; }
   .action-btn.edit:before {
     width: 17px;
-    background: url("img/profile-icons/settings.svg") 50% 50% no-repeat; }
+    background: url("./assets/img/profile-icons/settings.svg") 50% 50% no-repeat; }
   .action-btn.repost:before {
     width: 21px;
-    background: url("img/buttons/repost.svg") 50% 50% no-repeat; }
+    background: url("./assets/img/buttons/repost.svg") 50% 50% no-repeat; }
   .action-btn.like.active:before {
-    background: url("img/buttons/like-active.svg") 50% 50% no-repeat;
+    background: url("./assets/img/buttons/like-active.svg") 50% 50% no-repeat;
     cursor: default; }
   .action-btn.share.active:before {
     width: 16px;
-    background: url("img/feed-boxes/share.svg") 50% 50% no-repeat; }
+    background: url("./assets/img/feed-boxes/share.svg") 50% 50% no-repeat; }
   .action-btn.add.active:before {
     width: 17px;
-    background: url("img/feed-boxes/add.svg") 50% 50% no-repeat; }
+    background: url("./assets/img/feed-boxes/add.svg") 50% 50% no-repeat; }
   .action-btn.edit.active:before {
     width: 17px;
-    background: url("img/profile-icons/settings.svg") 50% 50% no-repeat; }
+    background: url("./assets/img/profile-icons/settings.svg") 50% 50% no-repeat; }
   .action-btn.repost.active:before {
     width: 21px;
-    background: url("img/buttons/repost.svg") 50% 50% no-repeat; }
+    background: url("./assets/img/buttons/repost.svg") 50% 50% no-repeat; }
   .action-btn:hover {
     opacity: 1; }
   .action-btn:active:before {
@@ -8021,7 +8021,7 @@ body.page-load .feed-box {
     width: 57px;
     height: 58px;
     border-radius: 50%;
-    background: url("img/buttons/people-img.png"); }
+    background: url("./assets/img/buttons/people-img.png"); }
   .people .people-name {
     flex-basis: 135px;
     font-size: 14px;
@@ -8076,7 +8076,7 @@ body.page-load .feed-box {
     opacity: .6;
     box-sizing: border-box; }
   .upload-btn:before {
-    background: url("img/buttons/upload-btn.svg") 50% 45% no-repeat; }
+    background: url("./assets/img/buttons/upload-btn.svg") 50% 45% no-repeat; }
   .upload-btn:after {
     border: 1px solid #fff;
     border-radius: 50%; }
@@ -8252,7 +8252,7 @@ body.page-load .feed-box {
       bottom: 0;
       opacity: .8; }
     .song-flex-table .box-btn.play::after, .membership-table .box-btn.play::after {
-      background: url(img/feed-boxes/play.svg) 50% 50% no-repeat;
+      background: url(./assets/img/feed-boxes/play.svg) 50% 50% no-repeat;
       background-size: contain; }
     .song-flex-table .box-btn:hover, .membership-table .box-btn:hover {
       background-color: rgba(0, 0, 0, 0.1); }
@@ -8345,17 +8345,17 @@ body.page-load .feed-box {
       opacity: .1; }
   .song-flex-table .action-btn.ellipses:before, .membership-table .action-btn.ellipses:before {
     width: 20px;
-    background: url("img/song-lists/ellipses.svg") 50% 50% no-repeat; }
+    background: url("./assets/img/song-lists/ellipses.svg") 50% 50% no-repeat; }
   .song-flex-table .action-btn.basket:before, .membership-table .action-btn.basket:before {
     width: 23px;
     height: 23px;
-    background: url("img/song-lists/basket.svg") 50% 50% no-repeat; }
+    background: url("./assets/img/song-lists/basket.svg") 50% 50% no-repeat; }
   .song-flex-table .ico-time, .membership-table .ico-time {
     height: 100%;
-    background: url("img/song-lists/time.svg") 50% 50% no-repeat; }
+    background: url("./assets/img/song-lists/time.svg") 50% 50% no-repeat; }
   .song-flex-table .ico-like, .membership-table .ico-like {
     height: 100%;
-    background: url("img/buttons/like.svg") 50% 50% no-repeat;
+    background: url("./assets/img/buttons/like.svg") 50% 50% no-repeat;
     opacity: .2; }
   .song-flex-table .ico-wave, .membership-table .ico-wave {
     position: relative;
@@ -8363,7 +8363,7 @@ body.page-load .feed-box {
     vertical-align: top;
     width: 35px;
     height: 23px;
-    background: url("img/feed-boxes/wave-min.svg") 0 0 no-repeat; }
+    background: url("./assets/img/feed-boxes/wave-min.svg") 0 0 no-repeat; }
     .song-flex-table .ico-wave:before, .membership-table .ico-wave:before {
       content: '';
       position: absolute;
@@ -8373,7 +8373,7 @@ body.page-load .feed-box {
       height: 100%;
       width: 0;
       transition: all .25s ease;
-      background: url("img/feed-boxes/wave-min-h.svg") 0 0 no-repeat; }
+      background: url("./assets/img/feed-boxes/wave-min-h.svg") 0 0 no-repeat; }
     .song-flex-table .ico-wave.wave-100:before, .membership-table .ico-wave.wave-100:before {
       width: 100%; }
     .song-flex-table .ico-wave.wave-90:before, .membership-table .ico-wave.wave-90:before {
@@ -8506,7 +8506,7 @@ body.page-load .feed-box {
   vertical-align: top;
   width: 35px;
   height: 23px;
-  background: url("img/feed-boxes/wave-min.svg") 0 0 no-repeat; }
+  background: url("./assets/img/feed-boxes/wave-min.svg") 0 0 no-repeat; }
   .ico-wave-min:before {
     content: '';
     position: absolute;
@@ -8516,7 +8516,7 @@ body.page-load .feed-box {
     height: 100%;
     width: 0;
     transition: all .25s ease;
-    background: url("img/feed-boxes/wave-min-h.svg") 0 0 no-repeat; }
+    background: url("./assets/img/feed-boxes/wave-min-h.svg") 0 0 no-repeat; }
   .ico-wave-min.w100:before {
     width: 100%; }
   .ico-wave-min.w90:before {
@@ -8597,7 +8597,7 @@ body.page-load .feed-box {
   .vocals.active .vocals-btn::before, .active.loop .vocals-btn::before, .vocals.active .loop-btn::before, .active.loop .loop-btn::before {
     background-color: #ea3f4f; }
   .vocals.active .vocals-btn::after, .active.loop .vocals-btn::after, .vocals.active .loop-btn::after, .active.loop .loop-btn::after {
-    background: url("img/other-elements/filter-btn-on.svg") 50% no-repeat; }
+    background: url("./assets/img/other-elements/filter-btn-on.svg") 50% no-repeat; }
 
 .vocals-title, .loop-title, .duration .duration-title, .price .duration-title, .duration .price-title, .price .price-title {
   font-size: 12px;
@@ -8633,13 +8633,13 @@ body.page-load .feed-box {
     right: 5%;
     width: 30px;
     height: 30px;
-    background: url("img/other-elements/filter-btn-off.svg") 50% no-repeat; }
+    background: url("./assets/img/other-elements/filter-btn-off.svg") 50% no-repeat; }
   .vocals-btn:active, .loop-btn:active {
     color: rgba(255, 255, 255, 0.8); }
     .vocals-btn:active::before, .loop-btn:active::before {
       background-color: #ea3f4f; }
     .vocals-btn:active::after, .loop-btn:active::after {
-      background: url("img/other-elements/filter-btn-on.svg") 50% no-repeat; }
+      background: url("./assets/img/other-elements/filter-btn-on.svg") 50% no-repeat; }
 
 .loop {
   width: 118px; }
@@ -8689,7 +8689,7 @@ body.page-load .feed-box {
       right: 0;
       width: 42px;
       height: 42px;
-      background: url("img/other-elements/dropdown-arrow.svg") 50% no-repeat;
+      background: url("./assets/img/other-elements/dropdown-arrow.svg") 50% no-repeat;
       z-index: 10; }
   .dropdown .dropdown-list {
     display: none;
@@ -8753,7 +8753,7 @@ body.page-load .feed-box {
         background: #4d4f55;
         transition: background .5s ease; }
       .toggleLabel .toggleElement i:after {
-        background: url("img/other-elements/filter-btn-off.svg") 50% 50% no-repeat;
+        background: url("./assets/img/other-elements/filter-btn-off.svg") 50% 50% no-repeat;
         transition: background .5s ease; }
     .toggleLabel .toggleElement b {
       position: relative;
@@ -8777,7 +8777,7 @@ body.page-load .feed-box {
     .toggleLabel input:checked + .toggleElement i:before, .toggleLabel .edit-block select:checked + .toggleElement i:before, .edit-block .toggleLabel select:checked + .toggleElement i:before, .toggleLabel .invite-block select:checked + .toggleElement i:before, .invite-block .toggleLabel select:checked + .toggleElement i:before, .toggleLabel .roles-block select:checked + .toggleElement i:before, .roles-block .toggleLabel select:checked + .toggleElement i:before, .toggleLabel .membership-block select:checked + .toggleElement i:before, .membership-block .toggleLabel select:checked + .toggleElement i:before, .toggleLabel .eJoin-block select:checked + .toggleElement i:before, .eJoin-block .toggleLabel select:checked + .toggleElement i:before, .toggleLabel .edit-block textarea:checked + .toggleElement i:before, .edit-block .toggleLabel textarea:checked + .toggleElement i:before, .toggleLabel .invite-block textarea:checked + .toggleElement i:before, .invite-block .toggleLabel textarea:checked + .toggleElement i:before, .toggleLabel .roles-block textarea:checked + .toggleElement i:before, .roles-block .toggleLabel textarea:checked + .toggleElement i:before, .toggleLabel .membership-block textarea:checked + .toggleElement i:before, .membership-block .toggleLabel textarea:checked + .toggleElement i:before, .toggleLabel .eJoin-block textarea:checked + .toggleElement i:before, .eJoin-block .toggleLabel textarea:checked + .toggleElement i:before {
       background: #EA3F4F; }
     .toggleLabel input:checked + .toggleElement i:after, .toggleLabel .edit-block select:checked + .toggleElement i:after, .edit-block .toggleLabel select:checked + .toggleElement i:after, .toggleLabel .invite-block select:checked + .toggleElement i:after, .invite-block .toggleLabel select:checked + .toggleElement i:after, .toggleLabel .roles-block select:checked + .toggleElement i:after, .roles-block .toggleLabel select:checked + .toggleElement i:after, .toggleLabel .membership-block select:checked + .toggleElement i:after, .membership-block .toggleLabel select:checked + .toggleElement i:after, .toggleLabel .eJoin-block select:checked + .toggleElement i:after, .eJoin-block .toggleLabel select:checked + .toggleElement i:after, .toggleLabel .edit-block textarea:checked + .toggleElement i:after, .edit-block .toggleLabel textarea:checked + .toggleElement i:after, .toggleLabel .invite-block textarea:checked + .toggleElement i:after, .invite-block .toggleLabel textarea:checked + .toggleElement i:after, .toggleLabel .roles-block textarea:checked + .toggleElement i:after, .roles-block .toggleLabel textarea:checked + .toggleElement i:after, .toggleLabel .membership-block textarea:checked + .toggleElement i:after, .membership-block .toggleLabel textarea:checked + .toggleElement i:after, .toggleLabel .eJoin-block textarea:checked + .toggleElement i:after, .eJoin-block .toggleLabel textarea:checked + .toggleElement i:after {
-      background-image: url("img/other-elements/filter-btn-on.svg"); }
+      background-image: url("./assets/img/other-elements/filter-btn-on.svg"); }
   .toggleLabel input:checked + .toggleElement b.toggle-on, .toggleLabel .edit-block select:checked + .toggleElement b.toggle-on, .edit-block .toggleLabel select:checked + .toggleElement b.toggle-on, .toggleLabel .invite-block select:checked + .toggleElement b.toggle-on, .invite-block .toggleLabel select:checked + .toggleElement b.toggle-on, .toggleLabel .roles-block select:checked + .toggleElement b.toggle-on, .roles-block .toggleLabel select:checked + .toggleElement b.toggle-on, .toggleLabel .membership-block select:checked + .toggleElement b.toggle-on, .membership-block .toggleLabel select:checked + .toggleElement b.toggle-on, .toggleLabel .eJoin-block select:checked + .toggleElement b.toggle-on, .eJoin-block .toggleLabel select:checked + .toggleElement b.toggle-on, .toggleLabel .edit-block textarea:checked + .toggleElement b.toggle-on, .edit-block .toggleLabel textarea:checked + .toggleElement b.toggle-on, .toggleLabel .invite-block textarea:checked + .toggleElement b.toggle-on, .invite-block .toggleLabel textarea:checked + .toggleElement b.toggle-on, .toggleLabel .roles-block textarea:checked + .toggleElement b.toggle-on, .roles-block .toggleLabel textarea:checked + .toggleElement b.toggle-on, .toggleLabel .membership-block textarea:checked + .toggleElement b.toggle-on, .membership-block .toggleLabel textarea:checked + .toggleElement b.toggle-on, .toggleLabel .eJoin-block textarea:checked + .toggleElement b.toggle-on, .eJoin-block .toggleLabel textarea:checked + .toggleElement b.toggle-on {
     opacity: 1;
     transform: scale(1); }
@@ -8868,7 +8868,7 @@ body.page-load .feed-box {
         height: 40px;
         margin-left: -22px;
         z-index: 10;
-        background: url(img/other-elements/dropdown-arrow.svg) 50% no-repeat;
+        background: url(./assets/img/other-elements/dropdown-arrow.svg) 50% no-repeat;
         border: 1px solid transparent;
         opacity: .4; }
   .filters-wrap .select2-container--default[dir="rtl"] .select2-selection--single .select2-selection__clear {
@@ -8890,7 +8890,7 @@ body.page-load .feed-box {
     margin-left: -22px;
     z-index: 10;
     border: 1px solid transparent;
-    background: url(img/other-elements/dropdown-arrow.svg) 50% no-repeat;
+    background: url(./assets/img/other-elements/dropdown-arrow.svg) 50% no-repeat;
     transform: rotate(180deg); }
   .filters-wrap .select2-container--default.select2-container--open.select2-container--above .select2-selection--single, .filters-wrap .select2-container--default.select2-container--open.select2-container--above .select2-selection--multiple {
     border-top-left-radius: 0;
@@ -9238,7 +9238,7 @@ div.ui-slider-range.ui-widget-header {
       width: 80px;
       height: 80px;
       margin: auto;
-      background: url(img/profile-icons/email.svg) no-repeat;
+      background: url(./assets/img/profile-icons/email.svg) no-repeat;
       background-size: contain; }
   .invite-block .invite-inner .inp-block-title, .roles-block .invite-inner .inp-block-title, .invite-block .roles-inner .inp-block-title, .roles-block .roles-inner .inp-block-title {
     width: 100%;
@@ -9353,7 +9353,7 @@ div.ui-slider-range.ui-widget-header {
     left: 46%;
     width: 14px;
     height: 14px;
-    background: url("img/membership/checkmark.svg") 50% 50% no-repeat;
+    background: url("./assets/img/membership/checkmark.svg") 50% 50% no-repeat;
     background-size: contain;
     opacity: .8; }
   .membership-table .td.no::before {
@@ -9363,7 +9363,7 @@ div.ui-slider-range.ui-widget-header {
     left: 46.6%;
     width: 12px;
     height: 12px;
-    background: url(img/membership/delete.svg) 50% 50% no-repeat;
+    background: url(./assets/img/membership/delete.svg) 50% 50% no-repeat;
     background-size: contain; }
 
 .membership-table .td:nth-child(2), .membership-table .td:nth-child(3), .membership-table .td:last-child {
@@ -9386,7 +9386,7 @@ div.ui-slider-range.ui-widget-header {
     left: 20px;
     width: 24px;
     height: 24px;
-    background: url(img/membership/world.svg) 50% 50% no-repeat;
+    background: url(./assets/img/membership/world.svg) 50% 50% no-repeat;
     background-size: cover; }
 
 @media screen and (max-width: 1024px) {
@@ -9596,7 +9596,7 @@ div.ui-slider-range.ui-widget-header {
     width: 80px;
     height: 80px;
     margin: auto;
-    background: url(img/profile-icons/email.svg) no-repeat;
+    background: url(./assets/img/profile-icons/email.svg) no-repeat;
     background-size: contain; }
 
 .eJoin-inner {
@@ -9793,7 +9793,7 @@ div.ui-slider-range.ui-widget-header {
       top: 0;
       right: -35%;
       z-index: 0;
-      background: url("img/vinyl.png") 50% 50% no-repeat;
+      background: url("./assets/img/vinyl.png") 50% 50% no-repeat;
       background-size: contain;
       transition: transform .4s linear;
       transform: translate(33.3%, 0);
@@ -9826,10 +9826,10 @@ div.ui-slider-range.ui-widget-header {
         margin: auto; }
       #searchPopup .search-playlist .img .box-btn.play:after {
         left: 4px;
-        background: url("img/feed-boxes/play.svg") 50% 50% no-repeat;
+        background: url("./assets/img/feed-boxes/play.svg") 50% 50% no-repeat;
         background-size: contain; }
       #searchPopup .search-playlist .img .box-btn.pause:after {
-        background: url("img/feed-boxes/pause-button.svg") 50% 50% no-repeat;
+        background: url("./assets/img/feed-boxes/pause-button.svg") 50% 50% no-repeat;
         background-size: contain; }
       #searchPopup .search-playlist .img .box-btn:hover {
         border: 1px solid rgba(255, 255, 255, 0.6); }
