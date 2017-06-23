@@ -19,9 +19,9 @@ const routes: Routes = [
   {
     path: '',
     component: HomeComponent,
-    resolve: {
-      homeData: HomeResolverService
-    },
+    // resolve: {
+    //   homeData: HomeResolverService
+    // },
     children: [
       {
         path: '',

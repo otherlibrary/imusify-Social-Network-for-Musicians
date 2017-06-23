@@ -25,143 +25,143 @@ import {NewsComponent} from "./components/news/news.component";
 import {AuthAllSuccessGuard} from "./common/auth-all-success.guard";
 
 const APP_ROUTES: Routes = [
-  {
-    path: "",
-    redirectTo: "home",
-    pathMatch: "full",
-    canActivateChild: [AuthAllSuccessGuard]
-  },
-  {
-    path: 'home',
-    loadChildren: 'app/home/home.module#HomeModule',
-    canActivateChild: [AuthAllSuccessGuard]
-  },
-  {
-    path: 'browse',
-    loadChildren: 'app/browse/browse.module#BrowseModule',
-    canActivateChild: [AuthAllSuccessGuard]
-  },
-  {
-    path: 'profile',
-    loadChildren: 'app/profile/profile.module#ProfileModule',
-    canActivate: [AuthGuard]
-  },
-  {
-    path: 'upload',
-    loadChildren: 'app/upload/upload.module#UploadModule',
-    canActivate: [AuthGuard]
-  },
-  {
-    path: 'soung-detail',
-    component: SoungDetailComponent,
-    canActivate: [AuthGuard]
-  },
-  {
-    path: 'account',
-    component: AccountComponent,
-    canActivate: [AuthGuard],
-    children: [
-      {
-        path: '',
-        component: ChangePassComponent,
-      },
-      {
-        path: 'stripe',
-        component: StripeComponent,
-      }
-    ]
-  },
-  {
-    path: 'checkout',
-    component: CheckoutComponent,
-    canActivate: [AuthGuard]
-  },
-  {
-    path: 'artist-profile',
-    component: ArtistProfileComponent,
-    canActivate: [AuthGuard]
-  },
-  {
-    path: 'playlist',
-    component: PlaylistComponent,
-    outlet: 'popup',
-    canActivate: [AuthGuard]
-  },
-  {
-    path: 'notifications',
-    component: NotificationsComponent,
-    outlet: 'popup',
-    canActivate: [AuthGuard]
-  },
-  {
-    path: 'messages',
-    component: MessagesComponent,
-    outlet: 'popup',
-    canActivate: [AuthGuard]
-  },
-  {
-    path: 'favorites',
-    component: FavoritesComponent,
-    outlet: 'popup',
-    canActivate: [AuthGuard]
-  },
-  {
-    path: 'roles',
-    component: RolesComponent,
-    outlet: 'popup',
-    canActivate: [AuthGuard]
-  },
-  {
-    path: 'membership',
-    component: MembershipComponent,
-    outlet: 'popup',
-    canActivate: [AuthGuard]
-  },
-  {
-    path: 'invite',
-    component: InviteFriendsComponent,
-    outlet: 'popup',
-    canActivate: [AuthGuard]
-  },
-  {
-    path: 'about',
-    component: AboutComponent,
-    outlet: 'popup'
-  },
-  {
-    path: 'login',
-    component: LoginComponent,
-    outlet: 'popup'
-  },
-  {
-    path: 'signup',
-    component: SignupComponent,
-    outlet: 'popup'
-  },
-  {
-    path: 'search',
-    component: SearchComponent,
-    outlet: 'popup'
-  },
-  {
-    path: 'news',
-    component: NewsComponent,
-    outlet: 'popup',
-  },
-  {
-    path: 'signup/email',
-    component: EmailComponent,
-    outlet: 'popup'
-  },
-  {
-    path: '404',
-    component: NotFoundComponent
-  },
-  {
-    path: '**',
-    redirectTo: '/404',
-    pathMatch: "full"
-  }
+    {
+        path: "",
+        redirectTo: "home",
+        pathMatch: "full",
+        canActivateChild: [AuthAllSuccessGuard]
+    },
+    {
+        path: 'home',
+        loadChildren: 'app/home/home.module#HomeModule',
+        canActivateChild: [AuthAllSuccessGuard]
+    },
+    {
+        path: 'browse',
+        loadChildren: 'app/browse/browse.module#BrowseModule',
+        canActivateChild: [AuthAllSuccessGuard]
+    },
+    {
+        path: 'profile',
+        loadChildren: 'app/profile/profile.module#ProfileModule',
+        canActivate: [AuthGuard]
+    },
+    {
+        path: 'upload',
+        loadChildren: 'app/upload/upload.module#UploadModule',
+        canActivate: [AuthGuard]
+    },
+    {
+        path: 'soung-detail',
+        component: SoungDetailComponent,
+        canActivate: [AuthGuard]
+    },
+    {
+        path: 'account',
+        component: AccountComponent,
+        canActivate: [AuthGuard],
+        children: [
+            {
+                path: '',
+                component: ChangePassComponent,
+            },
+            {
+                path: 'stripe',
+                component: StripeComponent,
+            }
+        ]
+    },
+    {
+        path: 'checkout',
+        component: CheckoutComponent,
+        canActivate: [AuthGuard]
+    },
+    {
+        path: 'artist-profile',
+        component: ArtistProfileComponent,
+        canActivate: [AuthGuard]
+    },
+    {
+        path: 'playlist',
+        component: PlaylistComponent,
+        outlet: 'popup',
+        canActivate: [AuthGuard]
+    },
+    {
+        path: 'notifications',
+        component: NotificationsComponent,
+        outlet: 'popup',
+        canActivate: [AuthGuard]
+    },
+    {
+        path: 'messages',
+        component: MessagesComponent,
+        outlet: 'popup',
+        canActivate: [AuthGuard]
+    },
+    {
+        path: 'favorites',
+        component: FavoritesComponent,
+        outlet: 'popup',
+        canActivate: [AuthGuard]
+    },
+    {
+        path: 'roles',
+        component: RolesComponent,
+        outlet: 'popup',
+        canActivate: [AuthGuard]
+    },
+    {
+        path: 'membership',
+        component: MembershipComponent,
+        outlet: 'popup',
+        canActivate: [AuthGuard]
+    },
+    {
+        path: 'invite',
+        component: InviteFriendsComponent,
+        outlet: 'popup',
+        canActivate: [AuthGuard]
+    },
+    {
+        path: 'about',
+        component: AboutComponent,
+        outlet: 'popup'
+    },
+    {
+        path: 'login',
+        component: LoginComponent,
+        outlet: 'popup'
+    },
+    {
+        path: 'signup',
+        component: SignupComponent,
+        outlet: 'popup'
+    },
+    {
+        path: 'search',
+        component: SearchComponent,
+        outlet: 'popup'
+    },
+    {
+        path: 'news',
+        component: NewsComponent,
+        outlet: 'popup',
+    },
+    {
+        path: 'signup/email',
+        component: EmailComponent,
+        outlet: 'popup'
+    },
+    {
+        path: '404',
+        component: NotFoundComponent
+    },
+    {
+        path: '**',
+        redirectTo: '/404',
+        pathMatch: "full"
+    }
 ];
 
 export const routing = RouterModule.forRoot(APP_ROUTES, {useHash: true});
