@@ -1,0 +1,28 @@
+# This is a sample build configuration for Javascript (Node.js).
+# Check our guides at https://confluence.atlassian.com/x/14UWN for more examples.
+# Only use spaces to indent your .yml configuration.
+# -----
+# You can specify a custom docker image from Docker Hub as your build environment.
+image: node:6.10.2
+
+
+pipelines:
+  branches:
+    dev-live:
+      - step:
+          script:
+          - npm install
+          - npm i -g @angular/cli
+          - ng build --prod 
+          - ssh -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no -q selecto_msfit@88.99.224.58 'rm -rf ./coach.dev.msfit.selectotech.com/*'
+          - scp -r -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no -q ./dist/* selecto_msfit@88.99.224.58:./coach.dev.msfit.selectotech.com/
+    master:
+      - step:
+          script:
+          - npm install
+          - npm i -g @angular/cli
+          - ng build --prod --env=prod
+          - cp aws_msfit.pem ~/.ssh/
+          - chmod 400 ~/.ssh/aws_msfit.pem
+          - ssh -i ~/.ssh/aws_msfit.pem -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no ubuntu@52.66.70.163 'cd ~/coach.msfit && rm -rf ./*'
+          - scp -i ~/.ssh/aws_msfit.pem -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no -r ./dist/* ubuntu@52.66.70.163:~/coach.msfit
