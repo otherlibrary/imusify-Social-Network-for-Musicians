@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 
-import { userComponents, exportsUserComponents } from './index';
+import { authComponents, exportsAuthComponents } from './index';
 
 import { SharedModule } from "../shared/shared.module";
 import { AuthService }  from "../shared/services/auth.service";
@@ -10,14 +10,14 @@ import { AuthService }  from "../shared/services/auth.service";
         SharedModule
     ],
     declarations: [
-        ...userComponents
+        ...authComponents
     ],
     exports: [
-        ...exportsUserComponents
+        ...exportsAuthComponents
     ],
     providers: [
         AuthService
     ]
 })
-export class UserModule {
+export class AuthModule {
 }

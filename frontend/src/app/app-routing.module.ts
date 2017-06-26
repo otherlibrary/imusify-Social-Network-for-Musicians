@@ -1,28 +1,28 @@
-import {Routes, RouterModule} from "@angular/router";
-import {AuthGuard} from "./common/index";
-
-import {AboutComponent} from "./components/about/about.component";
-import {NotFoundComponent} from "./components/not-found/not-found.component";
-import {SearchComponent} from "./components/search/search.component";
-import {PlaylistComponent} from "./components/playlist/playlist.component";
-import {FavoritesComponent} from "./components/favorites/favorites.component";
-import {LoginComponent} from "./user/login/login.component";
-import {SignupComponent} from "./user/signup/signup.component";
-import {EmailComponent} from "./user/signup/email/email.component";
-import {CheckoutComponent} from "./components/checkout/checkout.component";
-import {SoungDetailComponent} from "./components/soung-detail/soung-detail.component";
-import {AccountComponent} from "./components/account/account.component";
-import {ChangePassComponent} from "./components/change-pass/change-pass.component";
-import {StripeComponent} from "./components/stripe/stripe.component";
-
-import {RolesComponent} from "./components/roles/roles.component";
-import {MembershipComponent} from "./components/membership/membership.component";
-import {InviteFriendsComponent} from "./components/invite-friends/invite-friends.component";
-import {NotificationsComponent} from "./components/notifications/notifications.component";
-import {MessagesComponent} from "./components/messages/messages.component";
-import {ArtistProfileComponent} from "./components/artist-profile/artist-profile.component";
-import {NewsComponent} from "./components/news/news.component";
-import {AuthAllSuccessGuard} from "./common/auth-all-success.guard";
+import { Routes, RouterModule}  from "@angular/router";
+import { AuthGuard}             from "./common/index";
+ 
+import { AboutComponent }         from "./components/about/about.component";
+import { NotFoundComponent }      from "./components/not-found/not-found.component";
+import { SearchComponent }        from "./components/search/search.component";
+import { PlaylistComponent }      from "./components/playlist/playlist.component";
+import { FavoritesComponent }     from "./components/favorites/favorites.component";
+import { LoginComponent }         from "./auth/login/login.component";
+import { SignupComponent }        from "./auth/signup/signup.component";
+import { EmailComponent }         from "./auth/signup/email/email.component";
+import { CheckoutComponent }      from "./components/checkout/checkout.component";
+import { SoungDetailComponent }   from "./components/soung-detail/soung-detail.component";
+import { AccountComponent }       from "./components/account/account.component";
+import { ChangePassComponent }    from "./components/change-pass/change-pass.component";
+import { StripeComponent }        from "./components/stripe/stripe.component";
+  
+import { RolesComponent }         from "./components/roles/roles.component";
+import { MembershipComponent }    from "./components/membership/membership.component";
+import { InviteFriendsComponent } from "./components/invite-friends/invite-friends.component";
+import { NotificationsComponent } from "./components/notifications/notifications.component";
+import { MessagesComponent }      from "./components/messages/messages.component";
+import { ArtistProfileComponent } from "./components/artist-profile/artist-profile.component";
+import { NewsComponent }          from "./components/news/news.component";
+import { AuthAllSuccessGuard }    from "./common/auth-all-success.guard";
 
 const APP_ROUTES: Routes = [
     {

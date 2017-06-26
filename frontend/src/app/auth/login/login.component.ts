@@ -1,11 +1,13 @@
 import { Component, OnInit }                  from '@angular/core';
-import { AuthService }                        from "../../shared/services/auth.service";
 import { Router }                             from '@angular/router';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { User }                               from './User'
+import { FacebookService, LoginResponse }     from "ngx-facebook";
+
+import { User }                               from './User';
+
+import { AuthService }                        from "../../shared/services/auth.service";
 import { EmitterService }                     from "../../shared/services/emitter.service";
 import { SharedService }                      from "../../shared/shared.service";
-import { FacebookService, LoginResponse }     from "ngx-facebook";
 declare const IN;
 
 @Component({

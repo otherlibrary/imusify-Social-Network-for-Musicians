@@ -4,7 +4,7 @@ import { HttpModule }              from '@angular/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FacebookModule }          from 'ngx-facebook';
 
-import { UserModule }              from './user/user.module';
+import { AuthModule }              from './auth/auth.module';
 
 import {
     HelpersService,
@@ -37,7 +37,7 @@ import { routing }      from './app-routing.module';
         SharedModule,
         BrowserModule,
         HttpModule,
-        UserModule,
+        AuthModule,
         routing,
         BrowserAnimationsModule,
         FacebookModule.forRoot()

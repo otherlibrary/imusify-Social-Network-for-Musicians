@@ -1,15 +1,15 @@
-import {NgModule} from '@angular/core';
-import {UserModule} from "../user/user.module";
-import {SharedModule} from "../shared/shared.module";
-import {HomeService} from "./home.service";
-import {ShareButtonsModule} from "ng2-sharebuttons";
-import {HomeRoutingModule} from "./home-routing.module";
-import {homeComponents, exportsHomeComponents} from "./index";
+import { NgModule }                              from '@angular/core';
+import { ShareButtonsModule }                    from "ng2-sharebuttons";
+import { AuthModule }                            from "../auth/auth.module";
+import { SharedModule }                          from "../shared/shared.module";
+import { HomeService }                           from "./home.service";
+import { HomeRoutingModule }                     from "./home-routing.module";
+import { homeComponents, exportsHomeComponents } from "./index";
 
 @NgModule({
     imports: [
         SharedModule,
-        UserModule,
+        AuthModule,
         ShareButtonsModule,
         HomeRoutingModule
     ],
