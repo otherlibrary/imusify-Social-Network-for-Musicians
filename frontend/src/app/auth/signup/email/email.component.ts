@@ -25,7 +25,7 @@ export class EmailComponent implements OnInit {
 
     // Date Picker settings
     public myDatePickerOptions: IMyOptions = {
-        dateFormat: 'dd.mm.yyyy',
+        dateFormat: 'yyyy-mm-dd',
         editableDateField: false,
         openSelectorOnInputClick: true
     };
@@ -44,23 +44,23 @@ export class EmailComponent implements OnInit {
     }
 
     formErrors = {
-        "fname": "",
-        "lname": "",
-        "uname": "",
+        "first_name": "",
+        "last_name": "",
+        "username": "",
         "password": "",
         "email": "",
         "gender": "",
-        "agree": ""
+        "terms": ""
     };
 
     validationMessages = {
-        "fname": {
+        "first_name": {
             "required": this._appConfig.errorMessages.first_name
         },
-        "lname": {
+        "last_name": {
             "required": this._appConfig.errorMessages.last_name
         },
-        "uname": {
+        "username": {
             "required": this._appConfig.errorMessages.username
         },
         "password": {
@@ -73,8 +73,8 @@ export class EmailComponent implements OnInit {
         "gender": {
             "required": this._appConfig.errorMessages.gender
         },
-        "agree": {
-            "required": this._appConfig.errorMessages.agree
+        "terms": {
+            "required": this._appConfig.errorMessages.terms
         }
     };
 
@@ -82,14 +82,15 @@ export class EmailComponent implements OnInit {
      * Create a form
      */
     buildForm() {
+        console.log(this.validationMessages);
         this.signupEmailForm = this.fb.group({
-            "fname": [this.user.fname, [
+            "first_name": [this.user.first_name, [
                 Validators.required
             ]],
-            "lname": [this.user.lname, [
+            "last_name": [this.user.last_name, [
                 Validators.required
             ]],
-            "uname": [this.user.uname, [
+            "username": [this.user.username, [
                 Validators.required
             ]],
             "password": [this.user.password, [
@@ -103,10 +104,13 @@ export class EmailComponent implements OnInit {
             "gender": [this.user.gender, [
                 Validators.required
             ]],
-            "agree": [this.user.agree, [
+            "terms": [this.user.terms, [
                 Validators.required,
                 Validators.pattern("true")
-            ]]
+            ]],
+            "birthday": [null, [
+                Validators.required
+            ]],
         });
         this.signupEmailForm.valueChanges
             .subscribe(data => this.onValueChange(data));
@@ -119,7 +123,9 @@ export class EmailComponent implements OnInit {
      * @param data
      */
     onValueChange(data?: any) {
+
         if (!this.signupEmailForm) return;
+
         let form = this.signupEmailForm;
 
         for (let field in this.formErrors) {
@@ -146,26 +152,38 @@ export class EmailComponent implements OnInit {
 
         for (let key in this.signupEmailForm.value) {
             if (this.signupEmailForm.value.hasOwnProperty(key)) {
-                if (key == 'myDate') {
-                    data['dd'] = this.signupEmailForm.value[key].date.day;
-                    data['mm'] = this.signupEmailForm.value[key].date.month;
-                    data['yy'] = this.signupEmailForm.value[key].date.year;
+                if (key == 'birthday') {
+                    data['birthday'] = this.signupEmailForm.value[key].formatted;
                     continue;
                 }
+
+                if (key == 'first_name') {
+                    data['name'] = this.signupEmailForm.value[key];
+                    continue;
+                }
+
+                if (key == 'last_name') {
+                    data['name'] += ' ' + this.signupEmailForm.value[key];
+                    continue;
+                }
+
                 data[key] = this.signupEmailForm.value[key];
             }
         }
 
-        let dataStr = this.helpers.toStringParam(data);
-        this._userService.signUp(dataStr).subscribe(
+        console.log(data);
+        
+        this._userService.signUp(data).subscribe(
             data => {
 
                 this._sharedService.loginSubject.next(data);
                 // сохраняем дание пользователя в localStorge
-                localStorage.setItem('auth_data', JSON.stringify(data));
+                // localStorage.setItem('auth_data', JSON.stringify(data));
 
                 EmitterService.get('TOGGLE_PRELOADER').emit(false);
                 this._router.navigate([{outlets: {popup: 'roles'}}]);
+
+                console.log(data);
 
 
                 this._sharedService.notificationSubject.next({
@@ -192,7 +210,7 @@ export class EmailComponent implements OnInit {
     setDate(): void {
         let date = new Date();
         this.signupEmailForm.setValue({
-            myDate: {
+            birthday: {
                 date: {
                     year:  date.getFullYear(),
                     month: date.getMonth() + 1,
@@ -206,8 +224,7 @@ export class EmailComponent implements OnInit {
      * Clear date
      */
     clearDate(): void {
-        // Clear the date using the setValue function
-        this.signupEmailForm.setValue({myDate: ''});
+        this.signupEmailForm.setValue({birthday: ''});
     }
 
     /**

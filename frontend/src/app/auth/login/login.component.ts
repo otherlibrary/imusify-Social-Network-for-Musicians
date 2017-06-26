@@ -22,11 +22,11 @@ export class LoginComponent implements OnInit {
     user: User = new User();
 
     formErrors = {
-        "username": "",
+        "email": "",
         "password": ""
     };
     validationMessages = {
-        "username": {
+        "email": {
             "required": "Required field."
         },
         "password": {
@@ -34,7 +34,7 @@ export class LoginComponent implements OnInit {
         }
     };
 
-    username: string;
+    email: string;
     password: string;
     rememberme: any;
 
@@ -52,7 +52,7 @@ export class LoginComponent implements OnInit {
 
     buildForm() {
         this.userLoginForm = this.fb.group({
-            "username": [this.user.username, [
+            "email": [this.user.email, [
                 Validators.required
             ]],
             "password": [this.user.password, [

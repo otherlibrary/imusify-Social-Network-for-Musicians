@@ -11,71 +11,84 @@
                         <div class="mail-ico"></div>
                     </div>
 
-                    <form class="form eJoin-form" [formGroup]="signupEmailForm" (ngSubmit)="signUp()" >
+                    <form class="form form--signup" [formGroup]="signupEmailForm" (ngSubmit)="signUp()" >
 
-                        <div class="inp-block">
-                            <input type="text" formControlName="fname" name="firstName" id="userFirstName" placeholder="David" />
-                            <label for="userFirstName">First Name</label>
-                        </div>
-
-                        <div class="inp-block">
-                            <input type="text" formControlName="lname" name="lastName" id="userLastName" placeholder="Walters" />
-                            <label for="userLastName">Last Name</label>
-                        </div>
-                        <div class="inp-block">
-                            <input type="text" formControlName="uname" name="userNickname" id="userNickname" placeholder="MusicLover" />
-                            <label for="userNickname">Username</label>
-                        </div>
-                        <div class="inp-block">
-                            <input type="password" formControlName="password" name="userPass" id="userPass" placeholder="******" />
-                            <label for="userPass">Password</label>
-                        </div>
-                        <div class="inp-block">
-                            <input type="email" formControlName="email" name="userEmail" id="userEmail" placeholder="my@email.com" />
-                            <label for="userEmail">Email</label>
-                        </div>
-                        <div class="inp-block">
-                            <ng-select formControlName="gender" id="selectGender" class="custom_select" [options]="genderData" noFilter="1" highlightColor="#242526">
-                            </ng-select>
-                            <label class="select2-label" for="selectGender">Select Gender</label>
-                        </div>
-                        <div class="inp-block">
-                            <my-date-picker 
-                                class="custom_picker valid_style"
-                                name="myDate" id="myDate"
-                                [options]="myDatePickerOptions"></my-date-picker>
-                            <label for="myDate">Date of Birth</label>
-                        </div>
-                        <div class="inp-block">
-                            <input type="text" name="invitationCode" id="invitationCode" />
-                            <label for="invitationCode">Invitation Code</label>
+                        <div class="form__column">
+                            <div class="form__group form__group--field">
+                                <input class="form__field" type="text" formControlName="first_name" name="firstName" id="firstName" placeholder="David" />
+                                <label class="form__label" for="firsttName">First Name</label>
+                            </div>
+                            
+                            <div class="form__group form__group--field">
+                                <input class="form__field" type="text" formControlName="last_name" name="lastName" id="lastName" placeholder="Walters" />
+                                <label class="form__label" for="lastName">Last Name</label>
+                            </div>
                         </div>
 
-                        <div class="inp-block">
+                        <div class="form__column">
+                            <div class="form__group form__group--field">
+                                <input class="form__field" type="text" formControlName="username" name="username" id="username" placeholder="MusicLover" />
+                                <label class="form__label" for="username">Username</label>
+                            </div>
+                            <div class="form__group form__group--field">
+                                <input class="form__field" type="password" formControlName="password" name="password" id="password" placeholder="******" />
+                                <label class="form__label" for="password">Password</label>
+                            </div>
+                        </div>
+
+                        <div class="form__column">
+                            <div class="form__group form__group--field form__group--field">
+                                <input class="form__field" type="email" formControlName="email" name="email" id="email" placeholder="my@email.com" />
+                                <label class="form__label" for="email">Email</label>
+                            </div>
+                            <div class="form__group form__group--field form__group--field">
+                                <ng-select formControlName="gender" id="gender" class="select select--custom" [options]="genderData" noFilter="1" highlightColor="#242526">
+                                </ng-select>
+                                <label class="form__label" for="gender">Select Gender</label>
+                            </div>
+                        </div>
+
+                        <div class="form__column">
+                            <div class="form__group form__group--field">
+                                <my-date-picker 
+                                    class="date-picker valid_style"
+                                    name="birthday" id="birthday"
+                                    formControlName="birthday"
+                                    [options]="myDatePickerOptions"></my-date-picker>
+                                <label class="form__label" for="myDate">Date of Birth</label>
+                            </div>
+                            <div class="form__group form__group--field">
+                                <input class="form__field" type="text" name="invitationCode" id="invitationCode" />
+                                <label class="form__label" for="invitationCode">Invitation Code</label>
+                            </div>
+                        </div>
+
+                        <div class="form__group form__group--field">
                             <label for="privacyPolicy" class="policy-label">
-                                <input type="checkbox" formControlName="agree" name="privacyPolicy" value="0" id="privacyPolicy">
+                                <input type="checkbox" formControlName="terms" name="terms" value="0" id="terms">
                                 <i></i>
                                 <span class="privacy-info">I acknowledge that I have read and accept the <a href="#">Terms of Use Agreement</a> and consent to the <a href="#">Privacy Policy</a> and <a href="#">Video Privacy Policy</a>.</span>
                             </label>
                             <p class="is-signed">Already have an Imusify account? <a href="#" (click)="goToLogin()">Sign in</a></p>
                         </div>
 
-                        <div class="inp-block">
-                            <label for="signIacknowledge" class="sign-label">
-                                <input type="checkbox" name="iacknowledge" value="1" id="signIacknowledge"/>
+                        <div class="form__group form__group--field">
+                            <label for="terms" class="sign-label">
+                                <input type="checkbox" name="terms_1" value="1" id="terms_1"/>
                                 <i></i>
                                 <span>I acknowledge that I have read and accept the Terms of Use Agreement and consent to the Privacy Policy and Video Privacy Policy.</span>
                             </label>
                         </div>
 
-                        <div class="inp-block">
+                        <div class="form__group">
                             <label for="signSubscribe" class="sign-label">
                                 <input type="checkbox" name="subscribe" value="1" id="signSubscribe"/>
                                 <i></i>
                                 <span>Subscribe to Newsletter</span>
                             </label>
                         </div>
-                        <div class="inp-block">
+
+                        <div class="form__group">
                             <div class="sbm-block">
                                 <button type="submit" [disabled]="!signupEmailForm.valid">Create Account</button>
                             </div>

@@ -1,0 +1,145 @@
+/*
+ * Form basic styles
+ */
+.form {
+
+    &__field {
+        position:   relative;
+        display:    block;
+        width:      100%;
+        padding:    10px 10px;
+        box-sizing: border-box;
+        background: none;
+        outline:    none;
+        border:     1px solid rgba(255, 255, 255, 0.4);
+        border-radius: 4px;
+        transition:    all .35s ease;
+        font-weight:   300;
+        font-size:     14px;
+        line-height:   20px;
+        color:         $inverse_color;
+    }
+
+    &__column {
+        @include flexbox();
+
+        .form__group {
+            margin-bottom: 25px;
+            width:  50%;
+        }
+    }
+
+    &__column {
+        .form__group:first-child {
+            padding-right: 13px;
+        }
+
+        .form__group:last-child {
+            padding-left: 13px;
+        }
+    }
+
+    &__group {
+        text-align: left;
+    }
+
+    &__label {
+        display:     block;
+        cursor:      pointer;
+        opacity:     .4;
+        text-align:  left;
+        font-weight: 300;
+        font-size:   14px;
+        line-height: 20px;
+        color:       $inverse_color;
+        text-transform: uppercase;
+        transition:     opacity .35s ease-in-out, transform .25s ease-in-out;
+        user-select:    none;
+    }
+
+    &__group--field {
+        flex-direction: column-reverse;
+        @include flexbox();
+
+        .form__field:focus {
+            border: 1px solid $inverse_color;
+        }
+
+        .form__field:focus + .form__label {
+            opacity: 1;
+            @include transform(translate(0, -5px));
+        }
+    }
+}
+
+
+.form--signup {
+    max-width: 480px;
+}
+
+
+
+
+
+/*
+ * Form components
+ */
+::-webkit-input-placeholder { /* Chrome/Opera/Safari */
+  color: $inverse_color;
+  opacity: .35;
+}
+::-moz-placeholder { /* Firefox 19+ */
+  color: $inverse_color;
+  opacity: .35;
+}
+:-ms-input-placeholder { /* IE 10+ */
+  color: $inverse_color;
+  opacity: .35;
+}
+:-moz-placeholder { /* Firefox 18- */
+  color: $inverse_color;
+  opacity: .35;
+}
+
+
+.select--custom {
+
+}
+
+.select--custom .below {
+    color: rgba(255, 255, 255, 0.6);
+    position: relative;
+    display: block;
+    width: 100%;
+    padding: 5px;
+    box-sizing: border-box;
+    background: none;
+    outline: none;
+    border: 1px solid rgba(255, 255, 255, 0.4);
+    border-radius: 4px;
+    transition: all .35s ease;
+    font-weight: 300;
+    font-size: 14px;
+    line-height: 20px;
+}
+
+.select--custom .filter {
+    display: none !important;
+}
+
+.select--custom .selected {
+    background-color: #242526 !important;
+}
+
+.select--custom .options {
+    background-color: #000 !important;
+}
+
+.select--custom .value {
+    text-align: left;
+}
+
+.select--custom > div > div.single > div.toggle {
+    width: 8px;
+    font-size: 9px;
+}

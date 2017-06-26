@@ -1,11 +1,11 @@
 export class User {
-    public fname: string;
-    public lname: string;
-    public uname: string;
+    public first_name: string;
+    public last_name: string;
+    public username: string;
     public password: string;
     public email: string;
     public newsletter?: string;
-    public agree: boolean;
+    public terms: boolean;
     public gender?: string;
     public invitationCode?: any;
     public birthDate: any;

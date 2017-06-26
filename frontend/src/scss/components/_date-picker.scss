@@ -1,0 +1,58 @@
+.date-picker .selection {
+    margin-bottom: 0 !important;
+    font-size: 14px !important;
+    padding: 5px !important;
+    text-align: left !important;
+}
+.date-picker .mydp .selection {
+    background-color: transparent;
+}
+.date-picker {
+    display: block;
+    position: relative;
+    width: 100%;
+    box-sizing: border-box;
+    background: none;
+    outline: none;
+    border: 1px solid rgba(255, 255, 255, 0.4);
+    border-radius: 4px;
+    transition: all .35s ease;
+    font-weight: 300;
+    font-size: 14px;
+    /*padding: 3px;*/
+    color: #fff;
+}
+.date-picker:hover, .date-picker:focus {
+    border-color: #fff;
+}
+.date-picker .mydp {
+    border: none;
+    display: block;
+}
+.date-picker .mydp .selectiongroup {
+    position: relative;
+    width: 100%;
+    box-sizing: border-box;
+    background: none;
+    outline: none;
+    padding: 3px;
+}
+.date-picker .mydp .btnclear, .mydp .btnpicker, .mydp .headertodaybtn {
+    background: transparent !important;
+    border-left-color: rgba(255, 255, 255, 0.4) !important;
+}
+.date-picker .mydp .btnclear, .mydp .btnpicker, .mydp .headertodaybtn .icon {
+    color: rgba(255,255,255,0.4) !important;
+}
+
+.date-picker:hover .mydp .btnclear, .date-picker:focus .mydp .btnclear,
+.date-picker:hover .mydp .btnpicker, .date-picker:focus .mydp .btnpicker,
+.date-picker:hover .mydp .headertodaybtn, .date-picker:focus .mydp .headertodaybtn {
+    border-left-color: rgba(255, 255, 255, 1) !important;
+}
+
+.date-picker:hover .mydp .btnclear, .date-picker:focus .mydp .btnclear,
+.date-picker:hover .mydp .btnpicker, .date-picker:focus .mydp .btnpicker,
+.date-picker:hover .mydp .headertodaybtn .icon, .date-picker:focus .mydp .headertodaybtn .icon {
+    color: rgba(255,255,255,1) !important;
+}

@@ -1,10 +1,20 @@
 /* You can add global styles to this file, and also import other style files */
 
-/* global */
+/*
+ * Global styles
+ */
 @import './scss/base/normalize';
 // @import './scss/base/fonts';
 @import './scss/base/variables';
 @import './scss/base/mixins';
+@import './scss/base/base';
+
+
+/*
+ * Components
+ */
+@import './scss/components/_date-picker';
+
 
 
 /* global */
@@ -43,6 +53,10 @@
 @import './scss/search-popup';
 
 @import './scss/_app';
+
+
+
+@import './scss/components/forms';
 
 /* ==========================================================================
    Variables
