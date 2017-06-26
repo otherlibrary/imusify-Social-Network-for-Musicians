@@ -12,11 +12,11 @@
                 </div>
                 <div class="social-logins">
                     <div class="fb soc-login"
-                         (click)="loginFB()">
+                        (click)="loginFB()">
                         <span>Facebook</span>
                     </div>
                     <div class="in soc-login"
-                         (click)="loginLD()">
+                        (click)="loginLD()">
                         <span>LinkedIn</span>
                     </div>
 
@@ -45,8 +45,7 @@
                         <input type="checkbox" formControlName="rememberme" name="rememberme" value="1" id="signInRemember"/>
                         <i></i>
                         <span>Keep me signed in</span>
-                    </label>
-                    
+                    </label>         
 
                     <div class="sbm-block">
                         <button type="submit" [disabled]="!userLoginForm.valid">Sign In</button>

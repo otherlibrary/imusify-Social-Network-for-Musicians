@@ -20,6 +20,10 @@
     /*display: block;*/
     /*z-index: 888;*/
 /*}*/
+
+.popup {
+    z-index: 10;
+}
 .popup_animate {
     animation-name: popup;
     animation-fill-mode: both;

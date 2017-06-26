@@ -51,7 +51,16 @@
                             <label for="invitationCode">Invitation Code</label>
                         </div>
 
-                        <div class="form__group">
+                        <div class="inp-block">
+                            <label for="privacyPolicy" class="policy-label">
+                                <input type="checkbox" formControlName="agree" name="privacyPolicy" value="0" id="privacyPolicy">
+                                <i></i>
+                                <span class="privacy-info">I acknowledge that I have read and accept the <a href="#">Terms of Use Agreement</a> and consent to the <a href="#">Privacy Policy</a> and <a href="#">Video Privacy Policy</a>.</span>
+                            </label>
+                            <p class="is-signed">Already have an Imusify account? <a href="#" (click)="goToLogin()">Sign in</a></p>
+                        </div>
+
+                        <div class="inp-block">
                             <label for="signIacknowledge" class="sign-label">
                                 <input type="checkbox" name="iacknowledge" value="1" id="signIacknowledge"/>
                                 <i></i>
@@ -59,21 +68,12 @@
                             </label>
                         </div>
 
-                        <div class="form__group">
+                        <div class="inp-block">
                             <label for="signSubscribe" class="sign-label">
                                 <input type="checkbox" name="subscribe" value="1" id="signSubscribe"/>
                                 <i></i>
                                 <span>Subscribe to Newsletter</span>
                             </label>
-                        </div>
-
-                        <div class="form__group">
-                            <label for="privacyPolicy" class="policy-label">
-                                <input type="checkbox" formControlName="agree" name="privacyPolicy" value="0" id="privacyPolicy">
-                                <i></i>
-                                <span class="privacy-info">I acknowledge that I have read and accept the <a href="#">Terms of Use Agreement</a> and consent to the <a href="#">Privacy Policy</a> and <a href="#">Video Privacy Policy</a>.</span>
-                            </label>
-                            <p class="is-signed">Already have an Imusify account? <a href="#" (click)="goToLogin()">Sign in</a></p>
                         </div>
                         <div class="inp-block">
                             <div class="sbm-block">
