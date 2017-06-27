@@ -57,41 +57,35 @@
                                     [options]="myDatePickerOptions"></my-date-picker>
                                 <label class="form__label" for="myDate">Date of Birth</label>
                             </div>
+
                             <div class="form__group form__group--field">
                                 <input class="form__field" type="text" name="invitationCode" id="invitationCode" />
                                 <label class="form__label" for="invitationCode">Invitation Code</label>
                             </div>
                         </div>
 
-                        <div class="form__group form__group--field">
-                            <label for="privacyPolicy" class="policy-label">
+                        <hr>
+
+                        <div class="form__group">
+                            <div class="checkbox">
                                 <input type="checkbox" formControlName="terms" name="terms" value="0" id="terms">
-                                <i></i>
-                                <span class="privacy-info">I acknowledge that I have read and accept the <a href="#">Terms of Use Agreement</a> and consent to the <a href="#">Privacy Policy</a> and <a href="#">Video Privacy Policy</a>.</span>
-                            </label>
-                            <p class="is-signed">Already have an Imusify account? <a href="#" (click)="goToLogin()">Sign in</a></p>
-                        </div>
-
-                        <div class="form__group form__group--field">
-                            <label for="terms" class="sign-label">
-                                <input type="checkbox" name="terms_1" value="1" id="terms_1"/>
-                                <i></i>
-                                <span>I acknowledge that I have read and accept the Terms of Use Agreement and consent to the Privacy Policy and Video Privacy Policy.</span>
-                            </label>
-                        </div>
-
-                        <div class="form__group">
-                            <label for="signSubscribe" class="sign-label">
-                                <input type="checkbox" name="subscribe" value="1" id="signSubscribe"/>
-                                <i></i>
-                                <span>Subscribe to Newsletter</span>
-                            </label>
-                        </div>
-
-                        <div class="form__group">
-                            <div class="sbm-block">
-                                <button type="submit" [disabled]="!signupEmailForm.valid">Create Account</button>
+                                <label for="terms" class="label label--accept">I acknowledge that I have read and accept the <a class="link" href="#" title="Terms of Use Agreement">Terms of Use Agreement</a> and consent to the <a class="link" href="#">Privacy Policy</a> and <a class="link" href="#" title="Video Privacy Policy">Video Privacy Policy</a>.</label>
                             </div>
+                        </div>
+
+                        <div class="form__group">
+                            <div class="checkbox">
+                                <input type="checkbox" name="subscribe" id="subscribe"/>
+                                <label for="subscribe" class="label label--accept">Subscribe to Newsletter</label>
+                            </div>
+                        </div>
+
+                        <div class="form__group form__group--signin-link">
+                            <p>Already have an Imusify account? <a class="link" href="#" (click)="goToLogin()" title="Sign in">Sign in</a></p>
+                        </div>
+
+                        <div class="form__group form__group--submit">
+                            <button class="btn btn--primary" type="submit" [disabled]="!signupEmailForm.valid">Create Account</button>
                         </div>
                     </form>
                 </div><!-- /.eJoin-inner -->

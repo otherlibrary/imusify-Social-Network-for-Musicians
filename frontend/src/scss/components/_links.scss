@@ -1,0 +1,9 @@
+.link {
+    color: $highlight_color;
+    border-bottom: 1px solid transparent;
+    transition: border .3s ease-in-out;
+
+    &:hover {
+        border-color: $highlight_color; 
+    }
+}

@@ -8,12 +8,7 @@
 @import './scss/base/variables';
 @import './scss/base/mixins';
 @import './scss/base/base';
-
-
-/*
- * Components
- */
-@import './scss/components/_date-picker';
+@import './scss/base/_typography.scss';
 
 
 
@@ -55,8 +50,14 @@
 @import './scss/_app';
 
 
-
-@import './scss/components/forms';
+/*
+ * Components
+ */
+@import './scss/components/_date-picker';
+@import './scss/components/_links';
+@import './scss/components/_forms';
+@import './scss/components/_dividers';
+@import './scss/components/_buttons';
 
 /* ==========================================================================
    Variables
@@ -416,29 +417,7 @@ $url_6: url(./assets/img/player/queue.svg);
     left: -9999em;
     width: 960px;
 }
-.btn {
-    position: relative;
-    display: inline-flex;
-    vertical-align: middle;
-    width: auto;
-    height: 46px;
-    margin-top: 20px;
-    padding: 0 15px;
-    box-sizing: border-box;
-    background: #EA3F4F;
-    border-radius: 3px;
-    font-size: 12px;
-    letter-spacing: .05em;
-    color: #fff !important;
-    cursor: pointer;
-    text-align: center;
-    align-items: center;
-    justify-content: center;
-    
-    &:hover {
-        background: #e7283a;
-    }
-}
+
 .edit-track-form .sbm-block {
     .btn {
         position: relative;

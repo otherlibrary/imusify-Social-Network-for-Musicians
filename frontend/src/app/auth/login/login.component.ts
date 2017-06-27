@@ -50,6 +50,9 @@ export class LoginComponent implements OnInit {
         this.buildForm();
     }
 
+    /**
+     * Helper method to create form
+     */
     buildForm() {
         this.userLoginForm = this.fb.group({
             "email": [this.user.email, [
@@ -66,6 +69,10 @@ export class LoginComponent implements OnInit {
         this.onValueChange();
     }
 
+    /**
+     * Update errors when data are changed in form
+     * @param {any} data [description]
+     */
     onValueChange(data?: any) {
         if (!this.userLoginForm) return;
         let form = this.userLoginForm;
@@ -84,14 +91,20 @@ export class LoginComponent implements OnInit {
         }
     }
 
+    /**
+     * Login via email
+     */
     login() {
         EmitterService.get('TOGGLE_PRELOADER').emit(true);
 
         this._authService.login(this.userLoginForm.value).subscribe(
             data => {
+
                 this._sharedService.loginSubject.next(data);
+
                 localStorage.setItem('auth_data', JSON.stringify(data));
-                this._router.navigate([{outlets: {popup: null}}]);
+
+                this._router.navigate([{ outlets: { popup: null } }]);
 
                 EmitterService.get('TOGGLE_PRELOADER').emit(false);
                 this._sharedService.notificationSubject.next({
@@ -110,12 +123,18 @@ export class LoginComponent implements OnInit {
             })
     }
 
+    /**
+     * Login via Facebook
+     */
     loginFB() {
         this._facebookService.login()
             .then((response: LoginResponse) => console.log('Logged in', response))
             .catch(e => console.error('Error logging in'));
     }
 
+    /**
+     * Login via LinkedIn
+     */
     loginLD() {
         IN.User.authorize(function(){
             IN.API.Raw().url('/people/~?format=json').method('GET').result(function(res){
@@ -124,10 +143,16 @@ export class LoginComponent implements OnInit {
         }, this);
     }
 
+    /**
+     * Close popup
+     */
     closePopup() {
         this._router.navigate(['',{outlets: {popup: null}}]);
     }
 
+    /**
+     * Redirect to Sign Up form
+     */
     goToSignup() {
         this._router.navigate([{ outlets: { popup: 'signup' } }]);
         return false;

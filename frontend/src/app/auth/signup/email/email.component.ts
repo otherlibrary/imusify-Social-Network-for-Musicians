@@ -27,7 +27,11 @@ export class EmailComponent implements OnInit {
     public myDatePickerOptions: IMyOptions = {
         dateFormat: 'yyyy-mm-dd',
         editableDateField: false,
-        openSelectorOnInputClick: true
+        openSelectorOnInputClick: true,
+        dayLabels: {su: 'Su', mo: 'Mo', tu: 'Tu', we: 'We', th: 'Th', fr: 'Fr', sa: 'Sa'},
+        showTodayBtn: false,
+        firstDayOfWeek: 'mo',
+        showSelectorArrow: false
     };
 
     constructor(

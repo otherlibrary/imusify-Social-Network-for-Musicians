@@ -4,9 +4,19 @@
     padding: 5px !important;
     text-align: left !important;
 }
+
+.date-picker  .mydp .selector {
+    border: none;
+
+    &:before {
+        display: none;
+    }
+}
+
 .date-picker .mydp .selection {
     background-color: transparent;
 }
+
 .date-picker {
     display: block;
     position: relative;
@@ -22,13 +32,16 @@
     /*padding: 3px;*/
     color: #fff;
 }
+
 .date-picker:hover, .date-picker:focus {
     border-color: #fff;
 }
+
 .date-picker .mydp {
     border: none;
     display: block;
 }
+
 .date-picker .mydp .selectiongroup {
     position: relative;
     width: 100%;
