@@ -1,3 +1,6 @@
+/*
+ * Flexbox
+ */
 @mixin flexbox() {
   display: -webkit-box;
   display: -moz-box;
@@ -14,12 +17,6 @@
   flex:  $values;
 }
 
-@mixin transform($transform...) {
-  -webkit-transform: $transform;
-    -ms-transform: $transform;
-      transform: $transform;
-}
-
 @mixin order($val) {
   -webkit-box-ordinal-group: $val;
   -moz-box-ordinal-group: $val;
@@ -28,10 +25,22 @@
   order: $val;
 }
 
+/*
+ * Transform
+ */
+@mixin transform($transform...) {
+  -webkit-transform: $transform;
+    -ms-transform: $transform;
+      transform: $transform;
+}
+
+/*
+ * Layout (for before/after pseudo elements)
+ */
 @mixin content-tl($top: 0, $left: 0, $height: 100%, $width: 100%, $bgColor: $primaryColor) {
   content:      '';
-  position:       absolute;
-  top:        $top;
+  position:     absolute;
+  top:          $top;
   left:         $left;
   height:       $height;
   width:        $width;
@@ -40,8 +49,8 @@
 
 @mixin content-tr($top: 0, $right: 0, $height: 100%, $width: 100%, $bgColor: $primaryColor) {
   content:      '';
-  position:       absolute;
-  top:        $top;
+  position:     absolute;
+  top:          $top;
   right:        $right;
   height:       $height;
   width:        $width;
@@ -50,7 +59,7 @@
 
 @mixin content-bl($bottom: 0, $left: 0, $height: 100%, $width: 100%, $bgColor: $primaryColor) {
   content:      '';
-  position:       absolute;
+  position:     absolute;
   bottom:       $bottom;
   left:         $left;
   height:       $height;
@@ -60,7 +69,7 @@
 
 @mixin content-br($bottom: 0, $right: 0, $height: 100%, $width: 100%, $bgColor: $primaryColor) {
   content:      '';
-  position:       absolute;
+  position:     absolute;
   bottom:       $bottom;
   right:        $right;
   height:       $height;

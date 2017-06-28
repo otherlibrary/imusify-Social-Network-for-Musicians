@@ -1,0 +1,30 @@
+h1 {
+  display: block;
+  margin: 100px 0 50px 0;
+  font-weight: 100;
+  font-size: 40px;
+  text-transform: uppercase;
+}
+
+button {
+  border: none;
+  background: none;
+  outline: none;
+  padding: 0;
+}
+
+ul li {
+  list-style-type: none;
+}
+
+.gui{
+  overflow: scroll;
+}
+
+
+
+
+//NoUi slider
+.noUi-connect {
+  background-color: rgb(234, 63, 79) !important;
+}

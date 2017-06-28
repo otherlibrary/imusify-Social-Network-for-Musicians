@@ -4,13 +4,13 @@ import {Component, OnInit, OnChanges, trigger, state, transition, style, animate
     selector: 'app-preloader',
     templateUrl: 'preloader.component.html',
     styleUrls: ['preloader.component.scss'],
-    animations: [
-        trigger('visibilityChanged', [
-            state('shown', style({opacity: 1, 'pointer-events': 'auto'})),
-            state('hidden', style({opacity: 0, 'pointer-events': 'none'})),
-            transition('* => *', animate('.3s'))
-        ])
-    ]
+    // animations: [
+    //     trigger('visibilityChanged', [
+    //         state('shown', style({opacity: 1, 'pointer-events': 'auto'})),
+    //         state('hidden', style({opacity: 0, 'pointer-events': 'none'})),
+    //         transition('* => *', animate('.3s'))
+    //     ])
+    // ]
 })
 export class PreloaderComponent implements OnInit {
     @Input() isVisible: boolean = false;

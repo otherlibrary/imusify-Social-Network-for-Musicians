@@ -13,42 +13,22 @@
 
 
 /* global */
-@import './scss/global';
 @import './scss/menu';
 @import './scss/playlist';
 @import './scss/notifications';
 @import './scss/messaging';
 @import './scss/favorites';
 
-/* pages */
-@import './scss/home';
-@import './scss/follow';
-@import './scss/profile';
-@import './scss/artist-profile/artist-profile';
-@import './scss/upload/upload';
-@import './scss/checkout/checkout';
-@import './scss/song-detail/song-detail';
-@import './scss/browse';
-@import './scss/about';
-@import './scss/news';
-@import './scss/popup';
-@import './scss/popovers';
-@import './scss/signs';
-@import './scss/edit-track';
-@import './scss/account';
-@import './scss/navigation';
-@import './scss/gui';
 
-//popups
-@import './scss/edit-profile';
-@import './scss/invite-friends';
-@import './scss/membership';
-@import './scss/roles';
-@import './scss/email-join';
-@import './scss/search-popup';
+/*
+ * Pages 
+ * TODO: move after components
+ */
+@import './scss/pages/_main';
+@import './scss/gui/_main';
+@import './scss/popups/_main';
 
 @import './scss/_app';
-
 
 /*
  * Components
@@ -58,6 +38,7 @@
 @import './scss/components/_forms';
 @import './scss/components/_dividers';
 @import './scss/components/_buttons';
+
 
 /* ==========================================================================
    Variables
