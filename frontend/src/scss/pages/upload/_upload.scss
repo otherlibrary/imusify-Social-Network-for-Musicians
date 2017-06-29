@@ -15,7 +15,7 @@
       .item-head { opacity: .6; }
     }
     .item-head { line-height: 0.749; letter-spacing: 0.05em; text-transform: uppercase; font-weight: 100; font-size: 14px; opacity: .2; }
-    .item-content { position: relative; width: 100px; height: 100px; margin: 7px 10px; border-radius: 6px; background-color: rgb(38, 38, 40); transition: all .8s $cubicLight;
+    .item-content { position: relative; width: 100px; height: 100px; margin: 7px 10px; border-radius: 6px; background-color: rgb(38, 38, 40); transition: all .8s $cubic_light;
       &::before { content: ""; position: absolute; top: 0; left: 0; width: 100px; height: 100px; }
       &.music::before { background: url("./assets/img/upload/music.png") 50% no-repeat; }
       &.video::before { background: url("./assets/img/upload/video.png") 50% no-repeat; }
@@ -68,7 +68,7 @@
 .audio-content { position: relative; width: 100%; padding: 0/* 30px 70px 30px*/;
 
   &:before { content: ""; position: absolute; z-index: 0; top: 40px; left: 0; right: 0; height: 91px; background-color: rgba(36, 36, 38, .4);
-    transition: background .5s $cubicLight; }
+    transition: background .5s $cubic_light; }
   &:hover:before {background-color: lighten(rgba(36, 36, 38, .4), 15%); }
 
   .song-info-head { position: relative; display: block; padding: 0 180px 20px 30px; z-index: 1;

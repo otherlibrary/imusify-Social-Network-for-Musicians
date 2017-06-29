@@ -25,6 +25,10 @@ body {
             left: 0;
         }
     }
+
+    text-rendering:          optimizeLegibility;
+    -moz-osx-font-smoothing: grayscale;
+    -webkit-font-smoothing:  antialiased;
 }
 
 a {
@@ -40,6 +44,19 @@ button {
 input {
     outline: none;
     box-sizing: border-box;
+}
+
+ul {
+    padding: 0;
+}
+
+.fallback-text {
+    display: none;
+}
+
+
+.flex-container {
+    @include flexbox();
 }
 
 .main {

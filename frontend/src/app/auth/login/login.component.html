@@ -1,30 +1,46 @@
-<div class="popup popup_animate">
+<div class="popup popup--signin popup_animate">
     <button class="popup-close" type="button" (click)="closePopup()">Close</button>
+
     <div class="popup-bg"></div>
+
     <div class="popup-scroll popup_animate_inner">
         <div class="scroll-bg"></div>
-        <div class="popup-inner">
-            <div class="sign-block">
-                <div class="title">Sign in to imusify</div>
-                <div class="tit-info">Use Facebook, Linked in, Soundcloud or your email to sign in. Don't have a Imusify account
-                    yet?
-                    No worries, <a href="#" (click)="goToSignup()">joining</a> is easy.
-                </div>
-                <div class="social-logins">
-                    <div class="fb soc-login"
-                        (click)="loginFB()">
-                        <span>Facebook</span>
-                    </div>
-                    <div class="in soc-login"
-                        (click)="loginLD()">
-                        <span>LinkedIn</span>
-                    </div>
 
-                    <div class="sc soc-login"><span>Souncloud</span></div>
-                </div>
-                <div class="or">Or</div>
+        <div class="popup__inner">
+            <div class="popup__content">
 
-                <form [formGroup]="userLoginForm" (ngSubmit)="login()" class="form form--singin">
+                <h2 class="popup__title">Sign in to imusify</h2>
+                <p class="popup__info">
+                    Use Facebook, Linked in, Soundcloud or your email to sign in. Don't have a Imusify account yet?
+                    No worries, <a class="link" href="#" (click)="goToSignup()" title="Sign Up">joining</a> is easy.
+                </p>
+
+                <!-- Social auth list -->
+                <ul class="social-auth-list">
+                    <li class="social-auth-list__item">
+                        <a (click)="loginFB()" href="#" title="Login with Facebook">
+                            <img src="./assets/img/sign/facebook.svg" alt="Facebook icon">
+                            <span class="fallback-text">Facebook</span>
+                        </a>
+                    </li>
+                    <li class="social-auth-list__item">
+                        <a (click)="loginLD()" href="#" title="Login with LinkedIn">
+                            <img src="./assets/img/sign/linkedin.svg" alt="LinkedIn icon">
+                            <span class="fallback-text">LinkedIn</span>
+                        </a>
+                    </li>
+                    <li class="social-auth-list__item">
+                        <a href="#" title="Login with Souncloud">
+                            <img src="./assets/img/sign/soundcloud.svg" alt="Souncloud icon">
+                            <span class="fallback-text">Souncloud</span>
+                        </a>
+                    </li>
+                </ul>
+                <!-- end Social auth list -->
+
+                <div class="text-seperator">Or</div>
+
+                <form [formGroup]="userLoginForm" (ngSubmit)="login()" class="form form--signin">
                     <div class="form__group form__group--field">
                         <div *ngIf="formErrors.username" class="error_box">
                             {{ formErrors.username }}

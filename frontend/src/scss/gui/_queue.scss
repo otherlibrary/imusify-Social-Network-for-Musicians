@@ -2,7 +2,7 @@
   transform: scale(0); opacity: 0; bottom: 100px;
   transition: transform 0s linear .25s, opacity .25s ease, bottom .25s ease;
   &.active { bottom: 65px; opacity: 1; transform: scale(1);
-    transition: transform 0s linear, opacity .35s ease, bottom .5s $cubicLight;}
+    transition: transform 0s linear, opacity .35s ease, bottom .5s $cubic_light;}
   ::-webkit-scrollbar { width: 6px; }
   ::-webkit-scrollbar-button:start:decrement,
   ::-webkit-scrollbar-button:end:increment { display: block; height: 0; background-color: transparent; }
@@ -30,7 +30,7 @@
   td, th { flex-grow: 2; margin: auto; color: #999;
     transition: color .25s ease;}
   tr { display: flex; height: 50px; text-align: left; font-size: 16px;
-    transition: background .8s $cubicLight;}
+    transition: background .8s $cubic_light;}
   td{ font-weight: 300;}
 
   &.artists { position: relative; width: 330px; box-shadow: 2px 15px 46px 12px rgba(0,0,0,0.8);

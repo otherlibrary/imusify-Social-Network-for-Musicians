@@ -1,0 +1,54 @@
+.popup {
+
+    &__inner {
+        box-sizing: border-box;
+        position:   relative;
+        max-width:  948px;
+        padding:    50px 0;
+        height:     100vh;
+        margin:     0 auto;
+        z-index:    1;
+        width:      96%;
+    }
+    
+    &__content {
+        text-align: center;
+        padding:    50px 0;
+        margin:     0 auto;
+        max-width:  948px;
+    }
+
+    &__title {
+        font-weight:    100;
+        font-size:      54px;
+        line-height:    1.2;
+        letter-spacing: -.025em;
+        margin:         0;
+        margin-bottom:  10px;
+        opacity:        .8;
+    }
+
+    &__info {
+        font-weight:     300;
+        font-size:       12px;
+        line-height:     1.2;
+        letter-spacing:  .05em;
+        margin:          0;
+        margin-bottom:   25px;
+        opacity:         .8;
+    }
+
+    &__icon {
+        background-color: $highlight_color;
+        height: 180px;
+        width:  180px;
+    }
+
+    .social-auth-list {
+        margin: 45px 0;
+
+        &__item {
+            margin: 0 10px;
+        }
+    }
+}

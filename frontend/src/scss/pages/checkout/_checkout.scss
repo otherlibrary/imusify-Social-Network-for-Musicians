@@ -87,10 +87,10 @@
     border-radius: 4px; overflow: hidden; cursor: pointer;
     &:before,&:after{ content: ''; position: absolute; display: block; top: 0; left: 0; bottom: 0; right: 0; margin: auto; }
     &:before{ background: #c23a48; z-index: 0; opacity: 0;
-      transition: opacity .5s $cubicLight;
+      transition: opacity .5s $cubic_light;
       border-radius: 4px;}
     &:after{ border: 1px solid $white; z-index: 1; opacity: .1;
-      transition: opacity .5s $cubicLight;
+      transition: opacity .5s $cubic_light;
       border-radius: 4px;}
     &:hover{
       &:after{ opacity: .4;}
@@ -107,7 +107,7 @@
   border-radius: 4px; overflow: hidden;
   &:before{ content: ''; position: absolute; display: block; top: 0; left: 0; bottom: 0; right: 0; margin: auto;
     border: 1px solid $white; z-index: 0; opacity: .1;
-    transition: opacity .5s $cubicLight;
+    transition: opacity .5s $cubic_light;
     border-radius: 4px;}
   .cart-top,.cart-body,.cart-bot{ position: relative; padding: 15px;
     box-sizing: border-box;}
