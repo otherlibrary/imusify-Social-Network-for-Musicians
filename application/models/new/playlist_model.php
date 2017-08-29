@@ -52,4 +52,18 @@ class Playlist_model extends MY_Model
         $this->db->where('id', $id);
         return $this->db->update('playlist');
     }
+
+    public function get_tracks($id)
+    {
+        $this->db->select('trackId');
+        $query = $this->db->get_where('playlist_detail', ['playlist_id' => $id]);
+        $ids = array_column($query->result('array'), 'trackId');
+
+        $this->db->select('title, timelength, albums.name as album');
+        $this->db->where_in('tracks.id', $ids);
+        $this->db->join('albums', 'albums.id = tracks.albumId');
+        $query = $this->db->get('tracks');
+
+        return $query->result('array');
+    }
 }

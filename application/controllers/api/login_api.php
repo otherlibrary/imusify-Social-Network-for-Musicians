@@ -26,6 +26,7 @@ class Login_Api extends REST_Controller
 
     function login_post()
     {
+        return $this->response('good', 200);
         if ($this->post('fp_code')) {
 
             $this->form_validation->set_rules('rst_password', 'Password', 'trim|required|xss_clean');
@@ -76,7 +77,14 @@ class Login_Api extends REST_Controller
                 $this->response(null, 400);
             } else {
 
-                $user = $this->Ilogin->login($this->post('username'), $this->post('password'), $this->post('rememberme'), null, $this->post('type'), $this->post());
+                $user = $this->Ilogin->login(
+                    $this->post('username'),
+                    $this->post('password'),
+                    $this->post('rememberme'),
+                    null,
+                    $this->post('type'),
+                    $this->post()
+                );
 
                 if ($user) {
                     $this->response($user, 200); // 200 being the HTTP response code
