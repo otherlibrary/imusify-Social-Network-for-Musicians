@@ -190,13 +190,17 @@ class CI_DB_pdo_driver extends CI_DB {
 	{
 		$sql = $this->_prep_query($sql);
 		$result_id = $this->conn_id->prepare($sql);
+
+        // if (false !== strpos($sql, 'SELECT COUNT(id)')) {
+        //     echo($sql.PHP_EOL);
+        // }
+
 		$result_id->execute();
-		
 		if (is_object($result_id))
 		{
 			if (is_numeric(stripos($sql, 'SELECT')))
 			{
-				$this->affect_rows = count($result_id->fetchAll());
+				$this->affect_rows = count([]);
 				$result_id->execute();
 			}
 			else

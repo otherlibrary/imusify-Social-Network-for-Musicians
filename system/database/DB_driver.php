@@ -297,6 +297,9 @@ class CI_DB_driver {
 		$time_start = list($sm, $ss) = explode(' ', microtime());
 
 		// Run the Query
+        /*if (false !== strpos($sql, 'SELECT COUNT(id)')) {
+            echo($sql.PHP_EOL);
+        }*/
 		if (FALSE === ($this->result_id = $this->simple_query($sql)))
 		{
 			if ($this->save_queries == TRUE)

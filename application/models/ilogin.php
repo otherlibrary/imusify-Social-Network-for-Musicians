@@ -39,7 +39,7 @@ Class ilogin extends CI_Model
         $this->db->limit(1);
 
         $query = $this->db->get();
-        //var_dump($this->db->last_query());exit;
+        // var_dump($this->db->last_query());exit;
         if ($query->num_rows() == 1) {
             $user = $query->row();
             $temp_uimg = $this->commonfn->get_photo('p', $user->id);
@@ -84,6 +84,7 @@ Class ilogin extends CI_Model
                 $state = get_ip_state($ip_address);
                 $euro = get_ip_eu($country);
             } catch (Exception $e) {
+                echo $e->getMessage();
                 //address is not found in database
             }
 
@@ -103,9 +104,9 @@ Class ilogin extends CI_Model
 
 
             //print_r($this->session->all_userdata());
-            if (isset($rememberme) && $rememberme == '1') {
-                $this->rememberme->setCookie($this->session->userdata(USER_SESSION_NAME)->id);
-            }
+            // if (isset($rememberme) && $rememberme == '1') {
+            //     $this->rememberme->setCookie($this->session->userdata(USER_SESSION_NAME)->id);
+            // }
 
             /*if(isset($rememberme) && $rememberme == '1')
             {
