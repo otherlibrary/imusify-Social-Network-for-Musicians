@@ -17,7 +17,7 @@ Class browse_recommended extends CI_Model
                                   $user_id = null)
     {
         $this->load->model('commonfn');
-        $userId = ($userId != null) ? $userId : $this->sess_userid;
+        $userId = ($user_id != null) ? $userId : $this->sess_userid;
         $output = [];
 
         if ($userId > 0)

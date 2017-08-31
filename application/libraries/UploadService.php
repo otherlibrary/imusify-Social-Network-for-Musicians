@@ -27,7 +27,6 @@ class UploadService
                 'max_size' => $availSpace,
                 'allowed_types' => 'mp3|mp2|ogg|aac|amr|wma|aiff|wav|flac|alac',
             ];
-
             $this->fixUploadPath($uploadPath);
             if (!$this->uploadFile('file', $uploadConfig)) {
                 $error = [
@@ -200,7 +199,7 @@ class UploadService
 
         if (!empty($currentPhoto)) {
             $this->ci->db->update('photos', ['name' => $filename], 'id=' . $currentPhoto['id']);
-            unlink(asset_upload_path() . $dir . $currentPhoto['name']);
+            // unlink(asset_upload_path() . $dir . $currentPhoto['name']);
         } else {
             $insertData = [
                 'detailId' => $detailId,

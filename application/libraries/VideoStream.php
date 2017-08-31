@@ -14,11 +14,6 @@ class VideoStream
     private $end    = -1;
     private $size   = 0;
  
-    function __construct($filePath) 
-    {
-        $this->path = $filePath;
-    }
-     
     /**
      * Open stream
      */
@@ -27,7 +22,6 @@ class VideoStream
         if (!($this->stream = fopen($this->path, 'rb'))) {
             die('Could not open stream for reading');
         }
-         
     }
      
     /**
@@ -116,12 +110,16 @@ class VideoStream
             $i += $bytesToRead;
         }
     }
-     
+
     /**
      * Start streaming video content
+     *
+     * @param $filePath
      */
-    function start()
+    function start($filePath)
     {
+        $this->path = $filePath;
+
         $this->open();
         $this->setHeader();
         $this->stream();

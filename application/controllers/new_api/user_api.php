@@ -23,6 +23,7 @@ class user_api extends REST_Controller
             'status' => 'fail',
             'msg' => 'Whoops, looks like something went wrong!',
         ];
+
         $userData = $this->session->userdata('user');
         $userId = $userData->id;
         if ($userId) {

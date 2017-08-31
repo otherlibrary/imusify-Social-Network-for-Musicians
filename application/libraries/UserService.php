@@ -80,7 +80,7 @@ class UserService
             $result['lastname'] = $user['lastname'];
             $result['followers'] = getvalfromtbl('COUNT(id)', 'followinglog', 'toId = ' . $userId, 'single');
             $result['following'] = getvalfromtbl('COUNT(id)', 'followinglog', 'fromId = ' . $userId, 'single');
-            $followStatus = getvalfromtbl('COUNT(id)', 'followinglog', "fromId=$currentUserId toId=$userId", 'single');
+            $followStatus = getvalfromtbl('COUNT(id)', 'followinglog', "fromId=$currentUserId AND toId=$userId", 'single');
             $result['follow_status'] = $followStatus == 1;
             $result['followingId'] = $userId;
             $result['username'] = $user['username'];
