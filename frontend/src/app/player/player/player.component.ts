@@ -147,8 +147,9 @@ export class PlayerComponent implements OnInit {
     this.currentTrack = record;
     this._playerService.getTrackLink(record.trackLink).subscribe(track => {
       this.streamTrack = track.stream_url + '?nor=1';
+      const waveform = JSON.parse(this.currentTrack.waveform);
       this._playerService.wavesurfer
-        .load(this.streamTrack, JSON.parse(this.currentTrack.waveform));
+        .load(this.streamTrack, waveform);
       this.durationTime = track.duration;
     });
   }
@@ -202,15 +203,16 @@ export class PlayerComponent implements OnInit {
   }
 
   toggleVolume() {
-    this._playerService.wavesurfer.toggleMute();
-    this.isMute = this._playerService.wavesurfer.getMute();
     if(this.currentVol != 0) {
       this._cacheVolume = this.currentVol;
       this.currentVol = 0;
+      this._playerService.wavesurfer.setMute(true);
     } else {
-      this.currentVol = this._cacheVolume;
+      this.currentVol = this._cacheVolume || 1;
+      this._playerService.wavesurfer.setMute(false);
     }
-
+    this._playerService.wavesurfer.setVolume(this.currentVol);
+    this.isMute = this._playerService.wavesurfer.getMute();
   }
 
   /**
@@ -222,7 +224,8 @@ export class PlayerComponent implements OnInit {
     this.currentVol = val;
     this._playerService.wavesurfer.setVolume(val);
     if(val <= 0) {
-      this.isMute = !this.isMute;
+      this.isMute = true;
+      this._playerService.wavesurfer.setVolume(0);
     } else if(val > 0){
       this.isMute = false;
     }
